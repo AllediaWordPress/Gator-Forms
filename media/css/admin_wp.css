@@ -1,3 +1,66 @@
+#pweb-adminbar {
+    position: fixed;
+    z-index: 98;
+    background: #F1F1F1;
+    left: 0;
+    right: 0;
+    top: 32px;
+    margin-left: 180px;
+    margin-right: 20px;
+    padding: 10px 0;
+    overflow: auto;
+}
+.folded #pweb-adminbar {
+    margin-left: 56px;
+}
+@media only screen and (max-width: 900px) {
+    .auto-fold #pweb-adminbar {
+        margin-left: 56px;
+    }  
+}
+
+#pweb-tabs-content {
+    padding-top: 100px;
+}
+
+@media only screen and (max-width: 950px) {
+    #pweb-adminbar h2 .nav-tab {
+        font-size: 13px;
+    }
+    .folded #pweb-adminbar h2 .nav-tab {
+        font-size: 15px;
+    }
+}
+@media only screen and (max-width: 850px) {
+    #pweb-adminbar h2 .nav-tab,
+    .folded #pweb-adminbar h2 .nav-tab {
+        font-size: 13px;
+    }
+    #pweb-save-button span,
+    #pweb-close-button span{
+        display: none;
+    }
+}
+@media only screen and (max-width: 782px) {
+    #pweb-adminbar,
+    .folded #pweb-adminbar,
+    .auto-fold #pweb-adminbar {
+        position: static;
+        top: auto;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0;
+    }
+    #pweb-tabs-content {
+        padding-top: 0;
+    }
+    #pweb-buy-button span {
+        display: none;
+    }
+}
+
+
+
 .pweb-text-success,
 .button.pweb-text-success {
     color: #006505;
@@ -243,6 +306,14 @@ label .pweb-star,
 }
 .pweb-field > label + .pweb-field-control {
     margin-top: 10px;
+}
+.pweb-field .pweb-field-control {
+    margin-left: 15px;
+}
+.pweb-radio-group .pweb-field-option {
+    display: inline-block;
+    margin-right: 20px;
+    min-width: 50px;
 }
 
 .pweb-not-related {

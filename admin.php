@@ -504,6 +504,15 @@ jQuery(document).ready(function($){
     }
     
     
+    protected function _load_tmpl($name = '', $preffix = __FILE__) {
+        
+        $path = plugin_dir_path(__FILE__).'tmpl/'.basename($preffix, '.php').'_'.$name.'.php';
+        if (is_file($path)) {
+            include $path;
+        }
+    }
+    
+    
     protected function _display_messages() {
         
         if (isset($_GET['error']) AND $_GET['error']) {
@@ -525,570 +534,33 @@ jQuery(document).ready(function($){
 <?php
 		}
     }
-    
-    
+
+
     protected function _display_create_form() {
         
-?>
-<div class="pweb-version pweb-clearfix">
-    <?php _e('Version'); ?> 
-    <?php echo $this->_get_version(); ?>
-</div>
-
-<h2><?php _e('Perfect Ajax Popup Contact Form', 'pwebcontact'); ?></h2>
-
-<p><?php esc_html_e( 'TODO description', 'pwebcontact' ); ?></p>
-
-<?php if ($this->can_edit) : ?>
-<div class="theme-browser pweb-panels pweb-clearfix">
-<div class="themes">
-    <div class="theme add-new-theme pweb-panel-box">
-        <a href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=pwebcontact&task=new' ), 'new-form'); ?>">
-            <div class="theme-screenshot">
-                <span></span>
-            </div>
-            <h3 class="theme-name"><?php _e( 'Create your first form', 'pwebcontact' ); ?></h3>
-        </a>
-    </div>
-</div>
-</div>
-<?php endif; ?>
-
-<?php  
+        $this->_load_tmpl('new'); 
     }
-    
-    
+
+
     protected function _display_forms_list() {
         
-?>
-<div class="pweb-version pweb-clearfix">
-    <?php _e('Version'); ?> 
-    <?php echo $this->_get_version(); ?>
-</div>
-
-<h2>
-    <?php _e('Perfect Ajax Popup Contact Form', 'pwebcontact'); ?>
-    <?php if ($this->can_edit) : ?>
-        <a class="add-new-h2" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=pwebcontact&task=new' ), 'new-form'); ?>">
-            <i class="icomoon-plus"></i> <?php echo esc_html_x('Add New', 'link'); ?></a>
-    <?php endif; ?>
-    <a class="add-new-h2" href="<?php echo $this->documentation_url; ?>" target="_blank">
-        <i class="icomoon-support"></i> <?php _e( 'Documentation' ); ?></a>
-</h2>
-
-<div class="theme-browser pweb-panels pweb-clearfix">
-<div class="themes">
-
-<?php foreach ($this->data as $form) : ?>
-    <div class="theme pweb-panel-box">
-        <div class="theme-screenshot">
-			
-		</div>
-        <h3 class="theme-name">
-            <?php echo $form->title ? esc_html($form->title) : '&nbsp;'; ?>
-        </h3>
-        <div class="theme-name pweb-position">
-            <?php if ($form->position == 'shortcode') : ?>
-                <input type="text" class="pweb-shortcode pweb-has-tooltip" readonly="readonly"
-                       title="<?php esc_attr_e( 'Copy shortcode and paste into blog post or page.', 'pwebcontact' ); ?>" 
-                       value="[pwebcontact id=<?php echo (int)$form->id; ?>]">
-                <!--<button type="button" class="button">
-                    <i class="icomoon-copy"></i>
-                </button>-->
-                <?php _e( 'shortcode', 'pwebcontact' ); ?>
-            <?php elseif ($form->position == 'widget') : ?>
-                TODO
-            <?php elseif ($form->position == 'footer') : ?>
-                TODO
-            <?php endif; ?>
-        </div>
-        <div class="theme-name pweb-actions">
-            <button type="button"<?php if (!$this->can_edit) echo ' disabled="disabled"'; ?> class="button button-primary" 
-                    onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact&task=edit&id='.(int)$form->id ); ?>'">
-                <i class="icomoon-pencil2"></i> <?php _e( 'Edit' ); ?>
-            </button>
-            <button type="button"<?php if (!$this->can_edit) echo ' disabled="disabled"'; ?> 
-                    class="button pweb-action-toggle-state pweb-text-<?php echo $form->publish ? 'success' : 'danger'; ?> pweb-has-tooltip" 
-                    title="<?php esc_attr_e( 'Toggle form publish state', 'pwebcontact' ); ?>" 
-                    data-action="<?php echo admin_url( 'admin.php?page=pwebcontact&task=edit_state&id='.(int)$form->id.'&ajax=1&_wpnonce='. wp_create_nonce('edit-form-state_'.$form->id).'&state=' ); ?>"
-                    data-state="<?php echo $form->publish; ?>">
-                <i class="icomoon-<?php echo $form->publish ? 'checkmark-circle' : 'cancel-circle'; ?>"></i> 
-            </button>
-            <button type="button"<?php if (!$this->can_edit) echo ' disabled="disabled"'; ?> 
-                    class="button pweb-has-tooltip" title="<?php esc_attr_e( 'Copy' ); ?>" 
-                    onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact&task=copy&id='.(int)$form->id.'&_wpnonce='. wp_create_nonce('copy-form_'.$form->id) ); ?>'">
-                <i class="icomoon-copy"></i> 
-            </button>
-            <button type="button"<?php if (!$this->can_edit) echo ' disabled="disabled"'; ?> 
-                    class="button pweb-action-delete pweb-has-tooltip" title="<?php esc_attr_e( 'Delete' ); ?>" 
-                    data-form-title="<?php echo esc_attr($form->title); ?>" 
-                    data-action="<?php echo admin_url( 'admin.php?page=pwebcontact&task=delete&id='.(int)$form->id.'&ajax=1&_wpnonce='. wp_create_nonce('delete-form_'.$form->id) ); ?>">
-                <i class="icomoon-remove2"></i> 
-            </button>
-        </div>
-    </div>
-<?php endforeach; ?>
-
-    <div class="theme active pweb-panel-box pweb-panel-pro">
-        <div class="theme-screenshot">
-			
-		</div>
-        <h3 class="theme-name">
-            <a class="button button-primary right" href="<?php echo $this->buy_pro_url; ?>" target="_blank">
-                <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
-            </a>
-            <?php _e( 'Pro', 'pwebcontact' ); ?>
-        </h3>
-    </div>
-    
-    <div class="theme active pweb-panel-box pweb-panel-support">
-        <div class="theme-screenshot">
-			
-		</div>
-        <h3 class="theme-name">
-            <a class="button button-primary right" href="<?php echo $this->buy_support_url; ?>" target="_blank">
-                <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
-            </a>
-            <?php _e( 'Support', 'pwebcontact' ); ?>
-        </h3>
-    </div>
-        
-</div>
-</div>
-
-<div id="pweb-dialog-delete" title="<?php esc_attr_e( 'Confirm deletion', 'pwebcontact' ); ?>" style="display:none">
-    <?php _e( 'Are you sure you want to delete form:', 'pwebcontact' ); ?> 
-    <span class="pweb-dialog-form-title"></span>?
-</div>
-<?php
+        $this->_load_tmpl('list');
     }
-    
-    
+
+
     protected function _display_edit_form() {
         
-?>
-<form name="edit" method="post" action="<?php echo esc_attr(admin_url( 'admin.php?page=pwebcontact&task=save' )); ?>">
-    
-    <div class="pweb-toolbar">
-        <h2><?php _e( 'Edit' ); ?></h2>
-        
-        <input type="text" name="title" value="<?php echo esc_attr($this->data->title); ?>" placeholder="<?php esc_attr_e( 'Form name', 'pwebcontact' ); ?>">
-        
-        <button type="submit" class="button button-primary">
-            <i class="icomoon-disk"></i> <?php _e( 'Save' ); ?>
-        </button>
-        <button type="button" class="button" onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact' ); ?>'">
-            <i class="icomoon-close"></i> <?php _e( 'Close' ); ?>
-        </button>
-        
-        <span class="pweb-save-status"></span>
-        
-        <a class="button button-primary right" href="<?php echo $this->buy_support_url; ?>" target="_blank">
-            <i class="icomoon-cart"></i> <?php esc_html_e( 'Buy Pro & Get Support', 'pwebcontact' ); ?>
-        </a>
-        <a class="button button-primary right" href="<?php echo $this->documentation_url; ?>" target="_blank">
-            <i class="icomoon-support"></i> <?php _e( 'Documentation' ); ?>
-        </a>
-    </div>
-    
-    <div id="pweb-tabs">
-        
-        <h2 class="nav-tab-wrapper">
-            <a href="#pweb-tab-location" class="nav-tab nav-tab-active"><?php esc_html_e( 'Location & Effects', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-fields" class="nav-tab"><?php esc_html_e( 'Fields', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-layout" class="nav-tab"><?php esc_html_e( 'Layout', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-submitted" class="nav-tab"><?php esc_html_e( 'After submitting', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-email" class="nav-tab"><?php esc_html_e( 'Email settings', 'pwebcontact' ); ?></a>
-        </h2>
-        
-        <div id="pweb-tab-location" class="nav-tab-content nav-tab-content-active pweb-clearfix">
-            <div class="pweb-width-40" id="pweb-location-steps">
-                
-                <div class="pweb-location-step">
-                    <h3><?php _e( 'Form before opening', 'pwebcontact' ); ?></h3>
-                    <div class="pweb-location-step-tab pweb-tab-active" id="pweb-location-before">
-                        <div class="pweb-step-option"></div>
-                        <div class="pweb-step-arrow-right"></div>
-                        <div class="pweb-step-arrow-down"></div>
-                    </div>
-                </div>
-                
-                <div class="pweb-location-step">
-                    <h3><?php _e( 'Movement effect', 'pwebcontact' ); ?></h3>
-                    <div class="pweb-location-step-tab" id="pweb-location-effect">
-                        <div class="pweb-step-option"></div>
-                        <div class="pweb-step-arrow-right"></div>
-                        <div class="pweb-step-arrow-down"></div>
-                    </div>
-                </div>
-                
-                <div class="pweb-location-step">
-                    <h3><?php _e( 'Form after opening', 'pwebcontact' ); ?></h3>
-                    <div class="pweb-location-step-tab" id="pweb-location-after">
-                        <div class="pweb-step-option"></div>
-                        <div class="pweb-step-arrow-right"></div>
-                        <div class="pweb-step-arrow-down"></div>
-                    </div>
-                </div>
-                
-                <div class="pweb-location-step">
-                    <h3><?php _e( 'Form position', 'pwebcontact' ); ?></h3>
-                    <div class="pweb-location-step-tab" id="pweb-location-place">
-                        <div class="pweb-step-option"></div>
-                        <div class="pweb-step-arrow-right"></div>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="pweb-width-60" id="pweb-location-options">
-                
-                <div class="pweb-location-options pweb-options-active" id="pweb-location-before-options">
-                    <?php echo $this->_get_field(array(
-                        'type' => 'radio',
-                        'name' => 'handler',
-                        'label' => 'How do you want to display your form before it is opened?',
-                        'class' => 'pweb-related',
-                        'default' => 'tab',
-                        'required' => true,
-                        'is_parent' => true,
-                        'options' => array(
-                            array(
-                                'value' => 'button',
-                                'name' => 'Button',
-                                'class' => 'pweb-layout-button pweb-related-accordion pweb-related-modal-button',
-                                'is_parent' => true
-                            ),
-                            array(
-                                'value' => 'tab',
-                                'name' => 'Toggler Tab',
-                                'class' => 'pweb-layout-tab pweb-related-slidebox pweb-related-modal',
-                                'is_parent' => true
-                            ),
-                            array(
-                                'value' => 'static',
-                                'name' => 'Always opened inside page content',
-                                'class' => 'pweb-layout-static pweb-related-static'
-                            ),
-                            array(
-                                'value' => 'hidden',
-                                'name' => 'Hidden',
-                                'class' => 'pweb-layout-hidden pweb-related-modal pweb-related-accordion pweb-related-slidebox pweb-related-modal-button'
-                            )
-                        )
-                    )); ?>
-
-                    <?php echo $this->_get_field(array(
-                        'type' => 'text',
-                        'label' => 'Define text shown on Toggler Tab or Button',
-                        'name' => 'toggler_name',
-                        'parent' => array('handler_button', 'handler_tab')
-                    )); ?>
-
-                    <?php echo $this->_get_field(array(
-                        'type' => 'radio',
-                        'name' => 'toggler_position',
-                        'label' => 'Toggler Tab position',
-                        'parent' => 'handler_tab',
-                        'default' => 'left',
-                        'is_parent' => true,
-                        'options' => array(
-                            array(
-                                'value' => 'left',
-                                'name' => 'Left'
-                            ),
-                            array(
-                                'value' => 'right',
-                                'name' => 'Right'
-                            ),
-                            array(
-                                'value' => 'top:left',
-                                'name' => 'Top left'
-                            ),
-                            array(
-                                'value' => 'top:right',
-                                'name' => 'Top right'
-                            ),
-                            array(
-                                'value' => 'bottom:left',
-                                'name' => 'Bottom left'
-                            ),
-                            array(
-                                'value' => 'bottom:right',
-                                'name' => 'Bottom right'
-                            )
-                        )
-                    )); ?>
-                    
-                    <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
-                        </a>
-                        <div class="pweb-advanced-options-content">
-                            <?php echo $this->_get_field(array(
-                                'type' => 'text',
-                                'label' => 'Position offset [px, %]',
-                                'name' => 'offset',
-                                'class' => 'pweb-unit',
-                                'parent' => array('layout_slidebox', 'handler_tab')
-                            )); ?>
-                            
-                            <?php echo $this->_get_field(array(
-                                'type' => 'text',
-                                'label' => 'Layer level (CSS z-index)',
-                                'name' => 'zindex',
-                                'class' => 'pweb-int',
-                                'parent' => array('layout_slidebox', 'layout_modal')
-                            )); ?>
-                            
-                            <?php echo $this->_get_field(array(
-                                'type' => 'radio',
-                                'name' => 'toggler_icon',
-                                'label' => 'Toggler Tab icon',
-                                'default' => 0,
-                                'is_parent' => true,
-                                'parent' => array('handler_tab', 'handler_button'),
-                                'options' => array(
-                                    array(
-                                        'value' => 0,
-                                        'name' => 'Disabled'
-                                    ),
-                                    array(
-                                        'value' => 'icomoon',
-                                        'name' => 'IcoMoon'
-                                    ),
-                                    array(
-                                        'value' => 'gallery',
-                                        'name' => 'Gallery'
-                                    ),
-                                    array(
-                                        'value' => 'custom',
-                                        'name' => 'Custom'
-                                    )
-                                )
-                            )); ?>
-                            
-                            <?php echo $this->_get_field(array(
-                                'type' => 'icomoon',
-                                'name' => 'toggler_icomoon',
-                                'label' => 'Toggler Tab IcoMoon',
-                                'parent' => array('toggler_icon_icomoon')
-                            )); ?>
-                            
-                            <?php echo $this->_get_field(array(
-                                'type' => 'radio',
-                                'name' => 'toggler_vertical',
-                                'label' => 'Vertical Toggler Tab',
-                                'default' => 0,
-                                'is_parent' => true,
-                                'parent' => array('toggler_position_left', 'toggler_position_right'),
-                                'options' => array(
-                                    array(
-                                        'value' => 0,
-                                        'name' => 'No'
-                                    ),
-                                    array(
-                                        'value' => 1,
-                                        'name' => 'Yes'
-                                    )
-                                )
-                            )); ?>
-                            
-                            <?php echo $this->_get_field(array(
-                                'type' => 'radio',
-                                'name' => 'toggler_rotate',
-                                'label' => 'Rotate Toggler Tab text',
-                                'default' => 1,
-                                'parent' => array('toggler_vertical_1'),
-                                'options' => array(
-                                    array(
-                                        'value' => -1,
-                                        'name' => '-90&deg; (counter-clockwise)'
-                                    ),
-                                    array(
-                                        'value' => 1,
-                                        'name' => '90&deg; (clockwise)'
-                                    )
-                                )
-                            )); ?>
-                            
-                            <?php echo $this->_get_field(array(
-                                'type' => 'filelist',
-                                'name' => 'toggler_font',
-                                'label' => 'TTF font file',
-                                'default' => 'NotoSans-Regular',
-                                'filter' => '\.ttf$',
-                                'directory' => 'media/fonts',
-                                'parent' => array('toggler_vertical_1')
-                            )); ?>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="pweb-location-options" id="pweb-location-effect-options">
-                    <?php echo $this->_get_field(array(
-                        'type' => 'radio',
-                        'name' => 'effect',
-                        'label' => 'Which animation do you want to use?',
-                        'class' => 'pweb-related',
-                        'default' => 'slide_in',
-                        'required' => true,
-                        'options' => array(
-                            array(
-                                'value' => 'slide_in',
-                                'name' => 'Slide-in from page edge',
-                                'class' => 'pweb-effect-slide-in pweb-related-slidebox',
-                                'is_parent' => true
-                            ),
-                            array(
-                                'value' => 'modal_fade',
-                                'name' => 'Fade-in lightbox',
-                                'class' => 'pweb-effect-modal-fade pweb-related-modal pweb-related-modal-button',
-                                'is_parent' => true
-                            ),
-                            array(
-                                'value' => 'modal_drop',
-                                'name' => 'Drop and fade-in lightbox from top',
-                                'class' => 'pweb-effect-modal-drop pweb-related-modal pweb-related-modal-button',
-                                'is_parent' => true
-                            ),
-                            array(
-                                'value' => 'modal_rotate',
-                                'name' => 'Move from toggler, rotate, enlarge and fade-in lightbox',
-                                'class' => 'pweb-effect-modal-rotate pweb-related-modal pweb-related-modal-button',
-                                'is_parent' => true
-                            ),
-                            array(
-                                'value' => 'modal_square',
-                                'name' => 'Move from toggler, enlarge and fade-in lightbox',
-                                'class' => 'pweb-effect-modal-square pweb-related-modal pweb-related-modal-button',
-                                'is_parent' => true
-                            ),
-                            array(
-                                'value' => 'modal_smooth',
-                                'name' => 'Move from toggler, change height and fade-in lightbox',
-                                'class' => 'pweb-effect-modal-smooth pweb-related-modal pweb-related-modal-button',
-                                'is_parent' => true
-                            ),
-                            array(
-                                'value' => 'slide_down',
-                                'name' => 'Slide-down - accordation',
-                                'class' => 'pweb-effect-slide-down pweb-related-accordion',
-                                'is_parent' => true
-                            ),
-                            array(
-                                'value' => 'none',
-                                'name' => 'No animation',
-                                'class' => 'pweb-effect-none pweb-related-static'
-                            )
-                        )
-                    )); ?>
-                </div>
-                
-                <div class="pweb-location-options" id="pweb-location-after-options">
-                    <?php echo $this->_get_field(array(
-                        'type' => 'radio',
-                        'name' => 'layout',
-                        'label' => 'How do you want to display your form after opening?',
-                        'class' => 'pweb-related',
-                        'default' => 'slidebox',
-                        'required' => true,
-                        'is_parent' => true,
-                        'options' => array(
-                            array(
-                                'value' => 'slidebox',
-                                'name' => 'Box at page edge',
-                                'class' => 'pweb-layout-slidebox pweb-related-slidebox'
-                            ),
-                            array(
-                                'value' => 'modal',
-                                'name' => 'Lightbox window',
-                                'class' => 'pweb-layout-modal pweb-related-modal pweb-related-modal-button'
-                            ),
-                            array(
-                                'value' => 'accordion',
-                                'name' => 'Accordion inside page content',
-                                'class' => 'pweb-layout-accordion pweb-related-accordion'
-                            ),
-                            array(
-                                'value' => 'static',
-                                'name' => 'Static form inside page content',
-                                'class' => 'pweb-layout-static pweb-related-static'
-                            )
-                        )
-                    )); ?>
-                </div>
-                
-                <div class="pweb-location-options" id="pweb-location-place-options">
-                    <?php echo $this->_get_field(array(
-                        'type' => 'radio',
-                        'name' => 'position',
-                        'group' => 'options',
-                        'label' => 'Where do you want to display your form?',
-                        'class' => 'pweb-related',
-                        'default' => 'footer',
-                        'required' => true,
-                        'options' => array(
-                            array(
-                                'value' => 'footer',
-                                'name' => 'On all pages',
-                                'class' => 'pweb-related-slidebox pweb-related-modal'
-                            ),
-                            array(
-                                'value' => 'shortcode',
-                                'name' => 'On selected pages with short code',
-                                'class' => 'pweb-related-slidebox pweb-related-modal pweb-related-accordion pweb-related-static pweb-related-modal-button'
-                            ),
-                            array(
-                                'value' => 'widget',
-                                'name' => 'In widget',
-                                'class' => 'pweb-related-accordion pweb-related-static pweb-related-modal-button'
-                            )
-                        )
-                    )); ?>
-                </div>
-                
-            </div>
-        </div>
-        
-        <div id="pweb-tab-fields" class="nav-tab-content pweb-clearfix">
-            tab 2
-        </div>
-        
-        <div id="pweb-tab-layout" class="nav-tab-content pweb-clearfix">
-            <?php echo $this->_get_field(array(
-                'type' => 'color',
-                'name' => 'toggler_bg',
-                'label' => 'Toggler Tab color',
-                'parent' => array('handler_tab', 'handler_button'),
-            )); ?>
-        </div>
-        
-        <div id="pweb-tab-submitted" class="nav-tab-content pweb-clearfix">
-            tab 4
-        </div>
-        
-        <div id="pweb-tab-email" class="nav-tab-content pweb-clearfix">
-            tab 5
-        </div>
-        
-    </div>
-    
-
-    <input type="hidden" name="id" value="<?php echo (int)$this->id; ?>">
-    <?php wp_nonce_field( 'save-form_'.$this->id ); ?>
-    
-</form>
-<?php
+        $this->_load_tmpl('edit');
     }
-    
-    
+
+
     protected function _get_version() {
         
         $data = get_plugin_data(dirname(__FILE__).'/pwebcontact.php');
         return $data['Version'];
     }
-    
-    
+
+
     protected function _get_field( $opt = array() ) {
         
         $opt = array_merge(array(
@@ -1217,8 +689,17 @@ jQuery(document).ready(function($){
         if ($readonly) {
             $attributes['readonly'] = 'readonly';
         }
+        
         if ($is_parent === true) {
             $attributes['class'] .= ' pweb-parent';
+        }
+        elseif (count($options)) {
+            foreach ($options as $option) {
+                if (isset($option['is_parent']) AND $option['is_parent'] === true) {
+                    $attributes['class'] .= ' pweb-parent';
+                    break;
+                }
+            }
         }
         
         
@@ -1232,7 +713,7 @@ jQuery(document).ready(function($){
                 if (!count($options)) {
                     $options = array(array(
                         'value' => '',
-                        'name' => 'Select option'
+                        'name' => '- Select option -'
                     ));
                 }
                 
@@ -1253,8 +734,13 @@ jQuery(document).ready(function($){
                         if ($item->isFile()) 
                         {
                             if (strpos($item->getFilename(), 'index.') === false AND preg_match('/'.$filter.'/i', $item->getFilename())) {
-                                $pos = strrpos($item->getFilename(), '.', 3);
-                                $file_name = substr($item->getFilename(), 0, $pos);
+                                if (isset($strip_ext) AND $strip_ext) {
+                                    $pos = strrpos($item->getFilename(), '.', 3);
+                                    $file_name = substr($item->getFilename(), 0, $pos);
+                                }
+                                else {
+                                    $file_name = $item->getFilename();
+                                }
                                 $options[] = array(
                                     'value' => $file_name,
                                     'name' => $file_name
@@ -1299,7 +785,7 @@ jQuery(document).ready(function($){
                 if (!count($options)) {
                     $options = array(array(
                         'value' => '',
-                        'name' => 'Select Administrator'
+                        'name' => '- Select Administrator -'
                     ));
                 }
                 
@@ -1308,7 +794,7 @@ jQuery(document).ready(function($){
                     foreach ($users as $user) {
                         $options[] = array(
                             'value' => $user->id,
-                            'name' => $user->display_name .'<'. $user->user_email .'>'
+                            'name' => $user->display_name .' <'. $user->user_email .'>'
                         );
                     }
                 }
@@ -1336,8 +822,10 @@ jQuery(document).ready(function($){
         switch ($type) {
             
             case 'text':
+            case 'email':
+            case 'hidden':
                 
-                $html .= '<input type="text" name="'.$field_name.'" value="'. esc_attr($value) .'"'. $this->_attr_to_str($attributes) .'>';
+                $html .= '<input type="'.$type.'" name="'.$field_name.'" value="'. esc_attr($value) .'"'. $this->_attr_to_str($attributes) .'>';
                 break;
                 
                 
@@ -1364,6 +852,9 @@ jQuery(document).ready(function($){
                     
                     if ($is_pro === false AND !isset($option['disabled']) AND in_array($name.':'.$option['value'], self::$pro[$group]) ) {
                         $option['disabled'] = true;
+                    }
+                    if (!isset($option['name'])) {
+                        $option['name'] = (string)$option['value'];
                     }
                     
                     $html .= '<option value="'.esc_attr($option['value']).'"'. selected($value, $option['value'], false) 
@@ -1410,11 +901,11 @@ jQuery(document).ready(function($){
                     $html .= '<input type="'.$type.'" name="'.$field_name.'" id="'.$option_id.'"'
                             . ' value="'.esc_attr($option['value']).'"'. checked($value, $option['value'], false) 
                             . ((isset($attributes['disabled']) OR isset($option['disabled'])) ? ' disabled="disabled"' : '') 
-                            . (($is_parent === true OR isset($option['is_parent'])) ? ' class="pweb-parent"' : '')
+                            . (($is_parent === true OR (isset($option['is_parent']) AND $option['is_parent'] === true)) ? ' class="pweb-parent"' : '')
                             . '>';
                     
                     $html .= '<label for="'.$option_id.'" id="'.$option_id.'-lbl"'
-                            . '>'. esc_html__($option['name'], 'pwebcontact') .'</label>';
+                            . '>'. __($option['name'], 'pwebcontact') .'</label>';
                     
                     $html .= '</div>';
                 }

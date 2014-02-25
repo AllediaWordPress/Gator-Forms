@@ -1,6 +1,6 @@
 /**
-* @version 3.2.0
-* @package PWebContact
+ * @version 1.0.0
+ * @package Perfect Ajax Popup Contact Form
 * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
 * @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
 * @author Piotr Moćko
@@ -14,16 +14,21 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     pwebcontact_admin.running_related = false;
     pwebcontact_admin.duration = 0;
     
-    var $tabs = $("#pweb-tabs");
+    var $tabs = $("#pweb-tabs-content"),
+        $adminBar = $("#pweb-adminbar");
+    
+    $(window).resize(function(){
+        $tabs.css("padding-top", $(this).width() < 768 ? 0 : $adminBar.height());
+    }).trigger("resize");
     
     // Initialize tooltips
     $(".pweb-has-tooltip").tooltip();
     
     // Tabs
-    $tabs.find(".nav-tab").click(function(e){
+    $("#pweb-tabs").find(".nav-tab").click(function(e){
         e.preventDefault();
 
-        $tabs.find(".nav-tab-active").removeClass("nav-tab-active");
+        $("#pweb-tabs").find(".nav-tab-active").removeClass("nav-tab-active");
         $(this).addClass("nav-tab-active");
 
         $tabs.find(".nav-tab-content-active").removeClass("nav-tab-content-active");
@@ -40,7 +45,16 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         $("#pweb-location-options .pweb-location-options").removeClass("pweb-options-active");
         $("#"+$(this).attr("id")+"-options").addClass("pweb-options-active");
 
-        var topOffset = $("#pweb-location-options").offset().top - $("#wpadminbar").height();
+        var winWidth = $(window).width(),
+            topOffset = $tabs.offset().top;
+        
+        if (winWidth > 600) {
+            topOffset = topOffset - $("#wpadminbar").height();
+            if (winWidth > 768) {
+                topOffset = 0;
+            }
+        }
+        
         if ($(window).scrollTop() > topOffset) {
             $("html,body").animate({ scrollTop: topOffset }, 500);
         }
@@ -95,7 +109,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         // change options which do not meet most relevan combination
         $relatedFields.filter(":checked").each(function(){
             if ($.inArray(selected, $(this).data("relations")) === -1) {
-                $(this).closest("fieldset").find("."+selected+" input:not(:disabled)").first().trigger("change");
+                $(this).closest("fieldset").find("."+selected+" input:not(:disabled)").first().click();
             }
         });
         
@@ -170,7 +184,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         }
         $elements.each(function(){
             var show = false,
-                // Get all parents IDs of child
+                // Get all parents IDs of child element
                 ids = $(this).data("parents");
             for (var id in ids) {
                 // Skip id if it has parent id from beginning of function
@@ -192,9 +206,12 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         });
     }
     
+    // store array of parents for each child
     $tabs.find(".pweb-child").each(function(){
         $(this).data("parents", $(this).attr("class").match(/pweb_params_[a-z_]+/g) );
-    });
+    })
+    // hide all childs on page load
+    .filter(".pweb-field").hide();
     
     // Show options for checked parent
     $tabs.find("fieldset.pweb-parent input").change(function(e){
@@ -218,6 +235,8 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     // Init fields
     $relatedFields.filter(":checked").trigger("change");
+	//TODO init parent options for fields not dependend on releated fields
+    //$tabs.find("fieldset.pweb-parent input.pweb-parent:checked").trigger("change");
     
     
     // Advanced options toggler
