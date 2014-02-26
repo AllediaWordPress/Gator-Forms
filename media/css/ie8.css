@@ -1,5 +1,5 @@
 /**
-* @version 3.2.4
+* @version 3.2.5
 * @package PWebContact
 * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
 * @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
@@ -54,6 +54,11 @@ form.pwebcontact-form input.pweb-radio {
 	margin-top: 0;
 }
 
+/* System message */
+form.pwebcontact-form .pweb-msg-button {
+	*display: inline;
+}
+
 /* Lightbox - close button */
 .pweb-modal-close {
 	*right: -5px;
@@ -61,6 +66,20 @@ form.pwebcontact-form input.pweb-radio {
 }
 .pweb-rtl .pweb-modal-close {
 	*left: -5px;
+}
+
+/* Accordion */
+.pweb-accordion.pweb-accordion-boxed .pwebcontact-container {
+ 	*position: relative;
+	*top: 15px;
+	*margin-top: 0;
+	*margin-bottom: 15px;
+}
+.pweb-accordion.pweb-accordion-boxed .pweb-arrow {
+	*top: -10px;
+}
+.pweb-accordion.pweb-accordion-boxed .pweb-button-close {
+	*top: 0;
 }
 
 /* Toggler tab */

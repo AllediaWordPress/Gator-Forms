@@ -1,5 +1,5 @@
 /**
-* @version 3.2.4
+* @version 3.2.5
 * @package PWebContact
 * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
 * @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
@@ -79,6 +79,9 @@ form.pwebcontact-form .btn {
 }
 .pweb-toggler-hidden .pwebcontact_toggler.pweb-closed {
 	
+}
+.pweb-accordion .pwebcontact_toggler {
+	width: auto;
 }
 
  /* Toggler Rounded
@@ -332,6 +335,32 @@ form.pwebcontact-form .btn {
 	right: 0;
 }
 
+ /* Container - Accordion
+  * --------------------------------------------------------------------- 
+  */
+.pweb-accordion .pwebcontact-container {
+	padding-top: 30px;
+}
+.pweb-accordion.pweb-accordion-boxed .pwebcontact-container {
+	margin-top: 15px;
+	padding: 30px 10px 10px;
+	border: 1px solid #7F7F7F;
+	border-color: rgba(0,0,0, 0.5);
+}
+.pweb-accordion.pweb-accordion-boxed .pweb-arrow {
+	position: absolute;
+	left: 25%;
+	top: 5px;
+	width: 0;
+	height: 0;
+	border-style: dashed;
+    border-width: 0 9px 10px 9px;
+	border-color: transparent;
+	border-bottom-color: #7F7F7F;
+	border-bottom-color: rgba(0,0,0, 0.5);
+	border-bottom-style: solid;
+}
+
  /* Container with slide Toggler - Slide in box
   * --------------------------------------------------------------------- 
   */
@@ -402,6 +431,14 @@ form.pwebcontact-form .btn {
 	border-radius: 10px 0 0 0;
 }
 
+ /* Container Rounded - Accordion
+  * --------------------------------------------------------------------- 
+  */
+.pwebcontact.pweb-accordion.pweb-radius .pwebcontact-container {
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
 
  /* Shadow
   * --------------------------------------------------------------------- 
@@ -446,6 +483,17 @@ form.pwebcontact-form .btn {
 	-moz-box-shadow: -3px -1px 3px rgba(0, 0, 0, 0.25);
 	-webkit-box-shadow: -3px -1px 3px rgba(0, 0, 0, 0.25);
 	box-shadow: -3px -1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.pwebcontact.pweb-accordion.pweb-shadow .pwebcontact-container {
+	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+.pwebcontact.pweb-accordion.pweb-accordion-boxed.pweb-shadow .pwebcontact-container {
+	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5), inset 0 0 4px rgba(0,0,0, 0.3);
+	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5), inset 0 0 4px rgba(0,0,0, 0.3);
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.5), inset 0 0 4px rgba(0,0,0, 0.3);
 }
 
 
@@ -496,32 +544,50 @@ body.pweb-modal-open {
 }
 
 /* Lightbox - Container Rounded */
-.pwebcontact-box.pweb-modal.pweb-radius .pwebcontact-container {
+.pwebcontact-box.pweb-modal.pweb-radius .pwebcontact-container,
+.ui-effects-transfer.pweb-genie.pweb-radius {
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 }
 /* Lightbox - Shadow */
-.pwebcontact-box.pweb-modal.pweb-shadow .pwebcontact-container {
+.pwebcontact-box.pweb-modal.pweb-shadow .pwebcontact-container,
+.ui-effects-transfer.pweb-genie.pweb-shadow {
 	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 /* Lightbox - close button */
-.pweb-modal-close {
-	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAQAAACROWYpAAAEEElEQVQ4y32Va2yTVRzGf23fd10vUNqxsY1dGIyba7BsTgiwhcRkgxHkFkJAuQzIggY0IXGYkKA4DeAQMQTIiIB+MyRAJn7hAxJRJKIRiJgQIhESZxYFEuja9f74oe1aoPh/vrx5z3nO/3qeA0+aBSvW+UaT2VBUb+91HXY3FDUUNZnzDaxYsfBcs2DDpHjqqC1ln07YU79t0oGX+mY1V3dWv1/VWVrqphgTW+EDLBjYS91tZZ/5v+34d1/sijIWv/bw2IXFy2urfKVu7BjP0q0YOCaMWVlzfF7wdJY2mLybzH4/+mpq3cxKrwcHBtanvTqrfK/X97+avCvFUn2xtjDBNJpDn8SGU1Ls+oXVTTUeL8587xYMHKN97fWnlikqnU/UDmWJWUwL/ZKQpPOvTZvg8eLI0W3Y8cyo+3hB4p50MmYLUgC24EdRSTq6rLIaD/Z06SyYuMdWvjnv4TfS+URhahpHYlLwR16gHDcmVrBSPNrXOv2LTimUrMoE3BiaO5Jz2dCmiDNIkGBRcCAuffde1WR8FGMDKy5n5cp5f34pHYqlt/tDkrQ7SpDgxNBASurLrHRFpPsXmUEFbgyw4fFM7FgQvi7NznirHQorTZ8cGkhJUm80vVIylJA0ppU6xlAEBiXj/EvWSI+TuewWhdP0xylJOhPPVeJGVNqxbdQ0xlIMprusoXnzW9LtRH5xFoUjmfHIpxL8Oiod3ed6kXE4wHRW+Od0dku/J57s7P1UmvxBNP//2ah0+CCNVOICk8qyOS3bpAeJfOpgSpISypUujZ+GpXd6HC8zPkM2Z9Vtiv0jZRvlGRrM5Lo4k/vWSHZUHsWlGW+YI+QKs7lh/Z1L0tuZLbPDuVzTpTsVT6+0haXB31hNUzbsMjMwZdWBz6XBuDOY7efWiG3kYuyOZmO6FJLOnWM5mYIZlDDd3lHVPXAt18/C2DAsBf8u2cECpqdbZcNDndHi27S5T5I2DD+POjccT0qHz9JJS3ZIrLioIGBbNu7dI6claVdB72uHI0np8lW6WUIgO55WivFRT6ttvffDQ/2SdCuyatiZR2wLXwlL0uVf6WEdrdRnL4YFEzfl+Gm3dXn2bun/67YkRZI3oscjxyM/Rx7FJenBwP6L7KWLdvy5K5kRA6qZSYety9nDiYM//HFLeXbvzsmr5kl66KKDmeSJQUaG8FJDgHbW0e3YzwnPmVe+33lz582Oy+P7OcF+ullHOwFqeEKGMgKIl2r8tLCUjWxnl7HH6KXX2GPdxXY2spQW/FTzlACOSC8eyplEgBYWsoI1rGUta1jBQloIMIlyCkhv9r2w48JLObVMwU+ARhoJ4GcKtZTjxZXL9Vm6BSsGJnYcOHFl4MSBHRMDK5b/e69yxzyNAvYf9TCL+HAwka4AAAAASUVORK5CYII%3D) no-repeat center !important;
-	display: block;
-	width: 30px !important;
-	height: 30px !important;
-	right: -15px;
-	top: -15px;
+.pweb-button-close {
 	position: absolute;
-	cursor: pointer;
-	border: none !important;
+	right: 5px;
+	top: 5px;
+	display: block;
+	width: 20px !important;
+	height: 20px !important;
+	line-height: 20px !important;
 	padding: 0 !important;
+	border: none !important;
+	cursor: pointer;
+	background: none !important;
+	overflow: hidden !important;
 	-moz-box-shadow: none !important;
 	-webkit-box-shadow: none !important;
 	box-shadow: none !important;
+	text-align: center;
+	font-size: 20px !important;
+}
+.pweb-modal .pweb-button-close {
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAQAAACROWYpAAAEEElEQVQ4y32Va2yTVRzGf23fd10vUNqxsY1dGIyba7BsTgiwhcRkgxHkFkJAuQzIggY0IXGYkKA4DeAQMQTIiIB+MyRAJn7hAxJRJKIRiJgQIhESZxYFEuja9f74oe1aoPh/vrx5z3nO/3qeA0+aBSvW+UaT2VBUb+91HXY3FDUUNZnzDaxYsfBcs2DDpHjqqC1ln07YU79t0oGX+mY1V3dWv1/VWVrqphgTW+EDLBjYS91tZZ/5v+34d1/sijIWv/bw2IXFy2urfKVu7BjP0q0YOCaMWVlzfF7wdJY2mLybzH4/+mpq3cxKrwcHBtanvTqrfK/X97+avCvFUn2xtjDBNJpDn8SGU1Ls+oXVTTUeL8587xYMHKN97fWnlikqnU/UDmWJWUwL/ZKQpPOvTZvg8eLI0W3Y8cyo+3hB4p50MmYLUgC24EdRSTq6rLIaD/Z06SyYuMdWvjnv4TfS+URhahpHYlLwR16gHDcmVrBSPNrXOv2LTimUrMoE3BiaO5Jz2dCmiDNIkGBRcCAuffde1WR8FGMDKy5n5cp5f34pHYqlt/tDkrQ7SpDgxNBASurLrHRFpPsXmUEFbgyw4fFM7FgQvi7NznirHQorTZ8cGkhJUm80vVIylJA0ppU6xlAEBiXj/EvWSI+TuewWhdP0xylJOhPPVeJGVNqxbdQ0xlIMprusoXnzW9LtRH5xFoUjmfHIpxL8Oiod3ed6kXE4wHRW+Od0dku/J57s7P1UmvxBNP//2ah0+CCNVOICk8qyOS3bpAeJfOpgSpISypUujZ+GpXd6HC8zPkM2Z9Vtiv0jZRvlGRrM5Lo4k/vWSHZUHsWlGW+YI+QKs7lh/Z1L0tuZLbPDuVzTpTsVT6+0haXB31hNUzbsMjMwZdWBz6XBuDOY7efWiG3kYuyOZmO6FJLOnWM5mYIZlDDd3lHVPXAt18/C2DAsBf8u2cECpqdbZcNDndHi27S5T5I2DD+POjccT0qHz9JJS3ZIrLioIGBbNu7dI6claVdB72uHI0np8lW6WUIgO55WivFRT6ttvffDQ/2SdCuyatiZR2wLXwlL0uVf6WEdrdRnL4YFEzfl+Gm3dXn2bun/67YkRZI3oscjxyM/Rx7FJenBwP6L7KWLdvy5K5kRA6qZSYety9nDiYM//HFLeXbvzsmr5kl66KKDmeSJQUaG8FJDgHbW0e3YzwnPmVe+33lz582Oy+P7OcF+ullHOwFqeEKGMgKIl2r8tLCUjWxnl7HH6KXX2GPdxXY2spQW/FTzlACOSC8eyplEgBYWsoI1rGUta1jBQloIMIlyCkhv9r2w48JLObVMwU+ARhoJ4GcKtZTjxZXL9Vm6BSsGJnYcOHFl4MSBHRMDK5b/e69yxzyNAvYf9TCL+HAwka4AAAAASUVORK5CYII%3D) no-repeat center !important;
+	width: 0px !important;
+	height: 0px !important;
+	right: -15px;
+	top: -15px;
+	padding: 30px 0 0 30px !important;
+}
+/* Accordion - close button */
+.pweb-accordion.pweb-accordion-boxed .pweb-button-close {
+	top: 20px;
 }
 
  /* Global form declarations
@@ -581,6 +647,10 @@ form.pwebcontact-form .pweb-msg-after {
 form.pwebcontact-form .pweb-msg-button,
 form.pwebcontact-form .pweb-msg-popup {
 	display: inline-block;
+}
+.pweb-accordion form.pwebcontact-form .pweb-msg-before {
+	margin-top: -25px;
+	margin-right: 15px;
 }
 
 /* Fields
@@ -778,7 +848,8 @@ form.pwebcontact-form .invalid a {
 	float: left;
 	width: 69.9%;
 }
-.pweb-labels-inline form.pwebcontact-form .pweb-field-checkbox .pweb-field {
+.pweb-labels-inline form.pwebcontact-form .pweb-field-checkbox .pweb-field,
+.pweb-labels-inline form.pwebcontact-form .pweb-field-buttons .pweb-field {
 	float: none;
 	width: auto !important;
 }
@@ -1085,13 +1156,17 @@ form.pwebcontact-form label .pweb-asterisk {
 	opacity: 1;
 }
 
-.pweb-init {
+.pweb-init.pweb-slidebox {
 	visibility: hidden;
+}
+.pweb-init.pweb-accordion {
+	display: none;
 }
 
 /* Clearfix
  * ---------------------------------------------------------------------
  */
+.pwebcontact-box:before, .pwebcontact-box:after,
 .pweb-fields:before, .pweb-fields:after,
 .pweb-fields-group:before, .pweb-fields-group:after,
 .pweb-field-container:before, .pweb-field-container:after,
@@ -1100,8 +1175,8 @@ form.pwebcontact-form label .pweb-asterisk {
 	display: table;
 	line-height: 0;
 }
-.pweb-fields,
-.pweb-fields:after,
+.pwebcontact-box:after,
+.pweb-fields, .pweb-fields:after,
 .pweb-fields-group:after,
 .pweb-field-container:after,
 .pweb-uploader .files > div:after {

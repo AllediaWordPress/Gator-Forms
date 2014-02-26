@@ -1,7 +1,7 @@
 /**
-* @version 3.1.4
+* @version 3.2.5
 * @package PWebContact
-* @copyright © 2013 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+* @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
 * @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
 * @author Piotr Moćko
 */
@@ -19,7 +19,8 @@
 }
 
 /* Links */
-.pweb-form-yellow form.pwebcontact-form a {
+.pweb-form-yellow form.pwebcontact-form a,
+.pweb-form-yellow .pweb-button-close {
     color: #f89406;
 	text-decoration: none;
 	background: none;
