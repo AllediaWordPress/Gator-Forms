@@ -592,7 +592,7 @@ jQuery(document).ready(function($){
         }
         
         return 
-                '<div class="pweb-field'
+                '<div class="pweb-field pweb-field-'.$type
                 .($parent ? $parent : '')
                 .($is_pro === true ? ' pweb-pro' : '')
                 .($disabled === true ? ' pweb-disabled' : '')
@@ -813,7 +813,18 @@ jQuery(document).ready(function($){
                 $type = 'text';
                 wp_enqueue_script( 'wp-color-picker' );
                 wp_enqueue_style( 'wp-color-picker' );
-                $html_after .= '<script type="text/javascript">jQuery(document).ready(function($){$("#'.$id.'").wpColorPicker()})</script>';
+                $html_after .= '<script type="text/javascript">'
+                        . 'jQuery(document).ready(function($){'
+                            . '$("#'.$id.'").wpColorPicker({'
+                                . 'change:function(e,ui){'
+                                    . '$(this).trigger("change")'
+                                . '},'
+                                . 'clear:function(e,ui){'
+                                    . '$(this).trigger("change")'
+                                . '}'
+                            . '})'
+                        . '})'
+                    . '</script>';
                 break;
         }
         

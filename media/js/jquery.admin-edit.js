@@ -232,11 +232,17 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         });
     });
     
+    var $inputFields = $tabs.find(".pweb-field-text input.pweb-parent, .pweb-field-color input.pweb-parent").change(function(e){
+        $tabs.find( "."+ $(this).attr("id") )[ $(this).val() ? "show" : "hide" ](pwebcontact_admin.duration);
+    });
+    
     
     // Init fields
-    $relatedFields.filter(":checked").trigger("change");
-	//TODO init parent options for fields not dependend on releated fields
-    //$tabs.find("fieldset.pweb-parent input.pweb-parent:checked").trigger("change");
+    $relatedFields.filter(":checked").first().trigger("change");
+	// Init parent options for fields not dependend on releated fields
+    $tabs.find("fieldset.pweb-parent").filter(":not(.pweb-related)").find("input:first").trigger("change");
+    $inputFields.trigger("change");
+    
     
     
     // Advanced options toggler
