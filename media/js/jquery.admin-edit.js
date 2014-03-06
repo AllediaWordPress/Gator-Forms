@@ -69,7 +69,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         if (pwebcontact_admin.running_related === true) return;
         
         pwebcontact_admin.running_related = true;
-        
+                
         var current_relations = $(this).data("relations"),
             relations = {
                 name: [],
@@ -157,18 +157,24 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         if (this.checked) {
             $("#pweb-location-effect .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
         }
+    }).filter(":checked").each(function(){
+        $("#pweb-location-effect .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
     });
     
     $("#pweb_params_layout input").change(function(e){
         if (this.checked) {
             $("#pweb-location-after .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
         }
+    }).filter(":checked").each(function(){
+        $("#pweb-location-after .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
     });
     
     $("#pweb_options_position input").change(function(e){
         if (this.checked) {
             $("#pweb-location-place .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
         }
+    }).filter(":checked").each(function(){
+        $("#pweb-location-place .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
     });
     
     
@@ -238,6 +244,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     
     // Init fields
+    //console.log($relatedFields.filter(":checked").first());
     $relatedFields.filter(":checked").first().trigger("change");
 	// Init parent options for fields not dependend on releated fields
     $tabs.find("fieldset.pweb-parent").filter(":not(.pweb-related)").find("input:first").trigger("change");

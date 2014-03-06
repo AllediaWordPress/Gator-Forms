@@ -137,7 +137,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'redirect_url',
             'label' => 'Redirect URL',
-            'class' => 'widefat',
+            'class' => 'widefat pweb-filter-url',
             'parent' => array('redirect_1')
         )); ?>
         
