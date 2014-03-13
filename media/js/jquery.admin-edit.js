@@ -7,7 +7,7 @@
 */
 
 var pwebcontact_l10n = pwebcontact_l10n || {},
-    pwebcontact_admin = {};
+    pwebcontact_admin = pwebcontact_admin || {};
 
 if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	
@@ -244,10 +244,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     
     // Init fields
-    //console.log($relatedFields.filter(":checked").first());
     $relatedFields.filter(":checked").first().trigger("change");
 	// Init parent options for fields not dependend on releated fields
-    $tabs.find("fieldset.pweb-parent").filter(":not(.pweb-related)").find("input:first").trigger("change");
+    $tabs.find("fieldset.pweb-parent").find("input:first").trigger("change");
     $inputFields.trigger("change");
     
     

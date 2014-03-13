@@ -316,6 +316,163 @@ label .pweb-star,
     min-width: 50px;
 }
 
+
+
+#pweb_fields .pweb-fields-container {
+    width: 60%;
+    float: left;
+}
+#pweb_fields .pweb-fields-types,
+#pweb_fields .pweb-fields-options {
+    width: 38%;
+    float: right;
+}
+#pweb_fields .pweb-fields-options {
+    display: none;
+}
+
+
+#pweb_fields .pweb-fields-row {
+    margin: 0 0 10px;
+}
+
+#pweb_fields .pweb-fields-col,
+#pweb_fields .pweb-fields-add-col,
+#pweb_fields .pweb-fields-add-row,
+#pweb_fields .pweb-fields-sort-row {
+    display: inline-block;
+    float: left;
+    padding: 0 3px;
+    min-height: 50px;
+    border: 2px dashed rgba(0,0,0, 0.1);
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    transition: border 0.4s;
+    -webkit-transition: border 0.4s;
+}
+#pweb_fields .pweb-fields-col:hover,
+#pweb_fields .pweb-fields-add-col:hover,
+#pweb_fields .pweb-fields-add-row:hover,
+#pweb_fields .pweb-fields-row.pweb-dragged .pweb-fields-col {
+    border-color: #0074A2;
+}
+
+
+#pweb_fields .pweb-fields-row.pweb-fields-cols-1 .pweb-fields-col {
+    width: 99%;
+    margin-right: 1%;
+}
+#pweb_fields .pweb-fields-row.pweb-fields-cols-2 .pweb-fields-col {
+    width: 49%;
+    margin-right: 1%;
+}
+#pweb_fields .pweb-fields-row.pweb-fields-cols-3 .pweb-fields-col {
+    width: 32%;
+    margin-right: 1.333%;
+}
+
+
+
+#pweb_fields .pweb-fields-sort-row,
+#pweb_fields .pweb-fields-add-col,
+#pweb_fields .pweb-fields-add-row,
+#pweb_fields .pweb-fields-remove-col {
+    line-height: 46px;
+    color: rgba(0,0,0, 0.1);
+    cursor: pointer;
+    text-align: center;
+}
+#pweb_fields .pweb-fields-cols {
+    display: inline-block;
+    float: left;
+    width: 84%;
+    min-height: 50px;
+}
+#pweb_fields .pweb-fields-sort-row {
+    border: 0;
+    width: 5%;
+    margin-right: 1%;
+    font-weight: bold;
+    font-size: 150%;
+    cursor: move;
+}
+#pweb_fields .pweb-fields-add-col {
+    width: 10%;
+}
+#pweb_fields .pweb-fields-remove-col {
+    width: auto;
+    float: right;
+    text-align: right;
+}
+#pweb_fields .pweb-fields-add-row {
+    width: 83%;
+    margin: 0 11% 0 6%;
+    line-height: 26px;
+    min-height: 30px;
+}
+#pweb_fields .pweb-fields-sort-row:hover,
+#pweb_fields .pweb-fields-add-col:hover,
+#pweb_fields .pweb-fields-add-row:hover,
+#pweb_fields .pweb-fields-remove-col:hover,
+#pweb_fields .pweb-fields-row.pweb-dragged .pweb-fields-sort-row {
+    color: #0074A2;
+}
+#pweb_fields .pweb-fields-row.pweb-fields-cols-3 .pweb-fields-add-col {
+    visibility: hidden;
+}
+
+
+
+#pweb_fields .pweb-fields-cols .pweb-sortable-placeholder {
+    display: inline-block;
+    float: left;
+    border: 0 solid #0074A2;
+    border-left-width: 5px;
+    width: 0;
+    height: 50px;
+    overflow: hidden;
+    margin: 0 0 0 -5px;
+}
+#pweb_fields .pweb-fields-cols .pweb-sortable-placeholder:first-child {
+    margin: 0 -5px 0 0;
+}
+
+#pweb_fields .pweb-fields-row.pweb-fields-cols-3 .pweb-sortable-placeholder,
+#pweb_fields .pweb-fields-row.pweb-fields-cols-1 .pweb-fields-cols.pweb-placeholder .pweb-sortable-placeholder,
+#pweb_fields .pweb-fields-row.pweb-fields-cols-2 .pweb-fields-cols.pweb-placeholder .pweb-sortable-placeholder,
+#pweb_fields .pweb-fields-row.pweb-fields-cols-3 .pweb-fields-cols.pweb-placeholder .pweb-sortable-placeholder {
+    border-width: 2px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#pweb_fields .pweb-fields-row.pweb-fields-cols-3 .pweb-sortable-placeholder {
+    width: 32%;
+    margin: 0 -32% 0 0;
+    position: relative;
+    z-index: 1;
+}
+#pweb_fields .pweb-fields-row.pweb-fields-cols-3 .pweb-sortable-placeholder:last-child {
+    margin: 0 0 0 -33.333%;
+}
+
+#pweb_fields .pweb-fields-row.pweb-fields-cols-1 .pweb-fields-cols.pweb-placeholder .pweb-sortable-placeholder {
+    width: 99%;
+    margin: 0 1% 0 0;
+}
+#pweb_fields .pweb-fields-row.pweb-fields-cols-2 .pweb-fields-cols.pweb-placeholder .pweb-sortable-placeholder {
+    width: 49%;
+    margin: 0 1% 0 0;
+}
+#pweb_fields .pweb-fields-row.pweb-fields-cols-3 .pweb-fields-cols.pweb-placeholder .pweb-sortable-placeholder {
+    width: 32%;
+    margin: 0 1.333% 0 0;
+}
+
+#pweb_fields .pweb-fields-cols .pweb-fields-field {
+    float: left;
+}
+
+
 .pweb-not-related {
     color: #aaa;
 }

@@ -119,7 +119,8 @@ class PWebContact_Admin {
                 
                 // load JS files
                 wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-edit.js', __FILE__), 
-                        array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-tooltip', 'jquery-ui-tabs'));
+                        array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-tooltip', 'jquery-ui-tabs', 'jquery-ui-sortable'));
+                wp_enqueue_script('pwebcontact_admin_fields_script', plugins_url('media/js/jquery.admin-fields.js', __FILE__));
             }
         }
         elseif ( $task == 'save' AND isset($_POST['id'])) {
