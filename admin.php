@@ -33,6 +33,9 @@ class PWebContact_Admin {
         ),
         'params' => array(
             
+        ),
+        'fields' => array(
+            
         )
     );
     
@@ -119,7 +122,16 @@ class PWebContact_Admin {
                 
                 // load JS files
                 wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-edit.js', __FILE__), 
-                        array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-tooltip', 'jquery-ui-tabs', 'jquery-ui-sortable'));
+                        array(
+                            'jquery', 
+                            'jquery-ui-core', 
+                            'jquery-ui-widget', 
+                            'jquery-ui-mouse', 
+                            'jquery-ui-tooltip', 
+                            'jquery-ui-sortable', 
+                            'jquery-ui-draggable', 
+                            'jquery-ui-droppable'
+                        ));
                 wp_enqueue_script('pwebcontact_admin_fields_script', plugins_url('media/js/jquery.admin-fields.js', __FILE__));
             }
         }
@@ -578,9 +590,6 @@ jQuery(document).ready(function($){
         
         extract( $opt );
         
-        if (empty($id)) {
-            $id = 'pweb_'. $group .'_'. $name;
-        }
         if ($is_pro === null) {
             $is_pro = in_array($name, self::$pro[$group]);
         }
@@ -613,6 +622,7 @@ jQuery(document).ready(function($){
         $opt = array_merge(array(
             'id' => null,
             'name' => null,
+            'index' => null,
             'group' => 'params',
             'label' => null,
             'required' => false,
@@ -622,13 +632,13 @@ jQuery(document).ready(function($){
         extract( $opt );
         
         if (empty($id)) {
-            $id = 'pweb_'. $group .'_'. $name;
+            $id = 'pweb_'. $group .'_'. ($index !== null ? $index.'_' : '') . $name;
         }
         if ($is_pro === null) {
             $is_pro = in_array($name, self::$pro[$group]);
         }
         
-        return '<label for="'.esc_attr($id).'"'. ($required ? ' class="required"' : '') .'>' . 
+        return '<label for="'.esc_attr($id).'" id="'.esc_attr($id).'-lbl"'. ($required ? ' class="required"' : '') .'>' . 
                 __($label, 'pwebcontact') . 
                 ($required ? ' <span class="pweb-star">*</span>' : '') .
                 ($is_pro === true ? ' <span class="pweb-pro">Pro</span>' : '') .
@@ -642,6 +652,7 @@ jQuery(document).ready(function($){
             'type' => 'text',
             'id' => null,
             'name' => null,
+            'index' => null,
             'group' => 'params',
             'value' => null,
             'default' => null,
@@ -661,11 +672,11 @@ jQuery(document).ready(function($){
         
         
         if (empty($id)) {
-            $id = 'pweb_'. $group .'_'. $name;
+            $id = 'pweb_'. $group .'_'. ($index !== null ? $index.'_' : '') . $name;
         }
         $attributes['id'] = $id;
         
-        $field_name = esc_attr($group.'['.$name.']');
+        $field_name = esc_attr($group. ($index !== null ? '['.$index.']' : '') . '['.$name.']');
         
         if ($is_pro === null) {
             $is_pro = in_array($name, self::$pro[$group]);

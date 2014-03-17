@@ -268,6 +268,8 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             $(this).next().slideDown(400);
             $icon.removeClass("dashicons-arrow-down").addClass("dashicons-arrow-up");
         }
+        
+        $(this).blur();
     });
     
     
