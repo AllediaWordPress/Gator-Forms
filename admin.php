@@ -453,6 +453,12 @@ jQuery(document).ready(function($){
         $this->data = new stdClass();
         $this->data->params = $this->_get_post('params');
         
+        $fields = $this->_get_post('fields');
+        ksort($fields);
+        
+        // TODO remove
+        print_r( $fields ); exit;
+        
         // Validate params
         $params = array();
         $params['debug'] = (int)$this->_get_param('debug', 0);
@@ -838,6 +844,11 @@ jQuery(document).ready(function($){
                         . '})'
                     . '</script>';
                 break;
+            
+            case 'custom':
+
+                $html .= '<div '. $this->_attr_to_str($attributes) .'>'. $content .'</div>';
+                break;
         }
         
         
@@ -946,5 +957,20 @@ jQuery(document).ready(function($){
             $attr .= ' '.$name.'="'.esc_attr($value).'"';
         }
         return $attr;
+    }
+    
+    private function _convert_size($str)
+    {
+        $val = trim($str);
+        $last = strtolower($str[strlen($str)-1]);
+        switch($last) 
+		{
+            case 'g': $val *= 1024;
+            case 'm': $val *= 1024;
+            case 'k': $val *= 1024;
+        }
+		$val = $val / 1024 / 1024;
+		
+        return $val > 10 ? intval($val) : round($val, 2);
     }
 }

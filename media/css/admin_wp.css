@@ -344,7 +344,7 @@ label .pweb-star,
     float: left;
     padding: 0 3px;
     min-height: 50px;
-    border: 2px dashed rgba(0,0,0, 0.1);
+    border: 2px dashed rgba(0,0,0, 0.2);
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     transition: border 0.4s;
@@ -356,7 +356,12 @@ label .pweb-star,
 #pweb_fields .pweb-fields-row.pweb-dragged .pweb-fields-col {
     border-color: #0074A2;
 }
-
+#pweb_fields .pweb-fields-col {
+    cursor: move;
+}
+#pweb_fields .pweb-fields-col .pweb-custom-field-container {
+    cursor: default;
+}
 
 #pweb_fields .pweb-fields-row.pweb-fields-cols-1 .pweb-fields-col {
     width: 99%;
@@ -378,7 +383,7 @@ label .pweb-star,
 #pweb_fields .pweb-fields-add-row,
 #pweb_fields .pweb-fields-remove-col {
     line-height: 46px;
-    color: rgba(0,0,0, 0.1);
+    color: rgba(0,0,0, 0.2);
     cursor: pointer;
     text-align: center;
 }
@@ -416,6 +421,20 @@ label .pweb-star,
 #pweb_fields .pweb-fields-remove-col:hover,
 #pweb_fields .pweb-fields-row.pweb-dragged .pweb-fields-sort-row {
     color: #0074A2;
+}
+#pweb_fields .pweb-has-field .pweb-fields-remove-col {
+    color: rgba(255,255,255, 0.4);
+}
+#pweb_fields .pweb-has-field {
+    color: #000;
+    background-color: #78B2C9;
+    background-color: rgba(0,116,162, 0.5);
+    border-style: solid;
+}
+#pweb_fields .pweb-has-field .pweb-fields-remove-col:hover,
+#pweb_fields .pweb-has-field a,
+#pweb_fields .pweb-has-field a:hover {
+    color: #fff;
 }
 #pweb_fields .pweb-fields-row.pweb-fields-cols-3 .pweb-fields-add-col {
     visibility: hidden;
@@ -492,9 +511,7 @@ label .pweb-star,
     float: left;
     padding: 10px;
     margin: 10px;
-    background: #009E0A;
     color: #f4f4f4;
-    background: #009E0A;
     border: 1px solid rgba(0,0,0, 0.3);
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -508,34 +525,73 @@ label .pweb-star,
     color: #fff;
     border-color: rgba(0,0,0, 0.8);
 }
+#pweb_field_type_email,
+#pweb_field_type_name,
+#pweb_field_type_phone,
+#pweb_field_type_subject,
+#pweb_field_type_text,
+#pweb_field_type_textarea,
+#pweb_field_type_date,
+#pweb_field_type_password {
+    background-color: #2EA2CC;
+}
+#pweb_field_type_radio,
+#pweb_field_type_checkboxes,
+#pweb_field_type_select,
+#pweb_field_type_multiple {
+    background-color: #1FAD45;
+}
+#pweb_field_type_separator_text,
+#pweb_field_type_separator_header {
+    background-color: #CCAF0B;
+}
+#pweb_field_type_checkbox,
+#pweb_field_type_email_copy {
+    background-color: #D46F15;
+}
+#pweb_field_type_upload,
+#pweb_field_type_captcha,
+#pweb_field_type_mailto_list {
+    background-color: #523F6D;
+}
+#pweb_field_type_send_button {
+    background-color: #CF4944;
+}
 
 #pweb_fields_options_close {
     text-decoration: none;
     float: right;
     font-size: 30px;
 }
-#pweb_fields_options_content h3 {
-    margin-top: 0;
-}
 
-
-#pweb_fields .pweb-has-field {
-    background-color: #009E0A;
+#pweb_fields .pweb-has-field.pweb-custom-field-active {
+    background-color: #308DB2;
+    background-color: rgba(0,116,162, 0.8);
 }
 #pweb_fields .pweb-droppable,
 #pweb_fields .pweb-droppable.pweb-has-field {
-    background-color: #0e90d2;
+    background-color: #C1D8E1;
+    background-color: rgba(0,116,162, 0.2);
+}
+#pweb_fields .pweb-fields-add-row.pweb-droppable,
+#pweb_fields .pweb-fields-add-col.pweb-droppable {
+    color: #0074A2;
 }
 #pweb_fields .pweb-droppable-hover,
 #pweb_fields .pweb-droppable-hover.pweb-has-field {
-    background-color: #002a80;
+    background-color: #308DB2;
+    background-color: rgba(0,116,162, 0.8);
+}
+#pweb_fields .pweb-fields-add-row.pweb-droppable-hover,
+#pweb_fields .pweb-fields-add-col.pweb-droppable-hover {
+    color: #fff;
 }
 
 
-#pweb_fields .pweb-not-related {
+.pweb-not-related {
     color: #aaa;
 }
-#pweb_fields .pweb-not-related:hover {
+.pweb-not-related:hover {
     color: #444;
 }
 

@@ -175,17 +175,6 @@ function_exists('add_action') or die;
     <div class="pweb-advanced-options-content">
         
         <?php echo $this->_get_field(array(
-            'type' => 'textarea',
-            'name' => 'email_to_list',
-            'label' => 'Email to list',
-            'class' => 'pweb-filter-email',
-            'attributes' => array(
-                'rows' => 5,
-                'cols' => 30
-            )
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'email_from',
             'label' => 'Sender email',

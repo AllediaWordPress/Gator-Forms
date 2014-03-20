@@ -11,7 +11,7 @@
 function_exists('add_action') or die;
 
 ?>
-<form name="edit" method="post" action="<?php echo esc_attr(admin_url( 'admin.php?page=pwebcontact&task=save' )); ?>">
+<form name="edit" method="post" action="<?php echo esc_attr(admin_url( 'admin.php?page=pwebcontact&task=save' )); ?>" id="pweb_form">
     
     <div id="pweb-adminbar">
         
@@ -28,6 +28,11 @@ function_exists('add_action') or die;
             </button>
 
             <span class="pweb-save-status"></span>
+            
+            <!-- TODO remove -->
+            <a class="button right" href="http://app.uxpin.com/42eb90189d3a45c7f37cb0b0aabfd519b04c5d3c/" target="_blank">
+                UXPin
+            </a>
 
             <a class="button button-primary right" id="pweb-buy-button" href="<?php echo $this->buy_support_url; ?>" target="_blank">
                 <i class="icomoon-cart"></i> <?php _e( 'Buy Pro', 'pwebcontact' ); ?>
