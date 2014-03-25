@@ -17,6 +17,8 @@ function_exists('add_action') or die;
         
         <div class="pweb-toolbar pweb-clearfix">
             <h2><?php _e( 'Edit' ); ?></h2>
+            
+            <?php $this->_display_messages(); ?>
 
             <input type="text" name="title" value="<?php echo esc_attr($this->data->title); ?>" placeholder="<?php esc_attr_e( 'Form name', 'pwebcontact' ); ?>">
 
@@ -27,7 +29,7 @@ function_exists('add_action') or die;
                 <i class="icomoon-close"></i> <span><?php _e( 'Close' ); ?></span>
             </button>
 
-            <span class="pweb-save-status"></span>
+            <span id="pweb-save-status"></span>
             
             <!-- TODO remove -->
             <a class="button right" href="http://app.uxpin.com/42eb90189d3a45c7f37cb0b0aabfd519b04c5d3c/" target="_blank">
@@ -44,38 +46,38 @@ function_exists('add_action') or die;
         </div>
 
         <h2 class="nav-tab-wrapper" id="pweb-tabs">
-            <a href="#pweb-tab-location" class="nav-tab nav-tab-active"><?php esc_html_e( 'Location & Effects', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-fields" class="nav-tab"><?php esc_html_e( 'Fields', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-layout" class="nav-tab"><?php esc_html_e( 'Layout', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-submitted" class="nav-tab"><?php esc_html_e( 'After submitting', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-email" class="nav-tab"><?php esc_html_e( 'Email settings', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-advanced" class="nav-tab"><?php esc_html_e( 'Advanced', 'pwebcontact' ); ?></a>
+            <a href="#pweb-tab-location" id="pweb-tab-location" class="nav-tab nav-tab-active"><?php esc_html_e( 'Location & Effects', 'pwebcontact' ); ?></a>
+            <a href="#pweb-tab-fields" id="pweb-tab-fields" class="nav-tab"><?php esc_html_e( 'Fields', 'pwebcontact' ); ?></a>
+            <a href="#pweb-tab-layout" id="pweb-tab-layout" class="nav-tab"><?php esc_html_e( 'Layout', 'pwebcontact' ); ?></a>
+            <a href="#pweb-tab-submitted" id="pweb-tab-submitted" class="nav-tab"><?php esc_html_e( 'After submitting', 'pwebcontact' ); ?></a>
+            <a href="#pweb-tab-email" id="pweb-tab-email" class="nav-tab"><?php esc_html_e( 'Email settings', 'pwebcontact' ); ?></a>
+            <a href="#pweb-tab-advanced" id="pweb-tab-advanced" class="nav-tab"><?php esc_html_e( 'Advanced', 'pwebcontact' ); ?></a>
         </h2>
     </div>
     
     <div id="pweb-tabs-content">
         
-        <div id="pweb-tab-location" class="nav-tab-content nav-tab-content-active pweb-clearfix">
+        <div id="pweb-tab-location-content" class="nav-tab-content nav-tab-content-active pweb-clearfix">
             <?php $this->_load_tmpl('location', __FILE__); ?>
         </div>
         
-        <div id="pweb-tab-fields" class="nav-tab-content pweb-clearfix">
+        <div id="pweb-tab-fields-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('fields', __FILE__); ?>
         </div>
         
-        <div id="pweb-tab-layout" class="nav-tab-content pweb-clearfix">
+        <div id="pweb-tab-layout-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('layout', __FILE__); ?>
         </div>
         
-        <div id="pweb-tab-submitted" class="nav-tab-content pweb-clearfix">
+        <div id="pweb-tab-submitted-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('submitted', __FILE__); ?>
         </div>
         
-        <div id="pweb-tab-email" class="nav-tab-content pweb-clearfix">
+        <div id="pweb-tab-email-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('email', __FILE__); ?>
         </div>
         
-        <div id="pweb-tab-advanced" class="nav-tab-content pweb-clearfix">
+        <div id="pweb-tab-advanced-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('advanced', __FILE__); ?>
         </div>
     </div>

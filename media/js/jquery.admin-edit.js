@@ -27,13 +27,19 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     // Tabs
     $("#pweb-tabs").find(".nav-tab").click(function(e){
         e.preventDefault();
+        document.location.hash = $(this).attr("href");
 
         $("#pweb-tabs").find(".nav-tab-active").removeClass("nav-tab-active");
         $(this).addClass("nav-tab-active");
 
         $tabs.find(".nav-tab-content-active").removeClass("nav-tab-content-active");
-        $($(this).attr("href")).addClass("nav-tab-content-active");
+        $($(this).attr("href")+"-content").addClass("nav-tab-content-active");
     });
+    
+    // Open last active tab
+    if (document.location.hash) {
+        $(document.location.hash).click();
+    }
     
     // Location tabs
     $("#pweb-location-steps .pweb-location-step-tab").click(function(e){
@@ -169,7 +175,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         $("#pweb-location-after .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
     });
     
-    $("#pweb_options_position input").change(function(e){
+    $("#pweb_params_position input").change(function(e){
         if (this.checked) {
             $("#pweb-location-place .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
         }
@@ -272,14 +278,6 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         $(this).blur();
     });
     
-    
-    
-    
-	// show/hide description
-	$('.pweb-colapse a').click(function(e) {
-		e.preventDefault();
-		$(this).parent().find('.pweb-content').toggleClass('hide');
-	});
 	
 	// validate single email
 	$('.pweb-filter-email').on('change', function() {
@@ -384,90 +382,10 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	$('.pweb-filter-ext').on('change', function(){
 		this.value = this.value.toLowerCase().replace(/[^a-z0-9|?]+/g, '');
 	});
-	
-	// Warn about limited display of contact form
-	$('.pweb-component-view').click(function(){
-		if (this.value == 2)
-			alert(Joomla.JText._('MOD_PWEBCONTACT_INTEGRATION_COMPONENT_VIEW'));
-	});
-	
-	// Email HTML template preview 
-	$('.pweb-email-preview').each(function(){
-		$('<a>', {
-			href: '#',
-			html: '<i class="icon-eye"></i> '+Joomla.JText._('MOD_PWEBCONTACT_PREVIEW_BUTTON'),
-			'class': 'pweb-email-preview-button'
-		}).click(function(e) {
-			e.preventDefault();
-			
-			var tmpl = $(this).parent().find('select').val();
-			Joomla.popupWindow('../media/mod_pwebcontact/email_tmpl/'+tmpl+'.html', 'Preview', 700, 500, 1);
-			
-		}).appendTo($(this).parent());
-	});
-	
-	// Add copy button to Analytics sample codes
-	$('.pweb-analytics-code code').each(function(){
-		$('<a>', {
-			href: '#',
-			html: '<i class="icon-copy"></i> '+Joomla.JText._('MOD_PWEBCONTACT_COPY_BUTTON'),
-			'class': 'pweb-copy-code-button'
-		}).click(function(e) {
-			e.preventDefault();
-			
-			var code = $(this).prev().html(),
-				field = $('#jform_params_oncomplete'),
-				old_code = field.val(),
-				pos = field.offset().top,
-				maxPos = pos + field.outerHeight() - $(window).height();
-			field.val((old_code ? old_code+'\r\n' : '') + code);
-			if (pos > maxPos) pos = maxPos;
-			$('html, body').animate({ scrollTop: pos }, 500);
-		
-		}).insertAfter($(this));
-	});
-	
-	// Set module position
-	$('.pweb-set-position').click(function(e){
-		e.preventDefault();
-		
-		var $jform_position = $('#jform_position'),
-			value = $(this).data('position');
-		if ($jform_position.val() != value)
-		{
-			$jform_position.val(value);
-			if ($jform_position.val() != value
-				&& typeof $.fn.chosen === 'function' 
-				&& $jform_position.prop('tagName').toLowerCase() == 'select' 
-			) {
-				var Chosen = $jform_position.data('chosen'),
-					group = Chosen.add_unique_custom_group(),
-	        		option = $('<option value="' + value + '">' + value + '</option>');
-	        	$jform_position.append( group.append(option) )
-	        		.val(value)
-	        		.trigger('chosen:updated')
-	        		.trigger('liszt:updated');
-			}
-		}
-		
-		alert(Joomla.JText._('MOD_PWEBCONTACT_POSITION_SET'));
-	});
-	
-	// Assign module to all menu items
-	$('.pweb-menuitems-all').click(function(e){
-		e.preventDefault();
-		
-		$('#jform_assignment').val(0).trigger('change');
-		if (typeof document.id === 'function')
-			document.id('jform_assignment').fireEvent('change');
-		
-		if (typeof $.fn.chosen === 'function') {
-			$('#jform_assignment').trigger('chosen:updated').trigger('liszt:updated');
-		}
-		
-		alert(Joomla.JText._('MOD_PWEBCONTACT_ASSIGNED_TO_ALL_MENU_ITEMS'));
-	});
     
     // Set duration of showing/hiding options
     setTimeout(function(){ pwebcontact_admin.duration = 400; }, 600);
+    
+    setTimeout(function(){ $("#wpbody").find(".updated, .error").hide(); }, 3000);
+    
 });

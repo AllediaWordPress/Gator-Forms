@@ -15,9 +15,26 @@ function_exists('add_action') or die;
 	
 	<?php echo $this->_get_field_control(array(
         'type' => 'hidden',
-        'name' => 'fields'
+        'name' => 'fields',
+        'value' => json_encode( $this->_get_param('fields', array()) )
     )); ?>
-	
+    
+    <?php echo $this->_get_field(array(
+        'type' => 'select',
+        'group' => 'load',
+        'name' => 'fields',
+        'label' => 'Choose predefined fields',
+        'options' => array(
+            array(
+                'name' => '- Select -',
+                'value' => ''
+            ),
+            array(
+                'name' => 'Contact form',
+                'value' => '{"1":{"type":"row"},"2":{"type":"name","label":"Name","tooltip":"","required":"0","alias":"name","values":"","validation":""},"3":{"type":"row"},"4":{"type":"email","label":"Email","tooltip":"","required":"1","alias":"email","values":""},"5":{"type":"row"},"6":{"type":"phone","label":"Phone","tooltip":"","required":"0","alias":"phone","values":"","validation":"\/[\\\\d-+() ]+\/"},"7":{"type":"row"},"8":{"type":"textarea","label":"Message","tooltip":"","required":"1","alias":"message","values":"","rows":"","limit":""},"9":{"type":"row"},"10":{"type":"email_copy"},"11":{"type":"row"},"12":{"type":"button_send"}}'
+            )
+        )
+    )); ?>
     
     
     <div class="pweb-fields-container">
@@ -42,7 +59,7 @@ function_exists('add_action') or die;
             <?php _e('Email', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Email', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -110,6 +127,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -134,7 +152,7 @@ function_exists('add_action') or die;
             <?php _e('Name', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Name', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -202,6 +220,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -235,7 +254,7 @@ function_exists('add_action') or die;
             <?php _e('Phone', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Phone', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -303,6 +322,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -337,7 +357,7 @@ function_exists('add_action') or die;
             <?php _e('Subject', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Subject', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -405,6 +425,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -438,7 +459,7 @@ function_exists('add_action') or die;
             <?php _e('Text input', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Text input', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -506,6 +527,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -539,7 +561,7 @@ function_exists('add_action') or die;
             <?php _e('Multi-line textarea input', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Multi-line textarea input', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -607,6 +629,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -649,7 +672,7 @@ function_exists('add_action') or die;
             <?php _e('Date picker', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Date picker', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -717,6 +740,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -751,7 +775,7 @@ function_exists('add_action') or die;
             <?php _e('Radio group', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Radio group', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -828,6 +852,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -852,7 +877,7 @@ function_exists('add_action') or die;
             <?php _e('Checkboxes group', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Checkboxes group', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -929,6 +954,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -953,7 +979,7 @@ function_exists('add_action') or die;
             <?php _e('Single checkbox', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Single checkbox', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -1021,6 +1047,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -1060,7 +1087,7 @@ function_exists('add_action') or die;
             <?php _e('Select list', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Select list', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -1137,6 +1164,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -1161,7 +1189,7 @@ function_exists('add_action') or die;
             <?php _e('Multiple select list', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Multiple select list', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -1238,6 +1266,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -1263,7 +1292,7 @@ function_exists('add_action') or die;
             <?php _e('Password', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Password', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -1331,6 +1360,7 @@ function_exists('add_action') or die;
                                 'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
                             
@@ -1364,7 +1394,7 @@ function_exists('add_action') or die;
             <?php _e('Custom text/html', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Custom text/html', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -1404,7 +1434,7 @@ function_exists('add_action') or die;
             <?php _e('Header', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Header', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -1444,7 +1474,7 @@ function_exists('add_action') or die;
             <?php _e('Upload', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Upload', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -1475,7 +1505,7 @@ function_exists('add_action') or die;
             <?php _e('List of recipients', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('List of recipients', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -1506,7 +1536,7 @@ function_exists('add_action') or die;
             <?php _e('Send copy to yourself', 'pwebcontact'); ?>
             <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Field type', 'pwebcontact'); ?> <span><?php _e('Send copy to yourself', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
@@ -1514,7 +1544,7 @@ function_exists('add_action') or die;
                     <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
                 </div>
                 <div class="pweb-custom-field-label">
-                    <?php _e('Field label', 'pwebcontact'); ?> <span></span>
+                    <?php _e('Field label', 'pwebcontact'); ?> <span><?php _e('Send copy to yourself', 'pwebcontact'); ?></span>
                 </div>
                 
                 <div class="pweb-custom-field-options">
@@ -1532,18 +1562,18 @@ function_exists('add_action') or die;
         </div>
         
         
-        <?php $field_type = 'send_button'; ?>
+        <?php $field_type = 'button_send'; ?>
         <div class="pweb-custom-fields-type pweb-custom-fields-single" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Send button', 'pwebcontact'); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single pweb-custom-field-type-<?php echo $field_type; ?>">
                 <div class="pweb-custom-field-type">
                     <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Show options', 'pwebcontact'); ?>">
                         <?php _e('Button type', 'pwebcontact'); ?> <span><?php _e('Send', 'pwebcontact'); ?></span> <i class="dashicons dashicons-admin-generic"></i>
                     </a>
                 </div>
                 <div class="pweb-custom-field-label">
-                    <?php _e('Button label', 'pwebcontact'); ?> <span></span>
+                    <?php _e('Button label', 'pwebcontact'); ?> <span><?php _e('Send', 'pwebcontact'); ?></span>
                 </div>
                 
                 <div class="pweb-custom-field-options">
@@ -1716,7 +1746,7 @@ function_exists('add_action') or die;
         </div>
         
         
-        <div id="pweb_fields_options_content_send_button" class="pweb-fields-options-content">
+        <div id="pweb_fields_options_content_button_send" class="pweb-fields-options-content">
             
             <?php echo $this->_get_field(array(
                 'type' => 'text',

@@ -18,6 +18,8 @@ function_exists('add_action') or die;
 
 <h2><?php _e('Perfect Ajax Popup Contact Form', 'pwebcontact'); ?></h2>
 
+<?php $this->_display_messages(); ?>
+
 <p><?php esc_html_e( 'TODO description', 'pwebcontact' ); ?></p>
 
 <?php if ($this->can_edit) : ?>

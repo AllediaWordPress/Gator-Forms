@@ -28,9 +28,7 @@ class PWebContact_Admin {
     protected $buy_support_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
     
     protected static $pro = array(
-        'options' => array(
-            
-        ),
+        'load' => array(),
         'params' => array(
             
         ),
@@ -133,6 +131,8 @@ class PWebContact_Admin {
                             'jquery-ui-droppable'
                         ));
                 wp_enqueue_script('pwebcontact_admin_fields_script', plugins_url('media/js/jquery.admin-fields.js', __FILE__));
+                
+                //TODO load JavaScript translations
             }
         }
         elseif ( $task == 'save' AND isset($_POST['id'])) {
@@ -348,8 +348,16 @@ jQuery(document).ready(function($){
             }
             else {
                 $this->data->params = json_decode($this->data->params, true);
+                $this->data->params['position'] = $this->data->position;
+                $this->data->params['layout'] = $this->data->layout;
             }
         }
+    }
+    
+    
+    protected function _set_param($key = null, $value = null) {
+        
+        $this->data->params[$key] = $value;
     }
     
     
@@ -451,26 +459,62 @@ jQuery(document).ready(function($){
         
         // Get params from request
         $this->data = new stdClass();
-        $this->data->params = $this->_get_post('params');
+        $this->data->params = $this->_get_post('params', array());
         
-        $fields = $this->_get_post('fields');
-        ksort($fields);
-        
-        // TODO remove
-        print_r( $fields ); exit;
+        $params =& $this->data->params;
         
         // Validate params
-        $params = array();
-        $params['debug'] = (int)$this->_get_param('debug', 0);
-
+        // Int
+        /*
+        zindex
+        labels_width
+        toggler_width
+        toggler_height
+        toggler_font_size
+        msg_close_delay
+        open_delay
+        open_count
+        cookie_lifetime
+        close_delay
+        effect_duration*/
+        
+        // Unit
+        /*
+        offset
+        bg_padding
+        form_width*/
+        
+        // URL
+        /*
+        redirect_url*/
+        
+        // Single email
+        /*
+        email_from
+        email_replyto*/
+        
+        // Emails
+        /*
+        email_to
+        email_bcc*/
+        
+        $fields = $this->_get_post('fields', array());
+        ksort($fields);
+        $params['fields'] = $fields;
+        
+        $position = $this->_get_param('position');
+        $layout = $this->_get_param('layout');
+        
+        unset($params['position'], $params['layout']);
+        
         // Update data
         return false !== $wpdb->update($wpdb->prefix.'pwebcontact_forms', array(
                     'title' => $this->_get_post('title'),
-                    'publish' => $this->_get_post('publish', 1),
-                    'position' => $this->_get_post('position'),
-                    'layout' => $this->_get_post('layout'),
+                    //'publish' => $this->_get_post('publish', 1),
+                    'position' => $position,
+                    'layout' => $layout,
                     'params' => json_encode($params)
-                ), array('id' => $this->id), array('%s', '%d', '%s', '%s', '%s'));
+                ), array('id' => $this->id), array('%s', /*'%d',*/ '%s', '%s', '%s'));
     }
     
     
@@ -495,8 +539,6 @@ jQuery(document).ready(function($){
 
 ?>
 <div class="wrap pweb-wrap pweb-view-<?php echo $this->view; ?>">
-    
-    <?php $this->_display_messages(); ?>
     
     <?php 
     if ($this->view == 'list') : 
@@ -720,6 +762,9 @@ jQuery(document).ready(function($){
             }
         }
         
+        if ($value === null AND $group === 'params') {
+            $value = $this->_get_param($name, $default);
+        }
         
         // extend HTML fields with custom types
         switch ($type) {

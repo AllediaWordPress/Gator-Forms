@@ -110,6 +110,9 @@ label .pweb-star,
     }
 }
 
+#pweb-adminbar {
+    overflow: hidden;
+}
 .pweb-toolbar h2 {
     display: inline;
 }
@@ -121,6 +124,25 @@ label .pweb-star,
 }
 .pweb-toolbar input {
     margin: 0 1px;
+}
+#pweb-save-status {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 29px;
+    padding: 0 0 0 10px;
+    color: #999;
+}
+#pweb-save-status.pweb-saving {
+    padding-right: 20px;
+    background: url(../../../../../wp-includes/images/wpspin.gif) 100% 50% no-repeat;
+}
+#wpbody div.updated,
+#wpbody div.error {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .nav-tab-content {
@@ -554,7 +576,7 @@ label .pweb-star,
 #pweb_field_type_mailto_list {
     background-color: #523F6D;
 }
-#pweb_field_type_send_button {
+#pweb_field_type_button_send {
     background-color: #CF4944;
 }
 

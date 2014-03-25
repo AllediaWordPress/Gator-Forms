@@ -26,6 +26,8 @@ function_exists('add_action') or die;
         <i class="icomoon-support"></i> <?php _e( 'Documentation' ); ?></a>
 </h2>
 
+<?php $this->_display_messages(); ?>
+
 <div class="theme-browser pweb-panels pweb-clearfix">
 <div class="themes">
 

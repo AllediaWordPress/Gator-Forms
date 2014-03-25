@@ -15,7 +15,6 @@ function_exists('add_action') or die;
 <?php echo $this->_get_field(array(
     'type' => 'radio',
     'name' => 'position',
-    'group' => 'options',
     'label' => 'Where do you want to display your form?',
     'class' => 'pweb-related',
     'default' => 'footer',

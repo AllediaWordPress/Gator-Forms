@@ -12,13 +12,16 @@ var pwebcontact_l10n = pwebcontact_l10n || {},
 if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     pwebcontact_admin.item_index = 0;
-    pwebcontact_admin.counter = 0; //TODO load counter when loading fields
+    pwebcontact_admin.counter = 0;
     pwebcontact_admin.confirm = true;
     
-    $("#pweb-tabs .nav-tab").get(1).click(); //TODO remove
     
-    // prepare fields before save
-    $("#pweb_form").on("submit", function(){
+    // save
+    $("#pweb_form").on("submit", function(e){
+        
+        e.preventDefault();
+        
+        $("#pweb-save-button").get(0).disabled = true;
         
         // close options
         $("#pweb_fields_options_close").click();
@@ -30,11 +33,43 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 last = $(this).data("index");
                 counter++;
             }
-            //console.log($(this).attr("name"), $(this).attr("name").replace("["+last+"]", "["+counter+"]"), $(this).val()); //TODO remove
             $(this).attr( "name", $(this).attr("name").replace("["+last+"]", "["+counter+"]") );
             
+            // generate alias for email template
+            if ($(this).hasClass("pweb-custom-field-alias") && !$(this).val()) {
+                var $alias = $(this).closest(".pweb-custom-field-options").find("input.pweb-custom-field-label-input");
+                if ($alias.length) {
+                    var alias = $alias.val().replace(/[^a-z0-9\_]+/gi, '').toLowerCase();
+                    $(this).val( alias ? alias : "field_"+counter );
+                }
+            }
         });
-        //return false;
+        
+        // save with ajax
+        $.ajax({
+			url: $(this).attr("action")+"&ajax=1",
+			type: "post", 
+			dataType: "json",
+            data: $(this).serialize(),
+            beforeSend: function() {
+                $("#pweb-save-status").addClass("pweb-saving").text("Saving..."); //TODO translation
+            }
+		}).always(function(){
+            $("#pweb-save-button").get(0).disabled = false;
+            $("#pweb-save-status").removeClass("pweb-saving")
+            
+        }).done(function(response, textStatus, jqXHR) {
+			if (response && typeof response.success === "boolean") 
+			{
+                $("#pweb-save-status").text(
+                        response.success === true ? "Saved on "+(new Date()).toLocaleTimeString() : "Error"); //TODO translation
+			}
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+            $("#pweb-save-status").text("Request error");
+            alert("Request error. "+ jqXHR.status +" "+ errorThrown); //TODO translation
+		});
+        
+        return false;
     });
     
     
@@ -62,9 +97,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         
         var $row = $('<div class="pweb-fields-row pweb-clearfix">'
                         +'<input type="hidden" name="fields['+pwebcontact_admin.counter+'][type]" value="row" data-index="'+pwebcontact_admin.counter+'">'
-                        +'<div class="pweb-fields-sort-row pweb-has-tooltip" title="Drag to change order of rows">&varr;</div>'
+                        +'<div class="pweb-fields-sort-row pweb-has-tooltip" title="Drag to change order of rows">&varr;</div>' //TODO translation
                         +'<div class="pweb-fields-cols"></div>'
-                        +'<div class="pweb-fields-add-col pweb-has-tooltip" title="Add column"><i class="icomoon-plus"></i></div>'
+                        +'<div class="pweb-fields-add-col pweb-has-tooltip" title="Add column"><i class="icomoon-plus"></i></div>' //TODO translation
                     +'</div>');
         
         $row.data("cols", 0)
@@ -154,7 +189,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 // create new column
                 var $col = $('<div class="pweb-fields-col">'
                                 +'<input type="hidden" name="fields['+pwebcontact_admin.counter+'][type]" value="column" data-index="'+pwebcontact_admin.counter+'">'
-                                +'<div class="pweb-fields-remove-col pweb-has-tooltip" title="Remove"><i class="icomoon-close"></i></div>'
+                                +'<div class="pweb-fields-remove-col pweb-has-tooltip" title="Remove"><i class="icomoon-close"></i></div>' //TODO translation
                             +'</div>');
                 
                 // insert field by droping field type on column
@@ -177,7 +212,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 $col.find(".pweb-fields-remove-col").click(function(){
                     if ($col.hasClass("pweb-has-field")) {
                         // remove field
-                        if (pwebcontact_admin.confirm === false || confirm("Are you sure you want to remove this field?")) {
+                        if (pwebcontact_admin.confirm === false || confirm("Are you sure you want to remove this field?")) { //TODO translation
                             // check if field options are opened
                             var $field = $col.find(".pweb-custom-field-container");
                             if ($("#pweb_fields_options").data("parent") === $field.attr("id")) {
@@ -251,16 +286,12 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
     
     
-    $("#pweb_fields_add_row").trigger("click"); //TODO remove
-    $("#pweb_fields_add_row").trigger("click"); //TODO remove
-    $("#pweb_fields_add_row").trigger("click"); //TODO remove
-    
-    
     // Drag field types to insert field into column
     $("#pweb_fields_types .pweb-custom-fields-type").draggable({
         scope: "pweb_field_type",
         revert: true
     });
+    
     
     // Display field label on sort list
     $("#pweb_fields_types .pweb-custom-field-label-input").change(function(){
@@ -268,6 +299,19 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             .find(".pweb-custom-field-label span")
             .text( $(this).val() );
     });
+    
+    $("#pweb_params_upload_label").change(function(){
+        $("#pweb_fields_rows").find(".pweb-custom-field-type-upload")
+            .find(".pweb-custom-field-label span")
+            .text( $(this).val() );
+    });
+    
+    $("#pweb_params_button_send").change(function(){
+        $("#pweb_fields_rows").find(".pweb-custom-field-type-button_send")
+            .find(".pweb-custom-field-label span")
+            .text( $(this).val() );
+    });
+    
     
     // Display option of single field
     $("#pweb_fields_types .pweb-custom-field-show-options").click(function(e){
@@ -306,9 +350,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         $(this).blur();
     });
     
-    //TODO generate alias for email template
-    
-    function dropField(source, target) {
+    function dropField(source, target, show_options) {
         
         // get index of current column
         var inputIndex = target.find("input"),
@@ -328,6 +370,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         });
         $field.find("fieldset").each(function(){
             this.disabled = false;
+            $(this).attr("id", $(this).attr("id").replace(/_X_/g, "_"+index+"_") )
         });
         $field.find("label").each(function(){
             $(this)
@@ -340,14 +383,102 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         target.droppable("disable").addClass("pweb-has-field").prepend($field);
 
         // Display field options
-        $field.find(".pweb-custom-field-show-options").click();
+        if (typeof show_options === "undefined" || show_options !== false) {
+            $field.find(".pweb-custom-field-show-options").click();
+        }
         
         // Hide field on fields types list if only one instance is allowed
         if (source.hasClass("pweb-custom-fields-single")) {
             source.hide();
         }
+        
+        return $field;
     }
     
+    function loadFields(fields, parse) {
+        
+        var $row = null, $cols = null, $addCol = null, rowCreated = false;
+        
+        if (typeof parse === "undefined" || parse !== false) {
+            fields = $.parseJSON( fields );
+        }
+        
+        $.each(fields, function(i, field) {
+
+            if (field.type === "row") {
+                // create new row
+                $("#pweb_fields_add_row").trigger("click");
+                $row = $("#pweb_fields_rows").children().last();
+                $cols = $row.find(".pweb-fields-cols");
+                $addCol = $row.find(".pweb-fields-add-col");
+                rowCreated = true;
+            }
+            else {
+                if (rowCreated === false) {
+                    // add new column if not already created with new row
+                    $addCol.trigger("click");
+                }
+                if (field.type !== "column") {
+                    var $target = $cols.children().last();
+                    // add field
+                    dropField( $("#pweb_field_type_"+field.type), $target, false );
+                    
+                    // load field options
+                    var index = $target.find(".pweb-custom-field-options input:first").data("index");
+                    $.each(field, function(key, value) {
+                        if (key === "required") {
+                            if (value !== "0" && value !== "1") {
+                                value = "0";
+                            }
+                            $target.find("#pweb_fields_"+index+"_"+key+"_"+value).get(0).checked = true;
+                        }
+                        else if (key !== "type") {
+                            
+                            $target.find("#pweb_fields_"+index+"_"+key).val( value.replace(/\\+/g, "\\") );
+                            
+                            if (key === "label") {
+                                $target.find(".pweb-custom-field-label span").text(value);
+                            }
+                            else if (key === "upload") {
+                                $("#pweb_params_upload_label").trigger("change");
+                            }
+                            else if (key === "button_send") {
+                                $("#pweb_params_button_send").trigger("change");
+                            }
+                        }
+                    });
+                }
+                rowCreated = false;
+            }
+        });
+    }
+    
+    
+    // load sample fields
+    $("#pweb_load_fields").change(function(){
+        if (this.selectedIndex) {
+            var $rows = $("#pweb_fields_rows").children();
+            // confirm old fields removal
+            if ($rows.length === 0 || confirm("All current fields will be removed!")) { //TODO translation
+                // hide options to remove them
+                $("#pweb_fields_options_close").click();
+                // remove rows with columns and fields without confirmation
+                $rows.remove();
+                // load sample fields
+                loadFields( $(this).val() );
+            }
+            else {
+                this.selectedIndex = 0;
+            }
+        }
+    });
+    
+    
+    // load fields
+    loadFields( $("#pweb_params_fields").val() );
+    $("#pweb_params_fields").get(0).disabled = true;
+    
+    //console.log($("#pweb_params_fields").val());
     
     $("body").css("overflow-y", "scroll");
 });
