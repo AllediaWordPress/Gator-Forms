@@ -56,7 +56,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             }
 		}).always(function(){
             $("#pweb-save-button").get(0).disabled = false;
-            $("#pweb-save-status").removeClass("pweb-saving")
+            $("#pweb-save-status").removeClass("pweb-saving");
             
         }).done(function(response, textStatus, jqXHR) {
 			if (response && typeof response.success === "boolean") 
@@ -300,18 +300,6 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             .text( $(this).val() );
     });
     
-    $("#pweb_params_upload_label").change(function(){
-        $("#pweb_fields_rows").find(".pweb-custom-field-type-upload")
-            .find(".pweb-custom-field-label span")
-            .text( $(this).val() );
-    });
-    
-    $("#pweb_params_button_send").change(function(){
-        $("#pweb_fields_rows").find(".pweb-custom-field-type-button_send")
-            .find(".pweb-custom-field-label span")
-            .text( $(this).val() );
-    });
-    
     
     // Display option of single field
     $("#pweb_fields_types .pweb-custom-field-show-options").click(function(e){
@@ -370,7 +358,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         });
         $field.find("fieldset").each(function(){
             this.disabled = false;
-            $(this).attr("id", $(this).attr("id").replace(/_X_/g, "_"+index+"_") )
+            $(this).attr("id", $(this).attr("id").replace(/_X_/g, "_"+index+"_") );
         });
         $field.find("label").each(function(){
             $(this)
@@ -438,12 +426,6 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                             
                             if (key === "label") {
                                 $target.find(".pweb-custom-field-label span").text(value);
-                            }
-                            else if (key === "upload") {
-                                $("#pweb_params_upload_label").trigger("change");
-                            }
-                            else if (key === "button_send") {
-                                $("#pweb_params_button_send").trigger("change");
                             }
                         }
                     });

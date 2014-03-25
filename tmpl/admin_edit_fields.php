@@ -19,25 +19,32 @@ function_exists('add_action') or die;
         'value' => json_encode( $this->_get_param('fields', array()) )
     )); ?>
     
-    <?php echo $this->_get_field(array(
-        'type' => 'select',
-        'group' => 'load',
-        'name' => 'fields',
-        'label' => 'Choose predefined fields',
-        'options' => array(
-            array(
-                'name' => '- Select -',
-                'value' => ''
-            ),
-            array(
-                'name' => 'Contact form',
-                'value' => '{"1":{"type":"row"},"2":{"type":"name","label":"Name","tooltip":"","required":"0","alias":"name","values":"","validation":""},"3":{"type":"row"},"4":{"type":"email","label":"Email","tooltip":"","required":"1","alias":"email","values":""},"5":{"type":"row"},"6":{"type":"phone","label":"Phone","tooltip":"","required":"0","alias":"phone","values":"","validation":"\/[\\\\d-+() ]+\/"},"7":{"type":"row"},"8":{"type":"textarea","label":"Message","tooltip":"","required":"1","alias":"message","values":"","rows":"","limit":""},"9":{"type":"row"},"10":{"type":"email_copy"},"11":{"type":"row"},"12":{"type":"button_send"}}'
-            )
-        )
-    )); ?>
-    
-    
     <div class="pweb-fields-container">
+        
+        <div class="pweb-load-samples">
+            <?php echo $this->_get_label(array(
+                'group' => 'load',
+                'name' => 'fields',
+                'label' => 'Choose predefined fields'
+            )); ?>
+
+            <?php echo $this->_get_field_control(array(
+                'type' => 'select',
+                'group' => 'load',
+                'name' => 'fields',
+                'options' => array(
+                    array(
+                        'name' => '- Select -',
+                        'value' => ''
+                    ),
+                    array(
+                        'name' => 'Contact form',
+                        'value' => '{"1":{"type":"row"},"2":{"type":"name","label":"Name","tooltip":"","required":"0","alias":"name","values":"","validation":""},"3":{"type":"row"},"4":{"type":"email","label":"Email","tooltip":"","required":"1","alias":"email","values":""},"5":{"type":"row"},"6":{"type":"phone","label":"Phone","tooltip":"","required":"0","alias":"phone","values":"","validation":"\/[\\\\d-+() ]+\/"},"7":{"type":"row"},"8":{"type":"textarea","label":"Message","tooltip":"","required":"1","alias":"message","values":"","rows":"","limit":""},"9":{"type":"row"},"10":{"type":"email_copy"},"11":{"type":"row"},"12":{"type":"button_send"}}'
+                    )
+                )
+            )); ?>
+        </div>
+        
         <div class="pweb-fields-rows pweb-clearfix" id="pweb_fields_rows">
             
         </div>
@@ -1482,7 +1489,7 @@ function_exists('add_action') or die;
                     <?php if (in_array($field_type, self::$pro['fields'])) : ?><span class="pweb-pro">Pro</span><?php endif; ?>
                 </div>
                 <div class="pweb-custom-field-label">
-                    <?php _e('Field label', 'pwebcontact'); ?> <span></span>
+                    <?php _e('Field label', 'pwebcontact'); ?> <span><?php _e('Attachments', 'pwebcontact'); ?></span>
                 </div>
                 
                 <div class="pweb-custom-field-options">
@@ -1494,6 +1501,41 @@ function_exists('add_action') or die;
                         'index' => 'X',
                         'group' => 'fields',
                         'value' => $field_type
+                    )); ?>
+                    
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'text',
+                        'name' => 'label',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Label',
+                        'class' => 'pweb-custom-field-label-input',
+                        'default' => 'Attachments'
+                    )); ?>
+                    
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'text',
+                        'name' => 'tooltip',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Tooltip'
+                    )); ?>
+                    
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'radio',
+                        'name' => 'required',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Required',
+                        'class' => 'pweb-radio-group',
+                        'default' => 0,
+                        'options' => array(
+                            array('value' => 0, 'name' => 'No'),
+                            array('value' => 1, 'name' => 'Yes')
+                        )
                     )); ?>
                 </div>
             </div>
@@ -1557,6 +1599,17 @@ function_exists('add_action') or die;
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
+                    
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'text',
+                        'name' => 'label',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Label',
+                        'class' => 'pweb-custom-field-label-input',
+                        'default' => __('Send copy to yourself', 'pwebcontact')
+                    )); ?>
                 </div>
             </div>
         </div>
@@ -1586,6 +1639,17 @@ function_exists('add_action') or die;
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
+                    
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'text',
+                        'name' => 'label',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Label',
+                        'class' => 'pweb-custom-field-label-input',
+                        'default' => __('Send', 'pwebcontact')
+                    )); ?>
                 </div>
             </div>
         </div>
@@ -1609,24 +1673,6 @@ function_exists('add_action') or die;
         
         
         <div id="pweb_fields_options_content_upload" class="pweb-fields-options-content">
-            
-            <?php echo $this->_get_field(array(
-                'type' => 'text',
-                'name' => 'upload_label',
-                'label' => 'Label',
-            )); ?>
-
-            <?php echo $this->_get_field(array(
-                'type' => 'radio',
-                'name' => 'upload_required',
-                'label' => 'Required',
-                'class' => 'pweb-radio-group',
-                'default' => 1,
-                'options' => array(
-                    array('value' => 0, 'name' => 'No'),
-                    array('value' => 1, 'name' => 'Yes')
-                )
-            )); ?>
             
             <?php $max_size = $this->_convert_size( ini_get('post_max_size') );
             echo $this->_get_field(array(
@@ -1670,12 +1716,6 @@ function_exists('add_action') or die;
                     array('value' => 0, 'name' => 'No'),
                     array('value' => 1, 'name' => 'Yes')
                 )
-            )); ?>
-
-            <?php echo $this->_get_field(array(
-                'type' => 'text',
-                'name' => 'tooltip',
-                'label' => 'Tooltip'
             )); ?>
 
             <div class="pweb-advanced-options">
@@ -1741,18 +1781,6 @@ function_exists('add_action') or die;
                 'name' => 'email_to_list',
                 'label' => 'Recipients',
                 'class' => 'pweb-filter-emailRecipients'
-            )); ?>
-            
-        </div>
-        
-        
-        <div id="pweb_fields_options_content_button_send" class="pweb-fields-options-content">
-            
-            <?php echo $this->_get_field(array(
-                'type' => 'text',
-                'name' => 'button_send',
-                'label' => 'Send button label',
-                'default' => __('Send', 'pwebcontact')
             )); ?>
             
         </div>

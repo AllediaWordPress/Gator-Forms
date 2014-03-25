@@ -48,7 +48,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 			
             // restore state icon and color
             $(that).addClass($(that).data("state") ? "pweb-text-success" : "pweb-text-danger")
-                    .find("i").get(0).className = $(that).data("state") ? "icomoon-checkmark-circle" : "icomoon-cancel-circle"
+                    .find("i").get(0).className = ( $(that).data("state") ? "icomoon-checkmark-circle" : "icomoon-cancel-circle" );
 			alert('Request error. '+ jqXHR.status +' '+ errorThrown);
 		});
     });
