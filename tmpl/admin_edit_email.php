@@ -16,7 +16,7 @@ function_exists('add_action') or die;
     'type' => 'text',
     'name' => 'email_to',
     'label' => 'Enter one or more emails to which message should be sent to',
-    'class' => 'pweb-filter-emails'
+    'class' => 'pweb-filter-emails pweb-input-large'
 )); ?>
 
 <?php echo $this->_get_field(array(
@@ -198,7 +198,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'email_bcc',
             'label' => 'BCC emails',
-            'class' => 'pweb-filter-emails'
+            'class' => 'pweb-filter-emails pweb-input-large'
         )); ?>
         
         
@@ -206,7 +206,8 @@ function_exists('add_action') or die;
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'email_subject',
-            'label' => 'Custom subject of email'
+            'label' => 'Custom subject of email',
+            'class' => 'pweb-input-large'
         )); ?>
         
         <?php echo $this->_get_field(array(

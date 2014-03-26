@@ -388,4 +388,32 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     setTimeout(function(){ $("#wpbody").find(".updated, .error").hide(); }, 3000);
     
+    
+    // AdWords paste button
+	$("#pweb_params_adwords_url_btn").click(function(e){
+		e.preventDefault();
+		var s = prompt("Paste Google AdWords/Goal Conversion tracking script"); //TODO translation
+		if (s) {
+			var u = s.match(/<img[^>]* src=["]([^"]+)"/i);
+			if (u && typeof u[1] !== "undefined") {
+                $("#pweb_params_adwords_url").val( u[1].replace(/&amp;/gi, "&") );
+            }
+		}
+	});
+
+    // AdCenter paste button
+    $("#pweb_params_adcenter_url_btn").click(function(e){
+		e.preventDefault();
+		var s = prompt("Paste Microsoft adCenter conversion tracking script"); //TODO translation
+		if (s) {
+			var u = s.match(/<iframe[^>]* src=["]([^"]+)"/i);
+			if (u && typeof u[1] !== "undefined") {
+                $("#pweb_params_adcenter_url").val( u[1].replace(/&amp;/gi, "&") );
+            }
+		}
+	});
+    
+    $("#pweb_params_bg_color").closest(".pweb-field-control").append( $("#pweb_params_bg_opacity") );
+    
+    //TODO select background image
 });

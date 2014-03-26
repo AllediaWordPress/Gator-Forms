@@ -94,16 +94,13 @@ function_exists('add_action') or die;
 <?php echo $this->_get_field(array(
     'type' => 'color',
     'name' => 'bg_color',
-    'label' => 'Custom color of form background',
-    'is_parent' => true
+    'label' => 'Custom color of form background and opacity'
 )); ?>
 
-<?php echo $this->_get_field(array(
+<?php echo $this->_get_field_control(array(
     'type' => 'select',
     'name' => 'bg_opacity',
-    'label' => 'Opacity of custom color of form background',
     'default' => 0.9,
-    'parent' => array('bg_color'),
     'options' => array(
         array('value' => 0.1),
         array('value' => 0.2),
@@ -196,14 +193,14 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'form_width',
             'label' => 'Form width [px, %]',
-            'class' => 'pweb-filter-unit'
+            'class' => 'pweb-filter-unit pweb-input-mini'
         )); ?>
 
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'labels_width',
             'label' => 'Labels width [%]',
-            'class' => 'pweb-filter-int'
+            'class' => 'pweb-filter-int pweb-input-mini'
         )); ?>
         
         
@@ -211,7 +208,8 @@ function_exists('add_action') or die;
         <?php echo $this->_get_field(array(
             'type' => 'image',
             'name' => 'bg_image',
-            'label' => 'Background image'
+            'label' => 'Background image',
+            'class' => 'pweb-input-xlarge'
         )); ?>
 
         <?php echo $this->_get_field(array(
@@ -264,7 +262,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'bg_padding',
             'label' => 'Padding value [px, %]',
-            'class' => 'pweb-filter-unit'
+            'class' => 'pweb-filter-unit pweb-input-mini'
         )); ?>
         
         
@@ -304,7 +302,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'toggler_width',
             'label' => 'Toggler width [px]',
-            'class' => 'pweb-filter-int',
+            'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('handler_tab', 'handler_button')
         )); ?>
 
@@ -312,7 +310,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'toggler_height',
             'label' => 'Toggler height [px]',
-            'class' => 'pweb-filter-int',
+            'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('handler_tab', 'handler_button')
         )); ?>
 
@@ -320,7 +318,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'toggler_font_size',
             'label' => 'Toggler font size',
-            'class' => 'pweb-filter-unit',
+            'class' => 'pweb-filter-unit pweb-input-mini',
             'parent' => array('handler_tab', 'handler_button')
         )); ?>
 
@@ -337,7 +335,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'form_font_size',
             'label' => 'Form font size',
-            'class' => 'pweb-filter-unit'
+            'class' => 'pweb-filter-unit pweb-input-mini'
         )); ?>
 
         <?php echo $this->_get_field(array(

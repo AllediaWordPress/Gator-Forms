@@ -13,14 +13,10 @@ function_exists('add_action') or die;
 ?>
 
 <?php echo $this->_get_field(array(
-    'type' => 'textarea',
+    'type' => 'text',
     'name' => 'msg_success',
     'label' => 'Enter message which will appear after successful sending email by Contact Form',
-    'class' => 'widefat',
-    'attributes' => array(
-        'rows' => 3,
-        'cols' => 30
-    )
+    'class' => 'pweb-input-large'
 )); ?>
 
 <?php echo $this->_get_field(array(
@@ -61,7 +57,7 @@ function_exists('add_action') or die;
             'name' => 'msg_close_delay',
             'label' => 'Popup message close delay [s]',
             'default' => 10,
-            'class' => 'pweb-filter-int',
+            'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('msg_position_popup')
         )); ?>
         
@@ -75,6 +71,28 @@ function_exists('add_action') or die;
             'type' => 'color',
             'name' => 'msg_error_color',
             'label' => 'Error message color'
+        )); ?>
+        
+        
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'radio',
+            'name' => 'tooltips_validation',
+            'label' => 'Show tooltips on validation error',
+            'default' => 1,
+            'class' => 'pweb-radio-group',
+            'options' => array(
+                array(
+                    'value' => 0,
+                    'name' => 'No',
+                    'is_parent' => true
+                ),
+                array(
+                    'value' => 1,
+                    'name' => 'Yes',
+                    'is_parent' => true
+                )
+            )
         )); ?>
         
         
@@ -137,7 +155,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'redirect_url',
             'label' => 'Redirect URL',
-            'class' => 'widefat pweb-filter-url',
+            'class' => 'pweb-filter-url pweb-input-xlarge',
             'parent' => array('redirect_1')
         )); ?>
         
@@ -146,7 +164,7 @@ function_exists('add_action') or die;
             'name' => 'redirect_delay',
             'label' => 'Redirect delay [s]',
             'default' => 5,
-            'class' => 'pweb-filter-int',
+            'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('redirect_1')
         )); ?>
         
@@ -157,7 +175,7 @@ function_exists('add_action') or die;
             'name' => 'adwords_url',
             'label' => 'Google AdWords Conversion Tracker - image URL',
             'button' => 'Paste',
-            'class' => 'pweb-adwords-tracker'
+            'class' => 'pweb-input-xlarge'
         )); ?>
         
         <?php echo $this->_get_field(array(
@@ -165,7 +183,7 @@ function_exists('add_action') or die;
             'name' => 'adcenter_url',
             'label' => 'Microsoft adCenter Conversion Tracker - MSTag iframe URL',
             'button' => 'Paste',
-            'class' => 'pweb-adcenter-tracker'
+            'class' => 'pweb-input-xlarge'
         )); ?>
         
         

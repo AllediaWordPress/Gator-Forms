@@ -413,6 +413,10 @@ label .pweb-star,
 }
 
 
+#pweb_params_bg_opacity {
+    vertical-align: top;
+}
+
 
 #pweb_fields .pweb-fields-container {
     width: 60%;
@@ -681,6 +685,19 @@ label .pweb-star,
 #pweb_fields .pweb-fields-add-row.pweb-droppable-hover,
 #pweb_fields .pweb-fields-add-col.pweb-droppable-hover {
     color: #fff;
+}
+
+
+.pweb-input-mini {
+    max-width: 50px;
+}
+.pweb-input-large {
+    max-width: 300px;
+    width: 100%;
+}
+.pweb-input-xlarge {
+    max-width: 500px;
+    width: 100%;
 }
 
 

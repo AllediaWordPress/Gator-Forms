@@ -96,8 +96,8 @@ function_exists('add_action') or die;
         
         <?php echo $this->_get_field(array(
             'type' => 'select',
-            'name' => 'slide_transition',
-            'label' => 'Slide effect transition',
+            'name' => 'effect_transition',
+            'label' => 'Effect transition',
             'default' => -1,
             'parent' => array('layout_slidebox'),
             'options' => array(
@@ -145,7 +145,7 @@ function_exists('add_action') or die;
             'name' => 'effect_duration',
             'label' => 'Effect duration [ms]',
             'default' => 400,
-            'class' => 'pweb-filter-int',
+            'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('layout_slidebox', 'layout_modal', 'layout_accordion')
         )); ?>
         

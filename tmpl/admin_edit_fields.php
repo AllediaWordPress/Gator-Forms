@@ -104,7 +104,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -197,7 +198,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -299,7 +301,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -402,7 +405,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -504,7 +508,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -606,7 +611,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -655,7 +661,8 @@ function_exists('add_action') or die;
                                 'name' => 'rows',
                                 'index' => 'X',
                                 'group' => 'fields',
-                                'label' => 'Rows number'
+                                'label' => 'Rows number',
+                                'class' => 'pweb-input-mini'
                             )); ?>
                             
                             <?php echo $this->_get_field(array(
@@ -664,7 +671,8 @@ function_exists('add_action') or die;
                                 'name' => 'limit',
                                 'index' => 'X',
                                 'group' => 'fields',
-                                'label' => 'Characters limit'
+                                'label' => 'Characters limit',
+                                'class' => 'pweb-input-mini'
                             )); ?>
                             
                         </div>
@@ -717,7 +725,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -820,7 +829,8 @@ function_exists('add_action') or die;
                         'name' => 'values',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Options'
+                        'label' => 'Options',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -829,7 +839,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -869,7 +880,8 @@ function_exists('add_action') or die;
                                 'name' => 'cols',
                                 'index' => 'X',
                                 'group' => 'fields',
-                                'label' => 'Display options in columns'
+                                'label' => 'Display options in columns',
+                                'class' => 'pweb-input-mini'
                             )); ?>
                             
                         </div>
@@ -922,7 +934,8 @@ function_exists('add_action') or die;
                         'name' => 'values',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Options'
+                        'label' => 'Options',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -931,7 +944,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -971,7 +985,8 @@ function_exists('add_action') or die;
                                 'name' => 'cols',
                                 'index' => 'X',
                                 'group' => 'fields',
-                                'label' => 'Display options in columns'
+                                'label' => 'Display options in columns',
+                                'class' => 'pweb-input-mini'
                             )); ?>
                             
                         </div>
@@ -1024,7 +1039,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -1132,7 +1148,8 @@ function_exists('add_action') or die;
                         'name' => 'values',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Options'
+                        'label' => 'Options',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -1141,7 +1158,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -1234,7 +1252,8 @@ function_exists('add_action') or die;
                         'name' => 'values',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Options'
+                        'label' => 'Options',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -1243,7 +1262,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -1284,7 +1304,8 @@ function_exists('add_action') or die;
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Visible rows',
-                                'default' => '4'
+                                'default' => '4',
+                                'class' => 'pweb-input-mini'
                             )); ?>
                             
                         </div>
@@ -1337,7 +1358,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -1520,7 +1542,8 @@ function_exists('add_action') or die;
                         'name' => 'tooltip',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Tooltip'
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -1660,7 +1683,25 @@ function_exists('add_action') or die;
                 <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
             </a>
             <div class="pweb-advanced-options-content">
-
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'tooltips_focus',
+                    'label' => 'Show tooltips on field focus',
+                    'default' => 1,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'No',
+                            'is_parent' => true
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Yes',
+                            'is_parent' => true
+                        )
+                    )
+                )); ?>
             </div>
         </div>
     </div>
@@ -1687,7 +1728,7 @@ function_exists('add_action') or die;
                 'name' => 'upload_size_limit',
                 'label' => 'File size limit [MB]',
                 'default' => '1',
-                'class' => 'pweb-filter-upload-max-size'
+                'class' => 'pweb-filter-upload-max-size pweb-input-mini'
             )); ?>
             
             <?php echo $this->_get_field(array(
@@ -1695,7 +1736,7 @@ function_exists('add_action') or die;
                 'name' => 'upload_files_limit',
                 'label' => 'Files limit',
                 'default' => '5',
-                'class' => 'pweb-filter-float'
+                'class' => 'pweb-filter-float pweb-input-mini'
             )); ?>
 
             <?php echo $this->_get_field(array(
@@ -1703,7 +1744,7 @@ function_exists('add_action') or die;
                 'name' => 'upload_allowed_ext',
                 'label' => 'Allowed files extensions',
                 'default' => 'gif|jpe?g|png|doc?x|odt|txt|pdf|zip',
-                'class' => 'pweb-filter-ext'
+                'class' => 'pweb-filter-ext pweb-input-large'
             )); ?>
 
             <?php echo $this->_get_field(array(
@@ -1780,7 +1821,7 @@ function_exists('add_action') or die;
                 'type' => 'textarea',
                 'name' => 'email_to_list',
                 'label' => 'Recipients',
-                'class' => 'pweb-filter-emailRecipients'
+                'class' => 'pweb-filter-emailRecipients pweb-input-large'
             )); ?>
             
         </div>

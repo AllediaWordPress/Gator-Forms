@@ -867,7 +867,7 @@ jQuery(document).ready(function($){
             case 'text_button':
 
                 $type = 'text';
-                $html_after .= '<button type="button" class="button">'. esc_html__($button, 'pwebcontact') .'</button>';
+                $html_after .= '<button type="button" class="button" id="'.$id.'_btn">'. esc_html__($button, 'pwebcontact') .'</button>';
                 break;
             
             
@@ -879,12 +879,12 @@ jQuery(document).ready(function($){
                 $html_after .= '<script type="text/javascript">'
                         . 'jQuery(document).ready(function($){'
                             . '$("#'.$id.'").wpColorPicker({'
-                                . 'change:function(e,ui){'
-                                    . '$(this).trigger("change")'
+                                /*. 'change:function(e,ui){'
+                                    //. '$(this).trigger("change")'
                                 . '},'
                                 . 'clear:function(e,ui){'
-                                    . '$(this).trigger("change")'
-                                . '}'
+                                    //. '$(this).trigger("change")'
+                                . '}'*/
                             . '})'
                         . '})'
                     . '</script>';

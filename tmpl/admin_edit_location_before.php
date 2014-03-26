@@ -99,7 +99,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'offset',
             'label' => 'Position offset [px, %]',
-            'class' => 'pweb-filter-unit',
+            'class' => 'pweb-filter-unit pweb-input-mini',
             'parent' => array('layout_slidebox', 'handler_tab')
         )); ?>
 
@@ -107,7 +107,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'zindex',
             'label' => 'Layer level (CSS z-index)',
-            'class' => 'pweb-filter-int',
+            'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('layout_slidebox', 'layout_modal')
         )); ?>
 
@@ -163,7 +163,8 @@ function_exists('add_action') or die;
             'type' => 'image',
             'name' => 'toggler_icon_custom_image', //TODO change param name in front
             'label' => 'Custom icon',
-            'parent' => array('toggler_icon_custom')
+            'parent' => array('toggler_icon_custom'),
+            'class' => 'pweb-input-xlarge'
         )); ?>
 
 
@@ -255,7 +256,7 @@ function_exists('add_action') or die;
             'name' => 'open_delay',
             'label' => 'Auto-open delay [ms]',
             'default' => 1000,
-            'class' => 'pweb-filter-int',
+            'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('open_toggler_1', 'open_toggler_2', 'open_toggler_3')
         )); ?>
         
@@ -264,7 +265,7 @@ function_exists('add_action') or die;
             'name' => 'open_count',
             'label' => 'Auto-open count',
             'default' => 1,
-            'class' => 'pweb-filter-int',
+            'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('open_toggler_1', 'open_toggler_2', 'open_toggler_3')
         )); ?>
         
@@ -273,7 +274,7 @@ function_exists('add_action') or die;
             'name' => 'cookie_lifetime',
             'label' => 'Cookie lifetime [days]',
             'default' => 30,
-            'class' => 'pweb-filter-int',
+            'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('open_toggler_1', 'open_toggler_2', 'open_toggler_3')
         )); ?>
 
@@ -304,7 +305,7 @@ function_exists('add_action') or die;
             'name' => 'close_delay',
             'label' => 'Auto-close delay [ms]',
             'default' => 0,
-            'class' => 'pweb-filter-int',
+            'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('close_toggler_1')
         )); ?>
         
