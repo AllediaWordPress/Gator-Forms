@@ -49,9 +49,10 @@ function_exists('add_action') or die;
                 </button>-->
                 <?php _e( 'shortcode', 'pwebcontact' ); ?>
             <?php elseif ($form->position == 'widget') : ?>
-                TODO
+                <?php _e( 'Display in', 'pwebcontact' ); ?>
+                <a href="<?php echo admin_url('widgets.php'); ?>"><?php _e( 'widget', 'pwebcontact' ); ?></a>
             <?php elseif ($form->position == 'footer') : ?>
-                TODO
+                <?php _e( 'Display on all pages', 'pwebcontact' ); ?>
             <?php endif; ?>
         </div>
         <div class="theme-name pweb-actions">
