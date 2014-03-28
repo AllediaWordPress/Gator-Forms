@@ -11,4 +11,17 @@
 function_exists('add_action') or die;
 
 
+add_shortcode('pwebcontact', 'pwebcontact_shortcode');
 
+function pwebcontact_shortcode($atts, $content = null, $tag) 
+{
+	extract( shortcode_atts( array (
+		'id' => 0
+	), $atts ) );
+	
+	$output = '';
+	
+	//TODO load contact form by $id
+	
+	return $output;
+}
