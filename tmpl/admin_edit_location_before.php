@@ -23,24 +23,24 @@ function_exists('add_action') or die;
         array(
             'value' => 'button',
             'name' => 'Toggler Button',
-            'class' => 'pweb-layout-button pweb-related-accordion pweb-related-modal-button',
+            'class' => 'pweb-layout_type-button pweb-related-accordion pweb-related-modal-button',
             'is_parent' => true
         ),
         array(
             'value' => 'tab',
             'name' => 'Toggler Tab',
-            'class' => 'pweb-layout-tab pweb-related-slidebox pweb-related-modal',
+            'class' => 'pweb-layout_type-tab pweb-related-slidebox pweb-related-modal',
             'is_parent' => true
         ),
         array(
             'value' => 'static',
             'name' => 'Always opened inside page content',
-            'class' => 'pweb-layout-static pweb-related-static'
+            'class' => 'pweb-layout_type-static pweb-related-static'
         ),
         array(
             'value' => 'hidden',
             'name' => 'Hidden',
-            'class' => 'pweb-layout-hidden pweb-related-modal pweb-related-accordion pweb-related-slidebox pweb-related-modal-button'
+            'class' => 'pweb-layout_type-hidden pweb-related-modal pweb-related-accordion pweb-related-slidebox pweb-related-modal-button'
         )
     )
 )); ?>
@@ -56,7 +56,7 @@ function_exists('add_action') or die;
 
 <?php echo $this->_get_field(array(
     'type' => 'radio',
-    'name' => 'toggler_position',
+    'name' => 'position',
     'label' => 'Toggler Tab position',
     'parent' => 'handler_tab',
     'default' => 'left',
@@ -174,7 +174,7 @@ function_exists('add_action') or die;
             'name' => 'toggler_vertical',
             'label' => 'Vertical Toggler Tab',
             'default' => 0,
-            'parent' => array('toggler_position_left', 'toggler_position_right'),
+            'parent' => array('position_left', 'position_right'),
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(

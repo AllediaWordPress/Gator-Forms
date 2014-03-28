@@ -167,7 +167,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         $("#pweb-location-effect .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
     });
     
-    $("#pweb_params_layout input").change(function(e){
+    $("#pweb_params_layout_type input").change(function(e){
         if (this.checked) {
             $("#pweb-location-after .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
         }

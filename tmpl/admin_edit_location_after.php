@@ -14,7 +14,7 @@ function_exists('add_action') or die;
 
 <?php echo $this->_get_field(array(
     'type' => 'radio',
-    'name' => 'layout',
+    'name' => 'layout_type',
     'label' => 'How do you want to display your form after opening?',
     'class' => 'pweb-related',
     'default' => 'slidebox',
@@ -23,25 +23,25 @@ function_exists('add_action') or die;
         array(
             'value' => 'slidebox',
             'name' => 'Box at page edge',
-            'class' => 'pweb-layout-slidebox pweb-related-slidebox',
+            'class' => 'pweb-layout_type-slidebox pweb-related-slidebox',
             'is_parent' => true
         ),
         array(
             'value' => 'modal',
             'name' => 'Lightbox window',
-            'class' => 'pweb-layout-modal pweb-related-modal pweb-related-modal-button',
+            'class' => 'pweb-layout_type-modal pweb-related-modal pweb-related-modal-button',
             'is_parent' => true
         ),
         array(
             'value' => 'accordion',
             'name' => 'Accordion inside page content',
-            'class' => 'pweb-layout-accordion pweb-related-accordion',
+            'class' => 'pweb-layout_type-accordion pweb-related-accordion',
             'is_parent' => true
         ),
         array(
             'value' => 'static',
             'name' => 'Static form inside page content',
-            'class' => 'pweb-layout-static pweb-related-static'
+            'class' => 'pweb-layout_type-static pweb-related-static'
         )
     )
 )); ?>

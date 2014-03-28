@@ -349,7 +349,7 @@ jQuery(document).ready(function($){
             else {
                 $this->data->params = json_decode($this->data->params, true);
                 $this->data->params['position'] = $this->data->position;
-                $this->data->params['layout'] = $this->data->layout;
+                $this->data->params['layout_type'] = $this->data->layout;
             }
         }
     }
@@ -503,9 +503,9 @@ jQuery(document).ready(function($){
         $params['fields'] = $fields;
         
         $position = $this->_get_param('position');
-        $layout = $this->_get_param('layout');
+        $layout = $this->_get_param('layout_type');
         
-        unset($params['position'], $params['layout']);
+        unset($params['position'], $params['layout_type']);
         
         // Update data
         return false !== $wpdb->update($wpdb->prefix.'pwebcontact_forms', array(

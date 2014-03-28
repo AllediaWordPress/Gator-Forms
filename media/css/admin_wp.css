@@ -316,10 +316,10 @@ label .pweb-star,
 #pweb_params_effect_modal_square-lbl, 
 #pweb_params_effect_modal_smooth-lbl, 
 #pweb_params_effect_slide_down-lbl, 
-#pweb_params_layout_slidebox-lbl, 
-#pweb_params_layout_modal-lbl, 
-#pweb_params_layout_accordion-lbl, 
-#pweb_params_layout_static-lbl {
+#pweb_params_layout_type_slidebox-lbl, 
+#pweb_params_layout_type_modal-lbl, 
+#pweb_params_layout_type_accordion-lbl, 
+#pweb_params_layout_type_static-lbl {
     background: left bottom no-repeat;
     display: inline-block;
     padding-bottom: 130px;
@@ -356,16 +356,16 @@ label .pweb-star,
     background-image: url(../images/admin/accordion.png);
 }
 
-#pweb_params_layout_slidebox-lbl {
+#pweb_params_layout_type_slidebox-lbl {
     background-image: url(../images/admin/slidebox.png);
 }
-#pweb_params_layout_modal-lbl {
+#pweb_params_layout_type_modal-lbl {
     background-image: url(../images/admin/modal.png);
 }
-#pweb_params_layout_accordion-lbl {
+#pweb_params_layout_type_accordion-lbl {
     background-image: url(../images/admin/accordion.png);
 }
-#pweb_params_layout_static-lbl {
+#pweb_params_layout_type_static-lbl {
     background-image: url(../images/admin/static.png);
 }
 
