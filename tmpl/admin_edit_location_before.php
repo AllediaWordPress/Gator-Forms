@@ -56,36 +56,37 @@ function_exists('add_action') or die;
 
 <?php echo $this->_get_field(array(
     'type' => 'radio',
-    'name' => 'position',
+    'name' => 'toggler_position',
     'label' => 'Toggler Tab position',
     'parent' => 'handler_tab',
     'default' => 'left',
+    'class' => 'pweb-radio-group',
     'options' => array(
         array(
             'value' => 'left',
-            'name' => 'Left',
+            'name' => 'Left <br><span class="pwebposition-left"><span></span><span>&varr;</span></span>',
             'is_parent' => true
         ),
         array(
             'value' => 'right',
-            'name' => 'Right',
+            'name' => 'Right <br><span class="pwebposition-right"><span></span><span>&varr;</span></span>',
             'is_parent' => true
         ),
         array(
             'value' => 'top:left',
-            'name' => 'Top left'
+            'name' => 'Top left <br><span class="pwebposition-top-left"><span></span><span>&harr;</span></span>'
         ),
         array(
             'value' => 'top:right',
-            'name' => 'Top right'
+            'name' => 'Top right <br><span class="pwebposition-top-right"><span></span><span>&harr;</span></span>'
         ),
         array(
             'value' => 'bottom:left',
-            'name' => 'Bottom left'
+            'name' => 'Bottom left <br><span class="pwebposition-bottom-left"><span></span><span>&harr;</span></span>'
         ),
         array(
             'value' => 'bottom:right',
-            'name' => 'Bottom right'
+            'name' => 'Bottom right <br><span class="pwebposition-bottom-right"><span></span><span>&harr;</span></span>'
         )
     )
 )); ?>
@@ -99,16 +100,18 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'offset',
             'label' => 'Position offset [px, %]',
+            'tooltip' => 'Set length of red arrow in above `Toggler Tab position` with unit, e.g. 150px, 25%',
             'class' => 'pweb-filter-unit pweb-input-mini',
-            'parent' => array('layout_slidebox', 'handler_tab')
+            'parent' => array('layout_type_slidebox', 'handler_tab')
         )); ?>
 
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'zindex',
             'label' => 'Layer level (CSS z-index)',
+            'tooltip' => 'Default level is 1030. If contact form appears under menu or other layers then enlarge default value.',
             'class' => 'pweb-filter-int pweb-input-mini',
-            'parent' => array('layout_slidebox', 'layout_modal')
+            'parent' => array('layout_type_slidebox', 'layout_type_modal')
         )); ?>
 
 
@@ -117,6 +120,7 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'toggler_icon',
             'label' => 'Toggler icon',
+            'tooltip' => 'Select source for Toggler Tab icon.',
             'default' => 0,
             'parent' => array('handler_tab', 'handler_button'),
             'class' => 'pweb-radio-group',
@@ -154,6 +158,7 @@ function_exists('add_action') or die;
             'type' => 'filelist',
             'name' => 'toggler_icon_gallery_image', //TODO change param name in front
             'label' => 'Gallery icon',
+            'tooltip' => 'Select image from directory: `wp-content/plugins/pwebcontact/media/images/icons`.',
             'filter' => '\.(jpg|png|gif)$',
             'directory' => 'media/images/icons',
             'parent' => array('toggler_icon_gallery')
@@ -163,6 +168,7 @@ function_exists('add_action') or die;
             'type' => 'image',
             'name' => 'toggler_icon_custom_image', //TODO change param name in front
             'label' => 'Custom icon',
+            'tooltip' => 'Enter URL with custom image file with icon for Toggler Tab.',
             'parent' => array('toggler_icon_custom'),
             'class' => 'pweb-input-xlarge'
         )); ?>
@@ -173,8 +179,10 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'toggler_vertical',
             'label' => 'Vertical Toggler Tab',
+            'tooltip' => 'Flip toggler tab to vertical orientation.',
+            'desc' => 'Default vertical text color is white, change it in `Layout` tab.<br>Reload browser cache on front-end to see changes.<br>If you see rectangles instead of letters then you have to use other `TTF font`.<br>If text is cut then enlarge height of toggler in `Layout` tab. Width leave blank.',
             'default' => 0,
-            'parent' => array('position_left', 'position_right'),
+            'parent' => array('toggler_position_left', 'toggler_position_right'),
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(
@@ -185,7 +193,8 @@ function_exists('add_action') or die;
                 array(
                     'value' => 1,
                     'name' => 'Yes',
-                    'is_parent' => true
+                    'is_parent' => true,
+                    'disabled' => !$this->_check_image_text_creation()
                 )
             )
         )); ?>
@@ -194,6 +203,7 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'toggler_rotate',
             'label' => 'Rotate Toggler Tab text',
+            'tooltip' => 'Rotate text by 90&deg; to the left or right.',
             'default' => 1,
             'parent' => array('toggler_vertical_1'),
             'options' => array(
@@ -212,6 +222,7 @@ function_exists('add_action') or die;
             'type' => 'filelist',
             'name' => 'toggler_font',
             'label' => 'TTF font for vertical Toggler Tab text',
+            'tooltip' => 'Select font from directory: `wp-content/plugins/pwebcontact/media/fonts`. If it does not support your language then upload there other font file.',
             'default' => 'NotoSans-Regular',
             'filter' => '^((?!icomoon).)+\.ttf$',
             'directory' => 'media/fonts',
@@ -225,8 +236,9 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'open_toggler',
             'label' => 'Auto-open',
+            'tooltip' => 'Open contact form automatically after page has been loaded or when User scrolls down the page. On exit is experimental and might not work in old browsers.',
             'default' => 0,
-            'parent' => array('layout_slidebox', 'layout_modal', 'layout_accordion'),
+            'parent' => array('layout_type_slidebox', 'layout_type_modal', 'layout_type_accordion'),
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(
@@ -255,6 +267,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'open_delay',
             'label' => 'Auto-open delay [ms]',
+            'tooltip' => 'Set delay in mili-seconds for auto-open, e.g. 1000 (1s delay). Set 0 for no delay.',
             'default' => 1000,
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('open_toggler_1', 'open_toggler_2', 'open_toggler_3')
@@ -264,6 +277,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'open_count',
             'label' => 'Auto-open count',
+            'tooltip' => 'Set number of auto-open times. Counter is incremented after page refresh. Set 0 for unlimited auto-popups. Information is stored in cookie and will be cleared when cookie expires.',
             'default' => 1,
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('open_toggler_1', 'open_toggler_2', 'open_toggler_3')
@@ -273,6 +287,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'cookie_lifetime',
             'label' => 'Cookie lifetime [days]',
+            'tooltip' => 'Set 0 that cookie would expire when the browser is closed or number of days after which cookie would expire.',
             'default' => 30,
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('open_toggler_1', 'open_toggler_2', 'open_toggler_3')
@@ -284,8 +299,9 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'close_toggler',
             'label' => 'Auto-close',
+            'tooltip' => 'Close contact form automatically after sending email',
             'default' => 0,
-            'parent' => array('layout_slidebox', 'layout_modal', 'layout_accordion'),
+            'parent' => array('layout_type_slidebox', 'layout_type_modal', 'layout_type_accordion'),
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(
@@ -304,6 +320,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'close_delay',
             'label' => 'Auto-close delay [ms]',
+            'tooltip' => 'Set delay in mili-seconds for auto-close, e.g. 1000 (1s delay). Set 0 to disable.',
             'default' => 0,
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('close_toggler_1')
@@ -313,8 +330,9 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'close_other',
             'label' => 'Close other Perfect Contact Forms and Boxes',
+            'tooltip' => 'Close all other Slide in Boxes and Accordion from Perfect-Web when opening another one.',
             'default' => 0,
-            'parent' => array('layout_slidebox', 'layout_accordion'),
+            'parent' => array('layout_type_slidebox', 'layout_type_accordion'),
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(
@@ -332,8 +350,9 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'modal_disable_close',
             'label' => 'Disable manual closing of Lightbox',
+            'tooltip' => 'Hide close button of Lightbox window and disable closing when clicking backdrop. Window can only be closed with Auto-close event, page refresh or custom link.',
             'default' => 0,
-            'parent' => array('layout_modal'),
+            'parent' => array('layout_type_modal'),
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(
@@ -353,6 +372,7 @@ function_exists('add_action') or die;
             'type' => 'textarea',
             'name' => 'onload',
             'label' => 'JavaScript on load event',
+            'tooltip' => 'JavaScript code called on page load. Do not insert any HTML tags!',
             'class' => 'pweb-filter-javascript widefat',
             'attributes' => array(
                 'rows' => 5,
@@ -364,8 +384,9 @@ function_exists('add_action') or die;
             'type' => 'textarea',
             'name' => 'onopen',
             'label' => 'JavaScript on open event',
+            'tooltip' => 'JavaScript code called on form open. Do not insert any HTML tags!',
             'class' => 'pweb-filter-javascript widefat',
-            'parent' => array('layout_slidebox', 'layout_modal', 'layout_accordion'),
+            'parent' => array('layout_type_slidebox', 'layout_type_modal', 'layout_type_accordion'),
             'attributes' => array(
                 'rows' => 5,
                 'cols' => 50
@@ -376,8 +397,9 @@ function_exists('add_action') or die;
             'type' => 'textarea',
             'name' => 'onclose',
             'label' => 'JavaScript on close event',
+            'tooltip' => 'JavaScript code called on form close. Do not insert any HTML tags!',
             'class' => 'pweb-filter-javascript widefat',
-            'parent' => array('layout_slidebox', 'layout_modal', 'layout_accordion'),
+            'parent' => array('layout_type_slidebox', 'layout_type_modal', 'layout_type_accordion'),
             'attributes' => array(
                 'rows' => 5,
                 'cols' => 50

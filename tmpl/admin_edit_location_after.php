@@ -55,8 +55,9 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'accordion_boxed',
             'label' => 'Show accordion box with arrow',
+            'tooltip' => 'Surround contact form with box and show arrow at top of this box.',
             'default' => 1,
-            'parent' => array('layout_accordion'),
+            'parent' => array('layout_type_accordion'),
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(

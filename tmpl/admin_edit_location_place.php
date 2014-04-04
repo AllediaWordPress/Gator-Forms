@@ -47,6 +47,7 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'filter_browsers',
             'label' => 'Filter browsers',
+            'tooltip' => 'Select for which type of browsers you want to display contact form. Keep in mind that browser detection is not always 100% accurate. Users can setup their browser to mimic other browsers.',
             'default' => 0,
             'class' => 'pweb-radio-group',
             'options' => array(

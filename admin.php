@@ -304,12 +304,9 @@ class PWebContact_Admin {
     
     function admin_head() {
 
-        //TODO
 ?>
 <script type="text/javascript">
-jQuery(document).ready(function($){
-    
-});
+    var pwebcontact_admin = pwebcontact_admin || {};
 </script>
 <?php
     }
@@ -654,12 +651,14 @@ jQuery(document).ready(function($){
                 .($parent ? $parent : '')
                 .($is_pro === true ? ' pweb-pro' : '')
                 .($disabled === true ? ' pweb-disabled' : '')
-                .'">'.
+                .($tooltip ? ' pweb-has-tooltip' : '')
+                .'"'
+                .($tooltip ? ' title="'. esc_attr__($tooltip, 'pwebcontact') .'"' : '')
+                .'>'.
                     ($label ? $this->_get_label($opt) : '').
-                    '<div class="pweb-field-control'. ($tooltip ? ' pweb-has-tooltip' : '') .'"'. 
-                            ($tooltip ? ' title="'. esc_attr__($tooltip, 'pwebcontact') .'"' : '') .'>'.
+                    '<div class="pweb-field-control">'.
                         $this->_get_field_control($opt).
-                        ($desc ? '<div class="pweb-field-desc">'. esc_html__($desc, 'pwebcontact') .'</div>' : '').
+                        ($desc ? '<div class="pweb-field-desc">'. __($desc, 'pwebcontact') .'</div>' : '').
                     '</div>'.
                 '</div>';
     }
@@ -901,6 +900,7 @@ jQuery(document).ready(function($){
         switch ($type) {
             
             case 'text':
+            case 'password':
             case 'email':
             case 'hidden':
                 
@@ -929,7 +929,7 @@ jQuery(document).ready(function($){
                 $html .= '<select name="'.$field_name.'"'. $this->_attr_to_str($attributes) .'>';
                 foreach ($options as $option) {
                     
-                    if ($is_pro === false AND !isset($option['disabled']) AND in_array($name.':'.$option['value'], self::$pro[$group]) ) {
+                    if ($is_pro === false AND !(isset($option['disabled']) AND $option['disabled']) AND in_array($name.':'.$option['value'], self::$pro[$group]) ) {
                         $option['disabled'] = true;
                     }
                     if (!isset($option['name'])) {
@@ -937,7 +937,7 @@ jQuery(document).ready(function($){
                     }
                     
                     $html .= '<option value="'.esc_attr($option['value']).'"'. selected($value, $option['value'], false) 
-                            . (isset($attributes['disabled']) OR isset($option['disabled']) ? ' disabled="disabled"' : '') 
+                            . (isset($attributes['disabled']) OR (isset($option['disabled']) AND $option['disabled']) ? ' disabled="disabled"' : '') 
                             . '>'. esc_html__($option['name'], 'pwebcontact') .'</option>';
                 }
                 $html .= '</select>';
@@ -955,7 +955,7 @@ jQuery(document).ready(function($){
                 
                 foreach ($options as $option) {
                     
-                    if ($is_pro === false AND !isset($option['disabled']) AND in_array($name.':'.$option['value'], self::$pro[$group]) ) {
+                    if ($is_pro === false AND !(isset($option['disabled']) AND $option['disabled']) AND in_array($name.':'.$option['value'], self::$pro[$group]) ) {
                         $option['disabled'] = true;
                     }
                     if (isset($option['parent'])) {
@@ -968,7 +968,13 @@ jQuery(document).ready(function($){
                     if (isset($option['tooltip'])) {
                         $option['class'] .= ' pweb-has-tooltip';
                     }
-                    
+                    if ($value == $option['value']) {
+                        if (isset($option['disabled']) AND $option['disabled']) {
+                            // Select first not disabled option if currently selected option is disabled
+                            $html_after .= '<script type="text/javascript">jQuery(document).ready(function($){$("#'.$id.' input").not(":disabled").first().trigger("click");});</script>';
+                            $value = null;
+                        }
+                    }
                     
                     $option_id = $id .'_'. preg_replace('/[^a-z0-9-_]/i', '', $option['value']);
                     
@@ -979,7 +985,7 @@ jQuery(document).ready(function($){
                     
                     $html .= '<input type="'.$type.'" name="'.$field_name.'" id="'.$option_id.'"'
                             . ' value="'.esc_attr($option['value']).'"'. checked($value, $option['value'], false) 
-                            . ((isset($attributes['disabled']) OR isset($option['disabled'])) ? ' disabled="disabled"' : '') 
+                            . ((isset($attributes['disabled']) OR (isset($option['disabled']) AND $option['disabled'])) ? ' disabled="disabled"' : '') 
                             . (($is_parent === true OR (isset($option['is_parent']) AND $option['is_parent'] === true)) ? ' class="pweb-parent"' : '')
                             . '>';
                     
@@ -1018,4 +1024,55 @@ jQuery(document).ready(function($){
 		
         return $val > 10 ? intval($val) : round($val, 2);
     }
+    
+    private function _check_image_text_creation()
+	{
+		$functions = array(
+			'imagecreatetruecolor',
+			'imagecolorallocate',
+			'imagecolorallocatealpha',
+			'imagesavealpha',
+			'imagealphablending',
+			'imagefill',
+			'imagettftext',
+			'imagepng',
+			'imagedestroy'
+		);
+		$disabled_functions = array();
+		foreach ($functions as $function)
+		{
+			if (!(function_exists($function) && is_callable($function))) $disabled_functions[] = $function;
+		}
+		if (count($disabled_functions)) 
+		{
+			$this->warnings[] = sprintf( __('You can not use vertical Toggler Tab, because on this server following PHP functions are disabled: %s. Contact with server administrator.', 'pwebcontact'), implode(', ', $disabled_functions) );
+            
+			return false;
+		}
+
+		return true;
+	}
+    
+    private function _check_upload_path($path) 
+	{
+        //TODO _check_upload_path
+        
+		// create wirtable upload path
+		if (!JFolder::exists(JPATH_ROOT.$path)) {
+			JFolder::create(JPATH_ROOT.$path, 0777);
+		}
+		if (!is_writable(JPATH_ROOT.$path) AND JPath::canChmod(JPATH_ROOT.$path)) {
+			JPath::setPermissions(JPATH_ROOT.$path, null, '0777');
+		}
+		
+		// check upload path
+		if (!is_writable(JPATH_ROOT.$path)) {
+			$app = JFactory::getApplication();	
+			$app->enqueueMessage(JText::sprintf('MOD_PWEBCONTACT_CONFIG_MSG_UPLOAD_DIR', $path), 'warning');
+		}
+		// copy index.html file to upload path for security
+		elseif (!JFile::exists(JPATH_ROOT.$path.'index.html')) {
+			JFile::copy(JPATH_ROOT.'/media/mod_pwebcontact/upload/index.html', JPATH_ROOT.$path.'index.html');
+		}
+	}
 }

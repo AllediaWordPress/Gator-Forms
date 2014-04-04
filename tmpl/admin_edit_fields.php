@@ -248,7 +248,8 @@ function_exists('add_action') or die;
                                 'name' => 'validation',
                                 'index' => 'X',
                                 'group' => 'fields',
-                                'label' => 'Validation regular expression'
+                                'label' => 'Validation regular expression',
+                                'tooltip' => 'JavaScript regular expression for validation of field value'
                             )); ?>
                             
                         </div>
@@ -352,6 +353,7 @@ function_exists('add_action') or die;
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Validation regular expression',
+                                'tooltip' => 'JavaScript regular expression for validation of field value',
                                 'default' => '/[\d\-\+() ]+/'
                             )); ?>
                             
@@ -455,7 +457,8 @@ function_exists('add_action') or die;
                                 'name' => 'validation',
                                 'index' => 'X',
                                 'group' => 'fields',
-                                'label' => 'Validation regular expression'
+                                'label' => 'Validation regular expression',
+                                'tooltip' => 'JavaScript regular expression for validation of field value'
                             )); ?>
                             
                         </div>
@@ -558,7 +561,8 @@ function_exists('add_action') or die;
                                 'name' => 'validation',
                                 'index' => 'X',
                                 'group' => 'fields',
-                                'label' => 'Validation regular expression'
+                                'label' => 'Validation regular expression',
+                                'tooltip' => 'JavaScript regular expression for validation of field value'
                             )); ?>
                             
                         </div>
@@ -662,6 +666,7 @@ function_exists('add_action') or die;
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Rows number',
+                                'tooltip' => 'Max number of vissible rows',
                                 'class' => 'pweb-input-mini'
                             )); ?>
                             
@@ -672,6 +677,7 @@ function_exists('add_action') or die;
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Characters limit',
+                                'tooltip' => 'Set 0 for no limit',
                                 'class' => 'pweb-input-mini'
                             )); ?>
                             
@@ -830,6 +836,7 @@ function_exists('add_action') or die;
                         'index' => 'X',
                         'group' => 'fields',
                         'label' => 'Options',
+                        'tooltip' => 'Enter each option in new line',
                         'class' => 'pweb-input-large'
                     )); ?>
                     
@@ -935,6 +942,7 @@ function_exists('add_action') or die;
                         'index' => 'X',
                         'group' => 'fields',
                         'label' => 'Options',
+                        'tooltip' => 'Enter each option in new line',
                         'class' => 'pweb-input-large'
                     )); ?>
                     
@@ -1149,6 +1157,7 @@ function_exists('add_action') or die;
                         'index' => 'X',
                         'group' => 'fields',
                         'label' => 'Options',
+                        'tooltip' => 'Enter each option in new line',
                         'class' => 'pweb-input-large'
                     )); ?>
                     
@@ -1253,6 +1262,7 @@ function_exists('add_action') or die;
                         'index' => 'X',
                         'group' => 'fields',
                         'label' => 'Options',
+                        'tooltip' => 'Enter each option in new line',
                         'class' => 'pweb-input-large'
                     )); ?>
                     
@@ -1408,7 +1418,8 @@ function_exists('add_action') or die;
                                 'name' => 'validation',
                                 'index' => 'X',
                                 'group' => 'fields',
-                                'label' => 'Validation regular expression'
+                                'label' => 'Validation regular expression',
+                                'tooltip' => 'JavaScript regular expression for validation of field value'
                             )); ?>
                             
                         </div>
@@ -1727,6 +1738,7 @@ function_exists('add_action') or die;
                 'type' => 'text',
                 'name' => 'upload_size_limit',
                 'label' => 'File size limit [MB]',
+                'tooltip' => 'Set files size in MB for each uploaded file. It can not be grater than server max upload size.',
                 'default' => '1',
                 'class' => 'pweb-filter-upload-max-size pweb-input-mini'
             )); ?>
@@ -1735,6 +1747,7 @@ function_exists('add_action') or die;
                 'type' => 'text',
                 'name' => 'upload_files_limit',
                 'label' => 'Files limit',
+                'tooltip' => 'Set max number of files that can be attached to email. Set 0 for no limit.',
                 'default' => '5',
                 'class' => 'pweb-filter-float pweb-input-mini'
             )); ?>
@@ -1743,6 +1756,7 @@ function_exists('add_action') or die;
                 'type' => 'text',
                 'name' => 'upload_allowed_ext',
                 'label' => 'Allowed files extensions',
+                'tooltip' => 'List of allowed files extensions separated with pipe | e.g. jpg|gif|png',
                 'default' => 'gif|jpe?g|png|doc?x|odt|txt|pdf|zip',
                 'class' => 'pweb-filter-ext pweb-input-large'
             )); ?>
@@ -1751,6 +1765,7 @@ function_exists('add_action') or die;
                 'type' => 'radio',
                 'name' => 'upload_show_limits',
                 'label' => 'Show limits in tooltip',
+                'tooltip' => 'Show informations about max file size, number of files and allowed types in tooltip.',
                 'class' => 'pweb-radio-group',
                 'default' => 1,
                 'options' => array(
@@ -1769,6 +1784,7 @@ function_exists('add_action') or die;
                         'type' => 'radio',
                         'name' => 'attachment_type',
                         'label' => 'Attachment type in email',
+                        'tooltip' => 'Uploaded files can be attached directly in email or as links to files stored on server.',
                         'class' => 'pweb-radio-group',
                         'default' => 1,
                         'options' => array(
@@ -1781,6 +1797,7 @@ function_exists('add_action') or die;
                         'type' => 'radio',
                         'name' => 'attachment_delete',
                         'label' => 'Delete files after sending',
+                        'tooltip' => 'Delete files from server after email has been sent.',
                         'class' => 'pweb-radio-group',
                         'default' => 1,
                         'parent' => 'attachment_type_1',
@@ -1794,6 +1811,7 @@ function_exists('add_action') or die;
                         'type' => 'radio',
                         'name' => 'upload_autostart',
                         'label' => 'Auto-start upload',
+                        'tooltip' => 'Start upload after file has been chosen or droped.',
                         'class' => 'pweb-radio-group',
                         'default' => 1,
                         'options' => array(
@@ -1821,6 +1839,7 @@ function_exists('add_action') or die;
                 'type' => 'textarea',
                 'name' => 'email_to_list',
                 'label' => 'Recipients',
+                'desc' => 'Shows drop-down list of available recipients in contact form. Put each recipient in new line, separate email address from name with &#x7c; (pipe character). Use following pattern: email&#x7c;name, e.g.: <strong>support@perfect-web.co&#x7c;Support</strong>. Do not enter new line after last recipient! Email addresses will not be visible in contact forms to protect them from spam bots. Only name of recipients will be shown on list.',
                 'class' => 'pweb-filter-emailRecipients pweb-input-large'
             )); ?>
             

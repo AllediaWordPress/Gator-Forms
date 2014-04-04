@@ -16,6 +16,7 @@ function_exists('add_action') or die;
     'type' => 'filelist',
     'name' => 'style_toggler',
     'label' => 'Toggler style',
+    'tooltip' => 'If you want to change colors of Toggler Tab then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/toggler`.',
     'default' => 'blue',
     'filter' => '\.css$',
     'directory' => 'media/css/toggler',
@@ -33,6 +34,7 @@ function_exists('add_action') or die;
     'type' => 'color',
     'name' => 'toggler_bg',
     'label' => 'Custom color of Toggler',
+    'tooltip' => 'Select background color of Toggler Tab.',
     'parent' => array('handler_tab', 'handler_button')
 )); ?>
 
@@ -40,6 +42,7 @@ function_exists('add_action') or die;
     'type' => 'color',
     'name' => 'toggler_color',
     'label' => 'Custom color of Toggler text',
+    'tooltip' => 'Select text color of Toggler Tab',
     'parent' => array('handler_tab', 'handler_button')
 )); ?>
 
@@ -49,6 +52,7 @@ function_exists('add_action') or die;
     'type' => 'filelist',
     'name' => 'style_form',
     'label' => 'Buttons and fields style',
+    'tooltip' => 'If you want to change colors of buttons, fields and links then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/form`.',
     'default' => 'blue',
     'filter' => '\.css$',
     'directory' => 'media/css/form',
@@ -64,13 +68,15 @@ function_exists('add_action') or die;
 <?php echo $this->_get_field(array(
     'type' => 'color',
     'name' => 'buttons_fields_color',
-    'label' => 'Custom color of buttons, fields and links'
+    'label' => 'Custom color of buttons, fields and links',
+    'tooltip' => 'Select color of buttons background, fields borders and links text color'
 )); ?>
 
 <?php echo $this->_get_field(array(
     'type' => 'color',
     'name' => 'buttons_text_color',
-    'label' => 'Custom color of buttons text'
+    'label' => 'Custom color of buttons text',
+    'tooltip' => 'Select color of buttons text'
 )); ?>
 
 
@@ -80,6 +86,7 @@ function_exists('add_action') or die;
     'name' => 'style_bg',
     'label' => 'Background style',
     'default' => 'white',
+    'tooltip' => 'If you want to change colors of background then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/background`.',
     'filter' => '\.css$',
     'directory' => 'media/css/background',
     'strip_ext' => true,
@@ -94,7 +101,7 @@ function_exists('add_action') or die;
 <?php echo $this->_get_field(array(
     'type' => 'color',
     'name' => 'bg_color',
-    'label' => 'Custom color of form background and opacity'
+    'label' => 'Custom color of form background and opacity',
 )); ?>
 
 <?php echo $this->_get_field_control(array(
@@ -118,7 +125,8 @@ function_exists('add_action') or die;
 <?php echo $this->_get_field(array(
     'type' => 'color',
     'name' => 'text_color',
-    'label' => 'Custom color of form text'
+    'label' => 'Custom color of form text',
+    'tooltip' => 'Select color of text'
 )); ?>
 
 
@@ -126,7 +134,7 @@ function_exists('add_action') or die;
 <?php echo $this->_get_field(array(
     'type' => 'radio',
     'name' => 'rounded',
-    'label' => 'Rounded corners',
+    'label' => 'Display rounded corners',
     'default' => 1,
     'class' => 'pweb-radio-group',
     'options' => array(
@@ -144,7 +152,7 @@ function_exists('add_action') or die;
 <?php echo $this->_get_field(array(
     'type' => 'radio',
     'name' => 'shadow',
-    'label' => 'Shadow',
+    'label' => 'Display shadow',
     'default' => 1,
     'class' => 'pweb-radio-group',
     'options' => array(
@@ -165,12 +173,14 @@ function_exists('add_action') or die;
     'type' => 'radio',
     'name' => 'labels_position',
     'label' => 'Labels position',
+    'tooltip' => 'Select placement of fields labels. For mobile devices (phones) labels inline are displayed above fields.',
     'default' => 'inline',
     'class' => 'pweb-radio-group',
     'options' => array(
         array(
             'value' => 'inline',
-            'name' => 'Inline with field'
+            'name' => 'Inline with field',
+            'is_parent' => true
         ),
         array(
             'value' => 'above',
@@ -193,6 +203,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'form_width',
             'label' => 'Form width [px, %]',
+            'tooltip' => 'Width of form is also a width of Lightbox window. If you want to maximize the window then set 100%.',
             'class' => 'pweb-filter-unit pweb-input-mini'
         )); ?>
 
@@ -200,7 +211,9 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'labels_width',
             'label' => 'Labels width [%]',
-            'class' => 'pweb-filter-int pweb-input-mini'
+            'tooltip' => 'Set labels width in percents.',
+            'class' => 'pweb-filter-int pweb-input-mini',
+            'parent' => 'labels_position_inline'
         )); ?>
         
         
@@ -209,6 +222,7 @@ function_exists('add_action') or die;
             'type' => 'image',
             'name' => 'bg_image',
             'label' => 'Background image',
+            'tooltip' => 'Enter URL of image which will be shown in background of contact form. Image will not be repeated.',
             'class' => 'pweb-input-xlarge'
         )); ?>
 
@@ -216,6 +230,7 @@ function_exists('add_action') or die;
             'type' => 'select',
             'name' => 'bg_position',
             'label' => 'Background image alignment',
+            'tooltip' => 'Select position of background image: horizontal vertical.',
             'options' => array(
                 array('value' => '', 'name' => '- Use default -'),
                 array('value' => 'left top'),
@@ -234,6 +249,7 @@ function_exists('add_action') or die;
             'type' => 'select',
             'name' => 'bg_padding_position',
             'label' => 'Form padding',
+            'tooltip' => 'Select where you want to create space for background image.',
             'options' => array(
                 array(
                     'value' => '',
@@ -262,6 +278,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'bg_padding',
             'label' => 'Padding value [px, %]',
+            'tooltip' => 'Size of space for background image.',
             'class' => 'pweb-filter-unit pweb-input-mini'
         )); ?>
         
@@ -271,15 +288,17 @@ function_exists('add_action') or die;
             'type' => 'color',
             'name' => 'modal_bg',
             'label' => 'Lightbox backdrop color',
-            'parent' => array('layout_modal')
+            'tooltip' => 'Color of background layer under Lightbox window.',
+            'parent' => array('layout_type_modal')
         )); ?>
 
         <?php echo $this->_get_field(array(
             'type' => 'select',
             'name' => 'modal_opacity',
             'label' => 'Lightbox backdrop opacity',
+            'tooltip' => 'Transparency of background layer under Lightbox window.',
             'default' => -1,
-            'parent' => array('layout_modal'),
+            'parent' => array('layout_type_modal'),
             'options' => array(
                 array('value' => -1, 'name' => '- Use default -'),
                 array('value' => 0, 'name' => 'Hide'),
@@ -302,6 +321,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'toggler_width',
             'label' => 'Toggler width [px]',
+            'tooltip' => 'Toggler Tab width in pixels (without unit), e.g. 100. Leave blank for enabled vertical toggler.',
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('handler_tab', 'handler_button')
         )); ?>
@@ -310,6 +330,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'toggler_height',
             'label' => 'Toggler height [px]',
+            'tooltip' => 'Toggler Tab height in pixels (without unit), e.g. 20. Leave blank for disabled vertical toggler.',
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('handler_tab', 'handler_button')
         )); ?>
@@ -318,6 +339,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'toggler_font_size',
             'label' => 'Toggler font size',
+            'tooltip' => 'Size of Toggler font, e.g. 12px, 10pt, 100%',
             'class' => 'pweb-filter-unit pweb-input-mini',
             'parent' => array('handler_tab', 'handler_button')
         )); ?>
@@ -326,6 +348,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'toggler_font_family',
             'label' => 'Toggler font family',
+            'tooltip' => 'Name of font used for Toggler. Separate multiple names with coma and wrap name which contains space with single quote.',
             'parent' => array('toggler_vertical_0')
         )); ?>
         
@@ -335,13 +358,15 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'form_font_size',
             'label' => 'Form font size',
+            'tooltip' => 'Size of form font, e.g. 12px, 10pt, 100%',
             'class' => 'pweb-filter-unit pweb-input-mini'
         )); ?>
 
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'form_font_family',
-            'label' => 'Form font family'
+            'label' => 'Form font family',
+            'tooltip' => 'Name of font used for form. Separate multiple names with coma and wrap name which contains space with single quote.'
         )); ?>
         
         
@@ -350,6 +375,7 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'icons',
             'label' => 'Icons type',
+            'tooltip' => 'Do not select Bootstrap Glyphicons if you have disable it in Advanced tab of configuration.',
             'default' => 'icomoon',
             'class' => 'pweb-radio-group',
             'options' => array(

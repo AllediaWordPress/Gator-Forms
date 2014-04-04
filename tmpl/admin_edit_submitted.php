@@ -15,7 +15,7 @@ function_exists('add_action') or die;
 <?php echo $this->_get_field(array(
     'type' => 'text',
     'name' => 'msg_success',
-    'label' => 'Enter message which will appear after successful sending email by Contact Form',
+    'label' => 'Enter message which will appear after successful sending email by contact form',
     'class' => 'pweb-input-large'
 )); ?>
 
@@ -23,6 +23,7 @@ function_exists('add_action') or die;
     'type' => 'radio',
     'name' => 'msg_position',
     'label' => 'System message position',
+    'tooltip' => 'Display message before or after form, next to send button or in popup layer',
     'default' => 'after',
     'options' => array(
         array(
@@ -56,6 +57,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'msg_close_delay',
             'label' => 'Popup message close delay [s]',
+            'tooltip' => 'Set 0 to disable auto-close of popup message',
             'default' => 10,
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('msg_position_popup')
@@ -64,13 +66,15 @@ function_exists('add_action') or die;
         <?php echo $this->_get_field(array(
             'type' => 'color',
             'name' => 'msg_success_color',
-            'label' => 'Success message color'
+            'label' => 'Success message color',
+            'tooltip' => 'Select custom color of success message'
         )); ?>
 
         <?php echo $this->_get_field(array(
             'type' => 'color',
             'name' => 'msg_error_color',
-            'label' => 'Error message color'
+            'label' => 'Error message color',
+            'tooltip' => 'Select custom color of error message'
         )); ?>
         
         
@@ -101,6 +105,7 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'reset_form',
             'label' => 'Reset form',
+            'tooltip' => 'Reset all data filled in by User after email has been successfully sent. Success message will stay.',
             'default' => 1,
             'options' => array(
                 array(
@@ -155,6 +160,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'redirect_url',
             'label' => 'Redirect URL',
+            'tooltip' => 'Enter URL for redirect to thank you page after successful email sent. Do not encode ampersands &amp;',
             'class' => 'pweb-filter-url pweb-input-xlarge',
             'parent' => array('redirect_1')
         )); ?>
@@ -163,6 +169,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'redirect_delay',
             'label' => 'Redirect delay [s]',
+            'tooltip' => 'Enter delay time in seconds before redirect.',
             'default' => 5,
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('redirect_1')
@@ -174,6 +181,7 @@ function_exists('add_action') or die;
             'type' => 'text_button',
             'name' => 'adwords_url',
             'label' => 'Google AdWords Conversion Tracker - image URL',
+            'tooltip' => 'Paste URL of image from generated tracking script or you can use <em>Paste</em> button to extract this link from conversion tracking script.',
             'button' => 'Paste',
             'class' => 'pweb-input-xlarge'
         )); ?>
@@ -182,6 +190,7 @@ function_exists('add_action') or die;
             'type' => 'text_button',
             'name' => 'adcenter_url',
             'label' => 'Microsoft adCenter Conversion Tracker - MSTag iframe URL',
+            'tooltip' => 'Paste URL of iframe from generated tracking script or you can use <em>Paste</em> button to extract this link from conversion tracking script.',
             'button' => 'Paste',
             'class' => 'pweb-input-xlarge'
         )); ?>
@@ -192,6 +201,7 @@ function_exists('add_action') or die;
             'type' => 'textarea',
             'name' => 'oncomplete',
             'label' => 'JavaScript on mail success event',
+            'tooltip' => 'JavaScript code called after successful send of email. This event has one argument `data` type of object with property `ticket`. Do not insert any HTML tags!',
             'class' => 'pweb-filter-javascript widefat',
             'attributes' => array(
                 'rows' => 5,
@@ -203,6 +213,7 @@ function_exists('add_action') or die;
             'type' => 'textarea',
             'name' => 'onerror',
             'label' => 'JavaScript on mail error event',
+            'tooltip' => 'JavaScript code called after mail send error or invalid captcha. This event has one argument `data` type of object with possible property `invalid`. Do not insert any HTML tags!',
             'class' => 'pweb-filter-javascript widefat',
             'attributes' => array(
                 'rows' => 5,

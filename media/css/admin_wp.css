@@ -83,6 +83,11 @@ label .pweb-star,
     color: #ff0000;
 }
 
+input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-invalid label {
+    color: #ff0000 !important;
+    border-color: #ff0000 !important;
+}
+
 .pweb-view-list h2 {
     margin-bottom: 15px;
 }
@@ -406,10 +411,20 @@ label .pweb-star,
 .pweb-field .pweb-field-control {
     margin-left: 15px;
 }
+.pweb-field .pweb-field-desc {
+    margin-top: 5px;
+    font-style: italic;
+}
 .pweb-radio-group .pweb-field-option {
     display: inline-block;
     margin-right: 20px;
     min-width: 50px;
+}
+
+
+#pweb_params_toggler_position .pweb-field-option {
+    min-width: 100px;
+    margin-right: 5px;
 }
 
 

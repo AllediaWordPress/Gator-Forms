@@ -13,6 +13,8 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	
     pwebcontact_admin.running_related = false;
     pwebcontact_admin.duration = 0;
+    pwebcontact_admin.isLocalhost = (document.location.host === "localhost" || document.location.host === "127.0.0.1");
+    pwebcontact_admin.domain = document.location.host.replace("www.", "");
     
     var $tabs = $("#pweb-tabs-content"),
         $adminBar = $("#pweb-adminbar");
@@ -284,9 +286,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 		if (this.value) {
 			var regex=/^[a-zA-Z0-9.!#$%&‚Äô*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 			if (regex.test(this.value)) {
-				$(this).removeClass('invalid');
+				$(this).removeClass('pweb-invalid');
 			} else {
-				$(this).addClass('invalid');
+				$(this).addClass('pweb-invalid');
 			}
 		}
 	});
@@ -296,9 +298,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 		if (this.value) {
 			var regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w{2,4}(,[ ]*\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w{2,4})*$/;
 			if (regex.test(this.value)) {
-				$(this).removeClass('invalid');
+				$(this).removeClass('pweb-invalid');
 			} else {
-				$(this).addClass('invalid');
+				$(this).addClass('pweb-invalid');
 			}
 		}
 	});
@@ -308,9 +310,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 		if (this.value) {
 			var regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w{2,4}[\|]{1}[^\r\n\|]+([\r]?\n\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w{2,4}[\|]{1}[^\r\n\|]+)*$/;
 			if (regex.test(this.value)) {
-				$(this).removeClass('invalid');
+				$(this).removeClass('pweb-invalid');
 			} else {
-				$(this).addClass('invalid');
+				$(this).addClass('pweb-invalid');
 			}
 		}
 	});
@@ -335,14 +337,14 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	$('.pweb-filter-unit').on('change', function() {
 		var regex = /^\d+(px|em|ex|cm|mm|in|pt|pc|%){1}$/i;
 		if (!this.value || this.value === 'auto' || regex.test(this.value)) {
-			$(this).removeClass('invalid');
+			$(this).removeClass('pweb-invalid');
 		} else {
 			var value = parseInt(this.value);
 			if (!isNaN(value)) {
 				this.value = value+'px';
-				$(this).removeClass('invalid');
+				$(this).removeClass('pweb-invalid');
 			} else {
-				$(this).addClass('invalid');
+				$(this).addClass('pweb-invalid');
 			}
 		}
 	});
@@ -351,9 +353,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	$('.pweb-filter-color').on('change', function() {
 		var regex = /^(\w|#[0-9a-f]{3}|#[0-9a-f]{6}|rgb\(\d{1,3},[ ]?\d{1,3},[ ]?\d{1,3}\)|rgba\(\d{1,3},[ ]?\d{1,3},[ ]?\d{1,3},[ ]?[0]?\.\d{1}\))$/i;
 		if (!this.value || regex.test(this.value)) {
-			$(this).removeClass('invalid');
+			$(this).removeClass('pweb-invalid');
 		} else {
-			$(this).addClass('invalid');
+			$(this).addClass('pweb-invalid');
 		}
 	});
 	
@@ -361,9 +363,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	$('.pweb-filter-url').on('change', function() {
 		var regexp = /^((http|https):){0,1}\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/i;
 		if (!this.value || regex.test(this.value)) {
-			$(this).removeClass('invalid');
+			$(this).removeClass('pweb-invalid');
 		} else {
-			$(this).addClass('invalid');
+			$(this).addClass('pweb-invalid');
 		}
 	});
 	
@@ -387,6 +389,50 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     setTimeout(function(){ pwebcontact_admin.duration = 400; }, 600);
     
     setTimeout(function(){ $("#wpbody").find(".updated, .error").hide(); }, 3000);
+    
+    
+    $("#pweb_params_email_from").change(function(e){
+        $(this).removeClass("pweb-invalid");
+        var email = $(this).val().toLowerCase();
+        if (!pwebcontact_admin.isLocalhost && email.indexOf("@") !== -1 && email.indexOf(pwebcontact_admin.domain) === -1) {
+            $(this).addClass("pweb-invalid");
+        }
+    }).trigger("change");
+    
+    $("#pweb_params_smtp_username").change(function(e){
+        $(this).removeClass("pweb-invalid");
+        if (!pwebcontact_admin.isLocalhost && $("#pweb_params_mailer input:checked").val() === "smtp") {
+            // SMTP user from other domain than site
+            var username = $(this).val().toLowerCase();
+            if (username.indexOf("@") !== -1 && username.indexOf(pwebcontact_admin.domain) === -1) {
+                $(this).addClass("pweb-invalid");
+            }
+        }
+    }).trigger("change");
+    
+    $("#pweb_params_smtp_host").change(function(e){
+        $(this).removeClass('pweb-invalid');
+        if (!pwebcontact_admin.isLocalhost && $("#pweb_params_mailer input:checked").val() === "smtp") {
+            // SMTP host from other domain than site
+            var host = $(this).val().toLowerCase();
+            if (host !== "localhost" && host.indexOf(pwebcontact_admin.domain) === -1) {
+                $(this).addClass("pweb-invalid");
+            }
+        }
+    }).trigger("change");
+    
+    // Set SMTP port depending on security encryption
+    $("#pweb_params_smtp_secure input").change(function(e){
+        var port = 25;
+        switch ($(this).val()) {
+            case "ssl":
+                port = 465;
+                break;
+            case "tls":
+                port = 587;
+       }
+       $("#pweb_params_smtp_port").val(port);
+    });
     
     
     // AdWords paste button

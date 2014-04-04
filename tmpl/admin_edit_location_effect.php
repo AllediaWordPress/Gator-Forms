@@ -79,8 +79,9 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'toggler_slide',
             'label' => 'Slide Toggler Tab with box',
+            'tooltip' => 'Slide `Toggler Tab` with contact form. Works only with `Slide in Box` layout except on left and right side with horizontal `Toggler Tab`.',
             'default' => 0,
-            'parent' => array('layout_slidebox'),
+            'parent' => array('layout_type_slidebox'),
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(
@@ -99,12 +100,12 @@ function_exists('add_action') or die;
             'name' => 'effect_transition',
             'label' => 'Effect transition',
             'default' => -1,
-            'parent' => array('layout_slidebox'),
+            'parent' => array('layout_type_slidebox'),
             'options' => array(
                 array('value' => -1, 'name' => '- Use default -'),
                 array('value' => 'linear'),
                 array('value' => 'swing'),
-                array('value' => -2, 'name' => '- jQuery UI effects -', 'disabled' => true),
+                array('value' => -2, 'name' => '- jQuery UI Effects -', 'disabled' => true),
                 array('value' => 'easeInQuad'),
                 array('value' => 'easeOutQuad'),
                 array('value' => 'easeInOutQuad'),
@@ -144,9 +145,10 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'effect_duration',
             'label' => 'Effect duration [ms]',
+            'tooltip' => 'Set time of effect duration, e.g. 1000 (1s delay).',
             'default' => 400,
             'class' => 'pweb-filter-int pweb-input-mini',
-            'parent' => array('layout_slidebox', 'layout_modal', 'layout_accordion')
+            'parent' => array('layout_type_slidebox', 'layout_type_modal', 'layout_type_accordion')
         )); ?>
         
     </div>
