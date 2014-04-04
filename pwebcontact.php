@@ -100,18 +100,18 @@ class PWebContact
         // Get layout name
         $layout = $params->get('layout_type', 'slidebox');
         // Position and offset
-        $position = explode(':', $params->get('position', 'left:top'));
-        $params->set('position', $position[0]);
-        $params->def('position_secondary', array_key_exists(1, $position) ? $position[1] : 'top');
+        $position = explode(':', $params->get('toggler_position', 'left:top'));
+        $params->set('toggler_position', $position[0]);
+        $params->def('toggler_offset_position', array_key_exists(1, $position) ? $position[1] : 'top');
 
         // Set static position for static and accordion layouts
         if (in_array($layout, array('static', 'accordion'))) {
-            $params->set('position', 'static');
+            $params->set('toggler_position', 'static');
         }
         // Set left position for slidebox layout which was set to static position
-        elseif ($layout == 'slidebox' AND $params->get('position') == 'static') {
-            $params->set('position', 'left');
-            $params->set('position_secondary', 'top');
+        elseif ($layout == 'slidebox' AND $params->get('toggler_position') == 'static') {
+            $params->set('toggler_position', 'left');
+            $params->set('toggler_offset_position', 'top');
         }
 
 
@@ -120,21 +120,21 @@ class PWebContact
             if (!is_rtl())
                 $params->set('rtl', 0);
             else {
-                switch ($params->get('position')) {
+                switch ($params->get('toggler_position')) {
                     case 'left':
-                        $params->set('position', 'right');
+                        $params->set('toggler_position', 'right');
                         break;
                     case 'right':
-                        $params->set('position', 'left');
+                        $params->set('toggler_position', 'left');
                         break;
                     case 'top':
                     case 'bottom':
-                        switch ($params->get('position_secondary')) {
+                        switch ($params->get('toggler_offset_position')) {
                             case 'left':
-                                $params->set('position_secondary', 'right');
+                                $params->set('toggler_offset_position', 'right');
                                 break;
                             case 'right':
-                                $params->set('position_secondary', 'left');
+                                $params->set('toggler_offset_position', 'left');
                         }
                 }
                 $params->set('toggler_rotate', 0 - $params->get('toggler_rotate', 1));
@@ -143,7 +143,7 @@ class PWebContact
 
 
         // Disable vertical toggler if position is not left or right
-        if (!in_array($params->get('position'), array('left', 'right'))) {
+        if (!in_array($params->get('toggler_position'), array('left', 'right'))) {
             $params->set('toggler_vertical', 0);
         }
         // Disable sliding of toggler if it is not vertical and position is left or right
@@ -158,19 +158,19 @@ class PWebContact
                 $params->set('toggler_slide', 0);
             }
             if ($params->get('toggler_slide', 0)) {
-                $params->def('position_secondary', 'slide');
+                $params->def('toggler_offset_position', 'slide');
             } else {
-                $params->def('position_secondary', 'fixed');
+                $params->def('toggler_offset_position', 'fixed');
             }
         }
         elseif ($layout == 'modal') {
             if ($params->get('show_toggler', 1)) {
-                $params->def('position_secondary', $params->get('position') == 'static' ? 'static' : 'fixed');
+                $params->def('toggler_offset_position', $params->get('toggler_position') == 'static' ? 'static' : 'fixed');
             }
         }
         elseif ($layout == 'accordion') {
             if ($params->get('show_toggler', 1)) {
-                $params->def('position_secondary', 'fixed');
+                $params->def('toggler_offset_position', 'fixed');
             }
         }
 
@@ -280,8 +280,8 @@ class PWebContact
 		{
 			if (in_array($layout, array('slidebox', 'modal')))
 			{
-				$positionClasses[] = 'pweb-'.$params->get('position', 'left');
-				$positionClasses[] = 'pweb-offset-'.$params->get('position_secondary', 'top');
+				$positionClasses[] = 'pweb-'.$params->get('toggler_position', 'left');
+				$positionClasses[] = 'pweb-offset-'.$params->get('toggler_offset_position', 'top');
 				if ($params->get('toggler_vertical')) {
 					$moduleClasses[] = 'pweb-vertical';
 					if ($params->get('toggler_rotate', 1) == -1) $togglerClasses[] = 'pweb-rotate';
@@ -291,7 +291,7 @@ class PWebContact
 				
 				if ($layout == 'slidebox')
 				{
-					if (!$params->get('show_toggler', 1) AND $params->get('position_secondary') == 'fixed') $moduleClasses[] = 'pweb-toggler-hidden';
+					if (!$params->get('show_toggler', 1) AND $params->get('toggler_offset_position') == 'fixed') $moduleClasses[] = 'pweb-toggler-hidden';
 					if ($params->get('toggler_slide')) $moduleClasses[] = 'pweb-toggler-slide';
 					if (!$params->get('debug')) $boxClasses[] = 'pweb-init';
 				}
@@ -341,7 +341,7 @@ class PWebContact
 
 		// Position offset
 		if ($value = $params->get('offset'))
-			$css .= '#pwebcontact'.$module_id.'{'.$params->get('position_secondary', '').':'.$value.'}';
+			$css .= '#pwebcontact'.$module_id.'{'.$params->get('toggler_offset_position', '').':'.$value.'}';
 		
 		
 		// Layer level
@@ -574,7 +574,7 @@ class PWebContact
 			if (($padding_position == 'left' OR $padding_position == 'right')) {
 				$padding_mobile = 10;
 				if ($layout == 'slidebox' 
-					AND ($params->get('position') == 'left' OR $params->get('position') == 'right') 
+					AND ($params->get('toggler_position') == 'left' OR $params->get('toggler_position') == 'right') 
 					AND $params->get('toggler_vertical') AND !$params->get('toggler_slide')) {
 						$padding_mobile = 50;
 				}
@@ -831,13 +831,13 @@ class PWebContact
 		$module_id 	= (int)$params->get('id');
 		$media_url 	= $params->get('media_url');
 		$layout 	= $params->get('layout_type', 'slidebox');
-		$position 	= $params->get('position', 'left');
+		$position 	= $params->get('toggler_position', 'left');
 		
 		$options = array();	
 		$options[] = 'id:'.$module_id;
 		$options[] = 'layout:"'.$layout.'"';
 		$options[] = 'position:"'.$position.'"';
-		$options[] = 'offsetPosition:"'.$params->get('position_secondary').'"';
+		$options[] = 'offsetPosition:"'.$params->get('toggler_offset_position').'"';
 		$options[] = 'basePath:"'.JUri::base(true).'"';
 		if (is_file(JPATH_ROOT.'/components/com_ajax/ajax.php'))
 			$options[] = 'ajaxUrl:"index.php?option=com_ajax&module=pwebcontact&Itemid='.$app->input->getInt('Itemid').'&method="';
