@@ -243,3 +243,10 @@ function_exists('add_action') or die;
         )
     )
 )); ?>
+
+<?php echo $this->_get_field(array(
+    'type' => 'text',
+    'name' => 'moduleclass_sfx',
+    'label' => 'Contact Form CSS class',
+    'tooltip' => 'Add additional CSS class name to contact form container.'
+)); ?>

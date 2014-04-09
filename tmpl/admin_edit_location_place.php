@@ -38,12 +38,12 @@ function_exists('add_action') or die;
     )
 )); ?>
 
-<div class="pweb-advanced-options">
+<!--<div class="pweb-advanced-options">
     <a href="#" class="pweb-advanced-options-toggler">
         <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
     </a>
     <div class="pweb-advanced-options-content">
-        <?php echo $this->_get_field(array(
+        <?php /*echo $this->_get_field(array(
             'type' => 'radio',
             'name' => 'filter_browsers',
             'label' => 'Filter browsers',
@@ -64,6 +64,6 @@ function_exists('add_action') or die;
                     'name' => 'Only desktop'
                 )
             )
-        )); ?>
+        ));*/ ?>
     </div>
-</div>
+</div>-->

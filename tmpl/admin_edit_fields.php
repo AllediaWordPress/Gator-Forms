@@ -1538,6 +1538,14 @@ function_exists('add_action') or die;
                     
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
+                        'type' => 'hidden',
+                        'name' => 'show_upload',
+                        'value' => 1
+                    )); ?>
+                    
+                    
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
                         'type' => 'text',
                         'name' => 'label',
                         'index' => 'X',
@@ -1602,6 +1610,15 @@ function_exists('add_action') or die;
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
+                    
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'textarea',
+                        'name' => 'email_to_list',
+                        'label' => 'Recipients',
+                        'desc' => 'Shows drop-down list of available recipients in contact form. Put each recipient in new line, separate email address from name with &#x7c; (pipe character). Use following pattern: email&#x7c;name, e.g.: <strong>support@perfect-web.co&#x7c;Support</strong>. Do not enter new line after last recipient! Email addresses will not be visible in contact forms to protect them from spam bots. Only name of recipients will be shown on list.',
+                        'class' => 'pweb-filter-emailRecipients pweb-input-large'
+                    )); ?>
                 </div>
             </div>
         </div>
@@ -1632,6 +1649,13 @@ function_exists('add_action') or die;
                         'index' => 'X',
                         'group' => 'fields',
                         'value' => $field_type
+                    )); ?>
+                    
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'hidden',
+                        'name' => 'email_copy',
+                        'value' => 1
                     )); ?>
                     
                     <?php echo $this->_get_field(array(
@@ -1710,6 +1734,28 @@ function_exists('add_action') or die;
                             'value' => 1,
                             'name' => 'Yes',
                             'is_parent' => true
+                        )
+                    )
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'user_data',
+                    'label' => 'Auto fill in logged User data',
+                    'default' => 1,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'No'
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Yes'
+                        ),
+                        array(
+                            'value' => 2,
+                            'name' => 'Hide User data if logged in'
                         )
                     )
                 )); ?>
@@ -1835,13 +1881,7 @@ function_exists('add_action') or die;
         
         <div id="pweb_fields_options_content_mailto_list" class="pweb-fields-options-content">
             
-            <?php echo $this->_get_field(array(
-                'type' => 'textarea',
-                'name' => 'email_to_list',
-                'label' => 'Recipients',
-                'desc' => 'Shows drop-down list of available recipients in contact form. Put each recipient in new line, separate email address from name with &#x7c; (pipe character). Use following pattern: email&#x7c;name, e.g.: <strong>support@perfect-web.co&#x7c;Support</strong>. Do not enter new line after last recipient! Email addresses will not be visible in contact forms to protect them from spam bots. Only name of recipients will be shown on list.',
-                'class' => 'pweb-filter-emailRecipients pweb-input-large'
-            )); ?>
+            
             
         </div>
         
