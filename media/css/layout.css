@@ -1170,6 +1170,7 @@ form.pwebcontact-form label .pweb-asterisk {
 .pweb-fields:before, .pweb-fields:after,
 .pweb-fields-group:before, .pweb-fields-group:after,
 .pweb-field-container:before, .pweb-field-container:after,
+.pweb-row:before, .pweb-row:after,
 .pweb-uploader .files > div:before, .pweb-uploader .files > div:after {
 	content: "";
 	display: table;
@@ -1179,6 +1180,7 @@ form.pwebcontact-form label .pweb-asterisk {
 .pweb-fields, .pweb-fields:after,
 .pweb-fields-group:after,
 .pweb-field-container:after,
+.pweb-row:after,
 .pweb-uploader .files > div:after {
 	clear: both;
 }
