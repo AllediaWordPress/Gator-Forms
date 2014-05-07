@@ -11,6 +11,9 @@ var pwebcontact_l10n = pwebcontact_l10n || {},
 
 if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
+    // Initialize tooltips
+    $(".pweb-has-tooltip").tooltip();
+    
     // Toogle state action
     $(".pweb-action-toggle-state").click(function(e){
         
@@ -68,12 +71,14 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     // Delete dialog box
     $("#pweb-dialog-delete").dialog({
+        dialogClass: "wp-dialog",
         autoOpen: false,
         resizable: false,
         modal: true,
         buttons: [
             { 
                 text: pwebcontact_l10n.delete,
+                class : "button-primary",
                 click: function() {
                     
                     $(this).dialog("close");
@@ -114,6 +119,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             },
             {
                 text: pwebcontact_l10n.cancel,
+                class : "button",
                 click: function() {
                     $(this).dialog("close");
                 }
@@ -122,11 +128,17 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
     
     
+    
     $("input.pweb-shortcode").click(function(e){
         e.preventDefault();
+        e.stopPropagation();
         $(this).select();
     }).on("keydown", function(e){
         e.preventDefault();
+        e.stopPropagation();
         $(this).select();
     });
+    
+    
+    setTimeout(function(){ $("#wpbody").find(".updated, .error, .update-nag").hide(); }, 3000);
 });
