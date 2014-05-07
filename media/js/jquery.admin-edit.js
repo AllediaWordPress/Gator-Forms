@@ -69,7 +69,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
     
     // Show related options
-    var $relatedFields = $tabs.find("fieldset.pweb-related input");
+    var $relatedFields = $tabs.find("fieldset.pweb-related input").not(".pweb-shortcode");
     $relatedFields.each(function(){
         $(this).data("relations", $(this).parent().attr("class").match(/pweb-related-[a-z\-]+/g) );
     }).change(function(e){
@@ -142,34 +142,11 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     $("#pweb_params_handler input").change(function(e){
         if (this.checked) {
             var text = $("#"+$(this).attr("id")+"-lbl").text();
-            if (this.value === "tab") {
-                text = text +" - "+ $("#"+$("#pweb_params_toggler_position input:checked").attr("id")+"-lbl").text();
-            }
             $("#pweb-location-before .pweb-step-option").text(text);
         }
     });
     
-    $("#pweb_params_toggler_position input").change(function(e){
-        if (this.checked) {
-            var $field = $("#pweb_params_handler input:checked");
-            if ($field.val() === "tab") {
-                var text = $("#"+$field.attr("id")+"-lbl").text() 
-                        + " - "
-                        + $("#"+$(this).attr("id")+"-lbl").text();
-                $("#pweb-location-before .pweb-step-option").text(text);
-            }
-        }
-    });
-    
     $("#pweb_params_effect input").change(function(e){
-        if (this.checked) {
-            $("#pweb-location-effect .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
-        }
-    }).filter(":checked").each(function(){
-        $("#pweb-location-effect .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
-    });
-    
-    $("#pweb_params_layout_type input").change(function(e){
         if (this.checked) {
             $("#pweb-location-after .pweb-step-option").text( $("#"+$(this).attr("id")+"-lbl").text() );
         }
@@ -385,11 +362,6 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 		this.value = this.value.toLowerCase().replace(/[^a-z0-9|?]+/g, '');
 	});
     
-    // Set duration of showing/hiding options
-    setTimeout(function(){ pwebcontact_admin.duration = 400; }, 600);
-    
-    setTimeout(function(){ $("#wpbody").find(".updated, .error").hide(); }, 3000);
-    
     
     $("#pweb_params_email_from").change(function(e){
         $(this).removeClass("pweb-invalid");
@@ -438,7 +410,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     // AdWords paste button
 	$("#pweb_params_adwords_url_btn").click(function(e){
 		e.preventDefault();
-		var s = prompt("Paste Google AdWords/Goal Conversion tracking script"); //TODO translation
+		var s = prompt(pwebcontact_l10n.paste_adwords);
 		if (s) {
 			var u = s.match(/<img[^>]* src=["]([^"]+)"/i);
 			if (u && typeof u[1] !== "undefined") {
@@ -450,7 +422,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     // AdCenter paste button
     $("#pweb_params_adcenter_url_btn").click(function(e){
 		e.preventDefault();
-		var s = prompt("Paste Microsoft adCenter conversion tracking script"); //TODO translation
+		var s = prompt(pwebcontact_l10n.paste_adcenter);
 		if (s) {
 			var u = s.match(/<iframe[^>]* src=["]([^"]+)"/i);
 			if (u && typeof u[1] !== "undefined") {
@@ -462,4 +434,20 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     $("#pweb_params_bg_color").closest(".pweb-field-control").append( $("#pweb_params_bg_opacity") );
     
     //TODO select background image
+    
+    
+    $("input.pweb-shortcode").click(function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).select();
+    }).on("keydown", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).select();
+    });
+    
+    // Set duration of showing/hiding options
+    setTimeout(function(){ pwebcontact_admin.duration = 400; }, 600);
+    
+    setTimeout(function(){ $("#wpbody").find(".updated, .error, .update-nag").hide(); }, 3000);
 });
