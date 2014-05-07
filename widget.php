@@ -43,23 +43,25 @@ class PWebContact_Widget extends WP_Widget {
 	function widget( $args, $instance ) {
         
 		extract( $args );
+        
+        if ( $instance['form_id'] AND PWebContact::initForm($instance['form_id'], 'widget') === true ) {
 
-		/* Variables from the widget settings. */
-		$title = apply_filters('widget_title', $instance['title'] );
-		
-		/* Before widget (defined by themes). */
-		echo $before_widget;
+            /* Variables from the widget settings. */
+            $title = apply_filters('widget_title', $instance['title'] );
 
-		/* Display the widget title if one was input (before and after defined by themes). */
-		if ( $title )
-			echo $before_title . $title . $after_title;
+            /* Before widget (defined by themes). */
+            echo $before_widget;
 
-		/* Display contact from. */
-		if ( $instance['form_id'] )
-			$this->_display_pwebcontact_form( $instance['form_id'] );
+            /* Display the widget title if one was input (before and after defined by themes). */
+            if ( $title )
+                echo $before_title . $title . $after_title;
 
-		/* After widget (defined by themes). */
-		echo $after_widget;
+            /* Display contact from. */
+            PWebContact::displayForm( $instance['form_id'] );
+
+            /* After widget (defined by themes). */
+            echo $after_widget;
+        }
 	}
 
 	/**
@@ -127,12 +129,6 @@ class PWebContact_Widget extends WP_Widget {
         $data = $wpdb->get_results($sql);
         
         return is_array($data) ? $data : array();
-    }
-    
-    
-    protected function _display_pwebcontact_form( $form_id = 0 ) {
-        
-        //TODO display contact form in widget
     }
 }
 
