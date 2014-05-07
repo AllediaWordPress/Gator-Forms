@@ -14,6 +14,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     pwebcontact_admin.item_index = 0;
     pwebcontact_admin.counter = 0;
     pwebcontact_admin.confirm = true;
+    pwebcontact_admin.confirmed = false;
     
     
     // save
@@ -52,7 +53,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 			dataType: "json",
             data: $(this).serialize(),
             beforeSend: function() {
-                $("#pweb-save-status").addClass("pweb-saving").text("Saving..."); //TODO translation
+                $("#pweb-save-status").addClass("pweb-saving").text(pwebcontact_l10n.saving);
             }
 		}).always(function(){
             $("#pweb-save-button").get(0).disabled = false;
@@ -62,11 +63,11 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 			if (response && typeof response.success === "boolean") 
 			{
                 $("#pweb-save-status").text(
-                        response.success === true ? "Saved on "+(new Date()).toLocaleTimeString() : "Error"); //TODO translation
+                        response.success === true ? pwebcontact_l10n.saved_on+" "+(new Date()).toLocaleTimeString() : pwebcontact_l10n.error);
 			}
 		}).fail(function(jqXHR, textStatus, errorThrown) {
             $("#pweb-save-status").text("Request error");
-            alert("Request error. "+ jqXHR.status +" "+ errorThrown); //TODO translation
+            alert(pwebcontact_l10n.request_error+ ". "+ jqXHR.status +" "+ errorThrown);
 		});
         
         return false;
@@ -97,15 +98,14 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         
         var $row = $('<div class="pweb-fields-row pweb-clearfix">'
                         +'<input type="hidden" name="fields['+pwebcontact_admin.counter+'][type]" value="row" data-index="'+pwebcontact_admin.counter+'">'
-                        +'<div class="pweb-fields-sort-row pweb-has-tooltip" title="Drag to change order of rows">&varr;</div>' //TODO translation
+                        +'<div class="pweb-fields-sort-row pweb-has-tooltip" title="'+pwebcontact_l10n.drag_row+'">&varr;</div>'
                         +'<div class="pweb-fields-cols"></div>'
-                        +'<div class="pweb-fields-add-col pweb-has-tooltip" title="Add column"><i class="icomoon-plus"></i></div>' //TODO translation
+                        +'<div class="pweb-fields-add-col pweb-has-tooltip" title="'+pwebcontact_l10n.add_column+'"><i class="icomoon-plus"></i></div>'
                     +'</div>');
         
         $row.data("cols", 0)
             .find(".pweb-fields-cols")
             .sortable({
-            
             connectWith: ".pweb-fields-cols",
             cursor: "move",
             placeholder: "pweb-sortable-placeholder",
@@ -189,7 +189,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 // create new column
                 var $col = $('<div class="pweb-fields-col">'
                                 +'<input type="hidden" name="fields['+pwebcontact_admin.counter+'][type]" value="column" data-index="'+pwebcontact_admin.counter+'">'
-                                +'<div class="pweb-fields-remove-col pweb-has-tooltip" title="Remove"><i class="icomoon-close"></i></div>' //TODO translation
+                                +'<div class="pweb-fields-remove-col pweb-has-tooltip" title="'+pwebcontact_l10n.delete+'"><i class="icomoon-close"></i></div>'
                             +'</div>');
                 
                 // insert field by droping field type on column
@@ -212,7 +212,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 $col.find(".pweb-fields-remove-col").click(function(){
                     if ($col.hasClass("pweb-has-field")) {
                         // remove field
-                        if (pwebcontact_admin.confirm === false || confirm("Are you sure you want to remove this field?")) { //TODO translation
+                        if (pwebcontact_admin.confirm === false || pwebcontact_admin.confirmed === true) {
+                            pwebcontact_admin.confirmed = false;
+                            
                             // check if field options are opened
                             var $field = $col.find(".pweb-custom-field-container");
                             if ($("#pweb_fields_options").data("parent") === $field.attr("id")) {
@@ -223,13 +225,15 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                             if ($field.hasClass("pweb-custom-fields-single")) {
                                 $("#pweb_field_type_" + $field.data("type")).show("slow");
                             }
+                            // enable droping of field types on add column button
+                            $col.removeClass("pweb-has-field pweb-custom-field-active pweb-custom-field-type-"+$field.data("type"))
+                                    .droppable("enable");
                             // destroy DOM element
                             $field.remove();
-                            // enable droping of field types on add column button
-                            $col.removeClass("pweb-has-field").removeClass("pweb-custom-field-active").droppable("enable");
                             // enable field type of column
                             $col.find("input").get(0).disabled = false;
                         }
+                        else $("#pweb-dialog-field-delete").data("element", $(this)).dialog("open");
                     }
                     else {
                         
@@ -365,15 +369,15 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 .attr("id", $(this).attr("id").replace(/_X_/g, "_"+index+"_") )
                 .attr("for", $(this).attr("for").replace(/_X_/g, "_"+index+"_") );
         });
-        $field.attr("id", "pweb_fields_"+index+"_container");
+        $field.attr("id", "pweb_fields_"+index+"_container").removeClass("pweb-custom-field-type-"+$field.data("type"));
 
         // Disable adding new fields into this column and insert field details
-        target.droppable("disable").addClass("pweb-has-field").prepend($field);
+        target.droppable("disable").addClass("pweb-has-field pweb-custom-field-type-"+$field.data("type")).prepend($field);
 
         // Display field options
-        if (typeof show_options === "undefined" || show_options !== false) {
+        /*if (typeof show_options === "undefined" || show_options !== false) {
             $field.find(".pweb-custom-field-show-options").click();
-        }
+        }*/
         
         // Hide field on fields types list if only one instance is allowed
         if (source.hasClass("pweb-custom-fields-single")) {
@@ -441,24 +445,85 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         if (this.selectedIndex) {
             var $rows = $("#pweb_fields_rows").children();
             // confirm old fields removal
-            if ($rows.length === 0 || confirm("All current fields will be removed!")) { //TODO translation
+            if ($rows.length === 0 || pwebcontact_admin.confirmed === true) {
+                pwebcontact_admin.confirmed = false;
+                
                 // hide options to remove them
                 $("#pweb_fields_options_close").click();
                 // remove rows with columns and fields without confirmation
                 $rows.remove();
                 // load sample fields
                 loadFields( $(this).val() );
+                // set default option
+                this.selectedIndex = 0;
             }
             else {
-                this.selectedIndex = 0;
+                $("#pweb-dialog-fields-load").data("element", $(this)).dialog("open");
             }
         }
     });
     
     
+    // load fields dialog
+    $("#pweb-dialog-fields-load").dialog({
+        dialogClass: "wp-dialog",
+        autoOpen: false,
+        resizable: false,
+        modal: true,
+        buttons: [
+            { 
+                text: pwebcontact_l10n.ok,
+                class : "button-primary",
+                click: function(e) {
+                    pwebcontact_admin.confirmed = true;
+                    $(this).data("element").trigger("change");
+                    $(this).dialog("close");
+                }
+            },
+            {
+                text: pwebcontact_l10n.cancel,
+                class : "button",
+                click: function() {
+                    $(this).data("element").val("");
+                    $(this).dialog("close");
+                }
+            }
+        ]
+    });
+    
+    
+    // delete field dialog
+    $("#pweb-dialog-field-delete").dialog({
+        dialogClass: "wp-dialog",
+        autoOpen: false,
+        resizable: false,
+        modal: true,
+        buttons: [
+            { 
+                text: pwebcontact_l10n.delete,
+                class : "button-primary",
+                click: function(e) {
+                    pwebcontact_admin.confirmed = true;
+                    $(this).data("element").click();
+                    $(this).dialog("close");
+                }
+            },
+            {
+                text: pwebcontact_l10n.cancel,
+                class : "button",
+                click: function() {
+                    $(this).dialog("close");
+                }
+            }
+        ]
+    });
+    
+    
+    
     // load fields
     loadFields( $("#pweb_params_fields").val() );
     $("#pweb_params_fields").get(0).disabled = true;
+    
     
     //console.log($("#pweb_params_fields").val());
     
