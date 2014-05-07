@@ -24,7 +24,15 @@ function_exists('add_action') or die;
     <?php endif; ?>
     <a class="add-new-h2" href="<?php echo $this->documentation_url; ?>" target="_blank">
         <i class="icomoon-support"></i> <?php _e( 'Documentation' ); ?></a>
+    
+    <?php $debug = get_option('pwebcontact_debug', 0); ?>
+    <a href="#" class="add-new-h2 pweb-action-toggle-state pweb-has-tooltip pweb-text-<?php echo $debug ? 'success' : 'danger'; ?>" 
+       title="Enable this option if contact form is not showing or sending emails. Then reload front-end page and try to send email again. It would display more informations."
+       data-action="<?php echo admin_url( 'admin.php?page=pwebcontact&task=debug&ajax=1&_wpnonce='. wp_create_nonce('edit-debug-state').'&state=' ); ?>"
+       data-state="<?php echo $debug; ?>">
+        <i class="icomoon-<?php echo $debug ? 'checkmark-circle' : 'cancel-circle'; ?>"></i> <?php _e( 'Debug mode' ); ?></a>
 </h2>
+
 
 <?php $this->_display_messages(); ?>
 
@@ -33,11 +41,16 @@ function_exists('add_action') or die;
 
 <?php foreach ($this->data as $form) : ?>
     <div class="theme pweb-panel-box">
-        <div class="theme-screenshot">
+        <div class="theme-screenshot" onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact&task=edit&id='.(int)$form->id ); ?>'">
 			
 		</div>
         <h3 class="theme-name">
-            <?php echo $form->title ? esc_html($form->title) : '&nbsp;'; ?>
+            <span class="pweb-save-date">
+                <?php _e( 'Saved on', 'pwebcontact' ); ?><br><?php echo get_date_from_gmt($form->modify_date); ?>
+            </span>
+            <span class="pweb-form-title">
+                <?php echo $form->title ? esc_html($form->title) : '&nbsp;'; ?>
+            </span>
         </h3>
         <div class="theme-name pweb-position">
             <?php if ($form->position == 'shortcode') : ?>
@@ -83,8 +96,8 @@ function_exists('add_action') or die;
 <?php endforeach; ?>
 
     <div class="theme active pweb-panel-box pweb-panel-pro">
-        <div class="theme-screenshot">
-			
+        <div class="theme-screenshot" onclick="document.location.href='<?php echo $this->buy_pro_url; ?>'">
+			<i class="icomoon-cart"></i>
 		</div>
         <h3 class="theme-name">
             <a class="button button-primary right" href="<?php echo $this->buy_pro_url; ?>" target="_blank">
@@ -95,8 +108,8 @@ function_exists('add_action') or die;
     </div>
     
     <div class="theme active pweb-panel-box pweb-panel-support">
-        <div class="theme-screenshot">
-			
+        <div class="theme-screenshot" onclick="document.location.href='<?php echo $this->buy_support_url; ?>'">
+			<i class="icomoon-support"></i>
 		</div>
         <h3 class="theme-name">
             <a class="button button-primary right" href="<?php echo $this->buy_support_url; ?>" target="_blank">
@@ -109,7 +122,7 @@ function_exists('add_action') or die;
 </div>
 </div>
 
-<div id="pweb-dialog-delete" title="<?php esc_attr_e( 'Confirm deletion', 'pwebcontact' ); ?>" style="display:none">
-    <?php _e( 'Are you sure you want to delete form:', 'pwebcontact' ); ?> 
-    <span class="pweb-dialog-form-title"></span>?
+<div id="pweb-dialog-delete" title="<?php esc_attr_e( 'Delete', 'pwebcontact' ); ?>" style="display:none">
+    <p><?php _e( 'Are you sure you want to delete form:', 'pwebcontact' ); ?> 
+    <span class="pweb-dialog-form-title"></span>?</p>
 </div>
