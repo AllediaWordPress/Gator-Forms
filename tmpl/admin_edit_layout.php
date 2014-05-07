@@ -12,6 +12,30 @@ function_exists('add_action') or die;
 
 ?>
 
+<h3 class="pweb-load-samples">
+    <?php echo $this->_get_label(array(
+        'group' => 'load',
+        'name' => 'layout',
+        'label' => 'Choose your layout'
+    )); ?>
+
+    <?php echo $this->_get_field_control(array(
+        'type' => 'select',
+        'group' => 'load',
+        'name' => 'layout',
+        'options' => array(
+            array(
+                'name' => 'Select',
+                'value' => ''
+            ),
+            array(
+                'name' => 'Default',
+                'value' => '{}'
+            )
+        )
+    )); ?>
+</h3>
+
 <?php echo $this->_get_field(array(
     'type' => 'filelist',
     'name' => 'style_toggler',
@@ -135,6 +159,7 @@ function_exists('add_action') or die;
     'type' => 'radio',
     'name' => 'rounded',
     'label' => 'Display rounded corners',
+    'header' => 'Shape',
     'default' => 1,
     'class' => 'pweb-radio-group',
     'options' => array(
@@ -173,6 +198,7 @@ function_exists('add_action') or die;
     'type' => 'radio',
     'name' => 'labels_position',
     'label' => 'Labels position',
+    'header' => 'Labels',
     'tooltip' => 'Select placement of fields labels. For mobile devices (phones) labels inline are displayed above fields.',
     'default' => 'inline',
     'class' => 'pweb-radio-group',
@@ -203,6 +229,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'form_width',
             'label' => 'Form width [px, %]',
+            'header' => 'Form size',
             'tooltip' => 'Width of form is also a width of Lightbox window. If you want to maximize the window then set 100%.',
             'class' => 'pweb-filter-unit pweb-input-mini'
         )); ?>
@@ -222,6 +249,7 @@ function_exists('add_action') or die;
             'type' => 'image',
             'name' => 'bg_image',
             'label' => 'Background image',
+            'header' => 'Background image',
             'tooltip' => 'Enter URL of image which will be shown in background of contact form. Image will not be repeated.',
             'class' => 'pweb-input-xlarge'
         )); ?>
@@ -288,6 +316,7 @@ function_exists('add_action') or die;
             'type' => 'color',
             'name' => 'modal_bg',
             'label' => 'Lightbox backdrop color',
+            'header' => 'Lightbox backdrop',
             'tooltip' => 'Color of background layer under Lightbox window.',
             'parent' => array('layout_type_modal')
         )); ?>
@@ -321,6 +350,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'toggler_width',
             'label' => 'Toggler width [px]',
+            'header' => 'Toggler',
             'tooltip' => 'Toggler Tab width in pixels (without unit), e.g. 100. Leave blank for enabled vertical toggler.',
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('handler_tab', 'handler_button')
@@ -358,6 +388,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'form_font_size',
             'label' => 'Form font size',
+            'header' => 'Form font',
             'tooltip' => 'Size of form font, e.g. 12px, 10pt, 100%',
             'class' => 'pweb-filter-unit pweb-input-mini'
         )); ?>
@@ -371,23 +402,6 @@ function_exists('add_action') or die;
         
         
         
-        <?php echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'icons',
-            'label' => 'Icons type',
-            'tooltip' => 'Do not select Bootstrap Glyphicons if you have disable it in Advanced tab of configuration.',
-            'default' => 'icomoon',
-            'class' => 'pweb-radio-group',
-            'options' => array(
-                array(
-                    'value' => 'icomoon',
-                    'name' => 'IcoMoon'
-                ),
-                array(
-                    'value' => 'glyphicons',
-                    'name' => 'Bootstrap Glyphicons'
-                )
-            )
-        )); ?>
+        
     </div>
 </div>

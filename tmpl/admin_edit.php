@@ -29,13 +29,8 @@ function_exists('add_action') or die;
                 <i class="icomoon-close"></i> <span><?php _e( 'Close' ); ?></span>
             </button>
 
-            <span id="pweb-save-status"></span>
+            <span id="pweb-save-status"><?php _e( 'Saved on', 'pwebcontact' ); ?> <?php echo get_date_from_gmt($this->data->modify_date); ?></span>
             
-            <!-- TODO remove -->
-            <a class="button right" href="http://app.uxpin.com/42eb90189d3a45c7f37cb0b0aabfd519b04c5d3c/" target="_blank">
-                UXPin
-            </a>
-
             <a class="button button-primary right" id="pweb-buy-button" href="<?php echo $this->buy_support_url; ?>" target="_blank">
                 <i class="icomoon-cart"></i> <?php _e( 'Buy Pro', 'pwebcontact' ); ?>
                 <span>&amp; <?php _e( 'Get Support', 'pwebcontact' ); ?></span>
@@ -49,7 +44,6 @@ function_exists('add_action') or die;
             <a href="#pweb-tab-location" id="pweb-tab-location" class="nav-tab nav-tab-active"><?php esc_html_e( 'Location & Effects', 'pwebcontact' ); ?></a>
             <a href="#pweb-tab-fields" id="pweb-tab-fields" class="nav-tab"><?php esc_html_e( 'Fields', 'pwebcontact' ); ?></a>
             <a href="#pweb-tab-layout" id="pweb-tab-layout" class="nav-tab"><?php esc_html_e( 'Layout', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-submitted" id="pweb-tab-submitted" class="nav-tab"><?php esc_html_e( 'After submitting', 'pwebcontact' ); ?></a>
             <a href="#pweb-tab-email" id="pweb-tab-email" class="nav-tab"><?php esc_html_e( 'Email settings', 'pwebcontact' ); ?></a>
             <a href="#pweb-tab-advanced" id="pweb-tab-advanced" class="nav-tab"><?php esc_html_e( 'Advanced', 'pwebcontact' ); ?></a>
         </h2>
@@ -67,10 +61,6 @@ function_exists('add_action') or die;
         
         <div id="pweb-tab-layout-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('layout', __FILE__); ?>
-        </div>
-        
-        <div id="pweb-tab-submitted-content" class="nav-tab-content pweb-clearfix">
-            <?php $this->_load_tmpl('submitted', __FILE__); ?>
         </div>
         
         <div id="pweb-tab-email-content" class="nav-tab-content pweb-clearfix">

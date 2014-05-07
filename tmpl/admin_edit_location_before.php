@@ -34,12 +34,12 @@ function_exists('add_action') or die;
         ),
         array(
             'value' => 'static',
-            'name' => 'Always opened inside page content',
+            'name' => 'Always opened inside page content or sidebar',
             'class' => 'pweb-layout_type-static pweb-related-static'
         ),
         array(
             'value' => 'hidden',
-            'name' => 'Hidden',
+            'name' => 'Hidden before opening',
             'class' => 'pweb-layout_type-hidden pweb-related-modal pweb-related-accordion pweb-related-slidebox pweb-related-modal-button'
         )
     )
@@ -51,44 +51,8 @@ function_exists('add_action') or die;
     'type' => 'text',
     'name' => 'toggler_name',
     'label' => 'Define text shown on Toggler Tab or Button',
+    'default' => 'Contact form',
     'parent' => array('handler_button', 'handler_tab')
-)); ?>
-
-<?php echo $this->_get_field(array(
-    'type' => 'radio',
-    'name' => 'toggler_position',
-    'label' => 'Toggler Tab position',
-    'parent' => 'handler_tab',
-    'default' => 'left',
-    'class' => 'pweb-radio-group',
-    'options' => array(
-        array(
-            'value' => 'left',
-            'name' => 'Left <br><span class="pwebposition-left"><span></span><span>&varr;</span></span>',
-            'is_parent' => true
-        ),
-        array(
-            'value' => 'right',
-            'name' => 'Right <br><span class="pwebposition-right"><span></span><span>&varr;</span></span>',
-            'is_parent' => true
-        ),
-        array(
-            'value' => 'top:left',
-            'name' => 'Top left <br><span class="pwebposition-top-left"><span></span><span>&harr;</span></span>'
-        ),
-        array(
-            'value' => 'top:right',
-            'name' => 'Top right <br><span class="pwebposition-top-right"><span></span><span>&harr;</span></span>'
-        ),
-        array(
-            'value' => 'bottom:left',
-            'name' => 'Bottom left <br><span class="pwebposition-bottom-left"><span></span><span>&harr;</span></span>'
-        ),
-        array(
-            'value' => 'bottom:right',
-            'name' => 'Bottom right <br><span class="pwebposition-bottom-right"><span></span><span>&harr;</span></span>'
-        )
-    )
 )); ?>
 
 <div class="pweb-advanced-options">
@@ -96,6 +60,49 @@ function_exists('add_action') or die;
         <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
     </a>
     <div class="pweb-advanced-options-content">
+        <?php echo $this->_get_field(array(
+            'type' => 'radio',
+            'name' => 'toggler_position',
+            'label' => 'Toggler Tab position',
+            'parent' => 'handler_tab',
+            'default' => 'left',
+            'class' => 'pweb-radio-group',
+            'options' => array(
+                array(
+                    'value' => 'left',
+                    'name' => 'Left',
+                    'after' => '<br><span class="pwebposition-left"><span></span><span>&varr;</span></span>',
+                    'is_parent' => true
+                ),
+                array(
+                    'value' => 'right',
+                    'name' => 'Right',
+                    'after' => '<br><span class="pwebposition-right"><span></span><span>&varr;</span></span>',
+                    'is_parent' => true
+                ),
+                array(
+                    'value' => 'top:left',
+                    'name' => 'Top left',
+                    'after' => '<br><span class="pwebposition-top-left"><span></span><span>&harr;</span></span>'
+                ),
+                array(
+                    'value' => 'top:right',
+                    'name' => 'Top right',
+                    'after' => '<br><span class="pwebposition-top-right"><span></span><span>&harr;</span></span>'
+                ),
+                array(
+                    'value' => 'bottom:left',
+                    'name' => 'Bottom left',
+                    'after' => '<br><span class="pwebposition-bottom-left"><span></span><span>&harr;</span></span>'
+                ),
+                array(
+                    'value' => 'bottom:right',
+                    'name' => 'Bottom right',
+                    'after' => '<br><span class="pwebposition-bottom-right"><span></span><span>&harr;</span></span>'
+                )
+            )
+        )); ?>
+        
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'offset',
@@ -120,6 +127,7 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'toggler_icon',
             'label' => 'Toggler icon',
+            'header' => 'Toggler Tab',
             'tooltip' => 'Select source for Toggler Tab icon.',
             'default' => 0,
             'parent' => array('handler_tab', 'handler_button'),
@@ -179,6 +187,7 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'toggler_vertical',
             'label' => 'Vertical Toggler Tab',
+            'header' => 'Vertical Toggler Tab',
             'tooltip' => 'Flip toggler tab to vertical orientation.',
             'desc' => 'Default vertical text color is white, change it in `Layout` tab.<br>Reload browser cache on front-end to see changes.<br>If you see rectangles instead of letters then you have to use other `TTF font`.<br>If text is cut then enlarge height of toggler in `Layout` tab. Width leave blank.',
             'default' => 0,
@@ -236,6 +245,7 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'open_toggler',
             'label' => 'Auto-open',
+            'header' => 'Auto open and close',
             'tooltip' => 'Open contact form automatically after page has been loaded or when User scrolls down the page. On exit is experimental and might not work in old browsers.',
             'default' => 0,
             'parent' => array('layout_type_slidebox', 'layout_type_modal', 'layout_type_accordion'),
@@ -372,6 +382,7 @@ function_exists('add_action') or die;
             'type' => 'textarea',
             'name' => 'onload',
             'label' => 'JavaScript on load event',
+            'header' => 'JavaScript events',
             'tooltip' => 'JavaScript code called on page load. Do not insert any HTML tags!',
             'class' => 'pweb-filter-javascript widefat',
             'attributes' => array(

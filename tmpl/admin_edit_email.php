@@ -12,172 +12,123 @@ function_exists('add_action') or die;
 
 ?>
 
+<h3 class="pweb-load-samples">
+    <?php echo $this->_get_label(array(
+        'group' => 'load',
+        'name' => 'email',
+        'label' => 'Choose your answer scheme'
+    )); ?>
+
+    <?php echo $this->_get_field_control(array(
+        'type' => 'select',
+        'group' => 'load',
+        'name' => 'email',
+        'options' => array(
+            array(
+                'name' => 'Select',
+                'value' => ''
+            ),
+            array(
+                'name' => 'Default',
+                'value' => '{msg:"Email has been successfully sent",email:"default"}'
+            )
+        )
+    )); ?>
+</h3>
+
 <?php echo $this->_get_field(array(
     'type' => 'text',
-    'name' => 'email_to',
-    'label' => 'Enter one or more emails to which message should be sent to',
-    'tooltip' => 'To add multiple recipients separate each email with , (coma).',
-    'class' => 'pweb-filter-emails pweb-input-large'
+    'name' => 'msg_success',
+    'label' => 'Enter message which will appear after successful sending email by contact form',
+    'class' => 'pweb-input-large'
 )); ?>
 
-<?php echo $this->_get_field(array(
-    'type' => 'wp_user',
-    'name' => 'email_user',
-    'label' => 'or choose WordPress Administrator to whom message will be sent to',
-    'tooltip' => 'Enable this option to send email to selected WordPress Administrator. Do not use this option if Administrator has the same email address as in above field!'
-)); ?>
+<div class="pweb-field pweb-field-text">
+    <?php echo $this->_get_label(array(
+        'name' => 'email_to',
+        'label' => 'Enter one or more emails to which message should be sent to',
+    )); ?>
+    <div class="pweb-field-control">
+        <?php echo $this->_get_field_control(array(
+            'type' => 'text',
+            'name' => 'email_to',
+            'class' => 'pweb-filter-emails pweb-input-large'
+        )); ?>
+        
+        <?php echo __('or/and', 'pwebcontact') .' '. $this->_get_field_control(array(
+            'type' => 'wp_user',
+            'name' => 'email_cms_user',
+            'label' => 'or choose WordPress Administrator to whom message will be sent to',
+            'tooltip' => 'Enable this option to send email to selected WordPress Administrator. Do not use this option if Administrator has the same email address as in above field!'
+        )); ?>
+    </div>
+</div>
 
 
-
-<?php echo $this->_get_field(array(
-    'type' => 'radio',
-    'name' => 'email_admin',
-    'label' => 'Email to Administrator',
-    'tooltip' => '',
-    'default' => 1,
-    'class' => 'pweb-radio-group',
-    'options' => array(
-        array(
-            'value' => 1,
-            'name' => 'HTML format',
-            'is_parent' => true
-        ),
-        array(
-            'value' => 2,
-            'name' => 'Custom text format',
-            'is_parent' => true
-        )
-    )
-)); ?>
-
-<?php echo $this->_get_field(array(
-    'type' => 'filelist',
-    'name' => 'email_tmpl_html_user',
-    'label' => 'Administrator HTML email',
-    'tooltip' => '',
-    'default' => 'default',
-    'filter' => '\.html$',
-    'directory' => 'media/email_tmpl',
-    'strip_ext' => true,
-    'parent' => array('email_admin_1')
-)); ?>
-
-<?php echo $this->_get_field(array(
-    'type' => 'textarea',
-    'name' => 'email_tmpl_text_user',
-    'label' => 'Administrator text email',
-    'tooltip' => '',
-    'class' => 'widefat',
-    'parent' => array('email_admin_2'),
-    'attributes' => array(
-        'rows' => 5,
-        'cols' => 50
-    )
-)); ?>
-
-
-
-<?php echo $this->_get_field(array(
-    'type' => 'radio',
-    'name' => 'email_copy',
-    'label' => 'Send copy to User',
-    'tooltip' => '',
-    'default' => 0,
-    'class' => 'pweb-radio-group',
-    'options' => array(
-        array(
-            'value' => 0,
-            'name' => 'No'
-        ),
-        array(
-            'value' => 1,
-            'name' => 'Yes, HTML format',
-            'is_parent' => true
-        ),
-        array(
-            'value' => 2,
-            'name' => 'Yes, custom text format',
-            'is_parent' => true
-        )
-    )
-)); ?>
-
-<?php echo $this->_get_field(array(
-    'type' => 'filelist',
-    'name' => 'email_tmpl_html_user',
-    'label' => 'User HTML email',
-    'tooltip' => '',
-    'default' => 'default',
-    'filter' => '\.html$',
-    'directory' => 'media/email_tmpl',
-    'strip_ext' => true,
-    'parent' => array('email_copy_1')
-)); ?>
-
-<?php echo $this->_get_field(array(
-    'type' => 'textarea',
-    'name' => 'email_tmpl_text_user',
-    'label' => 'User text email',
-    'tooltip' => '',
-    'class' => 'widefat',
-    'parent' => array('email_copy_2'),
-    'attributes' => array(
-        'rows' => 5,
-        'cols' => 50
-    )
-)); ?>
-
-
-
-<?php echo $this->_get_field(array(
-    'type' => 'radio',
-    'name' => 'email_autoreply',
-    'label' => 'Send auto-reply',
-    'tooltip' => '',
-    'default' => 0,
-    'class' => 'pweb-radio-group',
-    'options' => array(
-        array(
-            'value' => 0,
-            'name' => 'No'
-        ),
-        array(
-            'value' => 1,
-            'name' => 'Yes, HTML format',
-            'is_parent' => true
-        ),
-        array(
-            'value' => 2,
-            'name' => 'Yes, custom text format',
-            'is_parent' => true
-        )
-    )
-)); ?>
-
-<?php echo $this->_get_field(array(
-    'type' => 'filelist',
-    'name' => 'email_tmpl_html_autoreply',
-    'label' => 'Auto-reply HTML email',
-    'tooltip' => '',
-    'default' => 'auto-reply',
-    'filter' => '\.html$',
-    'directory' => 'media/email_tmpl',
-    'strip_ext' => true,
-    'parent' => array('email_autoreply_1')
-)); ?>
-
-<?php echo $this->_get_field(array(
-    'type' => 'textarea',
-    'name' => 'email_tmpl_text_autoreply',
-    'label' => 'Auto-reply text email',
-    'tooltip' => '',
-    'class' => 'widefat',
-    'parent' => array('email_autoreply_2'),
-    'attributes' => array(
-        'rows' => 5,
-        'cols' => 50
-    )
-)); ?>
+<div class="pweb-field pweb-field-textarea">
+    <h3><?php _e( 'User email', 'pwebcontact' ); ?></h3>
+    <?php echo $this->_get_label(array(
+        'name' => 'email_user_tmpl',
+        'label' => 'Enter message which will be sent to User as copy'
+    )); ?>
+    <div class="pweb-field-control">
+        <?php echo $this->_get_field_control(array(
+            'type' => 'textarea',
+            'name' => 'email_user_tmpl',
+            'desc' => 'Remeber to create field type of: Send copy to yourself, to use this option.',
+            'class' => 'widefat',
+            'attributes' => array(
+                'rows' => 10,
+                'cols' => 50
+            )
+        )); ?>
+        <div class="pweb-field-desc"><?php _e('Remeber to create field type of: Send copy to yourself, to use this option.', 'pwebcontact'); ?></div>
+    </div>
+    <div class="pweb-field-control">
+        <?php echo $this->_get_label(array(
+            'name' => 'email_user_format',
+            'label' => 'Select format'
+        )); ?>
+        
+        <?php echo $this->_get_field_control(array(
+            'type' => 'radio',
+            'name' => 'email_user_format',
+            'default' => 1,
+            'class' => 'pweb-radio-group',
+            'options' => array(
+                array(
+                    'value' => 1,
+                    'name' => 'Text'
+                ),
+                array(
+                    'value' => 2,
+                    'name' => 'HTML'
+                )
+            )
+        )); ?>
+        
+        <?php echo $this->_get_label(array(
+            'name' => 'email_user_tmpl_list',
+            'label' => 'Load template'
+        )); ?>
+        
+        <?php echo $this->_get_field_control(array(
+            'type' => 'filelist',
+            'name' => 'email_user_tmpl_list',
+            'filter' => '\.html$',
+            'directory' => 'media/email_tmpl',
+            'strip_ext' => true,
+            'options' => array(
+                array(
+                    'value' => '',
+                    'name' => '- Select template -'
+                )
+            )
+        )); ?>
+        
+        <span class="pweb-field-desc"><?php _e( 'If you changed format of email then load template again', 'pwebcontact' ); ?></span>
+    </div>
+</div>
 
 <div class="pweb-advanced-options">
     <a href="#" class="pweb-advanced-options-toggler">
@@ -185,10 +136,272 @@ function_exists('add_action') or die;
     </a>
     <div class="pweb-advanced-options-content">
         
+        
+        <div class="pweb-field pweb-field-textarea">
+            <h3><?php _e( 'Administrator email', 'pwebcontact' ); ?></h3>
+            <?php echo $this->_get_label(array(
+                'name' => 'email_admin_tmpl',
+                'label' => 'Enter message which will be sent to Administrator'
+            )); ?>
+            <div class="pweb-field-control">
+                <?php echo $this->_get_field_control(array(
+                    'type' => 'textarea',
+                    'name' => 'email_admin_tmpl',
+                    'class' => 'widefat',
+                    'attributes' => array(
+                        'rows' => 10,
+                        'cols' => 50
+                    ),
+                    'default' => '{fields}
+
+{lang:Tiket}: {ticket}
+{lang:Page title}: {title}
+{lang:Page URL}: {url}
+{lang:IP}: {ip_address}
+{lang:Browser}: {browser}
+{lang:Operating system}: {os}
+{lang:Screen resolution}: {screen_resolution}
+
+{files}'
+                )); ?>
+            </div>
+            <div class="pweb-field-control">
+                <?php echo $this->_get_label(array(
+                    'name' => 'email_admin_format',
+                    'label' => 'Select format'
+                )); ?>
+
+                <?php echo $this->_get_field_control(array(
+                    'type' => 'radio',
+                    'name' => 'email_admin_format',
+                    'default' => 1,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 1,
+                            'name' => 'Text'
+                        ),
+                        array(
+                            'value' => 2,
+                            'name' => 'HTML'
+                        )
+                    )
+                )); ?>
+
+                <?php echo $this->_get_label(array(
+                    'name' => 'email_admin_tmpl_list',
+                    'label' => 'Load template'
+                )); ?>
+
+                <?php echo $this->_get_field_control(array(
+                    'type' => 'filelist',
+                    'name' => 'email_admin_tmpl_list',
+                    'filter' => '\.html$',
+                    'directory' => 'media/email_tmpl',
+                    'strip_ext' => true,
+                    'options' => array(
+                        array(
+                            'value' => '',
+                            'name' => '- Select template -'
+                        )
+                    )
+                )); ?>
+                
+                <span class="pweb-field-desc"><?php _e( 'If you changed format of email then load template again', 'pwebcontact' ); ?></span>
+            </div>
+        </div>
+        
+        
+        
+        <div class="pweb-field pweb-field-textarea">
+            <h3><?php _e( 'Auto-reply email', 'pwebcontact' ); ?></h3>
+            <?php echo $this->_get_label(array(
+                'name' => 'email_autoreply_tmpl',
+                'label' => 'Enter message of auto-reply which will be sent to User always'
+            )); ?>
+            <div class="pweb-field-control pweb-child pweb_params_email_autoreply_format_1 pweb_params_email_autoreply_format_2">
+                <?php echo $this->_get_field_control(array(
+                    'type' => 'textarea',
+                    'name' => 'email_autoreply_tmpl',
+                    'class' => 'widefat',
+                    'attributes' => array(
+                        'rows' => 10,
+                        'cols' => 50
+                    )
+                )); ?>
+            </div>
+            <div class="pweb-field-control">
+                <?php echo $this->_get_label(array(
+                    'name' => 'email_autoreply_format',
+                    'label' => 'Select format'
+                )); ?>
+
+                <?php echo $this->_get_field_control(array(
+                    'type' => 'radio',
+                    'name' => 'email_autoreply_format',
+                    'default' => 0,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'Do not send'
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Text',
+                            'is_parent' => true
+                        ),
+                        array(
+                            'value' => 2,
+                            'name' => 'HTML',
+                            'is_parent' => true
+                        )
+                    )
+                )); ?>
+
+                <span class="pweb-child pweb_params_email_autoreply_format_1 pweb_params_email_autoreply_format_2">
+                    <?php echo $this->_get_label(array(
+                        'name' => 'email_autoreply_tmpl_list',
+                        'label' => 'Load template'
+                    )); ?>
+
+                    <?php echo $this->_get_field_control(array(
+                        'type' => 'filelist',
+                        'name' => 'email_autoreply_tmpl_list',
+                        'filter' => '\.html$',
+                        'directory' => 'media/email_tmpl',
+                        'strip_ext' => true,
+                        'options' => array(
+                            array(
+                                'value' => '',
+                                'name' => '- Select template -'
+                            )
+                        )
+                    )); ?>
+
+                    <span class="pweb-field-desc"><?php _e( 'If you changed format of email then load template again', 'pwebcontact' ); ?></span>
+                </span>
+            </div>
+        </div>
+
+
+        <?php echo $this->_get_field(array(
+            'type' => 'radio',
+            'name' => 'msg_position',
+            'label' => 'System message position',
+            'tooltip' => 'Display message before or after form, next to send button or in popup layer',
+            'header' => 'System message',
+            'default' => 'after',
+            'options' => array(
+                array(
+                    'value' => 'before',
+                    'name' => 'Before form'
+                ),
+                array(
+                    'value' => 'after',
+                    'name' => 'After form'
+                ),
+                array(
+                    'value' => 'button',
+                    'name' => 'Next to Send buton'
+                ),
+                array(
+                    'value' => 'popup',
+                    'name' => 'In popup',
+                    'is_parent' => true
+                )
+            )
+        )); ?>
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'text',
+            'name' => 'msg_close_delay',
+            'label' => 'Popup message close delay [s]',
+            'tooltip' => 'Set 0 to disable auto-close of popup message',
+            'default' => 10,
+            'class' => 'pweb-filter-int pweb-input-mini',
+            'parent' => array('msg_position_popup')
+        )); ?>
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'color',
+            'name' => 'msg_success_color',
+            'label' => 'Success message color',
+            'tooltip' => 'Select custom color of success message'
+        )); ?>
+
+        <?php echo $this->_get_field(array(
+            'type' => 'color',
+            'name' => 'msg_error_color',
+            'label' => 'Error message color',
+            'tooltip' => 'Select custom color of error message'
+        )); ?>
+        
+        
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'radio',
+            'name' => 'tooltips_validation',
+            'label' => 'Show tooltips on validation error',
+            'default' => 1,
+            'class' => 'pweb-radio-group',
+            'options' => array(
+                array(
+                    'value' => 0,
+                    'name' => 'No',
+                    'is_parent' => true
+                ),
+                array(
+                    'value' => 1,
+                    'name' => 'Yes',
+                    'is_parent' => true
+                )
+            )
+        )); ?>
+        
+        
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'radio',
+            'name' => 'reset_form',
+            'label' => 'Reset form',
+            'tooltip' => 'Reset all data filled in by User after email has been successfully sent. Success message will stay.',
+            'default' => 1,
+            'options' => array(
+                array(
+                    'value' => 0,
+                    'name' => 'No'
+                ),
+                array(
+                    'value' => 1,
+                    'name' => 'After successfully sent'
+                ),
+                array(
+                    'value' => 2,
+                    'name' => 'After closing successfully sent form'
+                ),
+                array(
+                    'value' => 3,
+                    'name' => 'With reset button',
+                    'is_parent' => true
+                )
+            )
+        )); ?>
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'text',
+            'name' => 'button_reset',
+            'label' => 'Reset button label',
+            'parent' => array('reset_form_3')
+        )); ?>
+        
+        
+        
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'email_subject',
-            'label' => 'Custom subject of email',
+            'label' => 'Subject of email',
+            'header' => 'Email subject',
             'tooltip' => '',
             'class' => 'pweb-input-large'
         )); ?>
@@ -212,10 +425,6 @@ function_exists('add_action') or die;
                 array(
                     'value' => 2,
                     'name' => 'Page title'
-                ),
-                array(
-                    'value' => 3,
-                    'name' => 'Form field'
                 )
             )
         )); ?>
@@ -226,6 +435,7 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'ticket_enable',
             'label' => 'Enable tickets',
+            'header' => 'Tickets',
             'tooltip' => '',
             'default' => 0,
             'class' => 'pweb-radio-group',
@@ -269,6 +479,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'email_from',
             'label' => 'Sender email',
+            'header' => 'Email settings',
             'desc' => $isLocalhsot ? '' : sprintf(__('Sender email should be in the same domain as your website, example: %s'), 'info@'.$domain),
             'class' => 'pweb-filter-email',
             'default' => get_bloginfo('admin_email'),
@@ -402,6 +613,95 @@ function_exists('add_action') or die;
             'default' => 25,
             'parent' => 'mailer_smtp',
             'class' => 'pweb-input-mini'
+        )); ?>
+        
+        
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'radio',
+            'name' => 'redirect',
+            'label' => 'Redirect after send',
+            'header' => 'Redirect',
+            'default' => 0,
+            'class' => 'pweb-radio-group',
+            'options' => array(
+                array(
+                    'value' => 0,
+                    'name' => 'No'
+                ),
+                array(
+                    'value' => 1,
+                    'name' => 'Yes',
+                    'is_parent' => true
+                )
+            )
+        )); ?>
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'text',
+            'name' => 'redirect_url',
+            'label' => 'Redirect URL',
+            'tooltip' => 'Enter URL for redirect to thank you page after successful email sent. Do not encode ampersands &amp;',
+            'class' => 'pweb-filter-url pweb-input-xlarge',
+            'parent' => array('redirect_1')
+        )); ?>
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'text',
+            'name' => 'redirect_delay',
+            'label' => 'Redirect delay [s]',
+            'tooltip' => 'Enter delay time in seconds before redirect.',
+            'default' => 5,
+            'class' => 'pweb-filter-int pweb-input-mini',
+            'parent' => array('redirect_1')
+        )); ?>
+        
+        
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'text_button',
+            'name' => 'adwords_url',
+            'label' => 'Google AdWords Conversion Tracker - image URL',
+            'header' => 'Tracking',
+            'tooltip' => 'Paste URL of image from generated tracking script or you can use <em>Paste</em> button to extract this link from conversion tracking script.',
+            'button' => 'Paste',
+            'class' => 'pweb-input-xlarge'
+        )); ?>
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'text_button',
+            'name' => 'adcenter_url',
+            'label' => 'Microsoft adCenter Conversion Tracker - MSTag iframe URL',
+            'tooltip' => 'Paste URL of iframe from generated tracking script or you can use <em>Paste</em> button to extract this link from conversion tracking script.',
+            'button' => 'Paste',
+            'class' => 'pweb-input-xlarge'
+        )); ?>
+        
+        
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'textarea',
+            'name' => 'oncomplete',
+            'label' => 'JavaScript on mail success event',
+            'header' => 'JavaScript events',
+            'tooltip' => 'JavaScript code called after successful send of email. This event has one argument `data` type of object with property `ticket`. Do not insert any HTML tags!',
+            'class' => 'pweb-filter-javascript widefat',
+            'attributes' => array(
+                'rows' => 5,
+                'cols' => 50
+            )
+        )); ?>
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'textarea',
+            'name' => 'onerror',
+            'label' => 'JavaScript on mail error event',
+            'tooltip' => 'JavaScript code called after mail send error or invalid captcha. This event has one argument `data` type of object with possible property `invalid`. Do not insert any HTML tags!',
+            'class' => 'pweb-filter-javascript widefat',
+            'attributes' => array(
+                'rows' => 5,
+                'cols' => 50
+            )
         )); ?>
         
         

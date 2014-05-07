@@ -28,7 +28,8 @@ function_exists('add_action') or die;
         array(
             'value' => 'shortcode',
             'name' => 'On selected pages with short code',
-            'class' => 'pweb-related-slidebox pweb-related-modal pweb-related-accordion pweb-related-static pweb-related-modal-button'
+            'class' => 'pweb-related-slidebox pweb-related-modal pweb-related-accordion pweb-related-static pweb-related-modal-button',
+            'after' => '<input value="[pwebcontact id='.$this->id.']" class="pweb-shortcode pweb-has-tooltip" type="text" readonly="readonly" title="'.esc_attr__( 'Copy shortcode and paste into blog post or page.', 'pwebcontact' ).'">'
         ),
         array(
             'value' => 'widget',
@@ -37,6 +38,8 @@ function_exists('add_action') or die;
         )
     )
 )); ?>
+
+
 
 <!--<div class="pweb-advanced-options">
     <a href="#" class="pweb-advanced-options-toggler">

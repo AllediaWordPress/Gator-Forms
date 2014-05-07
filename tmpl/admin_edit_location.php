@@ -23,15 +23,6 @@ function_exists('add_action') or die;
     </div>
 
     <div class="pweb-location-step">
-        <h3><?php _e( 'Movement effect', 'pwebcontact' ); ?></h3>
-        <div class="pweb-location-step-tab" id="pweb-location-effect">
-            <div class="pweb-step-option"></div>
-            <div class="pweb-step-arrow-right"></div>
-            <div class="pweb-step-arrow-down"></div>
-        </div>
-    </div>
-
-    <div class="pweb-location-step">
         <h3><?php _e( 'Form after opening', 'pwebcontact' ); ?></h3>
         <div class="pweb-location-step-tab" id="pweb-location-after">
             <div class="pweb-step-option"></div>
@@ -53,10 +44,6 @@ function_exists('add_action') or die;
 
     <div class="pweb-location-options pweb-options-active" id="pweb-location-before-options">
         <?php $this->_load_tmpl('before', __FILE__); ?>
-    </div>
-
-    <div class="pweb-location-options" id="pweb-location-effect-options">
-        <?php $this->_load_tmpl('effect', __FILE__); ?>
     </div>
 
     <div class="pweb-location-options" id="pweb-location-after-options">
