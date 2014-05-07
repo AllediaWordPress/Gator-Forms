@@ -121,18 +121,39 @@ class PWebContact_Admin {
                 // load JS files
                 wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-edit.js', __FILE__), 
                         array(
-                            'jquery', 
-                            'jquery-ui-core', 
-                            'jquery-ui-widget', 
-                            'jquery-ui-mouse', 
-                            'jquery-ui-tooltip', 
-                            'jquery-ui-sortable', 
-                            'jquery-ui-draggable', 
+                            'jquery',
+                            'jquery-ui-tooltip'
+                        ));
+                wp_enqueue_script('pwebcontact_admin_fields_script', plugins_url('media/js/jquery.admin-fields.js', __FILE__),
+                        array(
+                            'jquery',
+                            'jquery-ui-core',
+                            'jquery-ui-widget',
+                            'jquery-ui-dialog',
+                            'jquery-ui-mouse',
+                            'jquery-ui-tooltip',
+                            'jquery-ui-sortable',
+                            'jquery-ui-draggable',
                             'jquery-ui-droppable'
                         ));
-                wp_enqueue_script('pwebcontact_admin_fields_script', plugins_url('media/js/jquery.admin-fields.js', __FILE__));
                 
                 //TODO load JavaScript translations
+                wp_localize_script('pwebcontact_admin_script', 'pwebcontact_l10n', array(
+                    'delete' => __('Delete'),
+                    'cancel' => __('Cancel'),
+                    'ok' => __('OK'),
+                    'drag_row' => __('Drag to change order of rows', 'pwebcontact'),
+                    'add_column' => __('Add column', 'pwebcontact'),
+                    'saving' => __('Saving...', 'pwebcontact'),
+                    'saved_on' => __('Saved on', 'pwebcontact'),
+                    'error' => __('Error'),
+                    'request_error' => __('Request error', 'pwebcontact'),
+                    'paste_adcenter' => __('Paste Microsoft adCenter conversion tracking script', 'pwebcontact'),
+                    'paste_adwords' => __('Paste Google AdWords/Goal Conversion tracking script', 'pwebcontact')
+                ));
+                
+                // load CSS
+                wp_enqueue_style('wp-jquery-ui-dialog');
             }
         }
         elseif ( $task == 'save' AND isset($_POST['id'])) {
@@ -245,6 +266,43 @@ class PWebContact_Admin {
                 }
             }
         }
+        elseif ( $task == 'debug' AND isset($_GET['state'])) {
+            
+            $this->view = 'list';
+            $state = (int)$_GET['state'];
+            
+            if (!$this->can_edit) {
+                // redirect to list view
+                $this->_redirect('admin.php?page=pwebcontact&error='.
+                        urlencode(__('You do not have sufficient permissions to change debug mode state!', 'pwebcontact')));
+            }
+            else {
+                
+                if (isset($_GET['ajax'])) {
+                    check_ajax_referer( 'edit-debug-state' );
+                    //wp_verify_nonce( $_POST['_wp_nonce'], 'edit-debug-state' );
+                }
+                else {
+                    check_admin_referer( 'edit-debug-state' );
+                }
+                
+                $result = update_option('pwebcontact_debug', $state);
+                $message = __($result ? 'Debug has been successfully '.($state ? 'enabled' : 'disabled').'.' : 'Failed changing debug mode state!', 'pwebcontact');
+                
+                if (isset($_GET['ajax'])) {
+                    header('Content-type: application/json');
+                    die(json_encode(array(
+                        'success' => $result,
+                        'message' => $message,
+                        'state' => $state
+                    )));
+                }
+                else {
+                    $this->_redirect('admin.php?page=pwebcontact'.
+                            '&'.($result ? 'notification' : 'error').'='.urlencode($message));
+                }
+            }
+        }
         elseif ( $task == 'list' OR $task == '' ) {
             
             $this->view = 'list';
@@ -318,7 +376,7 @@ class PWebContact_Admin {
         
         if ($this->data === null) {
         
-            $sql =  'SELECT `id`, `title`, `publish`, `position`, `layout` '.
+            $sql =  'SELECT `id`, `title`, `publish`, `position`, `modify_date`, `layout` '.
                     'FROM `'.$wpdb->prefix.'pwebcontact_forms` ';
             $this->data = $wpdb->get_results($sql);
             
@@ -335,7 +393,7 @@ class PWebContact_Admin {
         
         if ($this->data === null AND $this->id) {
         
-            $sql =  $wpdb->prepare('SELECT `title`, `publish`, `position`, `layout`, `params` '.
+            $sql =  $wpdb->prepare('SELECT `title`, `publish`, `position`, `layout`, `modify_date`, `params` '.
                     'FROM `'.$wpdb->prefix.'pwebcontact_forms` '.
                     'WHERE `id` = %d', $this->id);
             $this->data = $wpdb->get_row($sql);
@@ -360,7 +418,7 @@ class PWebContact_Admin {
     
     protected function _get_param($key = null, $default = null) {
         
-        if (isset($this->data->params[$key]) AND $this->data->params[$key]) {
+        if (isset($this->data->params[$key]) AND $this->data->params[$key] !== null AND $this->data->params[$key] !== '') {
             return $this->data->params[$key];
         }
         return $default;
@@ -369,7 +427,7 @@ class PWebContact_Admin {
     
     protected function _get_post($key = null, $default = null) {
         
-        if (isset($_POST[$key]) AND $_POST[$key]) {
+        if (isset($_POST[$key]) AND $_POST[$key] !== null AND $_POST[$key] !== '') {
             return $_POST[$key];
         }
         return $default;
@@ -417,6 +475,7 @@ class PWebContact_Admin {
             'publish' => 1,
             'position' => 'footer',
             'layout' => 'slidebox',
+            'modify_date' => gmdate('Y-m-d H:i:s'),
             'params' => '{}'
         );
         
@@ -441,6 +500,7 @@ class PWebContact_Admin {
         
         $data['title'] .= __( ' (Copy)', 'pwebcontact' );
         $data['publish'] = 0;
+        $data['modify_date'] = gmdate('Y-m-d H:i:s');
         
         if ($wpdb->insert($wpdb->prefix.'pwebcontact_forms', $data)) {
             $this->id = (int)$wpdb->insert_id;
@@ -510,6 +570,7 @@ class PWebContact_Admin {
                     //'publish' => $this->_get_post('publish', 1),
                     'position' => $position,
                     'layout' => $layout,
+                    'modify_date' => gmdate('Y-m-d H:i:s'),
                     'params' => json_encode($params)
                 ), array('id' => $this->id), array('%s', /*'%d',*/ '%s', '%s', '%s'));
     }
@@ -628,6 +689,7 @@ class PWebContact_Admin {
             'label' => null,
             'desc' => null,
             'tooltip' => null,
+            'header' => null,
             'parent' => null,
             'disabled' => false,
             'is_pro' => null
@@ -655,6 +717,7 @@ class PWebContact_Admin {
                 .'"'
                 .($tooltip ? ' title="'. esc_attr__($tooltip, 'pwebcontact') .'"' : '')
                 .'>'.
+                    ($header ? '<h3>'.$header.'</h3>' : '').
                     ($label ? $this->_get_label($opt) : '').
                     '<div class="pweb-field-control">'.
                         $this->_get_field_control($opt).
@@ -730,10 +793,9 @@ class PWebContact_Admin {
         }
         
         
-        if ($default !== null AND ($value === null OR $value === '')) {
-            $value = $default;
+        if (!isset($attributes['class'])) {
+            $attributes['class'] = '';
         }
-        
         if ($class) {
             $attributes['class'] .= ' '.$class;
         }
@@ -763,6 +825,9 @@ class PWebContact_Admin {
         
         if ($value === null AND $group === 'params') {
             $value = $this->_get_param($name, $default);
+        }
+        if ($value === null OR $value === '') {
+            $value = $default;
         }
         
         // extend HTML fields with custom types
@@ -855,7 +920,7 @@ class PWebContact_Admin {
                 if ($users) {
                     foreach ($users as $user) {
                         $options[] = array(
-                            'value' => $user->id,
+                            'value' => $user->ID,
                             'name' => $user->display_name .' <'. $user->user_email .'>'
                         );
                     }
@@ -976,7 +1041,7 @@ class PWebContact_Admin {
                         }
                     }
                     
-                    $option_id = $id .'_'. preg_replace('/[^a-z0-9-_]/i', '', $option['value']);
+                    $option_id = $id .'_'. preg_replace('/[^a-z0-9-_]/i', '', str_replace(':', '_', $option['value']));
                     
                     $html .= '<div class="pweb-field-option'
                             . (isset($option['class']) ? ' '.esc_attr($option['class']) : '').'"'
@@ -990,7 +1055,7 @@ class PWebContact_Admin {
                             . '>';
                     
                     $html .= '<label for="'.$option_id.'" id="'.$option_id.'-lbl"'
-                            . '>'. __($option['name'], 'pwebcontact') .'</label>';
+                            . '>'. __($option['name'], 'pwebcontact') . (isset($option['after']) ? $option['after'] : '').'</label>';
                     
                     $html .= '</div>';
                 }
