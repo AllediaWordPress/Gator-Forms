@@ -782,7 +782,8 @@ function_exists('add_action') or die;
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Date format',
-                                'default' => '%d-%m-%Y'
+                                'default' => 'dd-mm-yy',
+                                'desc' => '<a href="http://api.jqueryui.com/datepicker/#utility-formatDate" target="_blank">'.__('Click to see a full list of the possible formats of date', 'pwebcontact').'</a>'
                             )); ?>
                             
                         </div>

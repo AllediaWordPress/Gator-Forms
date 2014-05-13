@@ -50,11 +50,12 @@ class PWebContact
     protected static $headers       = array();
 	protected static $sys_info 		= null;
 	protected static $loaded 		= array(
-										'init' 			=> false,
-                                        'text' 			=> false,
-										'uploader_text' => false,
-										'debug_js' 		=> false,
-										'ie_css' 		=> false
+										'init'              => false,
+                                        'text'              => false,
+										'uploader_text'     => false,
+                                        'datapicker_text'   => false,
+										'debug_js'          => false,
+										'ie_css'            => false
 									);
     
 
@@ -102,6 +103,8 @@ class PWebContact
             
             wp_register_style('pwebcontact-uploader', $media_url.'css/uploader.css');
             wp_register_style('pwebcontact-uploader-rtl', $media_url.'css/uploader-rtl.css');
+            
+            wp_register_style('pwebcontact-jquery-ui-datepicker', $media_url.'jquery-ui/smoothness/jquery-ui.datapicker'.($debug ? '' : '.min').'.css');
 
             wp_register_style('pwebcontact-custom', $media_url.'css/custom.css');
             
@@ -735,6 +738,18 @@ class PWebContact
 		$layout 	= $params->get('layout_type', 'slidebox');
 		$debug 		= $params->get('debug');
 
+        
+        // Check if calendar field will be used
+		$fields = self::getFields();
+		$datapicker = false;
+		foreach ($fields as $field)
+		{
+            if ($field['type'] == 'date')
+			{
+				$datapicker = true;
+			}
+		}
+        
 		// jQuery
 		if ($params->get('load_jquery', 1)) {
             wp_enqueue_script('jquery');
@@ -768,9 +783,8 @@ class PWebContact
 		}
 
 
-        // TODO load IcoMoon for calendar field
-		// Toggler IcoMoon
-		if (in_array($params->get('handler', 'tab'), array('button', 'tab')) AND $params->get('toggler_icon') == 'icomoon' AND $params->get('toggler_icomoon') AND $params->get('load_icomoon', 1))
+		// Toggler and calendar field IcoMoon
+		if (($datapicker OR (in_array($params->get('handler', 'tab'), array('button', 'tab')) AND $params->get('toggler_icon') == 'icomoon' AND $params->get('toggler_icomoon'))) AND $params->get('load_icomoon', 1))
 			wp_enqueue_style('pwebcontact-icomoon');
 
 
@@ -842,6 +856,22 @@ class PWebContact
 				wp_enqueue_style('pwebcontact-animations');
 			}
 		}
+        
+        // Load jQuery Datapicker for calendar field
+        if ($datapicker AND $params->get('load_jquery_ui', 1)) {
+            wp_enqueue_script('jquery-ui-datepicker');
+            wp_enqueue_style('pwebcontact-jquery-ui-datepicker');
+            
+            //TODO load datapicker translations
+            /*if (!self::$loaded['datapicker_text']) 
+			{
+				self::$loaded['datapicker_text'] = true;
+				
+                wp_localize_script('jquery-ui-datapicker', 'pwebcontact_l10n = pwebcontact_l10n || {}; pwebcontact_l10n.datapicker', array(
+                    '' => __('', 'pwebcontact'),
+                ));
+			}*/
+        }
         
         // Load jQuery Cookie for auto-open count
         if ($params->get('open_toggler') AND $params->get('open_count') AND $params->get('load_jquery_cookie', 1)) {
@@ -967,7 +997,6 @@ class PWebContact
 		$params = self::getParams($form_id);
 		
 		$form_id 	= (int)$params->get('id');
-		$media_url 	= $params->get('media_url');
 		$layout 	= $params->get('layout_type', 'slidebox');
 		$position 	= $params->get('toggler_position', 'left');
 		
@@ -1139,10 +1168,7 @@ class PWebContact
 		}
 		if (count($calendars)) 
 		{
-			//TODO load some calendar
 			$options[] = 'calendars:['.implode(',',$calendars).']';
-			/*if (($value = JFactory::getLanguage()->getFirstDay()) != 0)
-				$options[] = 'calendarFirstDay:'.$value;*/
 		}
 		
 		
