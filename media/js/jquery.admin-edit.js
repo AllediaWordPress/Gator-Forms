@@ -433,6 +433,81 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     $("#pweb_params_bg_color").closest(".pweb-field-control").append( $("#pweb_params_bg_opacity") );
     
+    
+    $(".pweb-load-email-tmpl").change(function(e){
+        
+        if (this.selectedIndex) {
+            
+            var id = $(this).attr("id").replace("_list", "");
+            
+            // confirm loading of email tmpl
+            if (!$("#"+id).val() || pwebcontact_admin.confirmed === true) {
+                pwebcontact_admin.confirmed = false;
+                
+                var that = this,
+                    data = {
+                        "tmpl": $(this).val(),
+                        "format": parseInt($("#"+id+"_format input:checked").val())
+                    };
+                
+                $.ajax({
+                    url: $(this).data("action"),
+                    type: "POST", 
+                    dataType: "text",
+                    data: data,
+                    beforeSend: function() {
+                        $('<i class="icomoon-spinner"></i>').insertAfter(that);
+                    }
+                }).done(function(response, textStatus, jqXHR) {
+
+                    // hide loading
+                    $(that).val("").next("i").remove();
+
+                    if (response) {
+                        $("#"+id).val(response);
+                    }
+                    else {
+                        alert(pwebcontact_l10n.missing_email_tmpl.replace("%s", data.tmpl + (data.format === 2 ? ".html" : ".txt")));
+                    }
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+
+                    alert(pwebcontact_l10n.request_error+'. '+ jqXHR.status +' '+ errorThrown);
+                });
+            }
+            else {
+                // confirmation
+                $("#pweb-dialog-email-load").data("element", $(this)).dialog("open");
+            }
+        }
+    });
+    
+    $("#pweb-dialog-email-load").dialog({
+        dialogClass: "wp-dialog",
+        autoOpen: false,
+        resizable: false,
+        modal: true,
+        buttons: [
+            { 
+                text: pwebcontact_l10n.ok,
+                class : "button-primary",
+                click: function(e) {
+                    pwebcontact_admin.confirmed = true;
+                    $(this).data("element").trigger("change");
+                    $(this).dialog("close");
+                }
+            },
+            {
+                text: pwebcontact_l10n.cancel,
+                class : "button",
+                click: function() {
+                    $(this).data("element").val("");
+                    $(this).dialog("close");
+                }
+            }
+        ]
+    });
+    
+    
     //TODO select background image
     
     

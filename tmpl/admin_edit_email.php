@@ -86,13 +86,13 @@ function_exists('add_action') or die;
     </div>
     <div class="pweb-field-control">
         <?php echo $this->_get_label(array(
-            'name' => 'email_user_format',
+            'name' => 'email_user_tmpl_format',
             'label' => 'Select format'
         )); ?>
         
         <?php echo $this->_get_field_control(array(
             'type' => 'radio',
-            'name' => 'email_user_format',
+            'name' => 'email_user_tmpl_format',
             'default' => 1,
             'class' => 'pweb-radio-group',
             'options' => array(
@@ -118,6 +118,10 @@ function_exists('add_action') or die;
             'filter' => '\.html$',
             'directory' => 'media/email_tmpl',
             'strip_ext' => true,
+            'class' => 'pweb-load-email-tmpl',
+            'attributes' => array(
+                'data-action' => admin_url( 'admin.php?page=pwebcontact&task=load_email&ajax=1&_wpnonce='. wp_create_nonce('load-email') )
+            ),
             'options' => array(
                 array(
                     'value' => '',
@@ -167,13 +171,13 @@ function_exists('add_action') or die;
             </div>
             <div class="pweb-field-control">
                 <?php echo $this->_get_label(array(
-                    'name' => 'email_admin_format',
+                    'name' => 'email_admin_tmpl_format',
                     'label' => 'Select format'
                 )); ?>
 
                 <?php echo $this->_get_field_control(array(
                     'type' => 'radio',
-                    'name' => 'email_admin_format',
+                    'name' => 'email_admin_tmpl_format',
                     'default' => 1,
                     'class' => 'pweb-radio-group',
                     'options' => array(
@@ -199,6 +203,10 @@ function_exists('add_action') or die;
                     'filter' => '\.html$',
                     'directory' => 'media/email_tmpl',
                     'strip_ext' => true,
+                    'class' => 'pweb-load-email-tmpl',
+                    'attributes' => array(
+                        'data-action' => admin_url( 'admin.php?page=pwebcontact&task=load_email&ajax=1&_wpnonce='. wp_create_nonce('load-email') )
+                    ),
                     'options' => array(
                         array(
                             'value' => '',
@@ -232,13 +240,13 @@ function_exists('add_action') or die;
             </div>
             <div class="pweb-field-control">
                 <?php echo $this->_get_label(array(
-                    'name' => 'email_autoreply_format',
+                    'name' => 'email_autoreply_tmpl_format',
                     'label' => 'Select format'
                 )); ?>
 
                 <?php echo $this->_get_field_control(array(
                     'type' => 'radio',
-                    'name' => 'email_autoreply_format',
+                    'name' => 'email_autoreply_tmpl_format',
                     'default' => 0,
                     'class' => 'pweb-radio-group',
                     'options' => array(
@@ -271,6 +279,10 @@ function_exists('add_action') or die;
                         'filter' => '\.html$',
                         'directory' => 'media/email_tmpl',
                         'strip_ext' => true,
+                        'class' => 'pweb-load-email-tmpl',
+                        'attributes' => array(
+                            'data-action' => admin_url( 'admin.php?page=pwebcontact&task=load_email&ajax=1&_wpnonce='. wp_create_nonce('load-email') )
+                        ),
                         'options' => array(
                             array(
                                 'value' => '',
@@ -706,4 +718,8 @@ function_exists('add_action') or die;
         
         
     </div>
+</div>
+
+<div id="pweb-dialog-email-load" title="<?php esc_attr_e( 'Load email template', 'pwebcontact' ); ?>" style="display:none">
+    <p><?php _e( 'Current content of email message will be replaced with selected template!', 'pwebcontact' ); ?></p>
 </div>

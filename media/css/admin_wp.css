@@ -462,9 +462,9 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 #pweb_params_bg_opacity {
     vertical-align: top;
 }
-#pweb_params_email_admin_format,
-#pweb_params_email_user_format,
-#pweb_params_email_autoreply_format {
+#pweb_params_email_admin_tmpl_format,
+#pweb_params_email_user_tmpl_format,
+#pweb_params_email_autoreply_tmpl_format {
     display: inline-block;
     margin-right: 30px;
 }
@@ -819,6 +819,20 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 }
 .pweb-clearfix {
 	min-height: 0; /* support: IE7 */
+}
+
+.icomoon-spinner {
+    display: inline-block;
+    -webkit-animation: pweb-spin 2s infinite linear;
+    animation: pweb-spin 2s infinite linear;
+}
+@-webkit-keyframes pweb-spin {
+    0% { -webkit-transform: rotate(0deg) }
+    100% { -webkit-transform: rotate(359deg) }
+}
+@keyframes pweb-spin {
+    0% { transform: rotate(0deg) }
+    100% { transform: rotate(359deg) }
 }
 
 

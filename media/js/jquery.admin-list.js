@@ -52,7 +52,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             // restore state icon and color
             $(that).addClass($(that).data("state") ? "pweb-text-success" : "pweb-text-danger")
                     .find("i").get(0).className = ( $(that).data("state") ? "icomoon-checkmark-circle" : "icomoon-cancel-circle" );
-			alert('Request error. '+ jqXHR.status +' '+ errorThrown);
+			alert(pwebcontact_l10n.request_error+'. '+ jqXHR.status +' '+ errorThrown);
 		});
     });
     
@@ -113,7 +113,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 
                         // restore delete button icon
                         $element.find("i").get(0).className = "icomoon-remove2";
-                        alert('Request error. '+ jqXHR.status +' '+ errorThrown);
+                        alert(pwebcontact_l10n.request_error+'. '+ jqXHR.status +' '+ errorThrown);
                     });
                 }
             },

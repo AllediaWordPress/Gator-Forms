@@ -137,7 +137,7 @@ class PWebContact_Admin {
                             'jquery-ui-droppable'
                         ));
                 
-                //TODO load JavaScript translations
+                // load JavaScript translations
                 wp_localize_script('pwebcontact_admin_script', 'pwebcontact_l10n', array(
                     'delete' => __('Delete'),
                     'cancel' => __('Cancel'),
@@ -148,6 +148,7 @@ class PWebContact_Admin {
                     'saved_on' => __('Saved on', 'pwebcontact'),
                     'error' => __('Error'),
                     'request_error' => __('Request error', 'pwebcontact'),
+                    'missing_email_tmpl' => __('Email template in selected format does not exists. Change format or create new file with email template: %s', 'pwebcontact'),
                     'paste_adcenter' => __('Paste Microsoft adCenter conversion tracking script', 'pwebcontact'),
                     'paste_adwords' => __('Paste Google AdWords/Goal Conversion tracking script', 'pwebcontact')
                 ));
@@ -320,11 +321,29 @@ class PWebContact_Admin {
             
             wp_localize_script('pwebcontact_admin_script', 'pwebcontact_l10n', array(
                 'delete' => __( 'Delete' ),
-                'cancel' => __( 'Cancel' )
+                'cancel' => __( 'Cancel' ),
+                'request_error' => __('Request error', 'pwebcontact'),
             ));
             
             // load CSS
             wp_enqueue_style('wp-jquery-ui-dialog');
+        }
+        elseif ( $task == 'load_email' ) {
+            
+            check_ajax_referer( 'load-email' );
+            //wp_verify_nonce( $_POST['_wp_nonce'], 'load-email' );
+            
+            $content = '';
+            if (isset($_GET['ajax']) AND isset($_POST['format']) AND $_POST['format'] AND isset($_POST['tmpl']) AND $_POST['tmpl']) {
+                
+                $path = dirname(__FILE__) .'/media/email_tmpl/'. basename($_POST['tmpl']) . ((int)$_POST['format'] === 2 ? '.html' : '.txt');
+                if (is_file($path)) {
+                    $content = file_get_contents($path);
+                }
+            }
+            
+            header('Content-type: text/plain');
+            die( $content );
         }
         
         // load CSS
