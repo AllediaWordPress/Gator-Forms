@@ -1596,7 +1596,7 @@ class PWebContact
 			if ($field->type == 'email') 
 			{
 				// Validate email
-				if ($value AND JMailHelper::isEmailAddress($value) === false) { //TODO
+				if ($value AND is_email($value) === false) {
 					$invalid_fields[] = 'field-'.$field->alias;
 				} else {
 					if (!$user_email) 
