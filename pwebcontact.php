@@ -1377,7 +1377,7 @@ class PWebContact
         if (function_exists('exceptions_error_handler'))
 			@set_error_handler('exceptions_error_handler');
 		
-		$form_id = (int)$_POST['mid'];
+		$form_id = isset($_POST['mid']) ? (int)$_POST['mid'] : 0;
 		$params = self::getParams($form_id);
 		
 		// Language
@@ -1389,7 +1389,7 @@ class PWebContact
 		}
 		
 		// Debug
-		if ((int)$_POST['debug'] === 1) $params->set('debug', 1); //WP
+		if (isset($_POST['debug']) AND (int)$_POST['debug'] === 1) $params->set('debug', 1); //WP
 		if (!defined('PWEBCONTACT_DEBUG')) define('PWEBCONTACT_DEBUG', $params->get('debug'));
 		
 		if (PWEBCONTACT_DEBUG) {
@@ -1428,7 +1428,7 @@ class PWebContact
 	{
 		$response = true;
 		
-        $form_id = (int)$_POST['mid'];
+        $form_id = isset($_POST['mid']) ? (int)$_POST['mid'] : 0;
 		$token = wp_create_nonce('pwebcontact'.$form_id);
         
 		try {
@@ -1446,7 +1446,7 @@ class PWebContact
 
 	public static function getTokenAjax() 
 	{
-        $form_id = (int)$_POST['mid'];
+        $form_id = isset($_POST['mid']) ? (int)$_POST['mid'] : 0;
         
 		return array('status' => 103, 'token' => wp_create_nonce('pwebcontact'.$form_id));
 	}
@@ -1557,13 +1557,12 @@ class PWebContact
 		
 		// Get inputs
 		$data = array(
-			'fields'			=> (array)$_POST['fields'],
-			'mailto'			=> isset($_POST['mailto']) ? (int)$_POST['mailto'] : null,
-            'copy'              => isset($_POST['copy']) ? (int)$_POST['copy'] : null,
-			'title' 			=> (string)$_POST['title'],
-			'url' 				=> (string)$_POST['url'],
-			'screen_resolution' => (string)$_POST['screen_resolution'],
-			'attachments' 		=> isset($_POST['attachments']) ? (array)$_POST['attachments'] : array()
+			'fields'			=> isset($_POST['fields'])              ? (array)$_POST['fields'] : array(),
+			'mailto'			=> isset($_POST['mailto'])              ? (int)$_POST['mailto'] : null,
+			'title' 			=> isset($_POST['title'])               ? (string)$_POST['title'] : null,
+			'url' 				=> isset($_POST['url'])                 ? (string)$_POST['url'] : null,
+			'screen_resolution' => isset($_POST['screen_resolution'])   ? (string)$_POST['screen_resolution'] : null,
+			'attachments' 		=> isset($_POST['attachments'])         ? (array)$_POST['attachments'] : array()
 		);
 
 		$data['ip_address'] 	= self::detectIP();
@@ -1760,7 +1759,7 @@ class PWebContact
 		$tmpl_path = $params->get('media_path').'email_tmpl/';
 		
 		// User email copy and auto-reply
-		$email_copy 		= ($params->get('email_copy', 0) AND (int)$_POST['copy']);
+		$email_copy 		= ($params->get('email_copy', 0) AND isset($_POST['copy']) AND (int)$_POST['copy']);
 		$email_autoreply 	= $params->get('email_autoreply', 0);
 		
 		if ($user_email AND ($email_copy OR $email_autoreply)) 
