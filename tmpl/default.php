@@ -543,7 +543,7 @@ $message =
 			<?php if ($params->get('msg_position', 'after') == 'after') echo $message; ?>
 			
 			<?php echo PWebContact::getHiddenFields(); ?>
-			<input type="hidden" name="<?php  ?>" value="1" id="pwebcontact<?php echo $form_id; ?>_token">
+			<input type="hidden" name="<?php echo wp_create_nonce('pwebcontact'.$form_id); ?>" value="1" id="pwebcontact<?php echo $form_id; ?>_token">
 		</form>
 		
 		<?php if ($params->get('show_upload', 0)) : ?>

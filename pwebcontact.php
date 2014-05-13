@@ -1375,7 +1375,7 @@ class PWebContact
 		}
 		
 		// Set media path
-		$params->set('media_url', 	plugins_url('media', __FILE__)); //WP
+		$params->set('media_url', 	plugins_url('media/', __FILE__)); //WP
 		$params->set('media_path', 	dirname(__FILE__) . '/media/'); //WP
         $upload_dir = wp_upload_dir();
 		$params->set('upload_url',  $upload_dir['baseurl'].'/pwebcontact/'.$form_id.'/'); //WP
@@ -1400,25 +1400,20 @@ class PWebContact
 	}
 
 
-	public static function checkToken() //TODO
+	public static function checkToken()
 	{
 		$response = true;
 		
+        $form_id = (int)$_POST['mid'];
+		$token = wp_create_nonce('pwebcontact'.$form_id);
+        
 		try {
-			if (!($app->input->post->get($token, '', 'alnum') || $app->input->get->get($token, '', 'alnum')))
+			if (!isset($_POST[$token]) OR (int)$_POST[$token] !== 1 OR wp_verify_nonce($_POST[$token], 'pwebcontact'.$form_id) === false)
 			{
-				if ($session->isNew())
-				{
-					// session has expired or cookies are blocked
-					$response = array('status' => 308, 'msg' => __('MOD_PWEBCONTACT_COOKIES_ERR', 'pwebcontact'));
-				}
-				else
-				{
-					$response = array('status' => 302, 'msg' => __('MOD_PWEBCONTACT_TOKEN_ERR', 'pwebcontact'));
-				}
+                $response = array('status' => 302, 'msg' => __('Invalid security token. Refresh page and try again', 'pwebcontact'));
 			}
 		} catch (Exception $e) {
-			$response = array('status' => 302, 'msg' => __('MOD_PWEBCONTACT_JOOMLA_ERR', 'pwebcontact'), 'debug' => array($e->getMessage().' in '.$e->getFile().' on line '.$e->getLine()));
+			$response = array('status' => 302, 'msg' => __('WordPress error', 'pwebcontact'), 'debug' => array($e->getMessage().' in '.$e->getFile().' on line '.$e->getLine()));
 		}
 		
 		return $response;
@@ -1427,11 +1422,13 @@ class PWebContact
 
 	public static function getTokenAjax() 
 	{
-		return array('status' => 103, 'token' => JSession::getFormToken()); //TODO
+        $form_id = (int)$_POST['mid'];
+        
+		return array('status' => 103, 'token' => wp_create_nonce('pwebcontact'.$form_id));
 	}
 
 
-	public static function checkCaptchaAjax() //TODO
+	public static function checkCaptchaAjax()
 	{
 		self::initAjaxResponse();
 		if (($response = self::checkToken()) !== true) return $response;
@@ -1443,15 +1440,15 @@ class PWebContact
 		$response = array('status' => 101, 'msg' => '');
 		
 		try {
-			// Captcha
+			// TODO veriffy captcha code
 			if (false) 
 			{
 				if (PWEBCONTACT_DEBUG) self::$logs[] = 'Invalid captcha code';
-				$response = array('status' => 201, 'msg' => __('MOD_PWEBCONTACT_INVALID_CAPTCHA_ERR', 'pwebcontact'));
+				$response = array('status' => 201, 'msg' => __('Invalid captcha code', 'pwebcontact'));
 			}
 		} catch (Exception $e) {
 			self::$logs[] = $e->getMessage().' in '.$e->getFile().' on line '.$e->getLine();
-			$response = array('status' => 301, 'msg' => __('MOD_PWEBCONTACT_JOOMLA_ERR', 'pwebcontact'));
+			$response = array('status' => 301, 'msg' => __('WordPress error', 'pwebcontact'));
 		}
 		
 		$response['debug'] = self::closeAjaxResponse();
@@ -1472,7 +1469,7 @@ class PWebContact
 			$response = array_merge(array('status' => 104), $response);
 		} catch (Exception $e) {
 			self::$logs[] = $e->getMessage().' in '.$e->getFile().' on line '.$e->getLine();
-			$response = array('status' => 400, 'msg' => __('MOD_PWEBCONTACT_JOOMLA_ERR', 'pwebcontact'));
+			$response = array('status' => 400, 'msg' => __('WordPress error', 'pwebcontact'));
 		}
 		
 		$response['debug'] = self::closeAjaxResponse();
@@ -1494,7 +1491,7 @@ class PWebContact
 			$response = self::sendEmail();
 		} catch (Exception $e) {
 			self::$logs[] = $e->getMessage().' in '.$e->getFile().' on line '.$e->getLine();
-			$response = array('status' => 300, 'msg' => __('MOD_PWEBCONTACT_JOOMLA_ERR', 'pwebcontact'));
+			$response = array('status' => 300, 'msg' => __('WordPress error', 'pwebcontact'));
 		}
 		
 		// delete atachments
@@ -1507,7 +1504,7 @@ class PWebContact
 				$response['deleted'] = true;
 			} catch (Exception $e) {
 				self::$logs[] = $e->getMessage().' in '.$e->getFile().' on line '.$e->getLine();
-				$response = array('status' => 401, 'msg' => __('MOD_PWEBCONTACT_JOOMLA_ERR', 'pwebcontact'));
+				$response = array('status' => 401, 'msg' => __('WordPress error', 'pwebcontact'));
 			}
 		}
 		
