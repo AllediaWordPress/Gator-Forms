@@ -71,8 +71,8 @@ class PWebContact
             define('PWEBCONTACT_DEBUG', $debug);
             
             // Register scripts
-            wp_register_script('pwebcontact-bootstrap', $media_url.'js/bootstrap'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
-            wp_register_script('pwebcontact-bootstrap-2', $media_url.'js/bootstrap-2.3.2'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
+            wp_register_script('pwebcontact-bootstrap', $media_url.'bootstrap/js/bootstrap'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
+            wp_register_script('pwebcontact-bootstrap-2', $media_url.'bootstrap-2.3.2/js/bootstrap'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
             
             wp_register_script('pwebcontact-jquery-iframe-transport', $media_url.'js/jquery.iframe-transport.js', array('jquery'), null, true);
             wp_register_script('pwebcontact-jquery-fileupload-process', $media_url.'js/jquery.fileupload-process.js', array('jquery'), null, true);
@@ -87,10 +87,10 @@ class PWebContact
             
             
             // Register styles
-            wp_register_style('pwebcontact-bootstrap', $media_url.'css/bootstrap'.($debug ? '' : '.min').'.css');
-            wp_register_style('pwebcontact-bootstrap-rtl', $media_url.'css/bootstrap-rtl'.($debug ? '' : '.min').'.css');
-            wp_register_style('pwebcontact-bootstrap-2', $media_url.'css/bootstrap-2.3.2'.($debug ? '' : '.min').'.css');
-            wp_register_style('pwebcontact-bootstrap-2-rtl', $media_url.'css/bootstrap-2.3.2-rtl'.($debug ? '' : '.min').'.css');
+            wp_register_style('pwebcontact-bootstrap', $media_url.'bootstrap/css/bootstrap'.($debug ? '' : '.min').'.css');
+            wp_register_style('pwebcontact-bootstrap-theme', $media_url.'bootstrap/css/bootstrap-theme'.($debug ? '' : '.min').'.css');
+            wp_register_style('pwebcontact-bootstrap-2', $media_url.'bootstrap-2.3.2/css/bootstrap'.($debug ? '' : '.min').'.css');
+            wp_register_style('pwebcontact-bootstrap-2-responsive', $media_url.'bootstrap-2.3.2/css/bootstrap-responsive'.($debug ? '' : '.min').'.css');
             wp_register_style('pwebcontact-bootstrap-custom', $media_url.'css/bootstrap-custom.css');
             wp_register_style('pwebcontact-bootstrap-custom-rtl', $media_url.'css/bootstrap-custom-rtl.css');
 
@@ -754,13 +754,11 @@ class PWebContact
             
 			if ($params->get('bootstrap_version', 2) === 2) {
                 wp_enqueue_style('pwebcontact-bootstrap-2');
-                if ($params->get('rtl', 0)) 
-                    wp_enqueue_style('pwebcontact-bootstrap-2-rtl');
+                wp_enqueue_style('pwebcontact-bootstrap-2-responsive');
             }
             elseif ($params->get('bootstrap_version', 2) === 3) {
                 wp_enqueue_style('pwebcontact-bootstrap');
-                if ($params->get('rtl', 0)) 
-                    wp_enqueue_style('pwebcontact-bootstrap-rtl');
+                wp_enqueue_style('pwebcontact-bootstrap-theme');
             }
 		}
 		elseif ($params->get('load_bootstrap_css', 2) == 2) {
