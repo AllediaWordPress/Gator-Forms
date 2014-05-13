@@ -508,6 +508,61 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
     
     
+    $("#pweb_load_email_scheme").change(function(e){
+        
+        if (this.selectedIndex) {
+            
+            // confirm loading of email scheme
+            if ((!$("#pweb_params_msg_success").val() && !$("pweb_params_email_user_tmpl").val()) || pwebcontact_admin.confirmed === true) {
+                pwebcontact_admin.confirmed = true;
+                
+                try {
+                    var data = $.parseJSON( $(this).val() );
+                } catch (e) {
+                    var data = false;
+                }
+                
+                if (data) {
+                    $("#pweb_params_msg_success").val( data.msg );
+                    $("#pweb_params_email_user_tmpl_list").val( data.tmpl ).trigger("change");
+                }
+                
+                $(this).val("");
+            }
+            else {
+                // confirmation
+                $("#pweb-dialog-email-scheme-load").data("element", $(this)).dialog("open");
+            }
+        }
+    });
+    
+    $("#pweb-dialog-email-scheme-load").dialog({
+        dialogClass: "wp-dialog",
+        autoOpen: false,
+        resizable: false,
+        modal: true,
+        buttons: [
+            { 
+                text: pwebcontact_l10n.ok,
+                class : "button-primary",
+                click: function(e) {
+                    pwebcontact_admin.confirmed = true;
+                    $(this).data("element").trigger("change");
+                    $(this).dialog("close");
+                }
+            },
+            {
+                text: pwebcontact_l10n.cancel,
+                class : "button",
+                click: function() {
+                    $(this).data("element").val("");
+                    $(this).dialog("close");
+                }
+            }
+        ]
+    });
+    
+    
     //TODO select background image
     
     

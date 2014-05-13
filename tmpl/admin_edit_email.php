@@ -15,22 +15,30 @@ function_exists('add_action') or die;
 <h3 class="pweb-load-samples">
     <?php echo $this->_get_label(array(
         'group' => 'load',
-        'name' => 'email',
+        'name' => 'email_scheme',
         'label' => 'Choose your answer scheme'
     )); ?>
 
     <?php echo $this->_get_field_control(array(
         'type' => 'select',
         'group' => 'load',
-        'name' => 'email',
+        'name' => 'email_scheme',
         'options' => array(
             array(
-                'name' => 'Select',
+                'name' => '- Select -',
                 'value' => ''
             ),
             array(
-                'name' => 'Default',
-                'value' => '{msg:"Email has been successfully sent",email:"default"}'
+                'name' => 'Boring',
+                'value' => '{"tmpl":"boring","msg":"'.__('Your message has been successfully submitted. Thank you.', 'pwebcontact').'"}'
+            ),
+            array(
+                'name' => 'Fancy',
+                'value' => '{"tmpl":"fancy","msg":"'.__('Thanks! Message from you is now on the way to our mailbox. We can’t wait to read it :)', 'pwebcontact').'"}'
+            ),
+            array(
+                'name' => 'Superformal',
+                'value' => '{"tmpl":"superformal","msg":"'.__('The message of yours has been consigned.', 'pwebcontact').'"}'
             )
         )
     )); ?>
@@ -722,4 +730,7 @@ function_exists('add_action') or die;
 
 <div id="pweb-dialog-email-load" title="<?php esc_attr_e( 'Load email template', 'pwebcontact' ); ?>" style="display:none">
     <p><?php _e( 'Current content of email message will be replaced with selected template!', 'pwebcontact' ); ?></p>
+</div>
+<div id="pweb-dialog-email-scheme-load" title="<?php esc_attr_e( 'Load email scheme', 'pwebcontact' ); ?>" style="display:none">
+    <p><?php _e( 'Current content of message which will appear after successful sending and message which will be sent to User as copy will be replaced with selected scheme!', 'pwebcontact' ); ?></p>
 </div>
