@@ -1558,11 +1558,12 @@ class PWebContact
 		// Get inputs
 		$data = array(
 			'fields'			=> (array)$_POST['fields'],
-			'mailto'			=> (int)$_POST['mailto'],
+			'mailto'			=> isset($_POST['mailto']) ? (int)$_POST['mailto'] : null,
+            'copy'              => isset($_POST['copy']) ? (int)$_POST['copy'] : null,
 			'title' 			=> (string)$_POST['title'],
 			'url' 				=> (string)$_POST['url'],
 			'screen_resolution' => (string)$_POST['screen_resolution'],
-			'attachments' 		=> (array)$_POST['attachments']
+			'attachments' 		=> isset($_POST['attachments']) ? (array)$_POST['attachments'] : array()
 		);
 
 		$data['ip_address'] 	= self::detectIP();
@@ -1601,77 +1602,79 @@ class PWebContact
 		foreach ($fields as $field)
 		{
 			// skip all separators which does not have any data
-			if (strpos($field->type, 'separator') !== false) continue;
+			if (strpos($field['type'], 'separator') !== false OR in_array($field['type'], array('button_send', 'email_copy', 'captcha'))) continue;
 			
-			// get field from request
-			if (isset($data['fields'][$field->alias])) {
-				$value = $data['fields'][$field->alias];
-			} else {
-				$data['fields'][$field->alias] = $value = null;
-			}
-			
-			// is required
-			if ($field->required AND ($value === null OR $value === '')) {
-				// required field is empty
-				$invalid_fields[] = 'field-'.$field->alias;
-				continue;
-			}
-			
-			if ($field->type == 'email') 
+            if ($field['type'] == 'mailto_list') 
 			{
-				// Validate email
-				if ($value AND is_email($value) === false) {
-					$invalid_fields[] = 'field-'.$field->alias;
-				} else {
-					if (!$user_email) 
-						$email_vars['email'] = $user_email = $value;
-					else 
-						$user_cc[] = $value;
-				}
+                if ($data['mailto'] > 0) {
+                    $rows = @explode(PHP_EOL, $field['values']);
+                    if (array_key_exists($data['mailto']-1, $rows)) {
+                        $row = @explode('|', $rows[$data['mailto']-1]);
+                        if ($row[0]) {
+                            $email_to[] = $row[0];
+                            $email_vars['mailto_name'] = $row[1];
+                        }
+                    }
+                }
+                if (!count($email_to)) {
+                    // required field is empty
+                    $invalid_fields[] = 'mailto';
+                }
 			}
-			else 
+            elseif ($field['type'] == 'upload') 
 			{
-				if ($field->type == 'name') {
-					if (!$user_name) 
-						$email_vars['name'] = $user_name = $value;
-				}
-				elseif ($field->type == 'subject') {
-					$data['user_subject'] .= ' '.$value;
-				}
-				
-				// validate fields with regular expression
-				if (in_array($field->type, array('text', 'name', 'phone', 'subject', 'password')) AND $field->validation AND $value AND !preg_match($field->validation, $value)) { //WP
-					$invalid_fields[] = 'field-'.$field->alias;
-				}
-			}
+                if ($field['required'] AND !count($data['attachments'])) {
+                    $invalid_fields[] = 'uploader';
+                }
+            }
+            else
+            {
+                // get field from request
+                if (isset($data['fields'][$field['alias']])) {
+                    $value = $data['fields'][$field['alias']];
+                } else {
+                    $data['fields'][$field['alias']] = $value = null;
+                }
+
+                // is required
+                if ($field['required'] AND ($value === null OR $value === '')) {
+                    // required field is empty
+                    $invalid_fields[] = 'field-'.$field['alias'];
+                    continue;
+                }
+
+                if ($field['type'] == 'email') 
+                {
+                    // Validate email
+                    if ($value AND is_email($value) === false) {
+                        $invalid_fields[] = 'field-'.$field['alias'];
+                    } else {
+                        if (!$user_email) 
+                            $email_vars['email'] = $user_email = $value;
+                        else 
+                            $user_cc[] = $value;
+                    }
+                }
+                else 
+                {
+                    if ($field['type'] == 'name') {
+                        if (!$user_name) 
+                            $email_vars['name'] = $user_name = $value;
+                    }
+                    elseif ($field['type'] == 'subject') {
+                        $data['user_subject'] .= ' '.$value;
+                    }
+
+                    // validate fields with regular expression
+                    if (in_array($field['type'], array('text', 'name', 'phone', 'subject', 'password')) AND $field['validation'] AND $value AND !preg_match($field['validation'], $value)) { //WP
+                        $invalid_fields[] = 'field-'.$field['alias']['alias'];
+                    }
+                }
+            }
 		}
 		
-		
-		// mailto list
-		if ($params->get('email_to_list')) //TODO changed to field options
-		{
-			if ($data['mailto'] > 0) {
-				$rows = @explode(PHP_EOL, $params->get('email_to_list'));
-				if (array_key_exists($data['mailto']-1, $rows)) {
-					$row = @explode('|', $rows[$data['mailto']-1]);
-					if ($row[0]) {
-						$email_to[] = $row[0];
-						$email_vars['mailto_name'] = $row[1];
-					}
-				}
-			}
-			else {
-				// required field is empty
-				$invalid_fields[] = 'mailto';
-			}
-		} 
-		else {
+		if ($data['mailto'] === 0) {
 			$data['mailto'] = null;
-		}
-		
-		
-		if ($params->get('show_upload') == 2 AND !count($data['attachments'])) {
-			$invalid_fields[] = 'uploader';
 		}
 		
 		// invalid fields

@@ -1764,6 +1764,15 @@ function_exists('add_action') or die;
                         'label' => 'Tooltip',
                         'class' => 'pweb-input-large'
                     )); ?>
+                    
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'hidden',
+                        'name' => 'required',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'value' => 1
+                    )); ?>
                 </div>
             </div>
         </div>
