@@ -513,7 +513,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         if (this.selectedIndex) {
             
             // confirm loading of email scheme
-            if ((!$("#pweb_params_msg_success").val() && !$("pweb_params_email_user_tmpl").val()) || pwebcontact_admin.confirmed === true) {
+            if ((!$("#pweb_params_msg_success").val() && !$("#pweb_params_email_user_tmpl").val()) || pwebcontact_admin.confirmed === true) {
                 pwebcontact_admin.confirmed = true;
                 
                 try {
@@ -574,6 +574,24 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         e.preventDefault();
         e.stopPropagation();
         $(this).select();
+    });
+    
+    
+    $("span.pweb-pro, #pweb-buy-button").click(function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        
+        var width = $(window).width() - 100,
+            height = $(window).height() - 150;
+        
+        if (width > 700) {
+            width = 700;
+        }
+        
+        tb_show(pwebcontact_l10n.but_subscription, 
+            pwebcontact_admin.buy_url 
+                    + (pwebcontact_admin.buy_url.indexOf("?") === -1 ? "?" : "&") 
+                    + "TB_iframe=1&width="+width+"&height="+height, "");
     });
     
     // Set duration of showing/hiding options

@@ -788,6 +788,19 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 }
 
 
+span.pweb-pro {
+    background: #AA0000;
+    color: #FFFFFF;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 0 5px;
+    margin-left: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+
 .ui-dialog-content p {
     margin: 10px;
 }

@@ -103,7 +103,7 @@ function_exists('add_action') or die;
             <a class="button button-primary right" href="<?php echo $this->buy_pro_url; ?>" target="_blank">
                 <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
             </a>
-            <?php _e( 'Pro', 'pwebcontact' ); ?>
+            <?php _e( 'Get PRO version', 'pwebcontact' ); ?>
         </h3>
     </div>
     
@@ -115,7 +115,7 @@ function_exists('add_action') or die;
             <a class="button button-primary right" href="<?php echo $this->buy_support_url; ?>" target="_blank">
                 <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
             </a>
-            <?php _e( 'Support', 'pwebcontact' ); ?>
+            <?php _e( 'Get support only', 'pwebcontact' ); ?>
         </h3>
     </div>
         

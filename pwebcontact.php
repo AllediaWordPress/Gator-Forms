@@ -911,12 +911,26 @@ class PWebContact
 			{
 				// set write permissions to cache folder
 				if (!is_writable($path)) {
-					//JPath::setPermissions($path, null, '0777'); //TODO WP
+                    if (WP_Filesystem()) {
+                        global $wp_filesystem;
+                        $wp_filesystem->chmod($path, 0777);
+                    }
+                    else {
+                        chmod($path, 0777);
+                    }
 				}
 				
 				// write cache file
-				if (!file_put_contents($path.$file, $css))
-					$params->set('cache_css', 0);
+                if (WP_Filesystem()) {
+                    global $wp_filesystem;
+                    if (!$wp_filesystem->put_contents($path.$file, $css))
+                        $params->set('cache_css', 0);
+                }
+                else {
+                    if (!file_put_contents($path.$file, $css))
+                        $params->set('cache_css', 0);
+                }
+				
 			}
 			
 			if ($params->get('cache_css', 1)) {
@@ -1285,7 +1299,14 @@ class PWebContact
 		
 		// set write permissions to cache folder
 		if (!is_writable($path)) {
-			//JPath::setPermissions($path, null, '0777'); //TODO WP
+            
+            if (WP_Filesystem()) {
+                global $wp_filesystem;
+                $wp_filesystem->chmod($path, 0777);
+            }
+            else {
+                chmod($path, 0777);
+            }
 		}
 			
 		// save image
@@ -1536,11 +1557,35 @@ class PWebContact
 		
 		return $response;
 	}
+    
+    
+    public static function setupMailer($phpmailer) 
+    {
+        $params = self::getParams();
+        
+        if ($params->get('mailer') == 'smtp' AND $params->get('smtp_host'))
+        {
+            $phpmailer->IsSMTP();
+            $phpmailer->Host = $params->get('smtp_host');
+            $phpmailer->Port = $params->get('smtp_port', 25);
+            
+            $phpmailer->SMTPSecure = $params->get('smtp_secure', 'none');
+            $phpmailer->SMTPAuth = ($params->get('smtp_username') AND $params->get('smtp_password'));
+            
+            if ($phpmailer->SMTPAuth)
+            {
+                $phpmailer->Username = $params->get('smtp_username');
+                $phpmailer->Password = $params->get('smtp_password');
+            }
+        }
+    }
 	
 
 	public static function sendEmail() 
 	{		
-		$user 		= wp_get_current_user();
+		add_action('phpmailer_init', array('PWebContact', 'setupMailer'));
+        
+        $user 		= wp_get_current_user();
 		$params 	= self::getParams();
 		$form_id 	= (int)$params->get('id');
 		
@@ -1737,10 +1782,16 @@ class PWebContact
 		//$success_msg = str_replace(array('"','\\'), '', $success_msg);
 		
 		// email subject
-		if (!isset($data['subject'])) $data['subject'] = __($params->get('email_subject', 'Message sent from', 'pwebcontact'));
-		
+		if (!isset($data['subject'])) {
+            $data['subject'] = __($params->get('email_subject', 'Message sent from'), 'pwebcontact');
+        }
+        
+        // user subject
+        if ($data['user_subject']) {
+            $data['subject'] .= $data['user_subject'];
+        }
+        
 		// email subject suffix
-		//TODO test RTL if suffix should be before subject
 		switch ($params->get('email_subject_sfx', 2))
 		{
 			case 1:
@@ -1748,9 +1799,6 @@ class PWebContact
 				break;
 			case 2:
 				$data['subject'] .= ' '.$data['title'];
-				break;
-			case 3:
-				$data['subject'] .= $data['user_subject'];
 		}
 
 		// HOOK PROCCESS DATA - here you can add custom code to proccess variables: $data, $email_vars
@@ -1764,100 +1812,92 @@ class PWebContact
 		
 		if ($user_email AND ($email_copy OR $email_autoreply)) 
 		{
-			$mail = JFactory::getMailer(); //TODO
-			
-			// add recipient
-			$mail->addRecipient($user_email);
-			if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email: '.$user_email;
-			
-			// Add carbon copy recipients
-			if (count($user_cc))
-			{
-				$mail->addCC($user_cc);
-				if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email: '.implode(', ', $user_cc);
-			}
-			
-			// set subject
-			$mail->setSubject($data['subject']);
-			if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email subject: '.$data['subject'];
-			
-			// set sender
-			$mail->setSender(array($global_email, $global_name));
-			if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email sender: '.$global_email;
-			
+			$headers = array();
+            
+            // set sender
+            $headers[] = "From: $global_name <$global_email>";
+			if (PWEBCONTACT_DEBUG) 
+            {
+                self::$logs[] = 'User email: '.$user_email;
+                self::$logs[] = 'User email subject: '.$data['subject'];
+                self::$logs[] = 'User email sender: '.$global_email;
+            }
+            
 			// set reply to
 			if ($params->get('email_replyto')) 
 			{
-				$mail->ClearReplyTos();
-				$mail->addReplyTo($params->get('email_replyto'), $params->get( 'email_replyto_name', $global_name));
+                $headers[] = 'Reply-To: '.$params->get( 'email_replyto_name', $global_name).' <'.$params->get('email_replyto').'>';
 				if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email reply to: '.$params->get('email_replyto');
+			}
+            
+			// Add carbon copy recipients
+			if (count($user_cc))
+			{
+				$headers[] = 'CC: '.implode(', ', $user_cc);
+				if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email: '.implode(', ', $user_cc);
 			}
 			
 			// Auto-reply
 			if ($email_autoreply)
 			{
-				// load email body template
-				$tmpl = $params->get('email_tmpl_html_autoreply');
-				$is_html = $tmpl ? true : false;
-				$mail->IsHTML($is_html);
-				if ($is_html) {
-					$body = file_get_contents($tmpl_path . $tmpl .'.html');
-				} else {
-					$body = $params->get('email_tmpl_text_autoreply');
-				}
-	
-				self::parseTmplVars($body, $is_html, get_bloginfo('language'));
-				
-				// set body text direction
+                // set email format
+                $is_html = $params->get('email_autoreply_tmpl_format', 1) === 2;
+                $headers[] = 'Content-Type: '.($is_html ? 'text/html' : 'text/plain');
+                
+                // load email body template
+                $body = $params->get('email_autoreply_tmpl');
+                
+                self::parseTmplVars($body, $is_html, get_bloginfo('language'));
+                
+                // set body text direction
 				$body = ($params->get('rtl', 0) ? "\xE2\x80\x8F" : "\xE2\x80\x8E") . $body;
-				
-				// set body text
-				$mail->setBody($body);
-				
+                
 				if (PWEBCONTACT_DEBUG) self::$logs[] = 'User auto-reply email ready';
-		
+                
 				// send auto-reply email
-				if ($mail->Send() !== true) 
+                $result = wp_mail($user_email, $data['subject'], $body, $headers);
+                
+				if ($result !== true) 
 				{
 					return array('status' => 304, 'msg' => __('Error sending auto-reply', 'pwebcontact'));
 				} 
 				elseif (PWEBCONTACT_DEBUG) self::$logs[] = 'User auto-reply email sent successfully';
+                
+                // remove email format
+                array_pop($headers);
 			}
 			
 			// User email copy
 			if ($email_copy)
 			{
 				// set attachments as files
+                $attachments = array();
 				if ($params->get('attachment_type', 1) == 1 AND count($data['attachments']))
 				{
 					$path = $params->get('upload_path');
 					foreach ($data['attachments'] as $file)
-						$mail->addAttachment($path . $file, $file);
+						$attachments[] = $path . $file;
 					if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email attachments: '.implode(', ', $data['attachments']);
 				}
 				
-				// load email body template
-				$tmpl = $params->get('email_tmpl_html_user');
-				$is_html = $tmpl ? true : false;
-				$mail->IsHTML($is_html);
-				if ($is_html) {
-					$body = file_get_contents($tmpl_path . $tmpl .'.html');
-				} else {
-					$body = $params->get('email_tmpl_text_user');
-				}
-	
-				self::parseTmplVars($body, $is_html, get_bloginfo('language'));
+                // set email format
+                $is_html = $params->get('email_user_tmpl_format', 1) === 2;
+                $headers[] = 'Content-Type: '.($is_html ? 'text/html' : 'text/plain');
+                
+                // load email body template
+                $body = $params->get('email_user_tmpl');
+                
+                self::parseTmplVars($body, $is_html, get_bloginfo('language'));
 				
 				// set body text direction
 				$body = ($params->get('rtl', 0) ? "\xE2\x80\x8F" : "\xE2\x80\x8E") . $body;
 				
-				// set body text
-				$mail->setBody($body);
-				
 				if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email ready';
-		
+                
 				// send User email
-				if ($mail->Send() !== true) 
+				$result = wp_mail($user_email, $data['subject'], $body, $headers, $attachments);
+                
+				if ($result !== true) 
 				{
 					return array('status' => 305, 'msg' => __('Error sending email to user', 'pwebcontact'));
 				} 
@@ -1893,28 +1933,25 @@ class PWebContact
 
 
 		// Administrator email
-		$mail = JFactory::getMailer(); //TODO
+        $headers = array();
 
-		// add recipient
-		$mail->addRecipient($email_to);
-		if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin emails: '.implode(', ', $email_to);
-			
-		// set subject
-		$mail->setSubject($data['subject']);
-		if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email subject: '.$data['subject'];
+		if (PWEBCONTACT_DEBUG) 
+        {
+            self::$logs[] = 'Admin emails: '.implode(', ', $email_to);
+            self::$logs[] = 'Admin email subject: '.$data['subject'];
+        }
 
 		// set sender
 		if ($user_email AND !$params->get('server_sender', 0)) {
-			$mail->setSender(array($user_email, $user_name));
+            $headers[] = "From: $user_name <$user_email>";
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email Sender: '.$user_email;
 		} else {
-			$mail->setSender(array($global_email, $global_name));
+            $headers[] = "From: $global_name <$global_email>";
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email Sender: '.$global_email;
 			
 			// set reply to
 			if ($user_email) {
-				$mail->ClearReplyTos();
-				$mail->addReplyTo(array($user_email, $user_name));
+				$headers[] = "Reply-To: $user_name <$user_email>";
 				if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email reply to: '.$user_email;
 			}
 		}
@@ -1922,49 +1959,45 @@ class PWebContact
 		// Add blind carbon copy recipients
 		if ($params->get('email_bcc')) 
 		{
-			$email_bcc = @explode(',', $params->get('email_bcc'));
-			$mail->addBCC($email_bcc);
+			$headers[] = 'BCC: '.$params->get('email_bcc');
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin BCC recipients: '.$params->get('email_bcc');
 		}
 		
 		// Add User email as blind carbon copy in debug mode
 		if (PWEBCONTACT_DEBUG AND $user_email)
 		{
-			$mail->addBCC($user_email);
+            $headers[] = 'BCC: '.$user_email;
 			self::$logs[] = 'Admin BCC debug recipient: '.$user_email;
 		}
 
 		// set attachments as files
+        $attachments = array();
 		if ($params->get('attachment_type', 1) == 1 AND count($data['attachments']))
 		{
 			$path = $params->get('upload_path');
 			foreach ($data['attachments'] as $file)
-				$mail->addAttachment($path . $file, $file);
+				$attachments[] = $path . $file;
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email attachments: '.implode(', ', $data['attachments']);
 		}
 
-		// load email body template
-		$tmpl = $params->get('email_tmpl_html_admin');
-		$is_html = $tmpl ? true : false;
-		$mail->IsHTML($is_html);
-		if ($is_html) {
-			$body = file_get_contents($tmpl_path . $tmpl .'.html');
-		} else {
-			$body = $params->get('email_tmpl_text_admin');
-		}
+		// set email format
+        $is_html = $params->get('email_admin_tmpl_format', 1) === 2;
+        $headers[] = 'Content-Type: '.($is_html ? 'text/html' : 'text/plain');
+
+        // load email body template
+        $body = $params->get('email_admin_tmpl');
 
 		self::parseTmplVars($body, $is_html, get_bloginfo('language'));
 
 		// set body text direction
 		$body = ($params->get('rtl', 0) ? "\xE2\x80\x8F" : "\xE2\x80\x8E") . $body;
 
-		// set body text
-		$mail->setBody($body);
-
 		if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email ready';
 
 		// send Admin email
-		if ($mail->Send() !== true) 
+		$result = wp_mail($email_to, $data['subject'], $body, $headers, $attachments);
+        
+		if ($result !== true) 
 		{
 			return array('status' => 306, 'msg' => __('Error sending email to admin', 'pwebcontact'));
 		}
@@ -2034,15 +2067,15 @@ class PWebContact
 			foreach ($fields as $field)
 			{
 				// skip all separators which does not have any data
-				if (strpos($field->type, 'separator') !== false) continue;
+				if (strpos($field['type'], 'separator') !== false) continue;
 				
-				if (isset(self::$data['fields'][$field->alias])) {
-					$value = self::$data['fields'][$field->alias];
+				if (isset(self::$data['fields'][$field['alias']])) {
+					$value = self::$data['fields'][$field['alias']];
 				} else {
 					$value = null;
 				}
 				
-				switch ($field->type)
+				switch ($field['type'])
 				{
 					case 'textarea':
 						if ($is_html AND $value) 
@@ -2064,11 +2097,11 @@ class PWebContact
 						break;
 				}
 				
-				$patterns[] 	= '{'.$field->alias.'.value}';
+				$patterns[] 	= '{'.$field['alias'].'.value}';
 				$replacements[] = $value;
 				
-				$patterns[] 	= '{'.$field->alias.'.label}';
-				$replacements[] = $name = __($field->name, 'pwebcontact');
+				$patterns[] 	= '{'.$field['alias'].'.label}';
+				$replacements[] = $name = __($field['name'], 'pwebcontact');
 				
 				if ($search_fields AND !isset(self::$email_tmpls[$cache_fields_key])) {
 					//TODO test RTL if need to change position of sprintf arguments

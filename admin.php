@@ -24,13 +24,14 @@ class PWebContact_Admin {
     protected $errors = array();
     
     protected $documentation_url = 'http://www.perfect-web.co/wordpress/ajax-contact-form-popup/documentation';
-    protected $buy_pro_url = 'https://www.perfect-web.co/order/subscriptions/22';
+    protected $buy_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
+    protected $buy_pro_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
     protected $buy_support_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
     
     protected static $pro = array(
         'load' => array(),
         'params' => array(
-            
+            'toggler_icon'
         ),
         'fields' => array(
             
@@ -124,6 +125,7 @@ class PWebContact_Admin {
                             'jquery',
                             'jquery-ui-tooltip'
                         ));
+                
                 wp_enqueue_script('pwebcontact_admin_fields_script', plugins_url('media/js/jquery.admin-fields.js', __FILE__),
                         array(
                             'jquery',
@@ -136,6 +138,8 @@ class PWebContact_Admin {
                             'jquery-ui-draggable',
                             'jquery-ui-droppable'
                         ));
+                
+                add_thickbox();
                 
                 // load JavaScript translations
                 wp_localize_script('pwebcontact_admin_script', 'pwebcontact_l10n', array(
@@ -150,7 +154,8 @@ class PWebContact_Admin {
                     'request_error' => __('Request error', 'pwebcontact'),
                     'missing_email_tmpl' => __('Email template in selected format does not exists. Change format or create new file with email template: %s', 'pwebcontact'),
                     'paste_adcenter' => __('Paste Microsoft adCenter conversion tracking script', 'pwebcontact'),
-                    'paste_adwords' => __('Paste Google AdWords/Goal Conversion tracking script', 'pwebcontact')
+                    'paste_adwords' => __('Paste Google AdWords/Goal Conversion tracking script', 'pwebcontact'),
+                    'but_subscription' => esc_html__('Buy PRO & Get support', 'pwebcontact')
                 ));
                 
                 // load CSS
@@ -352,7 +357,7 @@ class PWebContact_Admin {
         wp_enqueue_style('pwebcontact_admin_wp_style', plugins_url('media/css/admin_wp.css', __FILE__), array('dashicons'));
         wp_enqueue_style('pwebcontact_icomoon_style', plugins_url('media/css/icomoon.css', __FILE__));
         
-        //add_action('admin_head', array($this, 'admin_head'));
+        add_action('admin_head', array($this, 'admin_head'));
     }
     
     
@@ -384,6 +389,7 @@ class PWebContact_Admin {
 ?>
 <script type="text/javascript">
     var pwebcontact_admin = pwebcontact_admin || {};
+    pwebcontact_admin.buy_url = "<?php echo $this->buy_url; ?>";
 </script>
 <?php
     }
@@ -732,10 +738,7 @@ class PWebContact_Admin {
                 .($parent ? $parent : '')
                 .($is_pro === true ? ' pweb-pro' : '')
                 .($disabled === true ? ' pweb-disabled' : '')
-                .($tooltip ? ' pweb-has-tooltip' : '')
-                .'"'
-                .($tooltip ? ' title="'. esc_attr__($tooltip, 'pwebcontact') .'"' : '')
-                .'>'.
+                .'">'.
                     ($header ? '<h3>'.$header.'</h3>' : '').
                     ($label ? $this->_get_label($opt) : '').
                     '<div class="pweb-field-control">'.
@@ -767,11 +770,15 @@ class PWebContact_Admin {
             $is_pro = in_array($name, self::$pro[$group]);
         }
         
-        return '<label for="'.esc_attr($id).'" id="'.esc_attr($id).'-lbl"'. ($required ? ' class="required"' : '') .'>' . 
+        return '<label for="'.esc_attr($id).'" id="'.esc_attr($id).'-lbl"' .
+                ' class="' . ($tooltip ? 'pweb-has-tooltip' : '') . ($required ? ' required' : '') . '"' .
+                ($tooltip ? ' title="'. esc_attr__($tooltip, 'pwebcontact') .'"' : '') .
+                '>' . 
                 __($label, 'pwebcontact') . 
                 ($required ? ' <span class="pweb-star">*</span>' : '') .
-                ($is_pro === true ? ' <span class="pweb-pro">Pro</span>' : '') .
-                '</label>';
+                
+                '</label>' .
+                ($is_pro === true ? ' <span class="pweb-pro pweb-has-tooltip" title="'.__('You need to get PRO version to use this feature', 'pwebcontact').'">'.__('PRO', 'pwebcontact').'</span>' : '');
     }
     
     
@@ -1139,24 +1146,50 @@ class PWebContact_Admin {
     
     private function _check_upload_path($path) 
 	{
-        //TODO _check_upload_path
+        $upload_dir = wp_upload_dir();
+		$path = $upload_dir['basedir'].'/pwebcontact/'.$this->id.'/';
         
-		// create wirtable upload path
-		if (!JFolder::exists(JPATH_ROOT.$path)) {
-			JFolder::create(JPATH_ROOT.$path, 0777);
-		}
-		if (!is_writable(JPATH_ROOT.$path) AND JPath::canChmod(JPATH_ROOT.$path)) {
-			JPath::setPermissions(JPATH_ROOT.$path, null, '0777');
-		}
-		
-		// check upload path
-		if (!is_writable(JPATH_ROOT.$path)) {
-			$app = JFactory::getApplication();	
-			$app->enqueueMessage(JText::sprintf('MOD_PWEBCONTACT_CONFIG_MSG_UPLOAD_DIR', $path), 'warning');
-		}
-		// copy index.html file to upload path for security
-		elseif (!JFile::exists(JPATH_ROOT.$path.'index.html')) {
-			JFile::copy(JPATH_ROOT.'/media/mod_pwebcontact/upload/index.html', JPATH_ROOT.$path.'index.html');
-		}
+        if (WP_Filesystem()) {
+            global $wp_filesystem;
+            
+            // create wirtable upload path
+            if (!$wp_filesystem->is_dir($path)) {
+                $wp_filesystem->mkdir($path, 0777);
+            }
+            if (!$wp_filesystem->is_writable($path)) {
+                $wp_filesystem->chmod($path, 0777);
+            }
+
+            // check upload path
+            if (!$wp_filesystem->is_writable($path)) {
+                $this->warnings[] = sprintf(__('Upload directory is not writeable: %s.'), $path);
+                return false;
+            }
+            // copy index.html file to upload path for security
+            elseif (!$wp_filesystem->is_file($path.'index.html')) {
+                $wp_filesystem->copy(dirname(__FILE__).'/index.html', $path.'index.html');
+            }
+        }
+        else {
+            // create wirtable upload path
+            if (!is_dir($path)) {
+                mkdir($path, 0777);
+            }
+            if (!is_writable($path)) {
+                chmod($path, '0777');
+            }
+
+            // check upload path
+            if (!is_writable($path)) {
+                $this->warnings[] = sprintf(__('Upload directory is not writeable: %s.'), $path);
+                return false;
+            }
+            // copy index.html file to upload path for security
+            elseif (!is_file($path.'index.html')) {
+                copy(dirname(__FILE__).'/index.html', $path.'index.html');
+            }
+        }
+        
+        return true;
 	}
 }
