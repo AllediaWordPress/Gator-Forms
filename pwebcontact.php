@@ -49,19 +49,12 @@ class PWebContact
 	
     protected static $headers       = array();
 	protected static $sys_info 		= null;
-	protected static $loaded 		= array(
-										'init'              => false,
-                                        'text'              => false,
-										'uploader_text'     => false,
-                                        'datapicker_text'   => false,
-										'debug_js'          => false,
-										'ie_css'            => false
-									);
+	protected static $loaded 		= array();
     
 
     public static function init() 
 	{
-        if (!self::$loaded['init']) 
+        if (!isset(self::$loaded['init'])) 
 		{
 			self::$loaded['init'] = true;
             
@@ -469,7 +462,7 @@ class PWebContact
 			}
 			// TODO Calendar
 			if ($value+20 >= 10000) {
-				self::$loaded['calendar_zindex'] = $value+30;
+				//self::$loaded['calendar_zindex'] = $value+30;
 				$css .= 'body div.calendar{z-index:'.($value+30).'}';
 			}
 			
@@ -826,7 +819,7 @@ class PWebContact
 				}
 			}
 			
-			if (!self::$loaded['uploader_text']) 
+			if (!isset(self::$loaded['uploader_text'])) 
 			{
 				self::$loaded['uploader_text'] = true;
 				
@@ -863,7 +856,7 @@ class PWebContact
             wp_enqueue_style('pwebcontact-jquery-ui-datepicker');
             
             //TODO load datapicker translations
-            /*if (!self::$loaded['datapicker_text']) 
+            /*if (!isset(self::$loaded['datapicker_text'])) 
 			{
 				self::$loaded['datapicker_text'] = true;
 				
@@ -946,7 +939,7 @@ class PWebContact
 		wp_enqueue_style('pwebcontact-ie8');
 
 
-		if (!self::$loaded['text']) 
+		if (!isset(self::$loaded['text'])) 
 		{
 			self::$loaded['text'] = true;
 			
@@ -965,9 +958,9 @@ class PWebContact
     {
         global $wpdb;
         
-        if (!self::$loaded['ie_css']) 
+        if (!isset(self::$loaded['ie_css'])) 
 		{
-			self::$loaded['ie_css'] = false;
+			self::$loaded['ie_css'] = true;
             
             $sql =  $wpdb->prepare('SELECT COUNT(`id`) '.
                     'FROM `'.$wpdb->prefix.'pwebcontact_forms` '.
@@ -975,8 +968,6 @@ class PWebContact
 
             if ($wpdb->get_var($sql) > 0)
             {
-                self::$loaded['ie_css'] = true;
-                
                 $media_url = plugins_url('media/', __FILE__); //WP
 
                 echo
@@ -1193,7 +1184,7 @@ class PWebContact
 		'});';
 		
 		
-		if ($params->get('debug') AND !self::$loaded['debug_js'])
+		if ($params->get('debug') AND !isset(self::$loaded['debug_js']))
 		{
 			self::$loaded['debug_js'] = true;
 			
@@ -1803,8 +1794,6 @@ class PWebContact
 
 		// HOOK PROCCESS DATA - here you can add custom code to proccess variables: $data, $email_vars
 
-		// HTML emails path
-		$tmpl_path = $params->get('media_path').'email_tmpl/';
 		
 		// User email copy and auto-reply
 		$email_copy 		= ($params->get('email_copy', 0) AND isset($_POST['copy']) AND (int)$_POST['copy']);
@@ -1913,25 +1902,6 @@ class PWebContact
 		}
 
 
-		// Administrator email language
-		/*$email_lang = $params->get('email_lang');
-		if ($email_lang) 
-		{
-			if ($email_lang != get_bloginfo('language')) 
-			{
-				$lang->setLanguage($email_lang);
-				$lang->load();
-				$lang->load('mod_pwebcontact');
-				$params->set('rtl', $lang->isRTL());
-				
-				if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email language loaded: '.$email_lang;
-			}
-			else {
-				$params->set('email_lang', false);
-			}
-		}*/
-
-
 		// Administrator email
         $headers = array();
 
@@ -1987,6 +1957,7 @@ class PWebContact
         // load email body template
         $body = $params->get('email_admin_tmpl');
 
+        // TODO allow to change Administrator email language
 		self::parseTmplVars($body, $is_html, get_bloginfo('language'));
 
 		// set body text direction
