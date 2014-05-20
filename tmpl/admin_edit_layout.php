@@ -251,7 +251,7 @@ function_exists('add_action') or die;
             'label' => 'Background image',
             'header' => 'Background image',
             'tooltip' => 'Enter URL of image which will be shown in background of contact form. Image will not be repeated.',
-            'class' => 'pweb-input-xlarge'
+            'class' => 'pweb-filter-url pweb-input-xlarge'
         )); ?>
 
         <?php echo $this->_get_field(array(

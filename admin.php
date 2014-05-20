@@ -27,14 +27,172 @@ class PWebContact_Admin {
     protected $buy_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
     protected $buy_pro_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
     protected $buy_support_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
-    
+        
     protected static $pro = array(
         'load' => array(),
         'params' => array(
-            'toggler_icon'
+            'accordion_boxed',
+			'adcenter_url',
+			'adwords_url',
+			'attachment_delete',
+			'attachment_type',
+			'bg_color',
+			'bg_image',
+			'bg_opacity',
+			'bg_padding',
+			'bg_padding_position',
+			'bg_position',
+			'button_reset',
+			'buttons_fields_color',
+			'buttons_text_color',
+			'close_delay',
+			'close_other',
+			'close_toggler',
+			'cookie_lifetime',
+			'effect::modal:fade',
+            'effect::modal:drop',
+            'effect::modal:rotate',
+            'effect::modal:square',
+            'effect::modal:smooth',
+            'effect::accordion:slide_down',
+            'effect::static:none',
+			'effect_duration',
+			'effect_transition',
+			//'email_admin_tmpl',
+			'email_admin_tmpl_format',
+			//'email_admin_tmpl_list',
+			'email_autoreply_tmpl',
+			'email_autoreply_tmpl_format',
+			//'email_autoreply_tmpl_list',
+			'email_bcc',
+			//'email_cms_user',
+			'email_copy',
+			//'email_from',
+			//'email_from_name',
+			'email_replyto',
+			'email_replyto_name',
+			//'email_subject',
+			'email_subject_sfx',
+			//'email_to',
+			//'email_user_tmpl',
+			'email_user_tmpl_format',
+			//'email_user_tmpl_list',
+			'form_font_family',
+			'form_font_size',
+			'form_width',
+			'handler::button',
+            'handler::static',
+            'handler::hidden',
+			'labels_position',
+			'labels_width',
+			'modal_bg',
+			'modal_disable_close',
+			'modal_opacity',
+			//'moduleclass_sfx',
+			'msg_close_delay',
+			'msg_error_color',
+			'msg_position',
+			//'msg_success',
+			'msg_success_color',
+			'offset',
+			'onclose',
+			'oncomplete',
+			'onerror',
+			'onload',
+			'onopen',
+			'open_count',
+			'open_delay',
+			'open_toggler',
+			//'position',
+			'redirect',
+			'redirect_delay',
+			'redirect_url',
+			'reset_form',
+			'rounded',
+			//'server_sender',
+			'shadow',
+			'show_upload',
+			//'style_bg',
+			//'style_form',
+			//'style_toggler',
+			'text_color',
+			'ticket_enable',
+			'ticket_format',
+			'toggler_bg',
+			'toggler_color',
+			'toggler_font',
+			'toggler_font_family',
+			'toggler_font_size',
+			'toggler_height',
+			'toggler_icomoon',
+			'toggler_icon',
+			'toggler_icon_custom_image',
+			'toggler_icon_gallery_image',
+			//'toggler_name',
+			'toggler_position',
+			'toggler_rotate',
+			'toggler_slide',
+			'toggler_vertical',
+			'toggler_width',
+			'tooltips_focus',
+			'tooltips_validation',
+			'upload_allowed_ext',
+			'upload_autostart',
+			'upload_files_limit',
+			'upload_max_size',
+			'upload_path',
+			'upload_show_limits',
+			'upload_size_limit',
+			'user_data',
+			'zindex',
         ),
         'fields' => array(
-            
+            'phone',
+            'subject',
+            'date',
+            'password',
+            'select',
+            'multiple',
+            'radio',
+            'checkboxes',
+            'checkbox',
+            'checkbox_modal',
+            'email_copy',
+            'separator_text',
+            'separator_header',
+            'upload',
+            'mailto_list'
+        )
+    );
+    
+    protected static $free = array(
+        'load' => array(),
+        'params' => array(
+			'effect::slidebox:slide_in',
+			'email_admin_tmpl',
+			//'email_admin_tmpl_list',
+			//'email_autoreply_tmpl_list',
+			'email_cms_user',
+			'email_from',
+			'email_from_name',
+			'email_subject',
+			'email_to',
+			'email_user_tmpl',
+			//'email_user_tmpl_list',
+			'handler::tab',
+			'msg_success',
+			'server_sender',
+			'style_bg',
+			'style_form',
+			'style_toggler',
+			'toggler_name',
+        ),
+        'fields' => array(
+            'email',
+            'name',
+            'text',
+            'textarea',
+            'button_send'
         )
     );
     
@@ -717,14 +875,20 @@ class PWebContact_Admin {
             'header' => null,
             'parent' => null,
             'disabled' => false,
-            'is_pro' => null
+            'is_pro' => null,
+            'is_free' => null
         ), $opt);
         
         extract( $opt );
         
         if ($is_pro === null) {
-            $is_pro = in_array($name, self::$pro[$group]);
+            $opt['is_pro'] = $is_pro = in_array($name, self::$pro[$group]);
+            
+            if ($is_pro === false AND $is_free === null) {
+                $opt['is_free'] = $is_free = in_array($name, self::$free[$group]);
+            }
         }
+        
         if ($parent !== null) {
             $names = array();
             foreach((array)$parent as $parent_name) {
@@ -758,7 +922,8 @@ class PWebContact_Admin {
             'group' => 'params',
             'label' => null,
             'required' => false,
-            'is_pro' => null
+            'is_pro' => null,
+            'is_free' => null
         ), $opt);
         
         extract( $opt );
@@ -768,6 +933,10 @@ class PWebContact_Admin {
         }
         if ($is_pro === null) {
             $is_pro = in_array($name, self::$pro[$group]);
+            
+            if ($is_pro === false AND $is_free === null) {
+                $is_free = in_array($name, self::$free[$group]);
+            }
         }
         
         return '<label for="'.esc_attr($id).'" id="'.esc_attr($id).'-lbl"' .
@@ -778,7 +947,8 @@ class PWebContact_Admin {
                 ($required ? ' <span class="pweb-star">*</span>' : '') .
                 
                 '</label>' .
-                ($is_pro === true ? ' <span class="pweb-pro pweb-has-tooltip" title="'.__('You need to get PRO version to use this feature', 'pwebcontact').'">'.__('PRO', 'pwebcontact').'</span>' : '');
+                ($is_pro === true ? $this->_display_badge_pro() : '') .
+                ($is_free === true ? $this->_display_badge_free() : '');
     }
     
     
@@ -799,7 +969,8 @@ class PWebContact_Admin {
             'attributes' => array(),
             'options' => array(),
             'is_parent' => false,
-            'is_pro' => null
+            'is_pro' => null,
+            'is_free' => null
         ), $opt);
         
         extract( $opt );
@@ -816,6 +987,10 @@ class PWebContact_Admin {
         
         if ($is_pro === null) {
             $is_pro = in_array($name, self::$pro[$group]);
+            
+            if ($is_pro === false AND $is_free === null) {
+                $is_free = in_array($name, self::$free[$group]);
+            }
         }
         
         
@@ -829,8 +1004,8 @@ class PWebContact_Admin {
             $attributes['class'] .= ' required';
             $attributes['required'] = 'required';
         }
-        if ($is_pro === true OR $disabled) {
-            $disabled = true;
+        //if ($is_pro === true OR $disabled) {
+        if ($disabled) {
             $attributes['disabled'] = 'disabled';
         }
         if ($readonly) {
@@ -1020,9 +1195,9 @@ class PWebContact_Admin {
                 $html .= '<select name="'.$field_name.'"'. $this->_attr_to_str($attributes) .'>';
                 foreach ($options as $option) {
                     
-                    if ($is_pro === false AND !(isset($option['disabled']) AND $option['disabled']) AND in_array($name.':'.$option['value'], self::$pro[$group]) ) {
-                        $option['disabled'] = true;
-                    }
+                    /*if ($is_pro === false AND !(isset($option['disabled']) AND $option['disabled']) AND in_array($name.':'.$option['value'], self::$pro[$group]) ) {
+                        /option['disabled'] = true;
+                    }*/
                     if (!isset($option['name'])) {
                         $option['name'] = (string)$option['value'];
                     }
@@ -1046,9 +1221,9 @@ class PWebContact_Admin {
                 
                 foreach ($options as $option) {
                     
-                    if ($is_pro === false AND !(isset($option['disabled']) AND $option['disabled']) AND in_array($name.':'.$option['value'], self::$pro[$group]) ) {
+                    /*if ($is_pro === false AND !(isset($option['disabled']) AND $option['disabled']) AND in_array($name.':'.$option['value'], self::$pro[$group]) ) {
                         $option['disabled'] = true;
-                    }
+                    }*/
                     if (isset($option['parent'])) {
                         $names = array();
                         foreach((array)$option['parent'] as $parent_name) {
@@ -1081,7 +1256,10 @@ class PWebContact_Admin {
                             . '>';
                     
                     $html .= '<label for="'.$option_id.'" id="'.$option_id.'-lbl"'
-                            . '>'. __($option['name'], 'pwebcontact') . (isset($option['after']) ? $option['after'] : '').'</label>';
+                            . '>'. __($option['name'], 'pwebcontact') . (isset($option['after']) ? $option['after'] : '')
+                            . (($is_pro !== true AND in_array($name.'::'.$option['value'], self::$pro[$group])) ? $this->_display_badge_pro() : '')
+                            . (in_array($name.'::'.$option['value'], self::$free[$group]) ? $this->_display_badge_free() : '')
+                            . '</label>';
                     
                     $html .= '</div>';
                 }
@@ -1099,6 +1277,24 @@ class PWebContact_Admin {
             $attr .= ' '.$name.'="'.esc_attr($value).'"';
         }
         return $attr;
+    }
+    
+    protected function _display_badge($field_type = null)
+    {
+        if (in_array($field_type, self::$pro['fields'])) 
+            return $this->_display_badge_pro();
+        elseif (in_array($field_type, self::$free['fields'])) 
+            return $this->_display_badge_free();
+    }
+    
+    protected function _display_badge_free()
+    {
+        return ' <span class="pweb-free">'.__('FREE', 'pwebcontact').'</span>';
+    }
+    
+    protected function _display_badge_pro()
+    {
+        return ' <span class="pweb-pro pweb-has-tooltip" title="'.__('You need to get PRO version to use this feature', 'pwebcontact').'">'.__('PRO', 'pwebcontact').'</span>';
     }
     
     private function _convert_size($str)

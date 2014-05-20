@@ -12,7 +12,9 @@ var pwebcontact_l10n = pwebcontact_l10n || {},
 if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     // Initialize tooltips
-    $(".pweb-has-tooltip").tooltip();
+    $(".pweb-has-tooltip").tooltip({
+        track: true
+    });
     
     // Toogle state action
     $(".pweb-action-toggle-state").click(function(e){

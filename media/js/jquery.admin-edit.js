@@ -24,7 +24,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     }).trigger("resize");
     
     // Initialize tooltips
-    $(".pweb-has-tooltip").tooltip();
+    $(".pweb-has-tooltip").tooltip({
+        track: true
+    });
     
     // Tabs
     $("#pweb-tabs").find(".nav-tab").click(function(e){
@@ -338,7 +340,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	
 	// validate url
 	$('.pweb-filter-url').on('change', function() {
-		var regexp = /^((http|https):){0,1}\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/i;
+		this.value = encodeURI(decodeURI(this.value));
+        
+        var regex = /^((http|https):){0,1}\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/i;
 		if (!this.value || regex.test(this.value)) {
 			$(this).removeClass('pweb-invalid');
 		} else {
