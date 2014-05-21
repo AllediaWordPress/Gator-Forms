@@ -15,6 +15,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     pwebcontact_admin.counter = 0;
     pwebcontact_admin.confirm = true;
     pwebcontact_admin.confirmed = false;
+    pwebcontact_admin.fields = 0;
     
     
     // save
@@ -221,6 +222,15 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                                 // close field options if opened
                                 $("#pweb_fields_options_close").click();
                             }
+                            if (!$field.hasClass("pweb-pro")) {
+                                pwebcontact_admin.fields--;
+                                if (typeof pwebcontact_admin.fields_limit !== "undefined" && pwebcontact_admin.fields_limit > 0) {
+                                    if (pwebcontact_admin.fields <= pwebcontact_admin.fields_limit) {
+                                        // hide limit notice
+                                        $("#pweb_fields_limit_warning").fadeOut("slow");
+                                    }
+                                }
+                            }
                             // show field type if only one instance is allowed
                             if ($field.hasClass("pweb-custom-fields-single")) {
                                 $("#pweb_field_type_" + $field.data("type")).show("slow");
@@ -382,6 +392,22 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         // Hide field on fields types list if only one instance is allowed
         if (source.hasClass("pweb-custom-fields-single")) {
             source.hide();
+        }
+        
+        if (!$field.hasClass("pweb-pro")) {
+            pwebcontact_admin.fields++;
+            if (typeof pwebcontact_admin.fields_limit !== "undefined" && pwebcontact_admin.fields_limit > 0) {
+                // Show or hide limit notice
+                if (pwebcontact_admin.fields === pwebcontact_admin.fields_limit) {
+                    
+                }
+                else if (pwebcontact_admin.fields > pwebcontact_admin.fields_limit) {
+                    $("#pweb_fields_limit_warning").fadeIn("slow");
+                }
+                else {
+                    //alert("You have added "+pwebcontact_admin.fields+" of "+pwebcontact_admin.fields_limit+" free fields ");
+                }
+            }
         }
         
         return $field;

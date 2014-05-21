@@ -27,7 +27,9 @@ class PWebContact_Admin {
     protected $buy_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
     protected $buy_pro_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
     protected $buy_support_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
-        
+    protected $fields_limit = 5;
+
+
     protected static $pro = array(
         'load' => array(),
         'params' => array(
@@ -548,6 +550,7 @@ class PWebContact_Admin {
 <script type="text/javascript">
     var pwebcontact_admin = pwebcontact_admin || {};
     pwebcontact_admin.buy_url = "<?php echo $this->buy_url; ?>";
+    pwebcontact_admin.fields_limit = <?php echo $this->fields_limit; ?>;
 </script>
 <?php
     }
@@ -824,6 +827,12 @@ class PWebContact_Admin {
         if (count($this->errors)) {
 ?>
 <div class="error pweb-clearfix"><p><strong><?php echo implode('<br>', $this->errors); ?></strong></p></div>
+<?php
+		}
+        
+        if (count($this->warnings)) {
+?>
+<div class="error pweb-clearfix"><p><strong><?php echo implode('<br>', $this->warnings); ?></strong></p></div>
 <?php
 		}
         
@@ -1242,6 +1251,9 @@ class PWebContact_Admin {
                         }
                     }
                     
+                    $option['is_pro'] = ($is_pro !== true AND in_array($name.'::'.$option['value'], self::$pro[$group]));
+                    $option['is_free'] = in_array($name.'::'.$option['value'], self::$free[$group]);
+                    
                     $option_id = $id .'_'. preg_replace('/[^a-z0-9-_]/i', '', str_replace(':', '_', $option['value']));
                     
                     $html .= '<div class="pweb-field-option'
@@ -1251,14 +1263,17 @@ class PWebContact_Admin {
                     
                     $html .= '<input type="'.$type.'" name="'.$field_name.'" id="'.$option_id.'"'
                             . ' value="'.esc_attr($option['value']).'"'. checked($value, $option['value'], false) 
-                            . ((isset($attributes['disabled']) OR (isset($option['disabled']) AND $option['disabled'])) ? ' disabled="disabled"' : '') 
-                            . (($is_parent === true OR (isset($option['is_parent']) AND $option['is_parent'] === true)) ? ' class="pweb-parent"' : '')
-                            . '>';
+                            . ((isset($attributes['disabled']) OR (isset($option['disabled']) AND $option['disabled'])) ? ' disabled="disabled"' : '')
+                            . ' class="'
+                            . (($is_parent === true OR (isset($option['is_parent']) AND $option['is_parent'] === true)) ? 'pweb-parent' : '')
+                            . ($option['is_pro'] ? ' pweb-pro' : '')
+                            . ($option['is_free'] ? ' pweb-free' : '')
+                            . '">';
                     
                     $html .= '<label for="'.$option_id.'" id="'.$option_id.'-lbl"'
                             . '>'. __($option['name'], 'pwebcontact') . (isset($option['after']) ? $option['after'] : '')
-                            . (($is_pro !== true AND in_array($name.'::'.$option['value'], self::$pro[$group])) ? $this->_display_badge_pro() : '')
-                            . (in_array($name.'::'.$option['value'], self::$free[$group]) ? $this->_display_badge_free() : '')
+                            . ($option['is_pro'] ? $this->_display_badge_pro() : '')
+                            . ($option['is_free'] ? $this->_display_badge_free() : '')
                             . '</label>';
                     
                     $html .= '</div>';
@@ -1295,6 +1310,11 @@ class PWebContact_Admin {
     protected function _display_badge_pro()
     {
         return ' <span class="pweb-pro pweb-has-tooltip" title="'.__('You need to get PRO version to use this feature', 'pwebcontact').'">'.__('PRO', 'pwebcontact').'</span>';
+    }
+    
+    protected function _is_pro_field($field_type = null)
+    {
+        return in_array($field_type, self::$pro['fields']);
     }
     
     private function _convert_size($str)

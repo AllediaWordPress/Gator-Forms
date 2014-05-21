@@ -859,6 +859,32 @@ span.pweb-free {
     100% { transform: rotate(359deg) }
 }
 
+.pweb-alert {
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+.pweb-alert-danger {
+  background-color: #F2DEDE;
+  border-color: #EBCCD1;
+  color: #A94442;
+}
+.pweb-alert-warning {
+  background-color: #FCF8E3;
+  border-color: #FAEBCC;
+  color: #8A6D3B;
+}
+.pweb-alert-info {
+  background-color: #D9EDF7;
+  border-color: #BCE8F1;
+  color: #31708F;
+}
+.pweb-alert-success {
+  background-color: #DFF0D8;
+  border-color: #D6E9C6;
+  color: #3C763D;
+}
 
 /* jQuery UI Tooltips */
 .ui-tooltip {

@@ -11,6 +11,16 @@
 function_exists('add_action') or die;
 
 ?>
+
+<?php if (!defined('PWEBCONTACT_PRO')) : ?>
+<div id="pweb_fields_limit" class="pweb-alert pweb-alert-info">
+    <?php printf(__('You can add up to %d FREE fields. To unlock fields limit get PRO version.', 'pwebcontact'), $this->fields_limit); ?>
+</div>
+<div id="pweb_fields_limit_warning" class="pweb-alert pweb-alert-danger" style="display:none">
+    <?php printf(__('You have exceeded fields limit. Only first %d FREE fields will be displayed on your website.', 'pwebcontact'), $this->fields_limit); ?>
+</div>
+<?php endif; ?>
+
 <div id="pweb_fields" class="pweb-clearfix">
 	
 	<?php echo $this->_get_field_control(array(
@@ -66,7 +76,7 @@ function_exists('add_action') or die;
             <?php _e('Email', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Email field', 'pwebcontact'); ?></span>
@@ -161,7 +171,7 @@ function_exists('add_action') or die;
             <?php _e('Name', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Name field', 'pwebcontact'); ?></span>
@@ -266,7 +276,7 @@ function_exists('add_action') or die;
             <?php _e('Phone', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Phone field', 'pwebcontact'); ?></span>
@@ -371,7 +381,7 @@ function_exists('add_action') or die;
             <?php _e('Subject', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Subject field', 'pwebcontact'); ?></span>
@@ -475,7 +485,7 @@ function_exists('add_action') or die;
             <?php _e('Text input', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Text input field', 'pwebcontact'); ?></span>
@@ -578,7 +588,7 @@ function_exists('add_action') or die;
             <?php _e('Multi-line textarea input', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Multi-line textarea input field', 'pwebcontact'); ?></span>
@@ -694,7 +704,7 @@ function_exists('add_action') or die;
             <?php _e('Calendar', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Calendar field', 'pwebcontact'); ?></span>
@@ -798,7 +808,7 @@ function_exists('add_action') or die;
             <?php _e('Password', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Password field', 'pwebcontact'); ?></span>
@@ -901,7 +911,7 @@ function_exists('add_action') or die;
             <?php _e('Select list', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Select list field', 'pwebcontact'); ?></span>
@@ -1005,7 +1015,7 @@ function_exists('add_action') or die;
             <?php _e('Multiple select list', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Multiple select list field', 'pwebcontact'); ?></span>
@@ -1111,7 +1121,7 @@ function_exists('add_action') or die;
             <?php _e('Radio group', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Radio group field', 'pwebcontact'); ?></span>
@@ -1216,7 +1226,7 @@ function_exists('add_action') or die;
             <?php _e('Checkboxes group', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Checkboxes group field', 'pwebcontact'); ?></span>
@@ -1321,7 +1331,7 @@ function_exists('add_action') or die;
             <?php _e('Single checkbox', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Single checkbox field', 'pwebcontact'); ?></span>
@@ -1405,7 +1415,7 @@ function_exists('add_action') or die;
             <?php _e('Agree to Terms & Conditions', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Agree to Terms & Conditions field', 'pwebcontact'); ?></span>
@@ -1514,7 +1524,7 @@ function_exists('add_action') or die;
             <?php _e('Send copy to yourself', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Send copy to yourself field', 'pwebcontact'); ?></span>
@@ -1562,7 +1572,7 @@ function_exists('add_action') or die;
             <?php _e('Custom text/html', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Custom text/html field', 'pwebcontact'); ?></span>
@@ -1601,7 +1611,7 @@ function_exists('add_action') or die;
             <?php _e('Header', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Header field', 'pwebcontact'); ?></span>
@@ -1640,7 +1650,7 @@ function_exists('add_action') or die;
             <?php _e('Upload', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Upload field', 'pwebcontact'); ?></span>
@@ -1714,7 +1724,7 @@ function_exists('add_action') or die;
             <?php _e('List of recipients', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('List of recipients field', 'pwebcontact'); ?></span>
@@ -1781,11 +1791,13 @@ function_exists('add_action') or die;
         <?php $field_type = 'button_send'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?> pweb-custom-fields-single" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Send button', 'pwebcontact'); ?>
+            <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Send button', 'pwebcontact'); ?></span>
+                    <?php echo $this->_display_badge($field_type); ?>
                 </div>
                 <div class="pweb-custom-field-label">
                     <?php _e('Label', 'pwebcontact'); ?> <span><?php _e('Send', 'pwebcontact'); ?></span>
