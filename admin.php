@@ -10,6 +10,8 @@
 // No direct access
 function_exists('add_action') or die;
 
+//define('PWEBCONTACT_PRO', true);
+
 $pwebcontact_admin = new PWebContact_Admin;
 
 class PWebContact_Admin {
@@ -31,7 +33,9 @@ class PWebContact_Admin {
 
 
     protected static $pro = array(
-        'load' => array(),
+        'load' => array(
+            'layout'
+        ),
         'params' => array(
             'accordion_boxed',
 			'adcenter_url',
@@ -312,10 +316,13 @@ class PWebContact_Admin {
                     'saved_on' => __('Saved on', 'pwebcontact'),
                     'error' => __('Error'),
                     'request_error' => __('Request error', 'pwebcontact'),
+                    'error_loading_fields_settings' => __('Loading fields settings has failed!', 'pwebcontact'),
+                    'missing_layout_settings' => __('File with settings for selected layout does not exists!', 'pwebcontact'),
                     'missing_email_tmpl' => __('Email template in selected format does not exists. Change format or create new file with email template: %s', 'pwebcontact'),
                     'paste_adcenter' => __('Paste Microsoft adCenter conversion tracking script', 'pwebcontact'),
                     'paste_adwords' => __('Paste Google AdWords/Goal Conversion tracking script', 'pwebcontact'),
-                    'but_subscription' => esc_html__('Buy PRO & Get support', 'pwebcontact')
+                    'email_vars' => __('Variables for email message', 'pwebcontact'),
+                    'buy_subscription' => esc_html__('Buy PRO & Get support', 'pwebcontact')
                 ));
                 
                 // load CSS
@@ -484,10 +491,13 @@ class PWebContact_Admin {
             wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-list.js', __FILE__), 
                     array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-dialog', 'jquery-ui-tooltip'));
             
+            add_thickbox();
+            
             wp_localize_script('pwebcontact_admin_script', 'pwebcontact_l10n', array(
                 'delete' => __( 'Delete' ),
                 'cancel' => __( 'Cancel' ),
                 'request_error' => __('Request error', 'pwebcontact'),
+                'buy_subscription' => esc_html__('Buy PRO & Get support', 'pwebcontact')
             ));
             
             // load CSS
@@ -508,6 +518,40 @@ class PWebContact_Admin {
             }
             
             header('Content-type: text/plain');
+            die( $content );
+        }
+        elseif ( $task == 'load_layout' ) {
+            
+            check_ajax_referer( 'load-layout' );
+            //wp_verify_nonce( $_POST['_wp_nonce'], 'load-layout' );
+            
+            $content = '';
+            if (isset($_GET['ajax']) AND isset($_POST['layout']) AND $_POST['layout']) {
+                
+                $path = dirname(__FILE__) .'/media/layout_settings/'. basename($_POST['layout']) . '.txt';
+                if (is_file($path)) {
+                    $content = file_get_contents($path);
+                }
+            }
+            
+            header('Content-type: application/json');
+            die( $content );
+        }
+        elseif ( $task == 'load_fields' ) {
+            
+            check_ajax_referer( 'load-fields' );
+            //wp_verify_nonce( $_POST['_wp_nonce'], 'load-fields' );
+            
+            $content = '';
+            if (isset($_GET['ajax']) AND isset($_POST['fields']) AND $_POST['fields']) {
+                
+                $path = dirname(__FILE__) .'/media/fields_settings/'. basename($_POST['fields']) . '.txt';
+                if (is_file($path)) {
+                    $content = file_get_contents($path);
+                }
+            }
+            
+            header('Content-type: application/json');
             die( $content );
         }
         
@@ -549,8 +593,9 @@ class PWebContact_Admin {
 ?>
 <script type="text/javascript">
     var pwebcontact_admin = pwebcontact_admin || {};
+    pwebcontact_admin.plugin_url = "<?php echo plugins_url('pwebcontact/'); ?>";
     pwebcontact_admin.buy_url = "<?php echo $this->buy_url; ?>";
-    pwebcontact_admin.fields_limit = <?php echo $this->fields_limit; ?>;
+    pwebcontact_admin.fields_limit = <?php echo (!defined('PWEBCONTACT_PRO') ? $this->fields_limit : 0); ?>;
 </script>
 <?php
     }
@@ -880,7 +925,6 @@ class PWebContact_Admin {
             'group' => 'params',
             'label' => null,
             'desc' => null,
-            'tooltip' => null,
             'header' => null,
             'parent' => null,
             'disabled' => false,
@@ -890,7 +934,7 @@ class PWebContact_Admin {
         
         extract( $opt );
         
-        if ($is_pro === null) {
+        if (!defined('PWEBCONTACT_PRO') AND $is_pro === null) {
             $opt['is_pro'] = $is_pro = in_array($name, self::$pro[$group]);
             
             if ($is_pro === false AND $is_free === null) {
@@ -930,6 +974,7 @@ class PWebContact_Admin {
             'index' => null,
             'group' => 'params',
             'label' => null,
+            'tooltip' => null,
             'required' => false,
             'is_pro' => null,
             'is_free' => null
@@ -940,7 +985,7 @@ class PWebContact_Admin {
         if (empty($id)) {
             $id = 'pweb_'. $group .'_'. ($index !== null ? $index.'_' : '') . $name;
         }
-        if ($is_pro === null) {
+        if (!defined('PWEBCONTACT_PRO') AND $is_pro === null) {
             $is_pro = in_array($name, self::$pro[$group]);
             
             if ($is_pro === false AND $is_free === null) {
@@ -994,7 +1039,7 @@ class PWebContact_Admin {
         
         $field_name = esc_attr($group. ($index !== null ? '['.$index.']' : '') . '['.$name.']');
         
-        if ($is_pro === null) {
+        if (!defined('PWEBCONTACT_PRO') AND $is_pro === null) {
             $is_pro = in_array($name, self::$pro[$group]);
             
             if ($is_pro === false AND $is_free === null) {
@@ -1251,8 +1296,8 @@ class PWebContact_Admin {
                         }
                     }
                     
-                    $option['is_pro'] = ($is_pro !== true AND in_array($name.'::'.$option['value'], self::$pro[$group]));
-                    $option['is_free'] = in_array($name.'::'.$option['value'], self::$free[$group]);
+                    $option['is_pro'] = (!defined('PWEBCONTACT_PRO') AND $is_pro !== true AND in_array($name.'::'.$option['value'], self::$pro[$group]));
+                    $option['is_free'] = (!defined('PWEBCONTACT_PRO') AND in_array($name.'::'.$option['value'], self::$free[$group]));
                     
                     $option_id = $id .'_'. preg_replace('/[^a-z0-9-_]/i', '', str_replace(':', '_', $option['value']));
                     
@@ -1296,10 +1341,14 @@ class PWebContact_Admin {
     
     protected function _display_badge($field_type = null)
     {
-        if (in_array($field_type, self::$pro['fields'])) 
-            return $this->_display_badge_pro();
-        elseif (in_array($field_type, self::$free['fields'])) 
-            return $this->_display_badge_free();
+        if (!defined('PWEBCONTACT_PRO')) {
+            if (in_array($field_type, self::$pro['fields'])) {
+                return $this->_display_badge_pro();
+            }
+            elseif (in_array($field_type, self::$free['fields'])) {
+                return $this->_display_badge_free();
+            }
+        }
     }
     
     protected function _display_badge_free()
@@ -1314,7 +1363,7 @@ class PWebContact_Admin {
     
     protected function _is_pro_field($field_type = null)
     {
-        return in_array($field_type, self::$pro['fields']);
+        return !defined('PWEBCONTACT_PRO') AND in_array($field_type, self::$pro['fields']);
     }
     
     private function _convert_size($str)

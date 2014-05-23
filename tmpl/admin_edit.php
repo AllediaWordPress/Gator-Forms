@@ -31,10 +31,12 @@ function_exists('add_action') or die;
 
             <span id="pweb-save-status"><?php _e( 'Saved on', 'pwebcontact' ); ?> <?php echo get_date_from_gmt($this->data->modify_date); ?></span>
             
-            <button class="button button-primary right" id="pweb-buy-button">
+            <?php if (!defined('PWEBCONTACT_PRO')) : ?>
+            <button class="button button-primary right pweb-buy" id="pweb-buy-button">
                 <i class="icomoon-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
                 <span>&amp; <?php _e( 'Get Support', 'pwebcontact' ); ?></span>
             </button>
+            <?php endif; ?>
             <a class="button button-primary right" id="pweb-docs-button" href="<?php echo $this->documentation_url; ?>" target="_blank">
                 <i class="icomoon-support"></i> <span><?php _e( 'Documentation' ); ?></span>
             </a>

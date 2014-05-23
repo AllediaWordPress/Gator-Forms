@@ -41,8 +41,12 @@ function_exists('add_action') or die;
 
 <?php foreach ($this->data as $form) : ?>
     <div class="theme pweb-panel-box">
-        <div class="theme-screenshot" onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact&task=edit&id='.(int)$form->id ); ?>'">
-			
+        <div class="theme-screenshot pweb-layout-<?php echo $form->layout; ?>" onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact&task=edit&id='.(int)$form->id ); ?>'">
+			<?php if (!defined('PWEBCONTACT_PRO') AND $form->layout !== 'slidebox') : ?>
+                <span class="pweb-pro pweb-has-tooltip" title="<?php esc_attr_e('You need to get PRO version to use this layout', 'pwebcontact'); ?>">
+                    <?php _e('PRO', 'pwebcontact'); ?>
+                </span>
+            <?php endif; ?>
 		</div>
         <h3 class="theme-name">
             <span class="pweb-save-date">

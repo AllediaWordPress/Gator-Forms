@@ -90,6 +90,7 @@ function_exists('add_action') or die;
                 'cols' => 50
             )
         )); ?>
+        <div><a href="#" class="pweb-email-tmpl-vars"><?php _e('Show email variables', 'pwebcontact'); ?></a></div>
         <div class="pweb-field-desc"><?php _e('Remeber to create field type of: Send copy to yourself, to use this option.', 'pwebcontact'); ?></div>
     </div>
     <div class="pweb-field-control">
@@ -176,6 +177,7 @@ function_exists('add_action') or die;
 
 {files}'
                 )); ?>
+                <div><a href="#" class="pweb-email-tmpl-vars"><?php _e('Show email variables', 'pwebcontact'); ?></a></div>
             </div>
             <div class="pweb-field-control">
                 <?php echo $this->_get_label(array(
@@ -245,6 +247,7 @@ function_exists('add_action') or die;
                         'cols' => 50
                     )
                 )); ?>
+                <div><a href="#" class="pweb-email-tmpl-vars"><?php _e('Show email variables', 'pwebcontact'); ?></a></div>
             </div>
             <div class="pweb-field-control">
                 <?php echo $this->_get_label(array(
@@ -733,4 +736,27 @@ function_exists('add_action') or die;
 </div>
 <div id="pweb-dialog-email-scheme-load" title="<?php esc_attr_e( 'Load email scheme', 'pwebcontact' ); ?>" style="display:none">
     <p><?php _e( 'Current content of message which will appear after successful sending and message which will be sent to User as copy will be replaced with selected scheme!', 'pwebcontact' ); ?></p>
+</div>
+
+<div id="pweb-email-tmpl-vars" style="display:none">
+    <p><?php _e('Use following syntax in email templates to display data collected by form.', 'pwebcontact'); ?></p>
+    <ul>
+        <li><code>{lang:Word}</code> - <?php esc_html_e('displays translation of "Word" from language file', 'pwebcontact'); ?> </li>
+        <li><code>{fields}</code> - <?php esc_html_e('displays all fields, each "Label: Value" pair in new line', 'pwebcontact'); ?> </li>
+        <li><code>{field_alias.label}</code> - <?php printf(esc_html__('displays field label, will be translated if present in language file, replace %s with alias of field', 'pwebcontact'), '<code>field_alias</code>'); ?> </li>
+        <li><code>{field_alias.value}</code> - <?php esc_html_e('displays field value, replace <code>field_alias</code> with alias of field', 'pwebcontact'); ?> </li>
+        <li><code>{name}</code> - <?php esc_html_e('User name', 'pwebcontact'); ?> </li>
+        <li><code>{email}</code> - <?php esc_html_e('User email', 'pwebcontact'); ?> </li>
+        <li><code>{username}</code> - <?php esc_html_e('Joomla Username if logged in', 'pwebcontact'); ?> </li>
+        <li><code>{ip_address}</code> - <?php esc_html_e('User IP address', 'pwebcontact'); ?> </li>
+        <li><code>{browser}</code> - <?php esc_html_e('User browser name', 'pwebcontact'); ?> </li>
+        <li><code>{os}</code> - <?php esc_html_e('User operating system name', 'pwebcontact'); ?> </li>
+        <li><code>{screen_resolution}</code> - <?php esc_html_e('User screen resolution', 'pwebcontact'); ?> </li>
+        <li><code>{title}</code> - <?php esc_html_e('title of page', 'pwebcontact'); ?> </li>
+        <li><code>{url}</code> - <?php esc_html_e('page URL', 'pwebcontact'); ?> </li>
+        <li><code>{site_name}</code> - <?php esc_html_e('site name', 'pwebcontact'); ?> </li>
+        <li><code>{mailto_name}</code> - <?php esc_html_e('name of recipient selected by User from "Mail to list" field', 'pwebcontact'); ?> </li>
+        <li><code>{ticket}</code> - <?php esc_html_e('formatted ticket', 'pwebcontact'); ?> </li>
+        <li><code>{files}</code> - <?php esc_html_e('links to uploaded files if "Attachment type" set to: "Links to files"', 'pwebcontact'); ?> </li>
+    </ul>
 </div>

@@ -15,6 +15,9 @@ function_exists('add_action') or die;
 <?php if (!defined('PWEBCONTACT_PRO')) : ?>
 <div id="pweb_fields_limit" class="pweb-alert pweb-alert-info">
     <?php printf(__('You can add up to %d FREE fields. To unlock fields limit get PRO version.', 'pwebcontact'), $this->fields_limit); ?>
+    <button class="button button-primary pweb-buy">
+        <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
+    </button>
 </div>
 <div id="pweb_fields_limit_warning" class="pweb-alert pweb-alert-danger" style="display:none">
     <?php printf(__('You have exceeded fields limit. Only first %d FREE fields will be displayed on your website.', 'pwebcontact'), $this->fields_limit); ?>
@@ -39,17 +42,19 @@ function_exists('add_action') or die;
             )); ?>
 
             <?php echo $this->_get_field_control(array(
-                'type' => 'select',
+                'type' => 'filelist',
                 'group' => 'load',
                 'name' => 'fields',
+                'filter' => '\.txt$',
+                'directory' => 'media/fields_settings',
+                'strip_ext' => true,
+                'attributes' => array(
+                    'data-action' => admin_url( 'admin.php?page=pwebcontact&task=load_fields&ajax=1&_wpnonce='. wp_create_nonce('load-fields') )
+                ),
                 'options' => array(
                     array(
-                        'name' => 'Select',
+                        'name' => '- Select -',
                         'value' => ''
-                    ),
-                    array(
-                        'name' => 'Contact form',
-                        'value' => '{"1":{"type":"row"},"2":{"type":"name","label":"Name","tooltip":"","required":"0","alias":"name","values":"","validation":""},"3":{"type":"row"},"4":{"type":"email","label":"Email","tooltip":"","required":"1","alias":"email","values":""},"5":{"type":"row"},"6":{"type":"phone","label":"Phone","tooltip":"","required":"0","alias":"phone","values":"","validation":"\/[\\\\d-+() ]+\/"},"7":{"type":"row"},"8":{"type":"textarea","label":"Message","tooltip":"","required":"1","alias":"message","values":"","rows":"","maxlength":""},"9":{"type":"row"},"10":{"type":"email_copy"},"11":{"type":"row"},"12":{"type":"button_send"}}'
                     )
                 )
             )); ?>

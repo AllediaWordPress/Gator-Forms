@@ -224,7 +224,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                             }
                             if (!$field.hasClass("pweb-pro")) {
                                 pwebcontact_admin.fields--;
-                                if (typeof pwebcontact_admin.fields_limit !== "undefined" && pwebcontact_admin.fields_limit > 0) {
+                                if (pwebcontact_admin.fields_limit > 0) {
                                     if (pwebcontact_admin.fields <= pwebcontact_admin.fields_limit) {
                                         // hide limit notice
                                         $("#pweb_fields_limit_warning").fadeOut("slow");
@@ -396,7 +396,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         
         if (!$field.hasClass("pweb-pro")) {
             pwebcontact_admin.fields++;
-            if (typeof pwebcontact_admin.fields_limit !== "undefined" && pwebcontact_admin.fields_limit > 0) {
+            if (pwebcontact_admin.fields_limit > 0) {
                 // Show or hide limit notice
                 if (pwebcontact_admin.fields === pwebcontact_admin.fields_limit) {
                     
@@ -419,6 +419,13 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         
         if (typeof parse === "undefined" || parse !== false) {
             fields = $.parseJSON( fields );
+        }
+        
+        // reset number of loaded fields
+        pwebcontact_admin.fields = 0;
+        if (pwebcontact_admin.fields_limit) {
+            // hide limit notice
+            $("#pweb_fields_limit_warning").fadeOut("fast");
         }
         
         $.each(fields, function(i, field) {
@@ -468,20 +475,45 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     // load sample fields
     $("#pweb_load_fields").change(function(){
+        var that = this;
         if (this.selectedIndex) {
             var $rows = $("#pweb_fields_rows").children();
             // confirm old fields removal
             if ($rows.length === 0 || pwebcontact_admin.confirmed === true) {
                 pwebcontact_admin.confirmed = false;
                 
-                // hide options to remove them
-                $("#pweb_fields_options_close").click();
-                // remove rows with columns and fields without confirmation
-                $rows.remove();
-                // load sample fields
-                loadFields( $(this).val() );
-                // set default option
-                this.selectedIndex = 0;
+                $.ajax({
+                    url: $(this).data("action"),
+                    type: "POST", 
+                    dataType: "json",
+                    data: {
+                        "fields": $(this).val()
+                    },
+                    beforeSend: function() {
+                        $(' <i class="icomoon-spinner"></i>').insertAfter( that );
+                    }
+                }).done(function(response, textStatus, jqXHR) {
+
+                    // hide loading
+                    $(that).next("i.icomoon-spinner").remove();
+
+                    if (response) {
+                        // hide options to remove them
+                        $("#pweb_fields_options_close").click();
+                        // remove rows with columns and fields without confirmation
+                        $rows.remove();
+                        // load sample fields
+                        loadFields( response, false );
+                        // set default option
+                        that.selectedIndex = 0;
+                    }
+                    else {
+                        alert(pwebcontact_l10n.error_loading_fields_settings);
+                    }
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+
+                    alert(pwebcontact_l10n.request_error+'. '+ jqXHR.status +' '+ errorThrown);
+                });
             }
             else {
                 $("#pweb-dialog-fields-load").data("element", $(this)).dialog("open");

@@ -11,6 +11,16 @@
 function_exists('add_action') or die;
 
 ?>
+
+<?php if (!defined('PWEBCONTACT_PRO')) : ?>
+<div id="pweb_layout_type_warning" class="pweb-alert pweb-alert-danger" style="display:none">
+    <?php printf(__('You have selected layout which is available only in PRO version. Form would not be displayed on your website. To unlock all layout types get PRO version.', 'pwebcontact'), $this->fields_limit); ?>
+    <button class="button button-primary pweb-buy">
+        <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
+    </button>
+</div>
+<?php endif; ?>
+
 <div class="pweb-width-40" id="pweb-location-steps">
 
     <div class="pweb-location-step">

@@ -76,9 +76,20 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         $(this).data("relations", $(this).parent().attr("class").match(/pweb-related-[a-z\-]+/g) );
     }).change(function(e){
         
-        if (pwebcontact_admin.running_related === true) return;
+        if (pwebcontact_admin.running_related === true || !$(this).is(":checked")) return;
         
         pwebcontact_admin.running_related = true;
+        
+        var $warning = $("#pweb_layout_type_warning");
+        if ($warning.length) {
+            if ($(this).hasClass("pweb-pro")) {
+                $warning.fadeIn("slow");
+            }
+            else if ($(this).hasClass("pweb-free")) {
+                $warning.fadeOut("slow");
+            }
+        }
+        
                 
         var current_relations = $(this).data("relations"),
             relations = {
@@ -460,12 +471,12 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     dataType: "text",
                     data: data,
                     beforeSend: function() {
-                        $('<i class="icomoon-spinner"></i>').insertAfter(that);
+                        $(' <i class="icomoon-spinner"></i>').insertAfter(that);
                     }
                 }).done(function(response, textStatus, jqXHR) {
 
                     // hide loading
-                    $(that).val("").next("i").remove();
+                    $(that).val("").next("i.icomoon-spinner").remove();
 
                     if (response) {
                         $("#"+id).val(response);
@@ -567,6 +578,75 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
     
     
+    // Load layout preview
+    $("#pweb_load_layout").change(function(){
+        if (this.selectedIndex) {
+            $("#pweb-layout-preview img").attr("src", pwebcontact_admin.plugin_url + "media/layout_settings/" + $(this).val() + ".jpg");
+        }
+    });
+    
+    // Load layout settings
+    $("#pweb-layout-preview a").click(function(e){
+        e.preventDefault();
+        if ($("#pweb_load_layout").val()) {
+            $(this).blur();
+            $("#pweb-dialog-layout").dialog("open");
+        }
+    });
+    
+    // Load layout settings dialog
+    $("#pweb-dialog-layout").dialog({
+        dialogClass: "wp-dialog",
+        autoOpen: false,
+        resizable: false,
+        modal: true,
+        buttons: [
+            { 
+                text: pwebcontact_l10n.ok,
+                class : "button-primary",
+                click: function(e) {
+                    $(this).dialog("close");
+                    $.ajax({
+                        url: $("#pweb_load_layout").data("action"),
+                        type: "POST", 
+                        dataType: "json",
+                        data: {
+                            "layout": $("#pweb_load_layout").val()
+                        },
+                        beforeSend: function() {
+                            $(' <i class="icomoon-spinner"></i>').insertAfter( $("#pweb-layout-preview a") );
+                        }
+                    }).done(function(response, textStatus, jqXHR) {
+
+                        // hide loading
+                        $("#pweb-layout-preview i.icomoon-spinner").remove();
+
+                        if (response) {
+                            // load
+                            $.each(response, function(option, value) {
+                                $("#pweb_params_"+option).val(value);
+                            });
+                        }
+                        else {
+                            alert(pwebcontact_l10n.missing_layout_settings);
+                        }
+                    }).fail(function(jqXHR, textStatus, errorThrown) {
+
+                        alert(pwebcontact_l10n.request_error+'. '+ jqXHR.status +' '+ errorThrown);
+                    });
+                }
+            },
+            {
+                text: pwebcontact_l10n.cancel,
+                class : "button",
+                click: function() {
+                    $(this).dialog("close");
+                }
+            }
+        ]
+    });
+    
+    
     //TODO select background image
     
     
@@ -581,7 +661,22 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
     
     
-    $("span.pweb-pro, #pweb-buy-button").click(function(e){
+    $(".pweb-email-tmpl-vars").click(function(e){
+        e.preventDefault();
+        
+        var width = $(window).width() - 100,
+            height = $(window).height() - 150;
+        
+        if (width > 700) {
+            width = 700;
+        }
+        
+        tb_show(pwebcontact_l10n.email_vars, 
+            "#TB_inline?width="+width+"&height="+height+"&inlineId=pweb-email-tmpl-vars", "");
+    });
+    
+    
+    $("span.pweb-pro, .pweb-buy").click(function(e){
         e.preventDefault();
         e.stopPropagation();
         
@@ -592,7 +687,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             width = 700;
         }
         
-        tb_show(pwebcontact_l10n.but_subscription, 
+        tb_show(pwebcontact_l10n.buy_subscription, 
             pwebcontact_admin.buy_url 
                     + (pwebcontact_admin.buy_url.indexOf("?") === -1 ? "?" : "&") 
                     + "TB_iframe=1&width="+width+"&height="+height, "");

@@ -142,5 +142,23 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
     
     
+    $("span.pweb-pro, .pweb-buy").click(function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        
+        var width = $(window).width() - 100,
+            height = $(window).height() - 150;
+        
+        if (width > 700) {
+            width = 700;
+        }
+        
+        tb_show(pwebcontact_l10n.buy_subscription, 
+            pwebcontact_admin.buy_url 
+                    + (pwebcontact_admin.buy_url.indexOf("?") === -1 ? "?" : "&") 
+                    + "TB_iframe=1&width="+width+"&height="+height, "");
+    });
+    
+    
     setTimeout(function(){ $("#wpbody").find(".updated, .error, .update-nag").hide(); }, 3000);
 });
