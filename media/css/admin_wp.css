@@ -249,6 +249,11 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     -webkit-box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
 }
+#pweb-theme-preview a + i.icomoon-spinner,
+#pweb_load_fields + i.icomoon-spinner,
+.pweb-load-email-tmpl + i.icomoon-spinner {
+    margin-left: 5px;
+}
 
 
 .pweb-width-40 {
@@ -464,6 +469,8 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 .pweb-advanced-options-toggler {
     display: block;
     margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 15px;
 }
 .pweb-advanced-options-toggler .dashicons,
 .pweb-advanced-options-toggler .dashicons:before {

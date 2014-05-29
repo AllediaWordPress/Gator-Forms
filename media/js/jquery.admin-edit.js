@@ -490,7 +490,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     dataType: "text",
                     data: data,
                     beforeSend: function() {
-                        $(' <i class="icomoon-spinner"></i>').insertAfter(that);
+                        $('<i class="icomoon-spinner"></i>').insertAfter(that);
                     }
                 }).done(function(response, textStatus, jqXHR) {
 
@@ -602,6 +602,16 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         if (this.selectedIndex) {
             $("#pweb-theme-preview img").attr("src", pwebcontact_admin.plugin_url + "media/theme_settings/" + $(this).val() + ".jpg");
         }
+        
+        var $warning = $("#pweb_theme_warning");
+        if ($warning.length) {
+            if ($(this).val().indexOf("PRO") > -1) {
+                $warning.fadeIn("slow");
+            }
+            else {
+                $warning.fadeOut("slow");
+            }
+        }
     });
     
     // Load theme settings
@@ -633,7 +643,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                             "theme": $("#pweb_load_theme").val()
                         },
                         beforeSend: function() {
-                            $(' <i class="icomoon-spinner"></i>').insertAfter( $("#pweb-theme-preview a") );
+                            $('<i class="icomoon-spinner"></i>').insertAfter( $("#pweb-theme-preview a") );
                         }
                     }).done(function(response, textStatus, jqXHR) {
 

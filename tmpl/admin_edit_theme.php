@@ -44,11 +44,23 @@ function_exists('add_action') or die;
 </h3>
 
 
+<?php if (!defined('PWEBCONTACT_PRO')) : ?>
+<div id="pweb_theme_warning" class="pweb-alert pweb-alert-info" style="display:none">
+    <?php _e('You need to go PRO', 'pwebcontact'); ?> <i class="icomoon-smiley"></i>
+    <?php _e('You have chosen theme with some PRO options. You can still save your form, but to display it buy PRO Version', 'pwebcontact'); ?>
+    <button class="button button-primary pweb-buy">
+         <?php _e( 'Buy', 'pwebcontact' ); ?>
+    </button>
+</div>
+<?php endif; ?>
+
 
 <div id="pweb-theme-preview">
     <img src="<?php echo plugins_url('pwebcontact/media/theme_settings/Clean.jpg'); ?>" alt="<?php _e('Theme preview', 'pwebcontact'); ?>">
     <p>
-        <a href="#"><?php _e( 'Load settings for this theme', 'pwebcontact' ); ?></a>
+        <a href="#" class="button button-primary">
+            <?php _e( 'Load settings for this theme', 'pwebcontact' ); ?>
+        </a>
     </p>
 </div>
 
@@ -68,6 +80,7 @@ function_exists('add_action') or die;
             'type' => 'filelist',
             'name' => 'style_toggler',
             'label' => 'Toggler style',
+            'header' => 'Toggler',
             'tooltip' => 'If you want to change colors of Toggler Tab then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/toggler`.',
             'default' => 'blue',
             'filter' => '\.css$',
@@ -104,6 +117,7 @@ function_exists('add_action') or die;
             'type' => 'filelist',
             'name' => 'style_form',
             'label' => 'Buttons and fields style',
+            'header' => 'Buttons and fields',
             'tooltip' => 'If you want to change colors of buttons, fields and links then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/form`.',
             'default' => 'blue',
             'filter' => '\.css$',
@@ -137,6 +151,7 @@ function_exists('add_action') or die;
             'type' => 'filelist',
             'name' => 'style_bg',
             'label' => 'Background style',
+            'header' => 'Background',
             'default' => 'white',
             'tooltip' => 'If you want to change colors of background then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/background`.',
             'filter' => '\.css$',
@@ -188,7 +203,7 @@ function_exists('add_action') or die;
             'name' => 'rounded',
             'label' => 'Display rounded corners',
             'header' => 'Shape',
-            'default' => 1,
+            'default' => 0,
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(
@@ -206,7 +221,7 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'shadow',
             'label' => 'Display shadow',
-            'default' => 1,
+            'default' => 0,
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(
@@ -228,7 +243,7 @@ function_exists('add_action') or die;
             'label' => 'Labels position',
             'header' => 'Labels',
             'tooltip' => 'Select placement of fields labels. For mobile devices (phones) labels inline are displayed above fields.',
-            'default' => 'inline',
+            'default' => 'above',
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(

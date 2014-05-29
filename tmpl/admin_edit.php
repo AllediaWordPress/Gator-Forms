@@ -43,12 +43,30 @@ function_exists('add_action') or die;
         </div>
 
         <h2 class="nav-tab-wrapper" id="pweb-tabs">
-            <a href="#pweb-tab-location" id="pweb-tab-location" class="nav-tab nav-tab-active"><?php esc_html_e( 'Location & Effects', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-fields" id="pweb-tab-fields" class="nav-tab"><?php esc_html_e( 'Fields', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-theme" id="pweb-tab-theme" class="nav-tab"><?php esc_html_e( 'Theme', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-email" id="pweb-tab-email" class="nav-tab"><?php esc_html_e( 'Email settings', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-check" id="pweb-tab-check" class="nav-tab"><?php esc_html_e( 'Configuration check', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-advanced" id="pweb-tab-advanced" class="nav-tab"><?php esc_html_e( 'Advanced', 'pwebcontact' ); ?></a>
+            <a href="#pweb-tab-location" id="pweb-tab-location" class="nav-tab nav-tab-active">
+                <i class="icomoon-stack"></i>
+                <?php esc_html_e( 'Location & Effects', 'pwebcontact' ); ?>
+            </a>
+            <a href="#pweb-tab-fields" id="pweb-tab-fields" class="nav-tab">
+                <i class="icomoon-list"></i>
+                <?php esc_html_e( 'Fields', 'pwebcontact' ); ?>
+            </a>
+            <a href="#pweb-tab-theme" id="pweb-tab-theme" class="nav-tab">
+                <i class="icomoon-paint-format"></i>
+                <?php esc_html_e( 'Theme', 'pwebcontact' ); ?>
+            </a>
+            <a href="#pweb-tab-email" id="pweb-tab-email" class="nav-tab">
+                <i class="icomoon-envelope"></i>
+                <?php esc_html_e( 'Email settings', 'pwebcontact' ); ?>
+            </a>
+            <a href="#pweb-tab-check" id="pweb-tab-check" class="nav-tab">
+                <i class="icomoon-checkmark"></i>
+                <?php esc_html_e( 'Configuration check', 'pwebcontact' ); ?>
+            </a>
+            <a href="#pweb-tab-advanced" id="pweb-tab-advanced" class="nav-tab">
+                <i class="icomoon-cog"></i>
+                <?php esc_html_e( 'Advanced', 'pwebcontact' ); ?>
+            </a>
         </h2>
     </div>
     

@@ -143,7 +143,7 @@ function_exists('add_action') or die;
             )
         )); ?>
         
-        <span class="pweb-field-desc"><?php _e( 'If you changed format of email then load template again', 'pwebcontact' ); ?></span>
+        <span class="pweb-field-desc"><?php _e( 'If you have changed format of email then load template again', 'pwebcontact' ); ?></span>
     </div>
 </div>
 
@@ -229,7 +229,7 @@ function_exists('add_action') or die;
                     )
                 )); ?>
                 
-                <span class="pweb-field-desc"><?php _e( 'If you changed format of email then load template again', 'pwebcontact' ); ?></span>
+                <span class="pweb-field-desc"><?php _e( 'If you have changed format of email then load template again', 'pwebcontact' ); ?></span>
             </div>
         </div>
         
@@ -306,7 +306,7 @@ function_exists('add_action') or die;
                         )
                     )); ?>
 
-                    <span class="pweb-field-desc"><?php _e( 'If you changed format of email then load template again', 'pwebcontact' ); ?></span>
+                    <span class="pweb-field-desc"><?php _e( 'If you have changed format of email then load template again', 'pwebcontact' ); ?></span>
                 </span>
             </div>
         </div>

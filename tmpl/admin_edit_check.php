@@ -11,4 +11,7 @@
 function_exists('add_action') or die;
 
 ?>
-check
+
+<h3>
+    <?php _e('Check below if you can publish your form', 'pwebcontact'); ?>
+</h3>

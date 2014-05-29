@@ -422,7 +422,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                         "fields": $(this).val()
                     },
                     beforeSend: function() {
-                        $(' <i class="icomoon-spinner"></i>').insertAfter( that );
+                        $('<i class="icomoon-spinner"></i>').insertAfter( that );
                     }
                 }).done(function(response, textStatus, jqXHR) {
 
