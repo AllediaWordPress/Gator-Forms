@@ -10,17 +10,68 @@
 // No direct access
 function_exists('add_action') or die;
 
+$this->_set_pro_options('fields', array(
+    'phone',
+    'subject',
+    'date',
+    'password',
+    'select',
+    'multiple',
+    'radio',
+    'checkboxes',
+    'checkbox',
+    'checkbox_modal',
+    'email_copy',
+    'separator_text',
+    'separator_header',
+    'upload',
+    'mailto_list'
+));
+
+$this->_set_free_options('fields', array(
+    'email',
+    'name',
+    'text',
+    'textarea'
+));
 ?>
 
+<h3 class="pweb-steps">
+    <?php printf(__('Step %d of %d', 'pwebcontact'), 2, 4); ?>
+    -
+    <?php _e('Choose predefined form composition', 'pwebcontact'); ?>
+
+    <?php echo $this->_get_field_control(array(
+        'type' => 'filelist',
+        'group' => 'load',
+        'name' => 'fields',
+        'filter' => '\.txt$',
+        'directory' => 'media/fields_settings',
+        'strip_ext' => true,
+        'attributes' => array(
+            'data-action' => admin_url( 'admin.php?page=pwebcontact&task=load_fields&ajax=1&_wpnonce='. wp_create_nonce('load-fields') )
+        ),
+        'options' => array(
+            array(
+                'name' => '- Select -',
+                'value' => ''
+            )
+        )
+    )); ?>
+    
+    <?php _e('or drag and drop fields', 'pwebcontact'); ?>
+        
+    <button class="button button-primary pweb-next-tab-button" type="button">
+        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="icomoon-arrow-right"></i>
+    </button>
+</h3>
+
 <?php if (!defined('PWEBCONTACT_PRO')) : ?>
-<div id="pweb_fields_limit" class="pweb-alert pweb-alert-info">
-    <?php printf(__('You can add up to %d FREE fields. To unlock fields limit get PRO version.', 'pwebcontact'), $this->fields_limit); ?>
+<div id="pweb_fields_pro_warning" class="pweb-alert pweb-alert-info" style="display:none">
+    <?php _e('You need to go PRO :) You have chosen some PRO fields. You can still save your form, but to display it buy PRO Version', 'pwebcontact'); ?>
     <button class="button button-primary pweb-buy">
         <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
     </button>
-</div>
-<div id="pweb_fields_limit_warning" class="pweb-alert pweb-alert-danger" style="display:none">
-    <?php printf(__('You have exceeded fields limit. Only first %d FREE fields will be displayed on your website.', 'pwebcontact'), $this->fields_limit); ?>
 </div>
 <?php endif; ?>
 
@@ -34,32 +85,6 @@ function_exists('add_action') or die;
     
     <div class="pweb-fields-container">
         
-        <h3 class="pweb-load-samples">
-            <?php echo $this->_get_label(array(
-                'group' => 'load',
-                'name' => 'fields',
-                'label' => 'Choose predefined form composition'
-            )); ?>
-
-            <?php echo $this->_get_field_control(array(
-                'type' => 'filelist',
-                'group' => 'load',
-                'name' => 'fields',
-                'filter' => '\.txt$',
-                'directory' => 'media/fields_settings',
-                'strip_ext' => true,
-                'attributes' => array(
-                    'data-action' => admin_url( 'admin.php?page=pwebcontact&task=load_fields&ajax=1&_wpnonce='. wp_create_nonce('load-fields') )
-                ),
-                'options' => array(
-                    array(
-                        'name' => '- Select -',
-                        'value' => ''
-                    )
-                )
-            )); ?>
-        </h3>
-        
         <div class="pweb-fields-rows pweb-clearfix" id="pweb_fields_rows">
             
         </div>
@@ -71,10 +96,6 @@ function_exists('add_action') or die;
     
     
     <div class="pweb-fields-types" id="pweb_fields_types">
-        
-        <h3><?php _e('Drag and drop fields', 'pwebcontact'); ?></h3>
-        
-        
         
         <?php $field_type = 'email'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?> pweb-custom-fields-single" id="pweb_field_type_<?php echo $field_type; ?>">
@@ -1796,13 +1817,11 @@ function_exists('add_action') or die;
         <?php $field_type = 'button_send'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?> pweb-custom-fields-single" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Send button', 'pwebcontact'); ?>
-            <?php echo $this->_display_badge($field_type); ?>
             
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Send button', 'pwebcontact'); ?></span>
-                    <?php echo $this->_display_badge($field_type); ?>
                 </div>
                 <div class="pweb-custom-field-label">
                     <?php _e('Label', 'pwebcontact'); ?> <span><?php _e('Send', 'pwebcontact'); ?></span>

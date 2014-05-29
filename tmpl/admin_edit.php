@@ -45,8 +45,9 @@ function_exists('add_action') or die;
         <h2 class="nav-tab-wrapper" id="pweb-tabs">
             <a href="#pweb-tab-location" id="pweb-tab-location" class="nav-tab nav-tab-active"><?php esc_html_e( 'Location & Effects', 'pwebcontact' ); ?></a>
             <a href="#pweb-tab-fields" id="pweb-tab-fields" class="nav-tab"><?php esc_html_e( 'Fields', 'pwebcontact' ); ?></a>
-            <a href="#pweb-tab-layout" id="pweb-tab-layout" class="nav-tab"><?php esc_html_e( 'Layout', 'pwebcontact' ); ?></a>
+            <a href="#pweb-tab-theme" id="pweb-tab-theme" class="nav-tab"><?php esc_html_e( 'Theme', 'pwebcontact' ); ?></a>
             <a href="#pweb-tab-email" id="pweb-tab-email" class="nav-tab"><?php esc_html_e( 'Email settings', 'pwebcontact' ); ?></a>
+            <a href="#pweb-tab-check" id="pweb-tab-check" class="nav-tab"><?php esc_html_e( 'Configuration check', 'pwebcontact' ); ?></a>
             <a href="#pweb-tab-advanced" id="pweb-tab-advanced" class="nav-tab"><?php esc_html_e( 'Advanced', 'pwebcontact' ); ?></a>
         </h2>
     </div>
@@ -61,12 +62,16 @@ function_exists('add_action') or die;
             <?php $this->_load_tmpl('fields', __FILE__); ?>
         </div>
         
-        <div id="pweb-tab-layout-content" class="nav-tab-content pweb-clearfix">
-            <?php $this->_load_tmpl('layout', __FILE__); ?>
+        <div id="pweb-tab-theme-content" class="nav-tab-content pweb-clearfix">
+            <?php $this->_load_tmpl('theme', __FILE__); ?>
         </div>
         
         <div id="pweb-tab-email-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('email', __FILE__); ?>
+        </div>
+        
+        <div id="pweb-tab-check-content" class="nav-tab-content pweb-clearfix">
+            <?php $this->_load_tmpl('check', __FILE__); ?>
         </div>
         
         <div id="pweb-tab-advanced-content" class="nav-tab-content pweb-clearfix">

@@ -13,67 +13,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     pwebcontact_admin.item_index = 0;
     pwebcontact_admin.counter = 0;
-    pwebcontact_admin.confirm = true;
-    pwebcontact_admin.confirmed = false;
-    pwebcontact_admin.fields = 0;
-    
-    
-    // save
-    $("#pweb_form").on("submit", function(e){
-        
-        e.preventDefault();
-        
-        $("#pweb-save-button").get(0).disabled = true;
-        
-        // close options
-        $("#pweb_fields_options_close").click();
-        
-        // change index in names of fields to match current order
-        var counter = 0, last = 0;
-        $("#pweb_fields_rows").find("input,textarea").not(":disabled").each(function(){
-            if (typeof $(this).data("index") !== "undefined" && $(this).data("index") !== last) {
-                last = $(this).data("index");
-                counter++;
-            }
-            $(this).attr( "name", $(this).attr("name").replace("["+last+"]", "["+counter+"]") );
-            
-            // generate alias for email template
-            if ($(this).hasClass("pweb-custom-field-alias") && !$(this).val()) {
-                var $alias = $(this).closest(".pweb-custom-field-options").find("input.pweb-custom-field-label-input");
-                if ($alias.length) {
-                    var alias = $alias.val().replace(/[^a-z0-9\_]+/gi, '').toLowerCase();
-                    $(this).val( alias ? alias : "field_"+counter );
-                }
-            }
-        });
-        
-        // save with ajax
-        $.ajax({
-			url: $(this).attr("action")+"&ajax=1",
-			type: "post", 
-			dataType: "json",
-            data: $(this).serialize(),
-            beforeSend: function() {
-                $("#pweb-save-status").addClass("pweb-saving").text(pwebcontact_l10n.saving);
-            }
-		}).always(function(){
-            $("#pweb-save-button").get(0).disabled = false;
-            $("#pweb-save-status").removeClass("pweb-saving");
-            
-        }).done(function(response, textStatus, jqXHR) {
-			if (response && typeof response.success === "boolean") 
-			{
-                $("#pweb-save-status").text(
-                        response.success === true ? pwebcontact_l10n.saved_on+" "+(new Date()).toLocaleTimeString() : pwebcontact_l10n.error);
-			}
-		}).fail(function(jqXHR, textStatus, errorThrown) {
-            $("#pweb-save-status").text("Request error");
-            alert(pwebcontact_l10n.request_error+ ". "+ jqXHR.status +" "+ errorThrown);
-		});
-        
-        return false;
-    });
-    
+    pwebcontact_admin.pro_fields = 0;
     
     // allow rows sorting
     $("#pweb_fields_rows").sortable({
@@ -222,13 +162,10 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                                 // close field options if opened
                                 $("#pweb_fields_options_close").click();
                             }
-                            if (!$field.hasClass("pweb-pro")) {
-                                pwebcontact_admin.fields--;
-                                if (pwebcontact_admin.fields_limit > 0) {
-                                    if (pwebcontact_admin.fields <= pwebcontact_admin.fields_limit) {
-                                        // hide limit notice
-                                        $("#pweb_fields_limit_warning").fadeOut("slow");
-                                    }
+                            if (!pwebcontact_admin.is_pro && $field.hasClass("pweb-pro")) {
+                                pwebcontact_admin.pro_fields--;
+                                if (pwebcontact_admin.pro_fields <= 0) {
+                                    $("#pweb_fields_pro_warning").fadeOut("slow");
                                 }
                             }
                             // show field type if only one instance is allowed
@@ -383,6 +320,11 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 
         // Disable adding new fields into this column and insert field details
         target.droppable("disable").addClass("pweb-has-field pweb-custom-field-type-"+$field.data("type")).prepend($field);
+        
+        // Hide remove action for Send button
+        if ($field.data("type") === "button_send") {
+            target.find(".pweb-fields-remove-col").remove();
+        }
 
         // Display field options
         /*if (typeof show_options === "undefined" || show_options !== false) {
@@ -394,19 +336,10 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             source.hide();
         }
         
-        if (!$field.hasClass("pweb-pro")) {
-            pwebcontact_admin.fields++;
-            if (pwebcontact_admin.fields_limit > 0) {
-                // Show or hide limit notice
-                if (pwebcontact_admin.fields === pwebcontact_admin.fields_limit) {
-                    
-                }
-                else if (pwebcontact_admin.fields > pwebcontact_admin.fields_limit) {
-                    $("#pweb_fields_limit_warning").fadeIn("slow");
-                }
-                else {
-                    //alert("You have added "+pwebcontact_admin.fields+" of "+pwebcontact_admin.fields_limit+" free fields ");
-                }
+        if (!pwebcontact_admin.is_pro && $field.hasClass("pweb-pro")) {
+            pwebcontact_admin.pro_fields++;
+            if (pwebcontact_admin.pro_fields > 0) {
+                $("#pweb_fields_pro_warning").fadeIn("slow");
             }
         }
         
@@ -422,10 +355,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         }
         
         // reset number of loaded fields
-        pwebcontact_admin.fields = 0;
-        if (pwebcontact_admin.fields_limit) {
-            // hide limit notice
-            $("#pweb_fields_limit_warning").fadeOut("fast");
+        pwebcontact_admin.pro_fields = 0;
+        if (!pwebcontact_admin.is_pro) {
+            $("#pweb_fields_pro_warning").fadeOut("fast");
         }
         
         $.each(fields, function(i, field) {
@@ -579,11 +511,14 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     
     // load fields
-    loadFields( $("#pweb_params_fields").val() );
+    loadFields( $("#pweb_params_fields").val() || '{}' );
     $("#pweb_params_fields").get(0).disabled = true;
     
-    
-    //console.log($("#pweb_params_fields").val());
+    // load Send button if missing
+    if ($("#pweb_fields_rows").children().length === 0) {
+        $("#pweb_fields_add_row").click();
+        dropField( $("#pweb_field_type_button_send"), $("#pweb_fields_add_row").prev().children().last().find(".pweb-fields-cols").children().first(), false );
+    }
     
     $("body").css("overflow-y", "scroll");
 });

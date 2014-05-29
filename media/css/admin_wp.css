@@ -22,6 +22,9 @@
 #pweb-tabs-content {
     padding-top: 100px;
 }
+#pweb-settings-content {
+    padding-top: 50px;
+}
 
 @media only screen and (max-width: 950px) {
     #pweb-adminbar h2 .nav-tab {
@@ -126,12 +129,17 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 .pweb-panels.theme-browser .theme.add-new-theme {
     margin: 0 auto 4%;
 }
+.pweb-panels.theme-browser .theme.add-new-theme .theme-name {
+    margin: 0;
+    padding: 10px 10px 20px;
+}
 .pweb-panels.theme-browser .theme .theme-screenshot {
     height: 150px;
     padding-top: 0;
     text-align: center;
     background-repeat: no-repeat;
     background-position: center center;
+    z-index: 0;
 }
 .pweb-panels.theme-browser .theme .theme-screenshot:hover {
     cursor: pointer;
@@ -213,22 +221,28 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 }
 
 
-.pweb-load-samples {
+.pweb-steps {
     text-align: center;
     margin-bottom: 20px;
+} 
+.pweb-steps button.button, .pweb-steps button.button:focus {
+    vertical-align: middle;
 }
-.pweb-load-samples label {
-    
+.pweb-steps label {
+    vertical-align: middle;
 }
-.pweb-load-samples select {
-    
+.pweb-steps select {
+    vertical-align: middle;
+}
+.pweb-steps .pweb-next-tab-button {
+    margin-left: 30px;
 }
 
 
-#pweb-layout-preview {
+#pweb-theme-preview {
     text-align: center;
 }
-#pweb-layout-preview img {
+#pweb-theme-preview img {
     margin: 0 auto;
     background: #FFFFFF;
     padding: 10px;

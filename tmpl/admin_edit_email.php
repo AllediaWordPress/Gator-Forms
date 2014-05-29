@@ -12,12 +12,10 @@ function_exists('add_action') or die;
 
 ?>
 
-<h3 class="pweb-load-samples">
-    <?php echo $this->_get_label(array(
-        'group' => 'load',
-        'name' => 'email_scheme',
-        'label' => 'Choose your answer scheme'
-    )); ?>
+<h3 class="pweb-steps">
+    <?php printf(__('Step %d of %d', 'pwebcontact'), 4, 4); ?>
+    -
+    <?php _e('Choose your answer scheme', 'pwebcontact'); ?>
 
     <?php echo $this->_get_field_control(array(
         'type' => 'select',
@@ -42,6 +40,12 @@ function_exists('add_action') or die;
             )
         )
     )); ?>
+    
+    <?php _e('or define your own', 'pwebcontact'); ?>
+    
+    <button class="button button-primary pweb-next-tab-button" type="button">
+        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="icomoon-arrow-right"></i>
+    </button>
 </h3>
 
 <?php echo $this->_get_field(array(
@@ -503,18 +507,18 @@ function_exists('add_action') or die;
             'name' => 'email_from',
             'label' => 'Sender email',
             'header' => 'Email settings',
-            'desc' => $isLocalhsot ? '' : sprintf(__('Sender email should be in the same domain as your website, example: %s'), 'info@'.$domain),
-            'class' => 'pweb-filter-email',
-            'default' => get_bloginfo('admin_email'),
-            'required' => true
+            'desc' => sprintf(__('Leave blank to use email: &bdquo;%s&rdquo; set in %s.', 'pwebcontact'), $this->_get_param('email_from', get_bloginfo('admin_email'), 'settings'), 
+                                '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>')
+                        . ($isLocalhsot ? '' : sprintf(__('Sender email should be in the same domain as your website, example: %s'), 'info@'.$domain)),
+            'class' => 'pweb-filter-email'
         )); ?>
         
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'email_from_name',
             'label' => 'Sender name',
-            'default' => get_bloginfo('name'),
-            'required' => true
+            'desc' => sprintf(__('Leave blank to use name: &bdquo;%s&rdquo; set in %s.', 'pwebcontact'), $this->_get_param('email_from_name', get_bloginfo('name'), 'settings'), 
+                                '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>')
         )); ?>
         
         <?php echo $this->_get_field(array(
@@ -538,104 +542,6 @@ function_exists('add_action') or die;
             'label' => 'BCC emails',
             'tooltip' => 'Add blind carbon copy recipients to the email. To add multiple recipients separate each email with , (coma). Do not add any email address which was already set in another field!',
             'class' => 'pweb-filter-emails pweb-input-large'
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'server_sender',
-            'label' => 'Send from one domain',
-            'tooltip' => 'Send all emails from one domain. Administrator will receive email from address set in `Sender email` with reply to email address completed by the User. It is useful for some servers which do not allow to send emails from another domains.',
-            'default' => 1,
-            'class' => 'pweb-radio-group',
-            'options' => array(
-                array(
-                    'value' => 0,
-                    'name' => 'No'
-                ),
-                array(
-                    'value' => 1,
-                    'name' => 'Yes (recomended)'
-                )
-            )
-        )); ?>
-        
-        <?php 
-        $php_mail_enabled = (function_exists('mail') AND is_callable('mail'));
-        echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'mailer',
-            'label' => 'Mailer type',
-            'default' => $php_mail_enabled ? 'mail' : 'smtp',
-            'class' => 'pweb-radio-group',
-            'options' => array(
-                array(
-                    'value' => 'mail',
-                    'name' => 'PHP mail function',
-                    'disabled' => !$php_mail_enabled
-                ),
-                array(
-                    'value' => 'smtp',
-                    'name' => 'SMTP',
-                    'is_parent' => true
-                )
-            )
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'text',
-            'name' => 'smtp_username',
-            'label' => 'SMTP Username',
-            'desc' => $isLocalhsot ? '' : sprintf(__('Email account used for authentication should be in the same domain as your website, example: %s'), 'info@'.$domain),
-            'parent' => 'mailer_smtp'
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'password',
-            'name' => 'smtp_password',
-            'label' => 'SMTP Password',
-            'parent' => 'mailer_smtp'
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'text',
-            'name' => 'smtp_host',
-            'label' => 'SMTP Host',
-            'desc' => $isLocalhsot ? '' : sprintf(__('Host used for SMTP should be in the same domain as your website, example: %s'), 'mail.'.$domain),
-            'parent' => 'mailer_smtp'
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'smtp_secure',
-            'label' => 'SMTP Security',
-            'tooltip' => 'Select the security model that your SMTP server uses.',
-            'default' => 'none',
-            'class' => 'pweb-radio-group',
-            'parent' => 'mailer_smtp',
-            'options' => array(
-                array(
-                    'value' => 'none',
-                    'name' => 'None'
-                ),
-                array(
-                    'value' => 'ssl',
-                    'name' => 'SSL'
-                ),
-                array(
-                    'value' => 'tls',
-                    'name' => 'TLS'
-                )
-            )
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'text',
-            'name' => 'smtp_port',
-            'label' => 'SMTP Port',
-            'tooltip' => '>Enter the port number of your SMTP server. Use 25 for most unsecured servers and 465 for most secure servers.',
-            'default' => 25,
-            'parent' => 'mailer_smtp',
-            'class' => 'pweb-input-mini'
         )); ?>
         
         

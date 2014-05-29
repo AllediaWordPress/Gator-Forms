@@ -12,9 +12,18 @@ function_exists('add_action') or die;
 
 ?>
 
+<h3 class="pweb-steps">
+    <?php printf(__('Step %d of %d', 'pwebcontact'), 1, 4); ?>
+    -
+    <?php _e('Decide how and where your form should be displayed', 'pwebcontact'); ?>
+    <button class="button button-primary pweb-next-tab-button" type="button">
+        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="icomoon-arrow-right"></i>
+    </button>
+</h3>
+
 <?php if (!defined('PWEBCONTACT_PRO')) : ?>
-<div id="pweb_layout_type_warning" class="pweb-alert pweb-alert-danger" style="display:none">
-    <?php printf(__('You have selected layout which is available only in PRO version. Form would not be displayed on your website. To unlock all layout types get PRO version.', 'pwebcontact'), $this->fields_limit); ?>
+<div id="pweb_layout_type_warning" class="pweb-alert pweb-alert-info" style="display:none">
+    <?php _e('You need to go PRO :) You have chosen PRO layout. You can still save your form, but to display it buy PRO Version', 'pwebcontact'); ?>
     <button class="button button-primary pweb-buy">
         <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
     </button>

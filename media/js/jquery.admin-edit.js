@@ -11,6 +11,8 @@ var pwebcontact_l10n = pwebcontact_l10n || {},
 
 if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	
+    pwebcontact_admin.confirm = true;
+    pwebcontact_admin.confirmed = false;
     pwebcontact_admin.running_related = false;
     pwebcontact_admin.duration = 0;
     pwebcontact_admin.isLocalhost = (document.location.host === "localhost" || document.location.host === "127.0.0.1");
@@ -38,6 +40,11 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 
         $tabs.find(".nav-tab-content-active").removeClass("nav-tab-content-active");
         $($(this).attr("href")+"-content").addClass("nav-tab-content-active");
+    });
+    
+    $tabs.find(".pweb-next-tab-button").click(function(e){
+        e.preventDefault();
+        $( "#"+ $(this).closest(".nav-tab-content").attr("id").replace("-content", "") ).next().click();
     });
     
     // Open last active tab
@@ -269,6 +276,18 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         
         $(this).blur();
     });
+    
+    
+    // Select current Administrator if Email to is empty
+    if ($("#pweb_params_email_to").val() == "") {
+        var $email_cms_user = $("#pweb_params_email_cms_user");
+        if ($email_cms_user.get(0).options.length > 1) {
+            $email_cms_user.val(userSettings.uid);
+            if ($email_cms_user.get(0).selectedIndex < 1) {
+                $email_cms_user.get(0).selectedIndex = 1;
+            }
+        }
+    }
     
 	
 	// validate single email
@@ -578,24 +597,24 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
     
     
-    // Load layout preview
-    $("#pweb_load_layout").change(function(){
+    // Load theme preview
+    $("#pweb_load_theme").change(function(){
         if (this.selectedIndex) {
-            $("#pweb-layout-preview img").attr("src", pwebcontact_admin.plugin_url + "media/layout_settings/" + $(this).val() + ".jpg");
+            $("#pweb-theme-preview img").attr("src", pwebcontact_admin.plugin_url + "media/theme_settings/" + $(this).val() + ".jpg");
         }
     });
     
-    // Load layout settings
-    $("#pweb-layout-preview a").click(function(e){
+    // Load theme settings
+    $("#pweb-theme-preview a").click(function(e){
         e.preventDefault();
-        if ($("#pweb_load_layout").val()) {
+        if ($("#pweb_load_theme").val()) {
             $(this).blur();
-            $("#pweb-dialog-layout").dialog("open");
+            $("#pweb-dialog-theme").dialog("open");
         }
     });
     
-    // Load layout settings dialog
-    $("#pweb-dialog-layout").dialog({
+    // Load theme settings dialog
+    $("#pweb-dialog-theme").dialog({
         dialogClass: "wp-dialog",
         autoOpen: false,
         resizable: false,
@@ -607,19 +626,19 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 click: function(e) {
                     $(this).dialog("close");
                     $.ajax({
-                        url: $("#pweb_load_layout").data("action"),
+                        url: $("#pweb_load_theme").data("action"),
                         type: "POST", 
                         dataType: "json",
                         data: {
-                            "layout": $("#pweb_load_layout").val()
+                            "theme": $("#pweb_load_theme").val()
                         },
                         beforeSend: function() {
-                            $(' <i class="icomoon-spinner"></i>').insertAfter( $("#pweb-layout-preview a") );
+                            $(' <i class="icomoon-spinner"></i>').insertAfter( $("#pweb-theme-preview a") );
                         }
                     }).done(function(response, textStatus, jqXHR) {
 
                         // hide loading
-                        $("#pweb-layout-preview i.icomoon-spinner").remove();
+                        $("#pweb-theme-preview i.icomoon-spinner").remove();
 
                         if (response) {
                             // load
@@ -628,7 +647,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                             });
                         }
                         else {
-                            alert(pwebcontact_l10n.missing_layout_settings);
+                            alert(pwebcontact_l10n.missing_theme_settings);
                         }
                     }).fail(function(jqXHR, textStatus, errorThrown) {
 
@@ -692,6 +711,64 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     + (pwebcontact_admin.buy_url.indexOf("?") === -1 ? "?" : "&") 
                     + "TB_iframe=1&width="+width+"&height="+height, "");
     });
+    
+    
+    // save
+    $("#pweb_form").on("submit", function(e){
+        
+        e.preventDefault();
+        
+        $("#pweb-save-button").get(0).disabled = true;
+        
+        // close options
+        $("#pweb_fields_options_close").click();
+        
+        // change index in names of fields to match current order
+        var counter = 0, last = 0;
+        $("#pweb_fields_rows").find("input,textarea").not(":disabled").each(function(){
+            if (typeof $(this).data("index") !== "undefined" && $(this).data("index") !== last) {
+                last = $(this).data("index");
+                counter++;
+            }
+            $(this).attr( "name", $(this).attr("name").replace("["+last+"]", "["+counter+"]") );
+            
+            // generate alias for email template
+            if ($(this).hasClass("pweb-custom-field-alias") && !$(this).val()) {
+                var $alias = $(this).closest(".pweb-custom-field-options").find("input.pweb-custom-field-label-input");
+                if ($alias.length) {
+                    var alias = $alias.val().replace(/[^a-z0-9\_]+/gi, '').toLowerCase();
+                    $(this).val( alias ? alias : "field_"+counter );
+                }
+            }
+        });
+        
+        // save with ajax
+        $.ajax({
+			url: $(this).attr("action")+"&ajax=1",
+			type: "post", 
+			dataType: "json",
+            data: $(this).serialize(),
+            beforeSend: function() {
+                $("#pweb-save-status").addClass("pweb-saving").text(pwebcontact_l10n.saving);
+            }
+		}).always(function(){
+            $("#pweb-save-button").get(0).disabled = false;
+            $("#pweb-save-status").removeClass("pweb-saving");
+            
+        }).done(function(response, textStatus, jqXHR) {
+			if (response && typeof response.success === "boolean") 
+			{
+                $("#pweb-save-status").text(
+                        response.success === true ? pwebcontact_l10n.saved_on+" "+(new Date()).toLocaleTimeString() : pwebcontact_l10n.error);
+			}
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+            $("#pweb-save-status").text("Request error");
+            alert(pwebcontact_l10n.request_error+ ". "+ jqXHR.status +" "+ errorThrown);
+		});
+        
+        return false;
+    });
+    
     
     // Set duration of showing/hiding options
     setTimeout(function(){ pwebcontact_admin.duration = 400; }, 600);

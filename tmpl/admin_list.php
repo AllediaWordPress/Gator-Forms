@@ -18,10 +18,15 @@ function_exists('add_action') or die;
 
 <h2>
     <?php _e('Perfect Ajax Popup Contact Form', 'pwebcontact'); ?>
+    
     <?php if ($this->can_edit) : ?>
         <a class="add-new-h2" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=pwebcontact&task=new' ), 'new-form'); ?>">
             <i class="icomoon-plus"></i> <?php echo esc_html_x('Add New', 'link'); ?></a>
+    
+        <a class="add-new-h2" href="<?php echo admin_url( 'admin.php?page=pwebcontact&task=settings' ); ?>">
+            <i class="icomoon-cog"></i> <?php _e( 'Settings' ); ?></a>
     <?php endif; ?>
+    
     <a class="add-new-h2" href="<?php echo $this->documentation_url; ?>" target="_blank">
         <i class="icomoon-support"></i> <?php _e( 'Documentation' ); ?></a>
     

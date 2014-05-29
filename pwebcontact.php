@@ -42,6 +42,7 @@ class PWebContact
 	protected static $fields 		= array();
     protected static $forms 		= array();
 	// only one instance
+    protected static $settings      = null;
 	protected static $data 			= array();
 	protected static $email_tmpls 	= array();
 	protected static $email_vars 	= array();
@@ -346,6 +347,16 @@ class PWebContact
 			if (!self::$form_id AND $form_id) self::$form_id = $form_id;
 		}
 		return self::$params[$form_id];
+	}
+    
+    
+    public static function getSettings()
+	{
+		if (self::$settings === null)
+		{
+            self::$settings = new PWebContact_Params( get_option('pwebcontact_settings', array()) );
+		}
+		return self::$settings;
 	}
 
 
@@ -1552,22 +1563,26 @@ class PWebContact
     
     public static function setupMailer($phpmailer) 
     {
-        $params = self::getParams();
+        $settings = self::getSettings();
         
-        if ($params->get('mailer') == 'smtp' AND $params->get('smtp_host'))
+        if ($settings->get('mailer') == 'smtp' AND $settings->get('smtp_host'))
         {
-            $phpmailer->IsSMTP();
-            $phpmailer->Host = $params->get('smtp_host');
-            $phpmailer->Port = $params->get('smtp_port', 25);
+            $phpmailer->isSMTP();
+            $phpmailer->Host = $settings->get('smtp_host');
+            $phpmailer->Port = $settings->get('smtp_port', 25);
             
-            $phpmailer->SMTPSecure = $params->get('smtp_secure', 'none');
-            $phpmailer->SMTPAuth = ($params->get('smtp_username') AND $params->get('smtp_password'));
+            $phpmailer->SMTPSecure = $settings->get('smtp_secure', 'none');
+            $phpmailer->SMTPAuth = ($settings->get('smtp_username') AND $settings->get('smtp_password'));
             
             if ($phpmailer->SMTPAuth)
             {
-                $phpmailer->Username = $params->get('smtp_username');
-                $phpmailer->Password = $params->get('smtp_password');
+                $phpmailer->Username = $settings->get('smtp_username');
+                $phpmailer->Password = $settings->get('smtp_password');
             }
+        }
+        elseif ($settings->get('mailer') == 'mail') 
+        {
+            $phpmailer->isMail();
         }
     }
 	

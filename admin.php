@@ -29,13 +29,12 @@ class PWebContact_Admin {
     protected $buy_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
     protected $buy_pro_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
     protected $buy_support_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
-    protected $fields_limit = 5;
 
 
     protected static $pro = array(
-        'load' => array(
-            'layout'
-        ),
+        'load' => array(),
+        'fields' => array(),
+        'settings' => array(),
         'params' => array(
             'accordion_boxed',
 			'adcenter_url',
@@ -73,8 +72,8 @@ class PWebContact_Admin {
 			'email_bcc',
 			//'email_cms_user',
 			'email_copy',
-			//'email_from',
-			//'email_from_name',
+			'email_from',
+			'email_from_name',
 			'email_replyto',
 			'email_replyto_name',
 			//'email_subject',
@@ -115,7 +114,6 @@ class PWebContact_Admin {
 			'redirect_url',
 			'reset_form',
 			'rounded',
-			//'server_sender',
 			'shadow',
 			'show_upload',
 			//'style_bg',
@@ -151,54 +149,31 @@ class PWebContact_Admin {
 			'upload_size_limit',
 			'user_data',
 			'zindex',
-        ),
-        'fields' => array(
-            'phone',
-            'subject',
-            'date',
-            'password',
-            'select',
-            'multiple',
-            'radio',
-            'checkboxes',
-            'checkbox',
-            'checkbox_modal',
-            'email_copy',
-            'separator_text',
-            'separator_header',
-            'upload',
-            'mailto_list'
         )
     );
     
     protected static $free = array(
         'load' => array(),
+        'fields' => array(),
+        'settings' => array(),
         'params' => array(
 			'effect::slidebox:slide_in',
 			'email_admin_tmpl',
 			//'email_admin_tmpl_list',
 			//'email_autoreply_tmpl_list',
 			'email_cms_user',
-			'email_from',
-			'email_from_name',
+			//'email_from',
+			//'email_from_name',
 			'email_subject',
 			'email_to',
 			'email_user_tmpl',
 			//'email_user_tmpl_list',
 			'handler::tab',
 			'msg_success',
-			'server_sender',
 			'style_bg',
 			'style_form',
 			'style_toggler',
 			'toggler_name',
-        ),
-        'fields' => array(
-            'email',
-            'name',
-            'text',
-            'textarea',
-            'button_send'
         )
     );
     
@@ -317,7 +292,7 @@ class PWebContact_Admin {
                     'error' => __('Error'),
                     'request_error' => __('Request error', 'pwebcontact'),
                     'error_loading_fields_settings' => __('Loading fields settings has failed!', 'pwebcontact'),
-                    'missing_layout_settings' => __('File with settings for selected layout does not exists!', 'pwebcontact'),
+                    'missing_theme_settings' => __('File with settings for selected theme does not exists!', 'pwebcontact'),
                     'missing_email_tmpl' => __('Email template in selected format does not exists. Change format or create new file with email template: %s', 'pwebcontact'),
                     'paste_adcenter' => __('Paste Microsoft adCenter conversion tracking script', 'pwebcontact'),
                     'paste_adwords' => __('Paste Google AdWords/Goal Conversion tracking script', 'pwebcontact'),
@@ -476,6 +451,69 @@ class PWebContact_Admin {
                 }
             }
         }
+        elseif ( $task == 'settings') {
+            
+            $this->view = 'settings';
+            
+            if (!$this->can_edit) {
+                // redirect to list view
+                $this->_redirect('admin.php?page=pwebcontact&error='.
+                        urlencode(__('You do not have sufficient permissions to edit settings!', 'pwebcontact')));
+            }
+            else {
+                $this->_load_settings();
+                
+                // load JS files
+                wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-settings.js', __FILE__), 
+                        array(
+                            'jquery',
+                            'jquery-ui-tooltip'
+                        ));
+                
+                // load JavaScript translations
+                wp_localize_script('pwebcontact_admin_script', 'pwebcontact_l10n', array(
+                    'saving' => __('Saving...', 'pwebcontact'),
+                    'saved_on' => __('Saved on', 'pwebcontact'),
+                    'error' => __('Error'),
+                    'request_error' => __('Request error', 'pwebcontact')
+                ));
+            }
+        }
+        elseif ( $task == 'save_settings') {
+            
+            $this->view = 'settings';
+            
+            if (!$this->can_edit) {
+                // redirect to list view
+                $this->_redirect('admin.php?page=pwebcontact&error='.
+                        urlencode(__('You do not have sufficient permissions to edit settings!', 'pwebcontact')));
+            }
+            else {
+                
+                if (isset($_GET['ajax'])) {
+                    check_ajax_referer( 'save-settings' );
+                    //wp_verify_nonce( $_POST['_wp_nonce'], 'save-settings' );
+                }
+                else {
+                    check_admin_referer( 'save-settings' );
+                }
+                
+                $result = $this->_save_settings();
+                $message = __($result ? 'Settings have been successfully saved.' : 'Failed saving settings!', 'pwebcontact');
+                
+                if (isset($_GET['ajax'])) {
+                    header('Content-type: application/json');
+                    die(json_encode(array(
+                        'success' => $result,
+                        'message' => $message
+                    )));
+                }
+                else {
+                    $this->_redirect('admin.php?page=pwebcontact&task=settings'.
+                            '&'.($result ? 'notification' : 'error').'='.urlencode($message));
+                }
+            }
+        }
         elseif ( $task == 'list' OR $task == '' ) {
             
             $this->view = 'list';
@@ -520,15 +558,15 @@ class PWebContact_Admin {
             header('Content-type: text/plain');
             die( $content );
         }
-        elseif ( $task == 'load_layout' ) {
+        elseif ( $task == 'load_theme' ) {
             
-            check_ajax_referer( 'load-layout' );
-            //wp_verify_nonce( $_POST['_wp_nonce'], 'load-layout' );
+            check_ajax_referer( 'load-theme' );
+            //wp_verify_nonce( $_POST['_wp_nonce'], 'load-theme' );
             
             $content = '';
-            if (isset($_GET['ajax']) AND isset($_POST['layout']) AND $_POST['layout']) {
+            if (isset($_GET['ajax']) AND isset($_POST['theme']) AND $_POST['theme']) {
                 
-                $path = dirname(__FILE__) .'/media/layout_settings/'. basename($_POST['layout']) . '.txt';
+                $path = dirname(__FILE__) .'/media/theme_settings/'. basename($_POST['theme']) . '.txt';
                 if (is_file($path)) {
                     $content = file_get_contents($path);
                 }
@@ -582,6 +620,7 @@ class PWebContact_Admin {
 
         if ( $file == plugin_basename(dirname(__FILE__).'/pwebcontact.php') ) {
             $links[] = '<a href="' . admin_url( 'admin.php?page=pwebcontact' ) . '">'.__( 'Forms list', 'pwebcontact' ).'</a>';
+            $links[] = '<a href="' . admin_url( 'admin.php?page=pwebcontact&task=settings' ) . '">'.__( 'Settings' ).'</a>';
         }
 
         return $links;
@@ -593,9 +632,9 @@ class PWebContact_Admin {
 ?>
 <script type="text/javascript">
     var pwebcontact_admin = pwebcontact_admin || {};
+    pwebcontact_admin.is_pro = <?php echo (defined('PWEBCONTACT_PRO') ? 'true' : 'false'); ?>;
     pwebcontact_admin.plugin_url = "<?php echo plugins_url('pwebcontact/'); ?>";
     pwebcontact_admin.buy_url = "<?php echo $this->buy_url; ?>";
-    pwebcontact_admin.fields_limit = <?php echo (!defined('PWEBCONTACT_PRO') ? $this->fields_limit : 0); ?>;
 </script>
 <?php
     }
@@ -636,21 +675,38 @@ class PWebContact_Admin {
                 $this->data->params = json_decode($this->data->params, true);
                 $this->data->params['position'] = $this->data->position;
                 $this->data->params['layout_type'] = $this->data->layout;
+                
+                $this->_load_settings();
             }
         }
     }
     
     
-    protected function _set_param($key = null, $value = null) {
+    protected function _load_settings() {
         
-        $this->data->params[$key] = $value;
+        if (!is_object($this->data)) {
+            $this->data = new stdClass();
+        }
+        $this->data->settings = get_option('pwebcontact_settings', array());
     }
     
     
-    protected function _get_param($key = null, $default = null) {
+    protected function _set_param($key = null, $value = null, $group = 'params') {
         
-        if (isset($this->data->params[$key]) AND $this->data->params[$key] !== null AND $this->data->params[$key] !== '') {
-            return $this->data->params[$key];
+        if (!is_object($this->data)) {
+            $this->data = new stdClass();
+        }
+        $this->data->{$group}[$key] = $value;
+    }
+    
+    
+    protected function _get_param($key = null, $default = null, $group = 'params') {
+        
+        if (isset($this->data->{$group}) AND 
+                isset($this->data->{$group}[$key]) AND 
+                $this->data->{$group}[$key] !== null AND 
+                $this->data->{$group}[$key] !== '') {
+            return $this->data->{$group}[$key];
         }
         return $default;
     }
@@ -738,6 +794,12 @@ class PWebContact_Admin {
             return true;
         }
         return false;
+    }
+    
+    
+    protected function _save_settings() {
+        
+        return update_option('pwebcontact_settings', $this->_get_post('settings'));
     }
     
     
@@ -841,6 +903,9 @@ class PWebContact_Admin {
     elseif ($this->view == 'edit') : 
         $this->_display_edit_form();
     
+    elseif ($this->view == 'settings') : 
+        $this->_display_settings();
+    
     endif; ?>
     
     <p class="pweb-copyrights">
@@ -889,6 +954,12 @@ class PWebContact_Admin {
 <div class="updated pweb-clearfix"><p><strong><?php echo implode('<br>', $this->notifications); ?></strong></p></div>
 <?php
 		}
+    }
+    
+    
+    protected function _display_settings() {
+        
+        $this->_load_tmpl('settings');
     }
 
 
@@ -1078,8 +1149,8 @@ class PWebContact_Admin {
             }
         }
         
-        if ($value === null AND $group === 'params') {
-            $value = $this->_get_param($name, $default);
+        if ($value === null) {
+            $value = $this->_get_param($name, $default, $group);
         }
         if ($value === null OR $value === '') {
             $value = $default;
@@ -1364,6 +1435,16 @@ class PWebContact_Admin {
     protected function _is_pro_field($field_type = null)
     {
         return !defined('PWEBCONTACT_PRO') AND in_array($field_type, self::$pro['fields']);
+    }
+    
+    protected function _set_pro_options($group = null, $options = array())
+    {
+        self::$pro[$group] = $options;
+    }
+    
+    protected function _set_free_options($group = null, $options = array())
+    {
+        self::$free[$group] = $options;
     }
     
     private function _convert_size($str)
