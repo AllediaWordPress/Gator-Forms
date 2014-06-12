@@ -1619,7 +1619,23 @@ $this->_set_free_options('fields', array(
                         'name' => 'value',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Text/HTML'
+                        'label' => 'Text/HTML',
+                        'class' => 'pweb-input-large'
+                    )); ?>
+                    
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'radio',
+                        'name' => 'line_breaks',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Change line breaks to &lt;br&gt;',
+                        'class' => 'pweb-radio-group',
+                        'default' => 1,
+                        'options' => array(
+                            array('value' => 0, 'name' => 'No'),
+                            array('value' => 1, 'name' => 'Yes')
+                        )
                     )); ?>
                 </div>
             </div>
@@ -1638,7 +1654,7 @@ $this->_set_free_options('fields', array(
                     <?php echo $this->_display_badge($field_type); ?>
                 </div>
                 <div class="pweb-custom-field-label">
-                    <?php _e('Label', 'pwebcontact'); ?> <span><?php _e('Header', 'pwebcontact'); ?></span>
+                    <?php _e('Label', 'pwebcontact'); ?> <span></span>
                 </div>
                 
                 <div class="pweb-custom-field-options">
@@ -1654,11 +1670,12 @@ $this->_set_free_options('fields', array(
                     
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
-                        'type' => 'textarea',
-                        'name' => 'value',
+                        'type' => 'text',
+                        'name' => 'label',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Text/HTML'
+                        'label' => 'Header title',
+                        'class' => 'pweb-custom-field-label-input',
                     )); ?>
                 </div>
             </div>

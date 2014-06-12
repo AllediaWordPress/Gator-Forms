@@ -1,10 +1,10 @@
 /**
-* @version 3.2.10
-* @package PWebContact
-* @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
-* @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
-* @author Piotr Moćko
-*/
+ * @version 1.0.0
+ * @package Perfect Easy & Powerful Contact Form
+ * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @author Piotr Moćko
+ */
 
 .pwebcontact-box,
 form.pwebcontact-form .btn {
@@ -829,6 +829,15 @@ form.pwebcontact-form textarea:focus {
  */
 .pweb-separator-text {
 	line-height: 150%;
+}
+
+/* Header separator
+ * ---------------------------------------------------------------------
+ */
+.pweb-separator-header {
+	font-size: 200%;
+    line-height: 200%;
+    margin: 10px 0;
 }
 
 /* Labels invalid 

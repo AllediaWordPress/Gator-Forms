@@ -1,10 +1,10 @@
 /**
  * @version 1.0.0
  * @package Perfect Easy & Powerful Contact Form
-* @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
-* @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
-* @author Piotr Moćko
-*/
+ * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
+ * @author Piotr Moćko
+ */
 
 var pwebcontact_l10n = pwebcontact_l10n || {},
     pwebcontact_admin = pwebcontact_admin || {};
@@ -419,7 +419,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         if (this.selectedIndex) {
             var $rows = $("#pweb_fields_rows").children();
             // confirm old fields removal
-            if ($rows.length === 0 || pwebcontact_admin.confirmed === true) {
+            if ($rows.length <= 1 || pwebcontact_admin.confirmed === true) {
                 pwebcontact_admin.confirmed = false;
                 
                 $.ajax({

@@ -599,7 +599,6 @@ class PWebContact_Admin {
         // load CSS
         //wp_enqueue_style('pwebcontact_jquery_ui_style', plugins_url('media/css/ui/jquery-ui-1.10.4.custom.css', __FILE__));
         wp_enqueue_style('pwebcontact_admin_style', plugins_url('media/css/admin.css', __FILE__));
-        wp_enqueue_style('pwebcontact_admin_wp_style', plugins_url('media/css/admin_wp.css', __FILE__), array('dashicons'));
         wp_enqueue_style('pwebcontact_icomoon_style', plugins_url('media/css/icomoon.css', __FILE__));
         
         add_action('admin_head', array($this, 'admin_head'));

@@ -1,10 +1,10 @@
 /**
-* @version 3.2.0
-* @package PWebContact
-* @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
-* @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
-* @author Piotr Moćko
-*/
+ * @version 1.0.0
+ * @package Perfect Easy & Powerful Contact Form
+ * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
+ * @author Piotr Moćko
+ */
 
 var pwebcontact_l10n = pwebcontact_l10n || {},
     pwebcontact_admin = {};

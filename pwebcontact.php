@@ -216,6 +216,7 @@ class PWebContact
             $params->set('handler', 'tab');
             $params->set('toggler_vertical', 0);
             $params->set('toggler_slide', 0);
+            $params->set('msg_position', 'after');
         }
         /*** FREE END ***/ }
         

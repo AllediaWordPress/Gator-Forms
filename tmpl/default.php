@@ -32,11 +32,13 @@ $message =
 ?>
 <!-- PWebContact -->
 
+<!-- PRO START -->
 <?php if ($layout == 'modal' AND $params->get('handler') == 'button') : ?>
 <div class="<?php echo $params->get('moduleClass'); ?>" dir="<?php echo $params->get('rtl', 0) ? 'rtl' : 'ltr'; ?>">
 	<?php echo $toggler; ?>
 </div>
 <?php endif; ?>
+<!-- PRO END -->
 
 <div id="pwebcontact<?php echo $form_id; ?>" class="pwebcontact <?php echo $params->get('positionClass').' '.$params->get('moduleClass'); ?>" dir="<?php echo $params->get('rtl', 0) ? 'rtl' : 'ltr'; ?>">
 	
@@ -47,8 +49,11 @@ $message =
         echo $toggler; 
     ?>
 	
+    <!-- PRO START -->
 	<?php if ($layout == 'modal') : ?><div id="pwebcontact<?php echo $form_id; ?>_modal" class="pwebcontact-modal modal hide fade" style="display:none"><?php endif; ?>
-	<div id="pwebcontact<?php echo $form_id; ?>_box" class="pwebcontact-box <?php echo $params->get('moduleClass').' '.$params->get('boxClass'); ?>" dir="<?php echo $params->get('rtl', 0) ? 'rtl' : 'ltr'; ?>">
+	<!-- PRO END -->
+    
+    <div id="pwebcontact<?php echo $form_id; ?>_box" class="pwebcontact-box <?php echo $params->get('moduleClass').' '.$params->get('boxClass'); ?>" dir="<?php echo $params->get('rtl', 0) ? 'rtl' : 'ltr'; ?>">
 	<div id="pwebcontact<?php echo $form_id; ?>_container" class="pwebcontact-container">
 	
 		<?php 
@@ -62,7 +67,9 @@ $message =
 		
 		<form name="pwebcontact<?php echo $form_id; ?>_form" id="pwebcontact<?php echo $form_id; ?>_form" class="pwebcontact-form" action="<?php echo esc_url( home_url() ); ?>" method="post" accept-charset="utf-8">
 			
+            <!-- PRO START -->
 			<?php if ($params->get('msg_position', 'after') == 'before') echo $message; ?>
+            <!-- PRO END -->
 			
 			<div class="pweb-fields">
 			<?php 
@@ -96,8 +103,27 @@ $message =
                 
 					ob_start();
                     
-                    /* ----- Text separator --------------------------------------------------------------------------- */
-					if ($field['type'] == 'separator_text') : 
+                    
+                    /* ----- Buttons ------------------------------------------------------------------------------------------ */
+                    if ($field['type'] == 'button_send') :
+                     ?>
+					<div class="pweb-field-container pweb-field-buttons">
+						<div class="pweb-field">
+							<button id="pwebcontact<?php echo $form_id; ?>_send" type="button" class="btn" data-role="none"><?php _e($field['label'] ? $field['label'] : 'Send', 'pwebcontact') ?></button>
+							<?php if ($params->get('reset_form', 1) == 3) : ?>
+							<button id="pwebcontact<?php echo $form_id; ?>_reset" type="reset" class="btn" style="display:none" data-role="none"><i class="icon-remove-sign icon-white"></i> <?php _e($params->get('button_reset', 'Reset'), 'pwebcontact') ?></button>
+							<?php endif; ?>
+                            <!-- PRO START -->
+							<?php if ($params->get('msg_position', 'after') == 'button' OR $params->get('msg_position', 'after') == 'popup') echo $message; ?>
+                            <!-- PRO END -->
+                        </div>
+					</div>
+                    <?php
+					
+                    
+					/*** PRO START ***/
+					/* ----- Text separator --------------------------------------------------------------------------- */
+					elseif ($field['type'] == 'separator_text') : 
 						$fieldId = 'pwebcontact'.$form_id.'_text-'.$separators++;
 					?>
 					<div class="pweb-field-container pweb-separator-text" id="<?php echo $fieldId; ?>">
@@ -110,11 +136,11 @@ $message =
 						$fieldId = 'pwebcontact'.$form_id.'_header-'.$separators++;
 					?>
 					<div class="pweb-field-container pweb-separator-header" id="<?php echo $fieldId; ?>">
-						<?php _e($field['value'], 'pwebcontact'); ?>
+						<?php _e($field['label'], 'pwebcontact'); ?>
 					</div>
 					<?php 
 					
-					
+                    
 					/* ----- Mail to list ------------------------------------------------------------------------------- */
 					elseif ($field['type'] == 'mailto_list') :
 						
@@ -257,24 +283,9 @@ $message =
 						</div>
 					</div>
 					<?php 
+                    /*** PRO END ***/
                     
-                    
-                    /* ----- Buttons ------------------------------------------------------------------------------------------ */
-                    elseif ($field['type'] == 'button_send') :
-                     ?>
-					<div class="pweb-field-container pweb-field-buttons">
-						<div class="pweb-field">
-							<button id="pwebcontact<?php echo $form_id; ?>_send" type="button" class="btn" data-role="none"><?php _e($field['label'] ? $field['label'] : 'Send', 'pwebcontact') ?></button>
-							<?php if ($params->get('reset_form', 1) == 3) : ?>
-							<button id="pwebcontact<?php echo $form_id; ?>_reset" type="reset" class="btn" style="display:none" data-role="none"><i class="icon-remove-sign icon-white"></i> <?php _e($params->get('button_reset', 'Reset'), 'pwebcontact') ?></button>
-							<?php endif; ?>
-							<?php if ($params->get('msg_position', 'after') == 'button' OR $params->get('msg_position', 'after') == 'popup') echo $message; ?>
-						</div>
-					</div>
-                    <?php
-					
-					
-					/* ----- Fields ----------------------------------------------------------------------------------- */
+                    /* ----- Fields ----------------------------------------------------------------------------------- */
 					else : 
 						
 						$fieldId = 'pwebcontact'.$form_id.'_field-'.$field['alias'];
@@ -299,9 +310,11 @@ $message =
 							/* ----- Text fields: text, name, email, phone, subject, password, date ------------------------- */
 							if (in_array($field['type'], array('text', 'name', 'email', 'phone', 'subject', 'password', 'date'))) : 
 								
+                                /*** PRO START ***/
 								if ($user->ID AND ($field['type'] == 'name' OR $field['type'] == 'email') AND $params->get('user_data', 1)) {
 									$field['values'] = $field['type'] == 'email' ? $user->email : $user->display_name;
 								}
+                                /*** PRO END ***/
 								
 								$field['attributes'] = null;
 								$field['classes'] = array('pweb-input');
@@ -324,20 +337,25 @@ $message =
 										$field['classes'][] = 'email';
 										$type = 'email';
 										break;
+                                    /*** PRO START ***/
 									case 'password':
 										$type = 'password';
 										break;
 									case 'phone':
 										$type = 'tel';
 										break;
+                                    /*** PRO END ***/
 									default:
 										$type = 'text';
 								}
 							?>
 							<input type="<?php echo $type; ?>" name="<?php echo $fieldName; ?>" id="<?php echo $fieldId; ?>"<?php echo $field['attributes']; ?> value="<?php echo htmlspecialchars($field['values'], ENT_COMPAT, 'UTF-8'); ?>" data-role="none">
-							<?php if ($field['type'] == 'date') : ?>
+							<?php 
+                            /*** PRO START ***/
+                            if ($field['type'] == 'date') : ?>
 							<span class="pweb-calendar-btn" id="<?php echo $fieldId; ?>_btn"><i class="icomoon-calendar"></i></span>
 							<?php endif;
+                            /*** PRO END ***/
 							
 							
 							/* ----- Textarea ------------------------------------------------------------------------- */
@@ -366,6 +384,7 @@ $message =
 							<?php 
 							
 							
+                            /*** PRO START ***/
 							/* ----- Select and Multiple select ------------------------------------------------------- */
 							elseif ($field['type'] == 'select' OR $field['type'] == 'multiple') : 
 								$optValues = is_array($field['values']) ? $field['values'] : @explode('|', $field['values']);
@@ -487,7 +506,9 @@ $message =
 									<span class="pweb-asterisk">*</span>
 								<?php endif; ?>
 								</label>
-							<?php endif; ?>
+							<?php 
+                            /*** PRO START ***/
+                            endif; ?>
 						</div>
 					</div>
 					<?php endif;
@@ -547,13 +568,17 @@ $message =
 			<input type="hidden" name="<?php echo wp_create_nonce('pwebcontact'.$form_id); ?>" value="1" id="pwebcontact<?php echo $form_id; ?>_token">
 		</form>
 		
+        <!-- PRO START -->
 		<?php if ($params->get('show_upload', 0)) : ?>
 		<div class="pweb-dropzone" aria-hidden="true"><div><?php _e('Drop files here to upload', 'pwebcontact'); ?></div></div>
 		<?php endif; ?>
-	
+        <!-- PRO END -->
+        
 	</div>
 	</div>
+    <!-- PRO START -->
 	<?php if ($layout == 'modal') : ?></div><?php endif; ?>
+    <!-- PRO END -->
 </div>
 
 <script type="text/javascript">
