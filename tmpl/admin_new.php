@@ -1,7 +1,7 @@
 <?php
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author Piotr Moćko
@@ -16,11 +16,9 @@ function_exists('add_action') or die;
     <?php echo $this->_get_version(); ?>
 </div>
 
-<h2><?php _e('Perfect Ajax Popup Contact Form', 'pwebcontact'); ?></h2>
+<h2><?php _e('Perfect Easy & Powerful Contact Form', 'pwebcontact'); ?></h2>
 
 <?php $this->_display_messages(); ?>
-
-<p><?php esc_html_e( 'TODO description', 'pwebcontact' ); ?></p>
 
 <?php if ($this->can_edit) : ?>
 <div class="theme-browser pweb-panels pweb-clearfix">

@@ -1,7 +1,7 @@
 <?php
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author Piotr Moćko
@@ -17,7 +17,7 @@ function_exists('add_action') or die;
 </div>
 
 <h2>
-    <?php _e('Perfect Ajax Popup Contact Form', 'pwebcontact'); ?>
+    <?php _e('Perfect Easy & Powerful Contact Form', 'pwebcontact'); ?>
     
     <?php if ($this->can_edit) : ?>
         <a class="add-new-h2" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=pwebcontact&task=new' ), 'new-form'); ?>">
@@ -105,28 +105,28 @@ function_exists('add_action') or die;
 <?php endforeach; ?>
 
     <div class="theme active pweb-panel-box pweb-panel-pro">
-        <div class="theme-screenshot" onclick="document.location.href='<?php echo $this->buy_pro_url; ?>'">
+        <div class="theme-screenshot pweb-buy">
 			<i class="icomoon-cart"></i>
 		</div>
         <h3 class="theme-name">
-            <a class="button button-primary right" href="<?php echo $this->buy_pro_url; ?>" target="_blank">
+            <a class="button button-primary right pweb-buy" href="<?php echo $this->buy_url; ?>" target="_blank">
                 <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
             </a>
-            <?php _e( 'Get PRO version', 'pwebcontact' ); ?>
+            <?php _e( 'Get PRO version & support', 'pwebcontact' ); ?>
         </h3>
     </div>
     
-    <div class="theme active pweb-panel-box pweb-panel-support">
-        <div class="theme-screenshot" onclick="document.location.href='<?php echo $this->buy_support_url; ?>'">
+    <?php /*<div class="theme active pweb-panel-box pweb-panel-support">
+        <div class="theme-screenshot" onclick="document.location.href='<?php echo $this->buy_url; ?>'">
 			<i class="icomoon-support"></i>
 		</div>
         <h3 class="theme-name">
-            <a class="button button-primary right" href="<?php echo $this->buy_support_url; ?>" target="_blank">
+            <a class="button button-primary right" href="<?php echo $this->buy_url; ?>" target="_blank">
                 <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
             </a>
             <?php _e( 'Get support only', 'pwebcontact' ); ?>
         </h3>
-    </div>
+    </div>*/ ?>
         
 </div>
 </div>

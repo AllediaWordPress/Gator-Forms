@@ -1,6 +1,6 @@
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
 * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
 * @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
 * @author Piotr Moćko
@@ -168,6 +168,10 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                                     $("#pweb_fields_pro_warning").fadeOut("slow");
                                 }
                             }
+                            // hide upload path warning
+                            if ($field.data("type") === "upload") {
+                                $("#pweb-upload-path-warning").hide();
+                            }
                             // show field type if only one instance is allowed
                             if ($field.hasClass("pweb-custom-fields-single")) {
                                 $("#pweb_field_type_" + $field.data("type")).show("slow");
@@ -325,6 +329,10 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         if ($field.data("type") === "button_send") {
             target.find(".pweb-fields-remove-col").remove();
         }
+        else if ($field.data("type") === "upload") {
+            $("#pweb-upload-path-warning").show();
+        }
+        
 
         // Display field options
         /*if (typeof show_options === "undefined" || show_options !== false) {
@@ -516,8 +524,11 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     // load Send button if missing
     if ($("#pweb_fields_rows").children().length === 0) {
-        $("#pweb_fields_add_row").click();
-        dropField( $("#pweb_field_type_button_send"), $("#pweb_fields_add_row").prev().children().last().find(".pweb-fields-cols").children().first(), false );
+        
+        $("#pweb_load_fields").val("Contact form (FREE)").trigger("change");
+        
+        //$("#pweb_fields_add_row").click();
+        //dropField( $("#pweb_field_type_button_send"), $("#pweb_fields_add_row").prev().children().last().find(".pweb-fields-cols").children().first(), false );
     }
     
     $("body").css("overflow-y", "scroll");

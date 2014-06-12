@@ -1,7 +1,7 @@
 <?php
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author Piotr Moćko
@@ -24,7 +24,7 @@ function_exists('add_action') or die;
         'filter' => '\.jpg$',
         'directory' => 'media/theme_settings',
         'strip_ext' => true,
-        'default' => 'Clean',
+        'default' => 'Clean FREE',
         'attributes' => array(
             'data-action' => admin_url( 'admin.php?page=pwebcontact&task=load_theme&ajax=1&_wpnonce='. wp_create_nonce('load-theme') )
         ),
@@ -56,7 +56,7 @@ function_exists('add_action') or die;
 
 
 <div id="pweb-theme-preview">
-    <img src="<?php echo plugins_url('pwebcontact/media/theme_settings/Clean.jpg'); ?>" alt="<?php _e('Theme preview', 'pwebcontact'); ?>">
+    <img src="<?php echo plugins_url('pwebcontact/media/theme_settings/Clean FREE.jpg'); ?>" alt="<?php _e('Theme preview', 'pwebcontact'); ?>">
     <p>
         <a href="#" class="button button-primary">
             <?php _e( 'Load settings for this theme', 'pwebcontact' ); ?>

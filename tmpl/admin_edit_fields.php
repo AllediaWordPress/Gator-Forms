@@ -1,7 +1,7 @@
 <?php
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author Piotr Moćko
@@ -1574,13 +1574,6 @@ $this->_set_free_options('fields', array(
                     
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
-                        'type' => 'hidden',
-                        'name' => 'email_copy',
-                        'value' => 1
-                    )); ?>
-                    
-                    <?php echo $this->_get_field(array(
-                        'disabled' => true,
                         'type' => 'text',
                         'name' => 'label',
                         'index' => 'X',
@@ -2012,7 +2005,10 @@ $this->_set_free_options('fields', array(
                         'type' => 'custom',
                         'name' => 'upload_path',
                         'label' => 'Upload path',
-                        'content' => $upload_dir['basedir'].'/pwebcontact/'.$this->id
+                        'content' => $upload_dir['basedir'].'/pwebcontact/'.$this->id.'/'
+                            . ' <span class="pweb-text-'. ($this->_check_upload_path() === true ? 'success' : 'danger').'">('
+                            . ($this->_check_upload_path() === true ? __('writable', 'pwebcontact') : __('unwritable', 'pwebcontact')) 
+                            . ')</span>'
                     )); ?>
 
                 </div>

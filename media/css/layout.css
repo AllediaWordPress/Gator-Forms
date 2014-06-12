@@ -1,5 +1,5 @@
 /**
-* @version 3.2.5
+* @version 3.2.10
 * @package PWebContact
 * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
 * @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
@@ -12,6 +12,13 @@ form.pwebcontact-form .btn {
 	font-size: 12px;
 }
 
+.pwebcontact,
+.pwebcontact *,
+.pwebcontact_toggler {
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
 
  /* Positions
   * --------------------------------------------------------------------- 
@@ -1170,7 +1177,6 @@ form.pwebcontact-form label .pweb-asterisk {
 .pweb-fields:before, .pweb-fields:after,
 .pweb-fields-group:before, .pweb-fields-group:after,
 .pweb-field-container:before, .pweb-field-container:after,
-.pweb-row:before, .pweb-row:after,
 .pweb-uploader .files > div:before, .pweb-uploader .files > div:after {
 	content: "";
 	display: table;
@@ -1180,7 +1186,6 @@ form.pwebcontact-form label .pweb-asterisk {
 .pweb-fields, .pweb-fields:after,
 .pweb-fields-group:after,
 .pweb-field-container:after,
-.pweb-row:after,
 .pweb-uploader .files > div:after {
 	clear: both;
 }

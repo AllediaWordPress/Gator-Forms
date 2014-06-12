@@ -1,6 +1,6 @@
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
 * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
 * @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
 * @author Piotr Moćko
@@ -46,11 +46,6 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         e.preventDefault();
         $( "#"+ $(this).closest(".nav-tab-content").attr("id").replace("-content", "") ).next().click();
     });
-    
-    // Open last active tab
-    if (document.location.hash) {
-        $(document.location.hash).click();
-    }
     
     // Location tabs
     $("#pweb-location-steps .pweb-location-step-tab").click(function(e){
@@ -481,7 +476,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 var that = this,
                     data = {
                         "tmpl": $(this).val(),
-                        "format": parseInt($("#"+id+"_format input:checked").val())
+                        "format": pwebcontact_admin.is_pro ? parseInt($("#"+id+"_format input:checked").val()) : 1
                     };
                 
                 $.ajax({
@@ -705,21 +700,57 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
     
     
+    $("#pweb-tab-check").click(function(){
+        
+        var is_empty_recipient = (!$("#pweb_params_email_to").val() && $("#pweb_params_email_cms_user").get(0).selectedIndex === 0);
+        $("#pweb-email-to-warning")[is_empty_recipient ? "show" : "hide"]();
+        
+        if ($("#pweb-cog-check .pweb-alert-danger:visible").length) {
+            $("#pweb-cog-check-success").hide();
+            $("#pweb-cog-check-warning").hide();
+            $("#pweb-cog-check-error").show();
+            $("#pweb-cog-check-save").hide();
+        }
+        else if (!pwebcontact_admin.is_pro && ($("#pweb_layout_type_warning").css("display") !== "none" || $("#pweb_fields_pro_warning").css("display") !== "none" || $("#pweb_theme_warning").css("display") !== "none")) {
+            $("#pweb-cog-check-success").hide();
+            $("#pweb-cog-check-warning").show();
+            $("#pweb-cog-check-error").hide();
+            $("#pweb-cog-check-save").show();
+        }
+        else {
+            $("#pweb-cog-check-success").show();
+            $("#pweb-cog-check-warning").hide();
+            $("#pweb-cog-check-error").hide();
+            $("#pweb-cog-check-save").show();
+        }
+    });
+    
+    $("#pweb-cog-check-save").click(function(){
+        $("#pweb-save-button").click();
+    });
+    
+    
     $("span.pweb-pro, .pweb-buy").click(function(e){
         e.preventDefault();
         e.stopPropagation();
         
-        var width = $(window).width() - 100,
-            height = $(window).height() - 150;
+        var width = $(window).width() - 50,
+            height = $(window).height();
         
         if (width > 700) {
             width = 700;
+        }
+        if (height >= 750) {
+            height = height - 120;
+        }
+        else {
+            height = height - 20;
         }
         
         tb_show(pwebcontact_l10n.buy_subscription, 
             pwebcontact_admin.buy_url 
                     + (pwebcontact_admin.buy_url.indexOf("?") === -1 ? "?" : "&") 
-                    + "TB_iframe=1&width="+width+"&height="+height, "");
+                    + "TB_iframe=1&width="+width+"&height="+(height-30), "");
     });
     
     
@@ -779,6 +810,11 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         return false;
     });
     
+    
+    // Open last active tab
+    if (document.location.hash) {
+        $(document.location.hash).click();
+    }
     
     // Set duration of showing/hiding options
     setTimeout(function(){ pwebcontact_admin.duration = 400; }, 600);

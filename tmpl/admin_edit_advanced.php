@@ -1,7 +1,7 @@
 <?php
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author Piotr Moćko
@@ -26,6 +26,29 @@ function_exists('add_action') or die;
             'name' => 'moduleclass_sfx',
             'label' => 'Contact Form CSS class',
             'tooltip' => 'Add additional CSS class name to contact form container.'
+        )); ?>
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'radio',
+            'name' => 'rtl',
+            'label' => 'Enable RTL',
+            'tooltip' => 'Set Yes to enable Right to Left text direction. Use Auto mode if you have multi-language site with RTL languages.',
+            'default' => 2,
+            'class' => 'pweb-radio-group',
+            'options' => array(
+                array(
+                    'value' => 0,
+                    'name' => 'No'
+                ),
+                array(
+                    'value' => 1,
+                    'name' => 'Yes'
+                ),
+                array(
+                    'value' => 2,
+                    'name' => 'Auto'
+                )
+            )
         )); ?>
 
         <?php echo $this->_get_field(array(
@@ -254,6 +277,26 @@ function_exists('add_action') or die;
             'header' => 'Updates',
             'tooltip' => 'Display news and special offers from Perfect-Web.co website in administration panel of this extension only for Administrator.',
             'default' => 1,
+            'class' => 'pweb-radio-group',
+            'options' => array(
+                array(
+                    'value' => 0,
+                    'name' => 'No'
+                ),
+                array(
+                    'value' => 1,
+                    'name' => 'Yes'
+                )
+            )
+        )); ?>
+        
+        <?php echo $this->_get_field(array(
+            'type' => 'radio',
+            'name' => 'demo',
+            'label' => 'Demo mode',
+            'header' => 'Demo',
+            'tooltip' => 'Sends email message to User only.',
+            'default' => 0,
             'class' => 'pweb-radio-group',
             'options' => array(
                 array(

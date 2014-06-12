@@ -1,7 +1,7 @@
 <?php
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author Piotr Moćko
@@ -24,11 +24,10 @@ class PWebContact_Admin {
     protected $notifications = array();
     protected $warnings = array();
     protected $errors = array();
+    protected $requirements = array();
     
-    protected $documentation_url = 'http://www.perfect-web.co/wordpress/ajax-contact-form-popup/documentation';
-    protected $buy_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
-    protected $buy_pro_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
-    protected $buy_support_url = 'https://www.perfect-web.co/order/subscriptions/21,22';
+    protected $documentation_url = 'http://www.perfect-web.co/wordpress/contact-form/documentation';
+    protected $buy_url = 'http://www.perfect-web.co/wordpress/contact-form/subscriptions?tmpl=component';
 
 
     protected static $pro = array(
@@ -79,6 +78,7 @@ class PWebContact_Admin {
 			//'email_subject',
 			'email_subject_sfx',
 			//'email_to',
+            'email_user_send::1',
 			//'email_user_tmpl',
 			'email_user_tmpl_format',
 			//'email_user_tmpl_list',
@@ -93,7 +93,6 @@ class PWebContact_Admin {
 			'modal_bg',
 			'modal_disable_close',
 			'modal_opacity',
-			//'moduleclass_sfx',
 			'msg_close_delay',
 			'msg_error_color',
 			'msg_position',
@@ -114,7 +113,7 @@ class PWebContact_Admin {
 			'redirect_url',
 			'reset_form',
 			'rounded',
-			'shadow',
+            'shadow',
 			'show_upload',
 			//'style_bg',
 			//'style_form',
@@ -132,7 +131,7 @@ class PWebContact_Admin {
 			'toggler_icon',
 			'toggler_icon_custom_image',
 			'toggler_icon_gallery_image',
-			//'toggler_name',
+			'toggler_name',
 			'toggler_position',
 			'toggler_rotate',
 			'toggler_slide',
@@ -148,7 +147,7 @@ class PWebContact_Admin {
 			'upload_show_limits',
 			'upload_size_limit',
 			'user_data',
-			'zindex',
+			'zindex'
         )
     );
     
@@ -166,14 +165,18 @@ class PWebContact_Admin {
 			//'email_from_name',
 			'email_subject',
 			'email_to',
+            'email_user_send',
+            //'email_user_send::0',
+            //'email_user_send::2',
 			'email_user_tmpl',
 			//'email_user_tmpl_list',
 			'handler::tab',
+            'moduleclass_sfx',
 			'msg_success',
+			'rtl',
 			'style_bg',
 			'style_form',
-			'style_toggler',
-			'toggler_name',
+			'style_toggler'
         )
     );
     
@@ -605,7 +608,7 @@ class PWebContact_Admin {
     
     function menu() {
 
-        $title = __('Perfect Ajax Popup Contact Form', 'pwebcontact');
+        $title = __('Perfect Easy & Powerful Contact Form', 'pwebcontact');
         
         if (isset($_GET['task']) AND $_GET['task'] == 'edit') {
             $title = __('Edit') .' &lsaquo; '. $title;
@@ -735,21 +738,13 @@ class PWebContact_Admin {
     
     protected function _check_requirements() {
         
-        global $wp_version;
-        
-        $result = true;
-        
-        //TODO get result from session
-        //TODO if result == true then return it
-        
-        if (version_compare( $wp_version, '2.8', '<' )) {
-            $result = false;
-            $this->errors[] = __('This plugin is compatible with WordPress 2.8 or higher.', 'pwebcontact' );
+        if (($result = $this->_check_php_version()) !== true) {
+            $this->errors[] = $result;
         }
         
-        //TODO save result in session
-        
-        return $result;
+        if (($result = $this->_check_wp_version()) !== true) {
+            $this->errors[] = $result;
+        }
     }
     
     
@@ -1464,78 +1459,178 @@ class PWebContact_Admin {
     
     private function _check_image_text_creation()
 	{
-		$functions = array(
-			'imagecreatetruecolor',
-			'imagecolorallocate',
-			'imagecolorallocatealpha',
-			'imagesavealpha',
-			'imagealphablending',
-			'imagefill',
-			'imagettftext',
-			'imagepng',
-			'imagedestroy'
-		);
-		$disabled_functions = array();
-		foreach ($functions as $function)
-		{
-			if (!(function_exists($function) && is_callable($function))) $disabled_functions[] = $function;
-		}
-		if (count($disabled_functions)) 
-		{
-			$this->warnings[] = sprintf( __('You can not use vertical Toggler Tab, because on this server following PHP functions are disabled: %s. Contact with server administrator.', 'pwebcontact'), implode(', ', $disabled_functions) );
-            
-			return false;
-		}
+		if (!isset($this->requirements['image_text'])) 
+        {
+            $this->requirements['image_text'] = true;
 
-		return true;
+            $functions = array(
+                'imagecreatetruecolor',
+                'imagecolorallocate',
+                'imagecolorallocatealpha',
+                'imagesavealpha',
+                'imagealphablending',
+                'imagefill',
+                'imagettftext',
+                'imagepng',
+                'imagedestroy'
+            );
+            $disabled_functions = array();
+            foreach ($functions as $function)
+            {
+                if (!(function_exists($function) && is_callable($function))) $disabled_functions[] = $function;
+            }
+            if (count($disabled_functions)) 
+            {
+                $this->requirements['image_text'] = sprintf( __('You can not use vertical Toggler Tab, because on this server following PHP functions are disabled or missing: %s. Contact with server administrator to fix it.', 'pwebcontact'), implode(', ', $disabled_functions) );
+            }
+        }
+        
+		return $this->requirements['image_text'];
 	}
     
-    private function _check_upload_path($path) 
+    private function _check_cache_path() 
 	{
-        $upload_dir = wp_upload_dir();
-		$path = $upload_dir['basedir'].'/pwebcontact/'.$this->id.'/';
-        
-        if (WP_Filesystem()) {
-            global $wp_filesystem;
+        if (!isset($this->requirements['cache_path'])) 
+        {
+            $this->requirements['cache_path'] = true;
             
-            // create wirtable upload path
-            if (!$wp_filesystem->is_dir($path)) {
-                $wp_filesystem->mkdir($path, 0777);
-            }
-            if (!$wp_filesystem->is_writable($path)) {
-                $wp_filesystem->chmod($path, 0777);
-            }
+            $path = dirname(__FILE__).'/media/cache/';
+            
+            if (WP_Filesystem()) {
+                global $wp_filesystem;
 
-            // check upload path
-            if (!$wp_filesystem->is_writable($path)) {
-                $this->warnings[] = sprintf(__('Upload directory is not writeable: %s.'), $path);
-                return false;
+                if (!$wp_filesystem->is_writable($path)) {
+                    $wp_filesystem->chmod($path, 0777);
+                }
+                else {
+                    return $this->requirements['cache_path'];
+                }
+                
+                if (!$wp_filesystem->is_writable($path)) {
+                    $this->requirements['cache_path'] = sprintf(__('Cache directory: %s is not writable.', 'pwebcontact'), $path);
+                }
             }
-            // copy index.html file to upload path for security
-            elseif (!$wp_filesystem->is_file($path.'index.html')) {
-                $wp_filesystem->copy(dirname(__FILE__).'/index.html', $path.'index.html');
-            }
-        }
-        else {
-            // create wirtable upload path
-            if (!is_dir($path)) {
-                mkdir($path, 0777);
-            }
-            if (!is_writable($path)) {
-                chmod($path, '0777');
-            }
-
-            // check upload path
-            if (!is_writable($path)) {
-                $this->warnings[] = sprintf(__('Upload directory is not writeable: %s.'), $path);
-                return false;
-            }
-            // copy index.html file to upload path for security
-            elseif (!is_file($path.'index.html')) {
-                copy(dirname(__FILE__).'/index.html', $path.'index.html');
+            else {
+                if (!is_writable($path)) {
+                    chmod($path, 0777);
+                }
+                else {
+                    return $this->requirements['cache_path'];
+                }
+                
+                if (!is_writable($path)) {
+                    $this->requirements['cache_path'] = sprintf(__('Cache directory: %s is not writable.', 'pwebcontact'), $path);
+                }
             }
         }
         
-        return true;
+        return $this->requirements['cache_path'];
 	}
+    
+    private function _check_upload_path() 
+	{
+        if (!isset($this->requirements['upload_path'])) 
+        {
+            $this->requirements['upload_path'] = true;
+            
+            $upload_dir = wp_upload_dir();
+            $path = $upload_dir['basedir'].'/pwebcontact/'.$this->id.'/';
+            
+            if (WP_Filesystem()) {
+                global $wp_filesystem;
+
+                // create wirtable upload path
+                if (!$wp_filesystem->is_dir($path)) {
+                    $wp_filesystem->mkdir($path, 0777);
+                }
+                else {
+                    return $this->requirements['upload_path'];
+                }
+
+                // check upload path
+                if (!$wp_filesystem->is_writable($path)) {
+                    $this->requirements['upload_path'] = sprintf(__('Upload directory: %s is not writable.', 'pwebcontact'), $path);
+                }
+                // copy index.html file to upload path for security
+                elseif (!$wp_filesystem->is_file($path.'index.html')) {
+                    $wp_filesystem->copy(dirname(__FILE__).'/index.html', $path.'index.html');
+                }
+            }
+            else {
+                // create wirtable upload path
+                if (!is_dir($path)) {
+                    mkdir($path, 0777, true);
+                }
+                else {
+                    return $this->requirements['upload_path'];
+                }
+
+                // check upload path
+                if (!is_writable($path)) {
+                    $this->requirements['upload_path'] = sprintf(__('Upload directory: %s is not writable.', 'pwebcontact'), $path);
+                }
+                // copy index.html file to upload path for security
+                elseif (!is_file($path.'index.html')) {
+                    copy(dirname(__FILE__).'/index.html', $path.'index.html');
+                }
+            }
+        }
+        
+        return $this->requirements['upload_path'];
+	}
+    
+    private function _check_mailer() 
+	{
+        if (!isset($this->requirements['mailer'])) 
+        {
+            $this->requirements['mailer'] = true;
+            
+            $this->_load_settings();
+            $mailer = $this->_get_param('mailer', 'inherit', 'settings');
+            
+            if ($mailer === 'mail' AND !(function_exists('mail') AND is_callable('mail'))) {
+                $this->requirements['mailer'] = sprintf(__('PHP mail function is disabled. Change mailer type to SMTP in %s or ask your server Administrator to enable it.', 'pwebcontact'), '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>');
+            }
+            elseif ($mailer === 'smtp' AND (
+                    !$this->_get_param('smtp_username', null, 'settings') OR 
+                    !$this->_get_param('smtp_password', null, 'settings') OR 
+                    !$this->_get_param('smtp_host', null, 'settings') OR 
+                    !$this->_get_param('smtp_port', null, 'settings')
+                    )) {
+                $this->requirements['mailer'] = sprintf(__('Setup SMTP Authentication in %s. Ask your server Administrator if you do not know the SMTP connection details.', 'pwebcontact'), '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>');
+            }
+        }
+        
+        return $this->requirements['mailer'];
+    }
+    
+    private function _check_php_version() 
+	{
+        if (!isset($this->requirements['php_version'])) 
+        {
+            $this->requirements['php_version'] = true;
+            
+            if (version_compare( PHP_VERSION, '5.3', '<' )) {
+                $this->requirements['php_version'] = sprintf(__('This plugin requires PHP %s or higher.', 'pwebcontact' ), '5.3');
+            }
+        }
+        
+        return $this->requirements['php_version'];
+    }
+    
+    private function _check_wp_version() 
+	{
+        global $wp_version;
+        
+        if (!isset($this->requirements['wp_version'])) 
+        {
+            $this->requirements['wp_version'] = true;
+            
+            if (version_compare( $wp_version, '3.5', '<' )) {
+                $this->requirements['wp_version'] = sprintf(__('This plugin is compatible with WordPress %s or higher.', 'pwebcontact' ), '3.5');
+            }
+        }
+        
+        return $this->requirements['wp_version'];
+    }
 }

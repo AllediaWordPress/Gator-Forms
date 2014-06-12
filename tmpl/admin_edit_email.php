@@ -1,7 +1,7 @@
 <?php
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author Piotr Moćko
@@ -78,7 +78,30 @@ function_exists('add_action') or die;
 
 
 <div class="pweb-field pweb-field-textarea">
-    <h3><?php _e( 'User email', 'pwebcontact' ); ?></h3>
+    <h3><?php _e( 'Email message to User', 'pwebcontact' ); ?></h3>
+    
+    <?php echo $this->_get_field(array(
+        'type' => 'radio',
+        'name' => 'email_copy',
+        'label' => 'Send message to User',
+        'default' => 2,
+        'class' => 'pweb-radio-group',
+        'options' => array(
+            array(
+                'value' => 0,
+                'name' => 'No'
+            ),
+            array(
+                'value' => 2,
+                'name' => 'Always'
+            ),
+            array(
+                'value' => 1,
+                'name' => 'When field &bdquo;Send copy to yourself&rdquo; is checked'
+            )
+        )
+    )); ?>
+    
     <?php echo $this->_get_label(array(
         'name' => 'email_user_tmpl',
         'label' => 'Enter message which will be sent to User as copy'
@@ -155,7 +178,7 @@ function_exists('add_action') or die;
         
         
         <div class="pweb-field pweb-field-textarea">
-            <h3><?php _e( 'Administrator email', 'pwebcontact' ); ?></h3>
+            <h3><?php _e( 'Email message to Administrator', 'pwebcontact' ); ?></h3>
             <?php echo $this->_get_label(array(
                 'name' => 'email_admin_tmpl',
                 'label' => 'Enter message which will be sent to Administrator'
@@ -233,83 +256,6 @@ function_exists('add_action') or die;
             </div>
         </div>
         
-        
-        
-        <div class="pweb-field pweb-field-textarea">
-            <h3><?php _e( 'Auto-reply email', 'pwebcontact' ); ?></h3>
-            <?php echo $this->_get_label(array(
-                'name' => 'email_autoreply_tmpl',
-                'label' => 'Enter message of auto-reply which will be sent to User always'
-            )); ?>
-            <div class="pweb-field-control pweb-child pweb_params_email_autoreply_format_1 pweb_params_email_autoreply_format_2">
-                <?php echo $this->_get_field_control(array(
-                    'type' => 'textarea',
-                    'name' => 'email_autoreply_tmpl',
-                    'class' => 'widefat',
-                    'attributes' => array(
-                        'rows' => 10,
-                        'cols' => 50
-                    )
-                )); ?>
-                <div><a href="#" class="pweb-email-tmpl-vars"><?php _e('Show email variables', 'pwebcontact'); ?></a></div>
-            </div>
-            <div class="pweb-field-control">
-                <?php echo $this->_get_label(array(
-                    'name' => 'email_autoreply_tmpl_format',
-                    'label' => 'Select format'
-                )); ?>
-
-                <?php echo $this->_get_field_control(array(
-                    'type' => 'radio',
-                    'name' => 'email_autoreply_tmpl_format',
-                    'default' => 0,
-                    'class' => 'pweb-radio-group',
-                    'options' => array(
-                        array(
-                            'value' => 0,
-                            'name' => 'Do not send'
-                        ),
-                        array(
-                            'value' => 1,
-                            'name' => 'Text',
-                            'is_parent' => true
-                        ),
-                        array(
-                            'value' => 2,
-                            'name' => 'HTML',
-                            'is_parent' => true
-                        )
-                    )
-                )); ?>
-
-                <span class="pweb-child pweb_params_email_autoreply_format_1 pweb_params_email_autoreply_format_2">
-                    <?php echo $this->_get_label(array(
-                        'name' => 'email_autoreply_tmpl_list',
-                        'label' => 'Load template'
-                    )); ?>
-
-                    <?php echo $this->_get_field_control(array(
-                        'type' => 'filelist',
-                        'name' => 'email_autoreply_tmpl_list',
-                        'filter' => '\.html$',
-                        'directory' => 'media/email_tmpl',
-                        'strip_ext' => true,
-                        'class' => 'pweb-load-email-tmpl',
-                        'attributes' => array(
-                            'data-action' => admin_url( 'admin.php?page=pwebcontact&task=load_email&ajax=1&_wpnonce='. wp_create_nonce('load-email') )
-                        ),
-                        'options' => array(
-                            array(
-                                'value' => '',
-                                'name' => '- Select template -'
-                            )
-                        )
-                    )); ?>
-
-                    <span class="pweb-field-desc"><?php _e( 'If you have changed format of email then load template again', 'pwebcontact' ); ?></span>
-                </span>
-            </div>
-        </div>
 
 
         <?php echo $this->_get_field(array(

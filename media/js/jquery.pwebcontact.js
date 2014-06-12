@@ -1,11 +1,11 @@
 /**
-* @version 3.2.7.1
+* @version 3.2.9
 * @package PWebContact
 * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
 * @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
 * @author Piotr Moćko
 *
-* jQuery 1.8.x, 1.10.x
+* jQuery 1.8+
 */
 
 var pwebBoxes = pwebBoxes || [],
@@ -22,11 +22,8 @@ var pwebBoxes = pwebBoxes || [],
 		
 		// private members
 		
-		var status = 0; // 0=ready, 1=sending, 2=uploading, 3=sent, 4=reseted, 5=error
 		// protect captcha from disabling
-		var captcha = -1;
-		var captchaEnabled = false;
-		var token = null;
+		var captcha = {};
 		
 		// public members
 		
@@ -105,6 +102,7 @@ var pwebBoxes = pwebBoxes || [],
 			calendarFirstDay: 0
 		},
 		
+		status: 	0, // 0=ready, 1=sending, 2=uploading, 3=sent, 4=reseted, 5=error
 		hidden: 	true,
 		timer: 		false,
 		validator: 	false,
@@ -133,13 +131,16 @@ var pwebBoxes = pwebBoxes || [],
 			this.Toggler		= $(this.options.selector+'_toggler');
 			this.Box 			= $(this.options.selector+'_box');
 			this.Container 		= $(this.options.selector+'_container');
-			token 				= $(this.options.selector+'_token');
+			this.Token 			= $(this.options.selector+'_token');
 			
 			// reset fields
 			this.Form[0].reset();
 			
 			// enable captcha
-			if (!captchaEnabled && this.Form.find('.pweb-captcha').length) captchaEnabled = true;
+			captcha[this.options.id] = { enabled: 0, status: -1 };
+			if (captcha[this.options.id].enabled === 0) { 
+				captcha[this.options.id].enabled = this.Form.find('.pweb-captcha').length > 0;
+			}
 			
 			// disable submitting of form
 			this.Form.submit(function(e){
@@ -579,7 +580,7 @@ var pwebBoxes = pwebBoxes || [],
 		
 		initCalendar: function() 
 		{
-			if (typeof Calendar === 'undefined') 
+            if (typeof $.fn.datepicker !== 'function')
 				return false;
 			
 			if (this.options.calendars.length)
@@ -589,22 +590,22 @@ var pwebBoxes = pwebBoxes || [],
 				// init calendars
 				$.each(this.options.calendars, function(key, calendar) {
 					
-					var id = 'pwebcontact'+that.options.id+'_field-'+calendar.id;
-					Calendar.setup({
-						inputField: id,
-						button: id+'_btn',
-						onUpdate: function(){ this.inputField.focus(); },
-						ifFormat: typeof calendar.format !== 'undefined' ? calendar.format : null,
-						firstDay: that.options.calendarFirstDay,
-						electric: false
-					});
+					$(that.options.selector+'_field-'+calendar.id).datepicker({
+                        dateFormat : typeof calendar.format !== 'undefined' ? calendar.format : null,
+                        constrainInput: true,
+                        firstDay: 1,
+                        isRTL: $(that.options.selector).hasClass('pweb-rtl'),
+                        onSelect: function(dateText, inst) {
+                            this.focus();
+                        }
+                    });
 				});
 				
 				// calendar open button
 				this.Form.find('.pweb-calendar-btn').click(function(){
 					// change calendar position when opening
-					if (that.element.css('position') == 'fixed' || that.options.layout == 'modal')
-						$('div.calendar:last').css('position', 'fixed');
+					//if (that.element.css('position') == 'fixed' || that.options.layout == 'modal')
+						//$('div.calendar:last').css('position', 'fixed');
 					// focus calendar field to show tooltip
 					$(this).prev().focus();
 				});
@@ -801,7 +802,7 @@ var pwebBoxes = pwebBoxes || [],
 							if (row.hasClass('pweb-upload-ready'))
 								that.uploadQueue--;
 							// clear msg if there was displayed an error msg
-							if (status == 0) that.displayMsg('', '');
+							if (that.status == 0) that.displayMsg('', '');
 						});
 						
 						rows = rows.add(row);
@@ -821,7 +822,7 @@ var pwebBoxes = pwebBoxes || [],
 							var index = $.inArray(file.name, that.files);
 							if (index > -1) that.files.splice(index, 1);
 							// clear msg if there was displayed an error msg
-							if (status == 0) that.displayMsg('', '');
+							if (that.status == 0) that.displayMsg('', '');
 						});
 						
 						if (file.name) 
@@ -837,7 +838,7 @@ var pwebBoxes = pwebBoxes || [],
 								query._method = 'DELETE';
 								btn.data('type', 'POST');
 							}
-							query[token.attr('name')] = 1;
+							query[that.Token.attr('name')] = 1;
 							btn.data('url', that.options.ajaxUrl + 'uploader' +'&'+ decodeURIComponent($.param(query)) );
 						}
 						
@@ -870,7 +871,7 @@ var pwebBoxes = pwebBoxes || [],
 
 			// adding file to upload list
 			}).on('fileuploadadd', function (e, data) {
-				if (that.options.reloadToken && status == 0 && that.options.uploadAutoStart) 
+				if (that.options.reloadToken && that.status == 0 && that.options.uploadAutoStart) 
 					// reload token if cache is enabled and not uploading already
 					that.ajaxCall('getToken', false)
 			
@@ -893,9 +894,9 @@ var pwebBoxes = pwebBoxes || [],
 			}).on('fileuploadstart', function(e) {
 				if (that.options.uploadAutoStart) {
 					// clear msg before upload if not uploading already
-					if (status == 0)
+					if (that.status == 0)
 						that.displayMsg('', '');
-					status = 2; // uploading
+					that.status = 2; // uploading
 				}
 				
 			// adding file to download list
@@ -905,14 +906,14 @@ var pwebBoxes = pwebBoxes || [],
 					// empty server response
 					that.displayMsg(pwebcontact_l10n.upload.ERR, 'error');
 					if (data.autoUpload === false)
-						status = 5; // error
+						that.status = 5; // error
 				}
 			
 			// file is invalid or upload failed, added to list with error
 			}).on('fileuploadfail', function(e, data) {
 				that.displayMsg(pwebcontact_l10n.upload.ERR, 'error');
 				if (data.autoUpload === false)
-					status = 5; // error
+					that.status = 5; // error
 			
 			// after upload
 			}).on('fileuploadalways', function(e, data) {
@@ -928,9 +929,9 @@ var pwebBoxes = pwebBoxes || [],
 				// all files has been uploaded
 				if (that.uploadQueue == 0) 
 				{
-					if (data.autoUpload || status == 5)
-						status = 0; // ready
-					else if (status == 1)
+					if (data.autoUpload || that.status == 5)
+						that.status = 0; // ready
+					else if (that.status == 1)
 						that.ajaxCall('sendEmail');
 				}
 			});
@@ -964,7 +965,7 @@ var pwebBoxes = pwebBoxes || [],
 			if (typeof $.fn.validate === 'function')
 			{
 				// add captcha validation rule
-				if (captchaEnabled) {
+				if (captcha[this.options.id].enabled === true) {
 					setTimeout(function(){
 						that.Form.find('.pweb-captcha input[type=text]').addClass('pweb-input required');
 					}, 1000);
@@ -1291,15 +1292,15 @@ var pwebBoxes = pwebBoxes || [],
 		
 		resetForm: function()
 		{
-			if (status == 3) // sent
+			if (this.status == 3) // sent
 			{
 				var that = this;
 				
 				// allow to send next email after a few seconds
-				setTimeout(function(){ status = 0; }, 5000);
+				setTimeout(function(){ that.status = 0; }, 5000);
 				
-				status = 4; // reseted
-				captcha = -1;
+				this.status = 4; // reseted
+				captcha[this.options.id].status = -1;
 				this.displayMsg('', '');
 				
 				// get new token
@@ -1329,7 +1330,7 @@ var pwebBoxes = pwebBoxes || [],
 					this.uploadQueue = 0;
 				}
 				
-				if (captchaEnabled && typeof Recaptcha !== 'undefined' && !this.options.redirectURL)
+				if (captcha[this.options.id].enabled === true && typeof Recaptcha !== 'undefined' && !this.options.redirectURL)
 					Recaptcha.reload();
 			}
 		},
@@ -1339,7 +1340,7 @@ var pwebBoxes = pwebBoxes || [],
 			var that = this;
 			
 			// form already submitted or error occured
-			if (status == 1 || status == 2 || status == 3 || status == 5) 
+			if (this.status == 1 || this.status == 2 || this.status == 3 || this.status == 5) 
 				return false;
 			
 			// check if form is valid
@@ -1347,7 +1348,7 @@ var pwebBoxes = pwebBoxes || [],
 				return false;
 				
 			// form was not reseted after sending last message
-			if (status == 4) 
+			if (this.status == 4) 
 			{
 				var msg = pwebcontact_l10n.form.SEND_ERR;
 				if (this.options.msgPosition == 'popup') {
@@ -1360,20 +1361,20 @@ var pwebBoxes = pwebBoxes || [],
 				return false;
 			}
 			
-			status = 1; // sending
+			this.status = 1; // sending
 			this.scrollToMsg();
 			
 			// reload token if cache is enabled
 			if (this.options.reloadToken) this.ajaxCall('getToken', false);
 			
 			// pre check captcha
-			if (captchaEnabled && captcha === -1)
+			if (captcha[this.options.id].enabled === true && captcha[this.options.id].status === -1)
 				this.ajaxCall('checkCaptcha', false);
-			if (captcha === false) {
+			if (captcha[this.options.id].status === false) {
 				if (typeof Recaptcha !== 'undefined')
 					Recaptcha.reload();
 				
-				captcha = -1;
+				captcha[this.options.id].status = -1;
 				return false;
 			}
 			// upload files
@@ -1394,7 +1395,7 @@ var pwebBoxes = pwebBoxes || [],
 				}
 			}
 			
-			if (status == 1) this.ajaxCall('sendEmail');
+			if (this.status == 1) this.ajaxCall('sendEmail');
 		},
 		
 		ajaxCall: function(method, async)
@@ -1441,7 +1442,7 @@ var pwebBoxes = pwebBoxes || [],
 					if (method == 'getToken') 
 					{
 						that.options.reloadToken = false;
-						token.attr('name', data.token);
+						that.Token.attr('name', data.token);
 					}
 					else 
 					{
@@ -1463,7 +1464,7 @@ var pwebBoxes = pwebBoxes || [],
 						{
 							if (method == 'sendEmail') 
 							{
-								status = 3; // sent and allow reset
+								that.status = 3; // sent and allow reset
 								
 								// on complete event
 								that.options.onComplete.apply(that, [data]);
@@ -1482,9 +1483,9 @@ var pwebBoxes = pwebBoxes || [],
 									that.ButtonReset.show();
 								}
 								else {
-									status = 4; // reseted
+									that.status = 4; // reseted
 									// allow to send next email after a few seconds
-									setTimeout(function(){ status = 0; }, 5000);
+									setTimeout(function(){ that.status = 0; }, 5000);
 								}
 								
 								// display message
@@ -1503,14 +1504,14 @@ var pwebBoxes = pwebBoxes || [],
 									that.redirectOnSuccess();
 							}
 							else if (method == 'checkCaptcha') {
-								captcha = true;
+								captcha[that.options.id].status = true;
 							}
 						}
 						// error response
 						else 
 						{
 							if (method == 'checkCaptcha') {
-								captcha = false;
+								captcha[that.options.id].status = false;
 								// highlight invalid captcha field
 								that.Form.find('.pweb-captcha input').removeClass('valid').addClass('invalid');
 							}
@@ -1529,9 +1530,9 @@ var pwebBoxes = pwebBoxes || [],
 							// on error event
 							that.options.onError.apply(that, [data]);
 							
-							status = 0; // ready
+							that.status = 0; // ready
 							if (data.status >= 300 && !that.options.debug) {
-								status = 5; // error
+								that.status = 5; // error
 								that.ButtonSend.hide();
 							}
 							
@@ -1681,10 +1682,10 @@ var pwebBoxes = pwebBoxes || [],
 		displayError: function(text, debugHtml)
 		{
 			if (!this.options.debug) {
-				status = 5;
+				this.status = 5;
 				this.ButtonSend.hide();
 			}
-			else status = 0;
+			else this.status = 0;
 			
 			var msg = pwebcontact_l10n.form.REQUEST_ERR + text;
 			if (this.options.msgPosition == 'popup')
@@ -1725,7 +1726,7 @@ var pwebBoxes = pwebBoxes || [],
 				html = html.join('<br>');
 			if (typeof code !== 'undefined')
 				html = html+'<br>Response code: '+code;
-			this.displayAlert(html, 'info', 'Perfect Ajax Popup Contact Form Debug', false);
+			this.displayAlert(html, 'info', 'Perfect Easy & Powerful Contact Form Debug', false);
 		}
 	};
 	

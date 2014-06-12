@@ -1,7 +1,7 @@
 <?php
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author Piotr Moćko
@@ -173,7 +173,8 @@ $message =
                     /* ----- Email copy --------------------------------------------------------------------------- */
                     elseif ($field['type'] == 'email_copy') :
 						
-						$fieldId = 'pwebcontact'.$form_id.'_copy';
+                        if ($params->get('email_copy', 2) == 1) :
+                            $fieldId = 'pwebcontact'.$form_id.'_copy';
 					?>
 					<div class="pweb-field-container pweb-field-checkbox pweb-field-copy">
 						<div class="pweb-field">
@@ -184,7 +185,7 @@ $message =
 						</div>
 					</div>
 					<?php 
-					
+                        endif;
 					
 					/* ----- Upload ----------------------------------------------------------------------------------- */
 					elseif ($field['type'] == 'upload') :
@@ -335,7 +336,7 @@ $message =
 							?>
 							<input type="<?php echo $type; ?>" name="<?php echo $fieldName; ?>" id="<?php echo $fieldId; ?>"<?php echo $field['attributes']; ?> value="<?php echo htmlspecialchars($field['values'], ENT_COMPAT, 'UTF-8'); ?>" data-role="none">
 							<?php if ($field['type'] == 'date') : ?>
-							<span class="pweb-calendar-btn" id="<?php echo $fieldId; ?>_btn"><i class="icon-calendar"></i></span>
+							<span class="pweb-calendar-btn" id="<?php echo $fieldId; ?>_btn"><i class="icomoon-calendar"></i></span>
 							<?php endif;
 							
 							

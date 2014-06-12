@@ -1,7 +1,7 @@
 <?php
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author Piotr Moćko
@@ -203,7 +203,7 @@ function_exists('add_action') or die;
                     'value' => 1,
                     'name' => 'Yes',
                     'is_parent' => true,
-                    'disabled' => !$this->_check_image_text_creation()
+                    'disabled' => $this->_check_image_text_creation() !== true
                 )
             )
         )); ?>

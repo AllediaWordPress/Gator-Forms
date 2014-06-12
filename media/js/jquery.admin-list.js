@@ -146,17 +146,23 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         e.preventDefault();
         e.stopPropagation();
         
-        var width = $(window).width() - 100,
-            height = $(window).height() - 150;
+        var width = $(window).width() - 50,
+            height = $(window).height();
         
         if (width > 700) {
             width = 700;
+        }
+        if (height >= 750) {
+            height = height - 120;
+        }
+        else {
+            height = height - 40;
         }
         
         tb_show(pwebcontact_l10n.buy_subscription, 
             pwebcontact_admin.buy_url 
                     + (pwebcontact_admin.buy_url.indexOf("?") === -1 ? "?" : "&") 
-                    + "TB_iframe=1&width="+width+"&height="+height, "");
+                    + "TB_iframe=1&width="+width+"&height="+(height-30), "");
     });
     
     

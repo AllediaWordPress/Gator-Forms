@@ -1,7 +1,7 @@
 <?php 
 /**
  * @version 1.0.0
- * @package Perfect Ajax Popup Contact Form
+ * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @author Piotr Moćko
@@ -14,6 +14,7 @@ function_exists('add_action') or die;
 function pwebcontact_install() {
     
 	pwebcontact_install_db();
+    pwebcontact_install_upload_dir();
 }
 
 function pwebcontact_uninstall() {
@@ -71,4 +72,25 @@ function pwebcontact_check_db() {
     }
     
     $wpdb->show_errors($show);
+}
+
+function pwebcontact_install_upload_dir() {
+    
+    $upload_dir = wp_upload_dir();
+    $path = $upload_dir['basedir'].'/pwebcontact/';
+
+    if (WP_Filesystem()) {
+        global $wp_filesystem;
+
+        // create wirtable upload path
+        if (!$wp_filesystem->is_dir($path)) {
+            $wp_filesystem->mkdir($path, 0777);
+        }
+    }
+    else {
+        // create wirtable upload path
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+    }
 }
