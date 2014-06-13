@@ -539,7 +539,10 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     display: none;
 }
 
-
+#pweb_fields .pweb-fields-rows {
+    margin-top: 10px;
+    width: 100%;
+}
 #pweb_fields .pweb-fields-row {
     margin: 0 0 10px;
 }
@@ -563,6 +566,9 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 #pweb_fields .pweb-fields-add-row:hover,
 #pweb_fields .pweb-fields-row.pweb-dragged .pweb-fields-col {
     border-color: #0074A2;
+}
+#pweb_fields .pweb-fields-add-row {
+    float: none;
 }
 #pweb_fields .pweb-fields-col {
     cursor: move;

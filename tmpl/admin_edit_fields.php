@@ -86,10 +86,13 @@ $this->_set_free_options('fields', array(
     
     <div class="pweb-fields-container">
         
+        <div class="pweb-fields-add-row pweb-clearfix" id="pweb_fields_add_row_before">
+            <i class="icomoon-plus"></i> <?php _e('Add row', 'pwebcontact'); ?>
+        </div>
         <div class="pweb-fields-rows pweb-clearfix" id="pweb_fields_rows">
             
         </div>
-        <div class="pweb-fields-add-row pweb-clearfix" id="pweb_fields_add_row">
+        <div class="pweb-fields-add-row pweb-clearfix" id="pweb_fields_add_row_after">
             <i class="icomoon-plus"></i> <?php _e('Add row', 'pwebcontact'); ?>
         </div>
     </div>

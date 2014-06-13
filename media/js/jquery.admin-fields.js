@@ -33,7 +33,10 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     
     // add new row
-    $("#pweb_fields_add_row").click(function(){
+    function addRow(index, after) {
+        
+        if (typeof index === "undefined") index = 0;
+        if (typeof after === "undefined") after = true;
         
         pwebcontact_admin.counter++;
         
@@ -227,14 +230,38 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         }).trigger("click").tooltip();
         
         // Insert new row and refresh DOM elements
-        $("#pweb_fields_rows").append($row).sortable("refresh");
-        
+        var $rows = $("#pweb_fields_rows"),
+            $target = $rows.children().eq(index);
+        if ($target.length) {
+            $target[after ? "after" : "before"]($row);
+        }
+        else {
+            $rows.append($row);
+        }
+        $rows.sortable("refresh");
+    }
+    
+    $("#pweb_fields_add_row_before").click(function(){
+        addRow( 0, false );
     }).droppable({
         scope: "pweb_field_type",
         activeClass: "pweb-droppable",
         hoverClass: "pweb-droppable-hover",
         drop: function(event, ui) {
-            $(this).click();
+            addRow( 0, false );
+            // drop field type on add row button
+            dropField( ui.draggable, $(this).next().children().first().find(".pweb-fields-cols").children().first() );
+        }
+    });
+    
+    $("#pweb_fields_add_row_after").click(function(){
+        addRow( $(this).prev().children().length-1, true );
+    }).droppable({
+        scope: "pweb_field_type",
+        activeClass: "pweb-droppable",
+        hoverClass: "pweb-droppable-hover",
+        drop: function(event, ui) {
+            addRow( $(this).prev().children().length-1, true );
             // drop field type on add row button
             dropField( ui.draggable, $(this).prev().children().last().find(".pweb-fields-cols").children().first() );
         }
@@ -372,7 +399,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 
             if (field.type === "row") {
                 // create new row
-                $("#pweb_fields_add_row").trigger("click");
+                $("#pweb_fields_add_row_after").trigger("click");
                 $row = $("#pweb_fields_rows").children().last();
                 $cols = $row.find(".pweb-fields-cols");
                 $addCol = $row.find(".pweb-fields-add-col");
@@ -527,8 +554,8 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         
         $("#pweb_load_fields").val("Contact form (FREE)").trigger("change");
         
-        //$("#pweb_fields_add_row").click();
-        //dropField( $("#pweb_field_type_button_send"), $("#pweb_fields_add_row").prev().children().last().find(".pweb-fields-cols").children().first(), false );
+        //$("#pweb_fields_add_row_after").click();
+        //dropField( $("#pweb_field_type_button_send"), $("#pweb_fields_add_row_after").prev().children().last().find(".pweb-fields-cols").children().first(), false );
     }
     
     $("body").css("overflow-y", "scroll");
