@@ -16,7 +16,8 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     pwebcontact_admin.pro_fields = 0;
     
     // allow rows sorting
-    $("#pweb_fields_rows").sortable({
+    var $rows = $("#pweb_fields_rows");
+    $rows.sortable({
         axis: "y",
         opacity: 0.7,
         handle: ".pweb-fields-sort-row",
@@ -47,16 +48,16 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                         +'<div class="pweb-fields-add-col pweb-has-tooltip" title="'+pwebcontact_l10n.add_column+'"><i class="icomoon-plus"></i></div>'
                     +'</div>');
         
-        $row.data("cols", 0)
-            .find(".pweb-fields-cols")
-            .sortable({
+        $row.data("cols", 0).find(".pweb-fields-cols").sortable({
             connectWith: ".pweb-fields-cols",
+            opacity: 0.7,
             cursor: "move",
             placeholder: "pweb-sortable-placeholder",
             tolerance: "pointer",
             receive: function( event, ui ) {
                 
                 ui.sender.removeClass("pweb-placeholder");
+                $rows.find(".pweb-placeholder-top").removeClass("pweb-placeholder-top");
                 
                 if (ui.item.parent().children().length > 3) {
                     // replace dragged column in current row
@@ -102,6 +103,16 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     }
                 }
             },
+            change: function( event, ui ) {
+                $rows.find(".pweb-placeholder-top").removeClass("pweb-placeholder-top");
+                //if (ui.sender !== ui.item.parent()) {
+                    var i = ui.placeholder.index(),
+                        l = ui.placeholder.parent().children().length - 1;
+                    if (i !== 0 && i !== l) {
+                        ui.placeholder.parent().addClass("pweb-placeholder-top");
+                    }
+                //}
+            },
             start: function( event, ui ) {
                 event.stopPropagation();
                 // remember position of current column
@@ -113,7 +124,8 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 ui.item.removeClass("pweb-dragged");
                 ui.item.parent().removeClass("pweb-placeholder");
                 // change order of sortable items in DOM
-                //$("#pweb_fields_rows").find(".pweb-fields-cols").sortable("refresh");
+                //$rows.find(".pweb-fields-cols").sortable("refresh");
+                $rows.find(".pweb-placeholder-top").removeClass("pweb-placeholder-top");
             }
         });
         
@@ -138,7 +150,10 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 
                 // insert field by droping field type on column
                 $col.droppable({
-                    scope: "pweb_field_type",
+                    //scope: "pweb_field_type",
+                    accept: function(item) {
+                        return (item.hasClass("pweb-custom-fields-type"));
+                    },
                     activeClass: "pweb-droppable",
                     hoverClass: "pweb-droppable-hover",
                     drop: function(event, ui) {
@@ -219,7 +234,11 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 $row.find(".pweb-fields-cols").sortable("refresh");
             }
         }).droppable({
-            scope: "pweb_field_type",
+            //scope: "pweb_field_type",
+            accept: function(item) {
+                return (item.hasClass("pweb-has-field") || item.hasClass("pweb-custom-fields-type"));
+            },
+            tolerance: "pointer",
             activeClass: "pweb-droppable",
             hoverClass: "pweb-droppable-hover",
             drop: function(event, ui) {
@@ -230,8 +249,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         }).trigger("click").tooltip();
         
         // Insert new row and refresh DOM elements
-        var $rows = $("#pweb_fields_rows"),
-            $target = $rows.children().eq(index);
+        var $target = $rows.children().eq(index);
         if ($target.length) {
             $target[after ? "after" : "before"]($row);
         }
@@ -244,7 +262,10 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     $("#pweb_fields_add_row_before").click(function(){
         addRow( 0, false );
     }).droppable({
-        scope: "pweb_field_type",
+        //scope: "pweb_field_type",
+        accept: function(item) {
+            return (item.hasClass("pweb-custom-fields-type"));
+        },
         activeClass: "pweb-droppable",
         hoverClass: "pweb-droppable-hover",
         drop: function(event, ui) {
@@ -257,7 +278,10 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     $("#pweb_fields_add_row_after").click(function(){
         addRow( $(this).prev().children().length-1, true );
     }).droppable({
-        scope: "pweb_field_type",
+        //scope: "pweb_field_type",
+        accept: function(item) {
+            return (item.hasClass("pweb-custom-fields-type"));
+        },
         activeClass: "pweb-droppable",
         hoverClass: "pweb-droppable-hover",
         drop: function(event, ui) {
@@ -270,7 +294,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     // Drag field types to insert field into column
     $("#pweb_fields_types .pweb-custom-fields-type").draggable({
-        scope: "pweb_field_type",
+        //scope: "pweb_field_type",
         revert: true
     });
     
@@ -400,7 +424,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             if (field.type === "row") {
                 // create new row
                 $("#pweb_fields_add_row_after").trigger("click");
-                $row = $("#pweb_fields_rows").children().last();
+                $row = $rows.children().last();
                 $cols = $row.find(".pweb-fields-cols");
                 $addCol = $row.find(".pweb-fields-add-col");
                 rowCreated = true;
@@ -444,9 +468,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     $("#pweb_load_fields").change(function(){
         var that = this;
         if (this.selectedIndex) {
-            var $rows = $("#pweb_fields_rows").children();
+            var $rowsChildren = $rows.children();
             // confirm old fields removal
-            if ($rows.length <= 1 || pwebcontact_admin.confirmed === true) {
+            if ($rowsChildren.length <= 1 || pwebcontact_admin.confirmed === true) {
                 pwebcontact_admin.confirmed = false;
                 
                 $.ajax({
@@ -468,7 +492,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                         // hide options to remove them
                         $("#pweb_fields_options_close").click();
                         // remove rows with columns and fields without confirmation
-                        $rows.remove();
+                        $rowsChildren.remove();
                         // load sample fields
                         loadFields( response, false );
                         // set default option
@@ -550,7 +574,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     $("#pweb_params_fields").get(0).disabled = true;
     
     // load Send button if missing
-    if ($("#pweb_fields_rows").children().length === 0) {
+    if ($rows.children().length === 0) {
         
         $("#pweb_load_fields").val("Contact form (FREE)").trigger("change");
         
