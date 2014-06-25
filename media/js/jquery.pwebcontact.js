@@ -42,6 +42,7 @@ var pwebBoxes = pwebBoxes || [],
 			baseUrl: '',
 			ajaxUrl: '',
 			reloadToken: false,
+			bootstrap: 2,
 			
 			openAuto: false,
 			openDelay: 0,
@@ -91,7 +92,7 @@ var pwebBoxes = pwebBoxes || [],
 			onComplete: function(data){},
 			onError: function(data){},
 			
-			uploadAcceptFileTypes: /(\.|\/)(gif|jpe?g|png|doc?x|odt|txt|pdf|zip)$/i,
+			uploadAcceptFileTypes: /(\.|\/)(gif|jpe?g|png|docx?|odt|txt|pdf|zip)$/i,
 	        uploadMaxSize: 1048576, // 1 MB
 			uploadFilesLimit: 5,
 			uploadAutoStart: true,
@@ -358,7 +359,7 @@ var pwebBoxes = pwebBoxes || [],
 					keyboard: false,
 					// to disable closing backdrop set: static
 					backdrop: !this.options.modalClose && this.options.modalBackdrop ? 'static' : this.options.modalBackdrop
-				}).on('hidden', function(e) {
+				}).on(that.options.bootstrap === 2 ? 'hidden' : 'hidden.bs.modal', function(e) {
 					// do not close if clicked on form
 					e.stopPropagation();
 					if (e.target !== e.currentTarget) return;
@@ -367,7 +368,7 @@ var pwebBoxes = pwebBoxes || [],
 					that.toggleForm(0);
 					// remove opened class from body
 					$(document.body).removeClass(that.options.modalClass);
-				}).on('show', function(e) {
+				}).on(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal', function(e) {
 					// do not trigger if tooltip is the target
 					e.stopPropagation();
 					if (e.target !== e.currentTarget) return;
@@ -411,15 +412,17 @@ var pwebBoxes = pwebBoxes || [],
 					var opt = {};
 					if (that.options.layout == 'modal') 
 						opt.backdrop = 0;
+					else
+						opt.backdrop = true;
 					
-					$('<div class="pweb-modal modal hide fade'+ (that.Box.hasClass('pweb-rtl') ? ' pweb-rtl' : '') +'">'
+					$('<div class="pweb-modal modal fade' + (that.options.bootstrap === 2 ? ' hide' : '') + (that.Box.hasClass('pweb-rtl') ? ' pweb-rtl' : '') + '">'
 						+'<button type="button" class="pweb-button-close" data-dismiss="modal" aria-hidden="true">&times;</button>'
 						+'<div class="modal-body pweb-progress"></div>'
 					 +'</div>'
 					)
 					.appendTo(document.body)
 					.modal(opt)
-					.on('hidden', function() {
+					.on(that.options.bootstrap === 2 ? 'hidden' : 'hidden.bs.modal', function() {
 						$(this).remove();
 					})
 					.find('.modal-body').load(href, function(){
@@ -457,7 +460,7 @@ var pwebBoxes = pwebBoxes || [],
 		    }
 			
 			// modal window events
-			this.Modal.on('show', function(e) {
+			this.Modal.on(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal', function(e) {
 				// do not trigger if tooltip is the target
 				e.stopPropagation();
 				if (e.target !== e.currentTarget) return;
@@ -466,7 +469,7 @@ var pwebBoxes = pwebBoxes || [],
 					// hide container
 					that.Container.css({ visibility: 'hidden' });
 				}
-			}).on('shown', function(e) {
+			}).on(that.options.bootstrap === 2 ? 'shown' : 'shown.bs.modal', function(e) {
 				// do not trigger if tooltip is the target
 				e.stopPropagation();
 				if (e.target !== e.currentTarget) return;
@@ -541,6 +544,7 @@ var pwebBoxes = pwebBoxes || [],
 		
 		initTooltips: function()
 		{
+			var that = this;
 			if (typeof $.fn.tooltip === 'function')
 			{
 				// init tooltips
@@ -563,7 +567,11 @@ var pwebBoxes = pwebBoxes || [],
 				}).on('shown', function(e) {
 					e.stopPropagation();
 					if (e.target !== e.currentTarget) return;
-				}).on('hide', function(e) {
+				}).on(this.options.bootstrap === 2 ? 'hide' : 'hide.bs.tooltip', function(e) {
+					if (that.options.bootstrap === 2) {
+						e.preventDefault();
+						$(this).siblings('div.tooltip.in').removeClass('in');
+					}
 					e.stopPropagation();
 					if (e.target !== e.currentTarget) return;
 				}).on('hidden', function(e) {

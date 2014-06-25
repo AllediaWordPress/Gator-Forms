@@ -12,6 +12,9 @@
 // No direct access
 function_exists('add_action') or die;
 
+/*** PRO START ***/
+define('PWEBCONTACT_PRO', true);
+/*** PRO END ***/
 
 if ( is_admin() ) {
     
@@ -1056,14 +1059,15 @@ class PWebContact
 		
 		$options = array();	
 		$options[] = 'id:'.$form_id;
-        
-        if ($params->get('debug', 0))
-			$options[] = 'debug:1';
 		
+		if ($params->get('debug', 0))
+			$options[] = 'debug:1';
 		if ($params->get('cache', 0) == 2)
 			$options[] = 'reloadToken:1';
-        
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+		if (($value = (int)$params->get('bootstrap_version', 2)) != 2)
+			$options[] = 'bootstrap:'.$value;
+		
+		/*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
 		$options[] = 'layout:"'.$layout.'"';
 		$options[] = 'position:"'.$position.'"';
 		$options[] = 'offsetPosition:"'.$params->get('toggler_offset_position').'"';
@@ -1075,7 +1079,7 @@ class PWebContact
 		if (($value = (int)$params->get('msg_close_delay', 10)) != 10)
 			$options[] = 'msgCloseDelay:'.$value;
 		
-        if (($value = (intval($params->get('tooltips_focus', 1)) | (intval($params->get('tooltips_validation', 1)) << 1)) ) !== 3)
+		if (($value = (intval($params->get('tooltips_focus', 1)) | (intval($params->get('tooltips_validation', 1)) << 1)) ) !== 3)
 			$options[] = 'tooltips:'.$value;
 		
 		if ($value = $params->get('toggler_name_close') AND !$params->get('toggler_vertical', 0))

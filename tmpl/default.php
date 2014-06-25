@@ -50,7 +50,7 @@ $message =
     ?>
 	
     <!-- PRO START -->
-	<?php if ($layout == 'modal') : ?><div id="pwebcontact<?php echo $form_id; ?>_modal" class="pwebcontact-modal modal hide fade" style="display:none"><?php endif; ?>
+	<?php if ($layout == 'modal') : ?><div id="pwebcontact<?php echo $form_id; ?>_modal" class="pwebcontact-modal modal<?php if ((int)$params->get('bootstrap_version', 2) === 2) echo ' hide fade'; ?>" style="display:none"><?php endif; ?>
 	<!-- PRO END -->
     
     <div id="pwebcontact<?php echo $form_id; ?>_box" class="pwebcontact-box <?php echo $params->get('moduleClass').' '.$params->get('boxClass'); ?>" dir="<?php echo $params->get('rtl', 0) ? 'rtl' : 'ltr'; ?>">
