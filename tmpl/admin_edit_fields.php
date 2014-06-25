@@ -1957,7 +1957,7 @@ $this->_set_free_options('fields', array(
                 'name' => 'upload_allowed_ext',
                 'label' => 'Allowed files extensions',
                 'tooltip' => 'List of allowed files extensions separated with pipe | e.g. jpg|gif|png',
-                'default' => 'gif|jpe?g|png|doc?x|odt|txt|pdf|zip',
+                'default' => 'gif|jpe?g|png|docx?|odt|txt|pdf|zip',
                 'class' => 'pweb-filter-ext pweb-input-large'
             )); ?>
 

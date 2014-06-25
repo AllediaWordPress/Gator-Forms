@@ -300,7 +300,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	// validate coma separated emails
 	$('.pweb-filter-emails').on('change', function() {
 		if (this.value) {
-			var regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w{2,4}(,[ ]*\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w{2,4})*$/;
+			var regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w+(,[ ]*\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w+)*$/;
 			if (regex.test(this.value)) {
 				$(this).removeClass('pweb-invalid');
 			} else {
@@ -312,7 +312,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	// validate list of email recipients
 	$('.pweb-filter-emailRecipients').on('change', function() {
 		if (this.value) {
-			var regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w{2,4}[\|]{1}[^\r\n\|]+([\r]?\n\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w{2,4}[\|]{1}[^\r\n\|]+)*$/;
+			var regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w+[\|]{1}[^\r\n\|]+([\r]?\n\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w+[\|]{1}[^\r\n\|]+)*$/;
 			if (regex.test(this.value)) {
 				$(this).removeClass('pweb-invalid');
 			} else {
