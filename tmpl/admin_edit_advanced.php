@@ -17,7 +17,7 @@ function_exists('add_action') or die;
 
 <div class="pweb-advanced-options">
     <a href="#" class="pweb-advanced-options-toggler">
-        <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+        <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
     </a>
     <div class="pweb-advanced-options-content">
 

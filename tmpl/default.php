@@ -507,7 +507,7 @@ $message =
 								<?php endif; ?>
 								</label>
 							<?php 
-                            /*** PRO START ***/
+                            /*** PRO END ***/
                             endif; ?>
 						</div>
 					</div>

@@ -165,7 +165,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -260,7 +260,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -365,7 +365,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -469,7 +469,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -573,7 +573,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -676,7 +676,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -792,7 +792,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -896,7 +896,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1010,7 +1010,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1114,7 +1114,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1220,7 +1220,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1325,7 +1325,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1419,7 +1419,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1513,7 +1513,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1869,7 +1869,7 @@ $this->_set_free_options('fields', array(
         
         <div class="pweb-advanced-options pweb-clear">
             <a href="#" class="pweb-advanced-options-toggler">
-                <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
             </a>
             <div class="pweb-advanced-options-content">
                 <?php echo $this->_get_field(array(
@@ -1976,7 +1976,7 @@ $this->_set_free_options('fields', array(
 
             <div class="pweb-advanced-options">
                 <a href="#" class="pweb-advanced-options-toggler">
-                    <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+                    <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
                 </a>
                 <div class="pweb-advanced-options-content">
 

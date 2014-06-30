@@ -29,6 +29,9 @@ class PWebContact_Uploader extends UploadHandler
 		}
 		
 		$path = $params->get('upload_path');
+        
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+        
         if (WP_Filesystem()) {
             global $wp_filesystem;
             
@@ -100,6 +103,8 @@ class PWebContact_Uploader extends UploadHandler
 		{
 			$params = PWebContact::getParams();
 			$path = $params->get('upload_path');
+            
+            require_once ABSPATH . 'wp-admin/includes/file.php';
             
             if (WP_Filesystem()) {
                 global $wp_filesystem;

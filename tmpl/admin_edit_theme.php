@@ -56,12 +56,12 @@ function_exists('add_action') or die;
 
 
 <div id="pweb-theme-preview">
-    <img src="<?php echo plugins_url('pwebcontact/media/theme_settings/Clean FREE.jpg'); ?>" alt="<?php _e('Theme preview', 'pwebcontact'); ?>">
     <p>
         <a href="#" class="button button-primary">
             <?php _e( 'Load settings for this theme', 'pwebcontact' ); ?>
         </a>
     </p>
+    <img src="<?php echo plugins_url('pwebcontact/media/theme_settings/Clean FREE.jpg'); ?>" alt="<?php _e('Theme preview', 'pwebcontact'); ?>">
 </div>
 
 <div id="pweb-dialog-theme" title="<?php esc_attr_e( 'Load theme settings', 'pwebcontact' ); ?>" style="display:none">
@@ -72,7 +72,7 @@ function_exists('add_action') or die;
 
 <div class="pweb-advanced-options">
     <a href="#" class="pweb-advanced-options-toggler">
-        <?php _e( 'Advanced', 'pwebcontact' ); ?><i class="dashicons dashicons-arrow-down"></i>
+        <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
     </a>
     <div class="pweb-advanced-options-content">
 

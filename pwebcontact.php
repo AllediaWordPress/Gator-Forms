@@ -1573,6 +1573,8 @@ class PWebContact
 		if (($response = self::checkToken()) !== true) return $response;
 		
 		if (PWEBCONTACT_DEBUG) self::$logs[] = 'Uploader';
+        
+        require_once (dirname(__FILE__).'/uploader.php');
 		
 		try {			
 			$response = PWebContact_Uploader::uploader();
@@ -1610,6 +1612,8 @@ class PWebContact
 		if ($params->get('show_upload', 0) AND $params->get('attachment_delete') AND $params->get('attachment_type', 1) == 1 AND ($response['status'] < 200 OR $response['status'] >= 300))
 		{
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Deleting attachments';
+            
+            require_once (dirname(__FILE__).'/uploader.php');
 			
 			try {
 				PWebContact_Uploader::deleteAttachments();

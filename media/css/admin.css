@@ -481,6 +481,10 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     margin-bottom: 10px;
     font-weight: bold;
     font-size: 15px;
+    text-decoration: none;
+}
+.pweb-advanced-options-toggler span {
+    text-decoration: underline;
 }
 .pweb-advanced-options-toggler .dashicons,
 .pweb-advanced-options-toggler .dashicons:before {
