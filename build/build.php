@@ -73,7 +73,7 @@ class PWebCompiler {
                 
                 $filename = $info->getFilename();
                 
-                foreach ($this->$excludeRegExps as $regexp) {
+                foreach ($this->excludeRegExps as $regexp) {
                     if (preg_match($regexp, $directory . $filename)) {
                         continue 2;
                     }
