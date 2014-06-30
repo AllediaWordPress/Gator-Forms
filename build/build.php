@@ -11,12 +11,30 @@ class PWebCompiler {
 
     protected $path = null;
     protected $zip = null;
-    protected $exclude = array(
+    protected $is_pro = false;
+    protected $excludeRegExps = array(
         '/^\./',
         '/^media\/cache\/.+\.((?!html).)+$/i',
         '/^media\/js\/jquery\.pwebcontact\.js$/i',
         '/^assets/i',
         '/^build/i'
+    );
+    protected $excludeFreeFiles = array(
+        'uploader.php',
+        'UploadHandler.php',
+        'media/css/animations.css', // Modal window animations
+        'media/css/uploader.css',
+        'media/css/uploader-rtl.css',
+        'media/jquery-ui', // jQuery UI Datapicker
+        'media/js/jquery.cookie.js', // Auto-open counter
+        'media/js/jquery.cookie.min.js', // Auto-open counter
+        'media/js/jquery.fileupload.js',
+        'media/js/jquery.fileupload.min.js',
+        'media/js/jquery.fileupload-process.js',
+        'media/js/jquery.fileupload-ui.js',
+        'media/js/jquery.fileupload-validate.js',
+        'media/js/jquery.iframe-transport.js', // fileupload
+        'media/tickets'
     );
     protected $filterFiles = array(
         'pwebcontact.php',
@@ -25,10 +43,20 @@ class PWebCompiler {
     
     protected function filterFileContents( &$contents = null ) {
         
-        $contents = preg_replace('/([^\n]*<!-- PRO START -->).*?(<!-- PRO END -->[^\n]*\n)/s', '', $contents);
-        $contents = preg_replace('/([^\n]*<!-- FREE START -->).*?(<!-- FREE END -->[^\n]*\n)/s', '', $contents);
-        $contents = preg_replace('/([^\n]*\/\*\*\* PRO START \*\*\*\/).*?(\/\*\*\* PRO END \*\*\*\/[^\n]*\n)/s', '', $contents);
-        $contents = preg_replace('/([^\n]*\/\*\*\* FREE START \*\*\*\/).*?(\/\*\*\* FREE END \*\*\*\/[^\n]*\n)/s', '', $contents);
+        if ($this->is_pro) {
+            $contents = preg_replace('/([^\n]*<!-- FREE START -->).*?(<!-- FREE END -->[^\n]*\n)/s', '', $contents);
+            $contents = preg_replace('/([^\n]*\/\*\*\* FREE START \*\*\*\/).*?(\/\*\*\* FREE END \*\*\*\/[^\n]*\n)/s', '', $contents);
+            
+            $contents = preg_replace('/\n[^\n]*<!-- PRO (START|END) -->.*/', '', $contents);
+            $contents = preg_replace('/\n[^\n]*\/\*\*\* PRO (START|END) \*\*\*\/.*/', '', $contents);
+        }
+        else {
+            $contents = preg_replace('/([^\n]*<!-- PRO START -->).*?(<!-- PRO END -->[^\n]*\n)/s', '', $contents);
+            $contents = preg_replace('/([^\n]*\/\*\*\* PRO START \*\*\*\/).*?(\/\*\*\* PRO END \*\*\*\/[^\n]*\n)/s', '', $contents);
+            
+            $contents = preg_replace('/\n[^\n]*<!-- FREE (START|END) -->.*/', '', $contents);
+            $contents = preg_replace('/\n[^\n]*\/\*\*\* FREE (START|END) \*\*\*\/.*/', '', $contents);
+        }
     }
     
     protected function addFilesToZip($directory = null) {
@@ -45,10 +73,14 @@ class PWebCompiler {
                 
                 $filename = $info->getFilename();
                 
-                foreach ($this->exclude as $regexp) {
+                foreach ($this->$excludeRegExps as $regexp) {
                     if (preg_match($regexp, $directory . $filename)) {
                         continue 2;
                     }
+                }
+                
+                if (in_array($directory . $filename, $this->excludeFreeFiles)) {
+                    continue;
                 }
                 
                 if ($info->isFile()) {
@@ -87,9 +119,9 @@ class PWebCompiler {
         $this->path = dirname(__DIR__).'/';
         
         $version = $this->getVersion();
-        $is_pro = isset($options['pro']);
+        $this->is_pro = isset($options['pro']);
         
-        $zip_path = $this->path . 'build/wp_pwebcontact_'.$version.'_'.($is_pro ? 'pro' : 'free').'.zip';
+        $zip_path = $this->path . 'build/wp_pwebcontact_'.$version.'_'.($this->is_pro ? 'pro' : 'free').'.zip';
 		
         if (is_file($zip_path)) {
             unlink($zip_path);
