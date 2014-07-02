@@ -31,12 +31,14 @@ else {
     
     add_action('wp_footer', array('PWebContact', 'displayFormsInFooter'), 100);
     
+    /*** PRO START ***/
     add_shortcode('pwebcontact', array('PWebContact', 'displayFormByShortcode'));
+    /*** PRO END ***/
 }
 
-/*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+/*** PRO START ***/
 require_once dirname( __FILE__ ) . '/widget.php';
-/*** PRO END ***/ }
+/*** PRO END ***/
 
 class PWebContact
 {
@@ -155,6 +157,7 @@ class PWebContact
     }
     
     
+    /*** PRO START ***/
     public static function displayFormByShortcode($atts, $content = null, $tag) {
         
         extract( shortcode_atts( array (
@@ -171,6 +174,7 @@ class PWebContact
         
         return $output;
     }
+    /*** PRO END ***/
     
     
     public static function displayForm($form_id = 0) 
@@ -214,7 +218,7 @@ class PWebContact
         // Get layout name
         $layout = $params->get('layout_type', 'slidebox');
         
-        /*** FREE START ***/ if (!defined('PWEBCONTACT_PRO')) {
+        /*** FREE START ***/
         if ($layout !== 'slidebox') {
             $params->set('publish', 0);
         }
@@ -224,7 +228,7 @@ class PWebContact
             $params->set('toggler_slide', 0);
             $params->set('msg_position', 'after');
         }
-        /*** FREE END ***/ }
+        /*** FREE END ***/
         
         // TODO Show or hide module on Mobile browser
         
@@ -238,12 +242,12 @@ class PWebContact
         self::$forms[$form_id] = true;
         
         // Position and offset
-        /*** FREE START ***/ if (!defined('PWEBCONTACT_PRO')) {
+        /*** FREE START ***/
         $position = array('left', 'top');
-        /*** FREE END ***/ }
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** FREE END ***/
+        /*** PRO START ***/
         $position = explode(':', $params->get('toggler_position', 'left:top'));
-        /*** PRO END ***/ }
+        /*** PRO END ***/
         $params->set('toggler_position', $position[0]);
         $params->def('toggler_offset_position', array_key_exists(1, $position) ? $position[1] : 'top');
 
@@ -273,7 +277,7 @@ class PWebContact
             }
         }
 
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** PRO START ***/
         // Set static position for static and accordion layouts
         if (in_array($layout, array('static', 'accordion'))) {
             $params->set('toggler_position', 'static');
@@ -305,15 +309,15 @@ class PWebContact
         if ($layout == 'static') {
             $params->set('open_toggler', 0);
         }
-        /*** PRO END ***/ }
+        /*** PRO END ***/
 
         // Toggler tab name
-        /*** FREE START ***/ if (!defined('PWEBCONTACT_PRO')) {
+        /*** FREE START ***/
         $toggler_name = array('Contact form');
-        /*** FREE END ***/ }
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** FREE END ***/
+        /*** PRO START ***/
         $toggler_name = explode('|', $params->get('toggler_name', 'Contact form')); //WP
-        /*** PRO END ***/ }
+        /*** PRO END ***/
         $params->def('toggler_name_open', str_replace('"', '', __($toggler_name[0], 'pwebcontact'))); //WP
         $params->def('toggler_name_close', array_key_exists(1, $toggler_name) ? str_replace('"', '', __($toggler_name[1], 'pwebcontact')) : null); //WP
         
@@ -403,27 +407,27 @@ class PWebContact
 	{
 		$params = self::getParams($form_id);
 		
-        /*** FREE START ***/ if (!defined('PWEBCONTACT_PRO')) {
+        /*** FREE START ***/
         $moduleClasses = array(
 			'pweb-slidebox',
 			'pweb-labels-above'
 		);
-        /*** FREE END ***/ }
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** FREE END ***/
+        /*** PRO START ***/
         $layout = $params->get('layout_type', 'slidebox');
         
 		$moduleClasses = array(
 			'pweb-'.$layout,
 			'pweb-labels-'.$params->get('labels_position', 'inline')
 		);
-        /*** PRO END ***/ }
+        /*** PRO END ***/
         
         $positionClasses = $togglerClasses = $boxClasses = array();
 		
 		if (($class = $params->get('style_bg', 'white')) != -1) $moduleClasses[] = 'pweb-bg-'.$class;
 		if (($class = $params->get('style_form', 'blue')) != -1) $moduleClasses[] = 'pweb-form-'.$class;
 		
-        /*** FREE START ***/ if (!defined('PWEBCONTACT_PRO')) {
+        /*** FREE START ***/
         if (($class = $params->get('style_toggler', 'blue')) != -1) $togglerClasses[] = 'pweb-toggler-'.$class;
         
         $positionClasses[] = 'pweb-left';
@@ -431,9 +435,9 @@ class PWebContact
         $moduleClasses[] = 'pweb-horizontal';
         
         if (!$params->get('debug')) $boxClasses[] = 'pweb-init';
-        /*** FREE END ***/ }
+        /*** FREE END ***/
         
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** PRO START ***/
 		if ($layout != 'static') 
 		{
 			if (in_array($layout, array('slidebox', 'modal')))
@@ -471,7 +475,7 @@ class PWebContact
 			$user = wp_get_current_user(); //WP
 			if ($user->ID) $moduleClasses[] = 'pweb-hide-user';
 		}
-        /*** PRO END ***/ }
+        /*** PRO END ***/
         
         if ($params->get('rtl', 0)) $moduleClasses[] = $togglerClasses[] = 'pweb-rtl';
         if ($icon = $params->get('icons', 'icomoon')) $moduleClasses[] = 'pweb-'.$icon;
@@ -500,7 +504,7 @@ class PWebContact
 		$css 			= null;
 		$declarations 	= array();
 
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** PRO START ***/
 		// Position offset
 		if ($value = $params->get('offset'))
 			$css .= '#pwebcontact'.$form_id.'{'.$params->get('toggler_offset_position', '').':'.$value.'}';
@@ -767,7 +771,7 @@ class PWebContact
 			$css .= '#pwebcontact'.$form_id.'_box .pweb-arrow{border-bottom-color:rgb('.$border_color['r'].','.$border_color['g'].','.$border_color['b'].')}';
 			$declarations = array();
 		}
-        /*** PRO END ***/ }
+        /*** PRO END ***/
 
 		// Disable Boostrap glyphicons
 		if (!$params->get('boostrap_glyphicons', 1))
@@ -824,7 +828,7 @@ class PWebContact
 		if ($params->get('rtl', 0))
 			wp_enqueue_style('pwebcontact-layout-rtl');
 
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** PRO START ***/
 		wp_enqueue_style('pwebcontact-animations');
 
         // Check if calendar field will be used
@@ -921,7 +925,7 @@ class PWebContact
         if ($params->get('open_toggler') AND $params->get('open_count') AND $params->get('load_jquery_cookie', 1)) {
 			wp_enqueue_script('pwebcontact-jquery-cookie');
         }
-        /*** PRO END ***/ }
+        /*** PRO END ***/
         
         
 		if ($params->get('load_jquery_validate', 1)) 
@@ -1070,7 +1074,7 @@ class PWebContact
 		if (($value = (int)$params->get('bootstrap_version', 2)) != 2)
 			$options[] = 'bootstrap:'.$value;
 		
-		/*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+		/*** PRO START ***/
 		$options[] = 'layout:"'.$layout.'"';
 		$options[] = 'position:"'.$position.'"';
 		$options[] = 'offsetPosition:"'.$params->get('toggler_offset_position').'"';
@@ -1209,7 +1213,7 @@ class PWebContact
 			if (($value = $params->get('effect', 'modal:fade')) != 'modal:fade')
 				$options[] = 'effect:"'.substr($value, strpos($value, ':')+1).'"';
 		}
-        /*** PRO END ***/ }
+        /*** PRO END ***/
         
 		// Custom validation rules and calendar fields
 		$fields = self::getFields();
@@ -1232,12 +1236,12 @@ class PWebContact
 		if (count($rules)) {
 			$options[] = 'validatorRules:['.implode(',',$rules).']';
 		}
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** PRO START ***/
 		if (count($calendars)) 
 		{
 			$options[] = 'calendars:['.implode(',',$calendars).']';
 		}
-        /*** PRO END ***/ }
+        /*** PRO END ***/
 		
 		
 		// JavaScript initialization
@@ -1485,11 +1489,11 @@ class PWebContact
 		$params->set('media_url', 	plugins_url('media/', __FILE__)); //WP
 		$params->set('media_path', 	dirname(__FILE__) . '/media/'); //WP
         
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** PRO START ***/
         $upload_dir = wp_upload_dir();
 		$params->set('upload_url',  $upload_dir['baseurl'].'/pwebcontact/'.$form_id.'/'); //WP
 		$params->set('upload_path', $upload_dir['basedir'].'/pwebcontact/'.$form_id.'/'); //WP
-        /*** PRO END ***/ }
+        /*** PRO END ***/
         
 		// Internet Explorer < 10
 		if (!isset($_SERVER['HTTP_ACCEPT']) OR strpos($_SERVER['HTTP_ACCEPT'], 'application/json') === false) {
@@ -1610,7 +1614,7 @@ class PWebContact
 			$response = array('status' => 300, 'msg' => __('WordPress error', 'pwebcontact'));
 		}
 		
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** PRO START ***/
 		// delete atachments
 		if ($params->get('show_upload', 0) AND $params->get('attachment_delete') AND $params->get('attachment_type', 1) == 1 AND ($response['status'] < 200 OR $response['status'] >= 300))
 		{
@@ -1626,7 +1630,7 @@ class PWebContact
 				$response = array('status' => 401, 'msg' => __('WordPress error', 'pwebcontact'));
 			}
 		}
-        /*** PRO END ***/ }
+        /*** PRO END ***/
 		
 		$response['debug'] = self::closeAjaxResponse();
 		
@@ -1672,10 +1676,10 @@ class PWebContact
 		// mail from
 		$global_name  = $settings->get('email_from_name', get_bloginfo('name'));
 		$global_email = $settings->get('email_from', get_bloginfo('email'));
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** PRO START ***/
 		$global_name  = $params->get('email_from_name', $global_name);
 		$global_email = $params->get('email_from', $global_email);
-        /*** PRO END ***/ }
+        /*** PRO END ***/
 		if (!$global_email) {
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Invalid Global Configuration';
 			return array('status' => 303, 'msg' => __('MOD_PWEBCONTACT_GLOBAL_CONFIG_ERR', 'pwebcontact'));
@@ -1835,7 +1839,7 @@ class PWebContact
 		
 		// ticket
 		$data['ticket'] = '';
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** PRO START ***/
 		if ($ticket_type = $params->get('ticket_enable', 0)) 
 		{
 			if ($ticket_type == 1)
@@ -1864,7 +1868,7 @@ class PWebContact
 				$data['subject'] = sprintf(__($params->get('email_subject', '%s Message sent from'), 'pwebcontact'), $email_vars['ticket']);
 			}
 		}
-        /*** PRO START ***/ }
+        /*** PRO START ***/
 		
 		// success message
 		if (!isset($success_msg)) $success_msg = __($params->get('msg_success', 'Message successfully sent', 'pwebcontact'));
@@ -1876,7 +1880,7 @@ class PWebContact
             $data['subject'] = __($params->get('email_subject', 'Message sent from'), 'pwebcontact');
         }
         
-        /*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** PRO START ***/
         // user subject
         if ($data['user_subject']) {
             $data['subject'] .= $data['user_subject'];
@@ -1891,17 +1895,17 @@ class PWebContact
 			case 2:
 				$data['subject'] .= ' '.$data['title'];
 		}
-        /*** PRO END ***/ }
+        /*** PRO END ***/
 
 		// HOOK PROCCESS DATA - here you can add custom code to proccess variables: $data, $email_vars
 
         
-        /*** FREE START ***/ if (!defined('PWEBCONTACT_PRO')) {
+        /*** FREE START ***/
             $email_copy = ($params->get('email_copy', 2) == 2);
-        /*** FREE END ***/ }
-		/*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+        /*** FREE END ***/
+		/*** PRO START ***/
             $email_copy = ($params->get('email_copy', 2) == 2 OR ($params->get('email_copy', 2) == 1 AND isset($_POST['copy']) AND (int)$_POST['copy']));
-        /*** PRO END ***/ }
+        /*** PRO END ***/
         
 		// User email copy or auto-reply
 		if ($user_email AND $email_copy) 
@@ -2005,7 +2009,7 @@ class PWebContact
 			self::$logs[] = 'Admin BCC debug recipient: '.$user_email;
 		}
 
-		/*** PRO START ***/ if (defined('PWEBCONTACT_PRO')) {
+		/*** PRO START ***/
 		// Add blind carbon copy recipients
 		if ($params->get('email_bcc')) 
 		{
@@ -2026,11 +2030,11 @@ class PWebContact
 		// set email format
         $is_html = $params->get('email_admin_tmpl_format', 1) === 2;
         $headers[] = 'Content-Type: '.($is_html ? 'text/html' : 'text/plain');
-        /*** PRO END ***/ }
-        /*** FREE START ***/ if (!defined('PWEBCONTACT_PRO')) {
+        /*** PRO END ***/
+        /*** FREE START ***/
         $is_html = false;
         $headers[] = 'Content-Type: text/plain';
-        /*** FREE END ***/ }
+        /*** FREE END ***/
         
         // load email body template
         $body = $params->get('email_admin_tmpl');

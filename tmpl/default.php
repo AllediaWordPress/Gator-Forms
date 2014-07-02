@@ -306,9 +306,15 @@ $message =
 						<div class="pweb-field">
 							<?php 
 							
-							
+                            /*** FREE START ***/
+                            $filed_types = array('text', 'name', 'email');
+                            /*** FREE END ***/
+                            /*** PRO START ***/
+                            $filed_types = array('text', 'name', 'email', 'phone', 'subject', 'password', 'date');
+                            /*** PRO END ***/
+                            
 							/* ----- Text fields: text, name, email, phone, subject, password, date ------------------------- */
-							if (in_array($field['type'], array('text', 'name', 'email', 'phone', 'subject', 'password', 'date'))) : 
+							if (in_array($field['type'], $filed_types)) : 
 								
                                 /*** PRO START ***/
 								if ($user->ID AND ($field['type'] == 'name' OR $field['type'] == 'email') AND $params->get('user_data', 1)) {
