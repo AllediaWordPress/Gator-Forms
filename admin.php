@@ -3,7 +3,7 @@
  * @version 1.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license Perfect Web License http://www.perfect-web.co/license
  * @author Piotr Moćko
  */
 
@@ -196,6 +196,8 @@ class PWebContact_Admin {
         if (!isset($_GET['page']) OR $_GET['page'] !== 'pwebcontact') {
             return;
         }
+        
+        load_plugin_textdomain( 'pwebcontact', false, basename(dirname(__FILE__)).'/languages' );
         
         $this->can_edit = current_user_can('manage_options');
         
@@ -974,8 +976,15 @@ class PWebContact_Admin {
 
     protected function _get_version() {
         
-        $data = get_plugin_data(dirname(__FILE__).'/pwebcontact.php');
+        $data = get_plugin_data(dirname(__FILE__).'/pwebcontact.php', false, false);
         return $data['Version'];
+    }
+    
+    
+    protected function _get_name() {
+        
+        $data = get_plugin_data(dirname(__FILE__).'/pwebcontact.php', false, true);
+        return $data['Name'];
     }
 
 

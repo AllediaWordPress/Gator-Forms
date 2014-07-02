@@ -1,12 +1,13 @@
 <?php 
 /**
  * Plugin Name: Perfect Easy & Powerful Contact Form
- * Plugin URI: http://www.perfect-web.co/wordpress/ajax-contact-form-popup
- * Description: 
+ * Plugin URI: http://www.perfect-web.co/wordpress/contact-form
+ * Description: Intuitive for dummies. Handy for pros!
  * Version: 1.0.0
+ * Text Domain: pwebcontact
  * Author: Piotr Moćko
  * Author URI: http://www.perfect-web.co
- * License: GPLv3
+ * License: Perfect Web License http://www.perfect-web.co/license
  */
 
 // No direct access
@@ -62,6 +63,8 @@ class PWebContact
         if (!isset(self::$loaded['init'])) 
 		{
 			self::$loaded['init'] = true;
+            
+            load_plugin_textdomain( 'pwebcontact', false, basename(dirname(__FILE__)).'/languages' );
             
             $media_path = dirname(__FILE__) . '/media/';
             $media_url = plugins_url('media/', __FILE__);
@@ -2023,7 +2026,7 @@ class PWebContact
 		// set email format
         $is_html = $params->get('email_admin_tmpl_format', 1) === 2;
         $headers[] = 'Content-Type: '.($is_html ? 'text/html' : 'text/plain');
-        /*** PRO START ***/ }
+        /*** PRO END ***/ }
         /*** FREE START ***/ if (!defined('PWEBCONTACT_PRO')) {
         $is_html = false;
         $headers[] = 'Content-Type: text/plain';

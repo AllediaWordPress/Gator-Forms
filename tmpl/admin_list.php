@@ -3,7 +3,7 @@
  * @version 1.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license Perfect Web License http://www.perfect-web.co/license
  * @author Piotr Moćko
  */
 
@@ -17,7 +17,7 @@ function_exists('add_action') or die;
 </div>
 
 <h2>
-    <?php _e('Perfect Easy & Powerful Contact Form', 'pwebcontact'); ?>
+    <?php echo $this->_get_name(); ?>
     
     <?php if ($this->can_edit) : ?>
         <a class="add-new-h2" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=pwebcontact&task=new' ), 'new-form'); ?>">

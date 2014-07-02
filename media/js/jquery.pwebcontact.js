@@ -2,7 +2,7 @@
  * @version 1.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
- * @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
+ * @license Perfect Web License http://www.perfect-web.co/license
  * @author Piotr Moćko
  *
  * jQuery 1.8+

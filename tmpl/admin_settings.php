@@ -3,7 +3,7 @@
  * @version 1.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license Perfect Web License http://www.perfect-web.co/license
  * @author Piotr Moćko
  */
 
@@ -16,7 +16,7 @@ function_exists('add_action') or die;
     <div id="pweb-adminbar">
         
         <div class="pweb-toolbar pweb-clearfix">
-            <h2><?php _e('Perfect Easy & Powerful Contact Form Settings', 'pwebcontact'); ?></h2>
+            <h2><?php echo $this->_get_name(); ?></h2>
             
             <?php $this->_display_messages(); ?>
 

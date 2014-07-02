@@ -3,7 +3,7 @@
  * @version 1.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license Perfect Web License http://www.perfect-web.co/license
  * @author Piotr Moćko
  */
 
@@ -58,8 +58,8 @@ function_exists('add_action') or die;
     </div>
     <?php endif; ?>
 
-
-    <?php if (($result = $this->_check_upload_path()) !== true) : ?>
+    
+    <?php if (defined('PWEBCONTACT_PRO') AND ($result = $this->_check_upload_path()) !== true) : ?>
     <div class="pweb-alert pweb-alert-danger" id="pweb-upload-path-warning" style="display:none">
         <i class="icomoon-warning"></i> <?php echo $result; ?>
     </div>
