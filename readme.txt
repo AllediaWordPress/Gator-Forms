@@ -1,91 +1,132 @@
-=== Perfect Ajax Popup Contact Form ===
+=== Perfect Easy & Powerful Contact Form ===
 Contributors: perfect-web
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CDDZ6G6LDV4LG
-Tags: contact form, upload, ajax
+Tags: contact form, file upload, AJAX, responsive contact form, multiple contact forms plugin, shortcode contact form, widget contact form, contact form plugin, contact form maker, drag and drop contact form, form builder, file upload form, contact me, call me back, popup contact form, popup form, reservation form, contact helpdesk form, feedback form, post feedback, form, resnponsive form, rwd form, contacts form plugin, easy contact form plugin, button, contact, contacts, cnotact, conact, contatc, send copy, feedback, request, send
 Requires at least: 3.5.0
 Tested up to: 3.9.1
 Stable tag: 1.0.0
-License: GPLv3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+License: Perfect Web License
+License URI: http://www.perfect-web.co/license
 
-Share easily your photos and files stored on Microsoft OneDrive. You can display a gallery with your photos or a link to a file for download.
+Intuitive for dummies. Handy for pros!
 
 == Description ==
 
-OneDrive Gallery & File plugin has been inspired by Microsoft. It integrates WordPress with OneDrive (SkyDrive). This plugin displays a photo gallery directly from folder on OneDrive. Each time you add more photos on your OneDrive they automatically apear on your WordPress website. You can also insert a single photo or a download link with a file form OneDrive. Then you can edit your file on OneDrive and be sure that documents on you WordPress website are always up to date.
+Intuitive for dummies. Handy for pros!
 
+★ 5-click setup
 
-= Features =
+★ Fully responsive
 
-* Displays gallery of photos stored in folder on OneDrive.
-* Displays each photo in Lightbox with description set on OneDrive.
-* Displays a file from OneDrive as link for download with icon and size.
-* Displays a photo inside post content.
-* Use prettyPhoto jQuery for Lightbox effect.
-* Insert short code into post with WYSIWYG editor button.
-* Compatible with **Azure - Microsoft's Cloud Platform**.
+★ Drag&Drop form builder
 
+★ Spam protection
 
-= Front-end demo =
+★ Ready-made themes
 
-[Visit demo page](http://www.perfect-web.co/wordpress/microsoft-onedrive-gallery-file#page-demo)
+★ Cool visual and animations effects
 
+Discover Perfect Easy & Powerful Contact Form developed for WordPress. First of all see cool visual effects you can use on your website such as smooth slide in effect, impressive lightbox appear effects or on-site display with possible accordation effect. As you see your possibilities are practically unlimited. What is more learn about key features of Perfect Contact Form starting from handy upload, trough excellent spam protection, to unlimited number of forms and fields you can use. Thirdly explore our ready-made responsive layouts you can easily adjust to your needs. No matter you need a call me back option, an application or reservation form, support ticket submission form or a poll Perfect Contact Form will suit your needs perfectly.
+Try it it’s easy!
 
-= Microsoft Openness =
+= Key Features =
 
-This plugin is brought to you thanks to new Microsoft attiude towards Open Source. Due to Microsoft help and support we were able to create such a bridge between one of Mirosoft leading projects and WordPress. We hope that you will find this plugin useful.
+* Fully responsive & Mobile ready
+* Unlimited forms and fields
+* Ready-made layouts you can adjust
+* Spam protection
+* File upload
 
-![Inspired by Microsoft Openness](http://www.perfect-web.co/media/com_skydrive/images/MSFT_logo.png)
+= Popular usage examples =
 
+* Call me back form
+* Application form
+* Reservation form
+* Support ticket
+* Poll form
 
-= Like our software on Microsoft Opennes Ideas =
-[Vote for this plugin on Microsoft Opennes Ideas](http://ideas.opennessatcee.com/pl/idea/772f24a23590d7b206724dae1e698edc07048cdd)
+= Cool animation effects =
 
+* Smooth slide-in effect
+* Screen edge fixed position
+* Semi-transparent background
+* Multiple lightbox appear effects
+* Accordion
 
-= Translations =
+**Visit our [demo page](http://www.perfect-web.co/wordpress/contact-form#page-demo) to see how cool they actually are ;)**
 
-English, Serbian and Spanish by [Ogi Djuraskovic](http://firstsiteguide.com)
+= Compatibility =
 
+* WordPress 3.5+
+* jQuery 1.8+
+* Bootstrap 2.3.2 - 3.x
+* PHP 5.3+
+* HTML5 & CSS3
+* Supports all modern browsers, IE9+, partly IE7-8
+* Mobile ready
+* Responsive, RWD
+* Requires 3rd-part plugin for [browser detection](http://wordpress.org/plugins/php-browser-detection/)
 
-= Requirements =
+= All features =
 
-PHP 5.2+
-
+* Unlimited number of contact forms can be published at one page.
+* Unlimited number of fields type of: text, name, email, phone, subject, textarea, select list, multiple select list, single checkbox, checkboxes group, radios group, data picker with calendar, password.
+* Sort fields with drag-and-drop.
+* Split fields into columns.
+* Each field can have a tooltip and validation rule, can be required or not.
+* Display labels: inline with fields, above or inside.
+* Display any text or HTML code between fields.
+* Upload files selected with a button or by drag-and-drop, set: size limit, files limit, extension types.
+* Attach files directly to email or as links to files stored on server.
+* Advanced spam protection without any codes.
+* Multiple email recipients, BCC, reply to email, WordPress Admin as recipient.
+* Drop-down list of recipients.
+* Automatically fill in User name and email if is logged in.
+* Send a copy of email to sender.
+* Select predefined email template, set text or HTML format.
+* Set custom success message and email subject.
+* Ticket system - adds to subject unique date-time based ID or number counter.
+* Set custom toggler tab name, display it vertical or horizontal or hide it.
+* Track User informations: IP address, browser ([requires 3rd-part plugin](http://wordpress.org/plugins/php-browser-detection/)), operating system, screen resolution.
+* Track page title and URL from which email was sent.
+* Page redirect to URL after sending email.
+* Google Analytics Tracking Page View or Event after sending email.
+* Google AdWords and Microsoft adCenter Conversion Tracking.
+* Open contact form with custom link, image or any HTML code.
+* Preload fields values by URL or link.
+* Auto-open on page load, or on scroll, or on exit - when mouse pointer goes above top edge of page (experimental, not always works in IE 7 and 8).
+* Auto-open limit count - open for first X-times after page refresh and selected event.
+* Auto-open delay - if not opened earlier by user.
+* Auto-close delay - if not closed earlier by user.
 
 == Installation ==
 
-1. Install ZIP file or upload plugin files to the `/wp-content/plugins/pwebonedrive` directory.
+1. Install ZIP file or upload plugin files to the `/wp-content/plugins/pwebcontact` directory.
 1. **Activate the plugin** through the Plugins menu in WordPress.
-1. Create **Windows Live ID** account for [OneDrive](https://onedrive.live.com/) if you do not have already
-1. **Register your site** in [Windows Live application management](https://account.live.com/developers/applications/index) that WordPress could connect to your OneDrive.
-Remember to set your site URL as **Redirect domain** and **Mobile client app: No**, **Enhanced redirection security: Disabled**.
-[Read how to get your Client ID](http://msdn.microsoft.com/library/cc287659.aspx).
-1. Go to **plugin configuration** panel and set all details from **Windows Live application management**.
-1. Disable pop-up windows blocking, because OneDrive would display login and permissions screen in a new pop-up window.
-1. Edit post and use one of new blue buttons in editor.
-
+1. Go to **Perfect Contact Forms** menu and create first form.
+1. Follow 5 steps tabs with form configuration and save it.
+1. If you have selected to display form with shortcode or in widget then do not forget to insert shortcode or create widget.
 
 == Frequently Asked Questions ==
 
-[Visit full documentation page](http://www.perfect-web.co/wordpress/microsoft-onedrive-gallery-file/documentation)
+= Support =
 
-= Question =
+To ask a support question or post a bug report, fill a [support form](http://www.perfect-web.co/wordpress/contact-form/documentation) on our website.
 
-Answer
+= Documentation =
+
+[Visit full documentation page on our website.](http://www.perfect-web.co/wordpress/contact-form/documentation)
 
 == Screenshots ==
 
-1. Buttons in post editor
-2. Sign in to OneDrive
-3. Grant permissions
-4. Select a folder for gallery
-5. Select a file for a download link
-6. Shortcodes in editor
-7. Configuration
+1. Step 1 - you can decide here where and with what effects you want your form displayed
+2. Step 2 - use our easy drag&drop form builder to create your own form
+3. Step 3 - you can choose one of predefined layout or create your own
+4. Step 4 - choose predefined anwser scheme or create your own
+5. Step 5 - you can check here if you you did everything needed to publish your form
 
 == Changelog ==
 
-= 1.0.0 / 15-06-2014 =
+= 1.0.0 / 03-07-2014 =
 * First release
 
 == Upgrade Notice ==
