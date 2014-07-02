@@ -71,7 +71,7 @@ class PWebContact
             $media_path = dirname(__FILE__) . '/media/';
             $media_url = plugins_url('media/', __FILE__);
             
-            $debug = ((defined('WP_DEBUG') AND WP_DEBUG === true) OR $_GET['debug'] OR get_option('pwebcontact_debug', false));
+            $debug = ((defined('WP_DEBUG') AND WP_DEBUG === true) OR isset($_GET['debug']) OR get_option('pwebcontact_debug', false));
             define('PWEBCONTACT_DEBUG', $debug);
             
             // Register scripts
@@ -209,6 +209,7 @@ class PWebContact
         }
         
         $params = self::getParams($form_id); //WP
+        $params->def('debug', PWEBCONTACT_DEBUG);
         
         if ($params->get('position', 'footer') !== $position) {
             // form is assigned to another position
@@ -552,11 +553,11 @@ class PWebContact
 			
 			// Toggler icon
 			if ($params->get('toggler_icon') == 'gallery') {
-				if ($value = $params->get('toggler_icon_gallery'))
+				if ($value = $params->get('toggler_icon_gallery_image'))
 					$css .= '#pwebcontact'.$form_id.'_toggler .pweb-icon{background-image:url('.$media_url.'images/icons/'.urlencode($value).')}';
 			}
 			elseif ($params->get('toggler_icon') == 'custom') {
-				if ($value = $params->get('toggler_icon_custom'))
+				if ($value = $params->get('toggler_icon_custom_image'))
                         //TODO parse and encode URL with JS
 					$css .= '#pwebcontact'.$form_id.'_toggler .pweb-icon{background-image:url('.$value.')}'; //WP
 			}
@@ -1078,8 +1079,8 @@ class PWebContact
 		$options[] = 'layout:"'.$layout.'"';
 		$options[] = 'position:"'.$position.'"';
 		$options[] = 'offsetPosition:"'.$params->get('toggler_offset_position').'"';
-		$options[] = 'basePath:"'.home_url('', 'relative').'"'; //TODO test
-		$options[] = 'ajaxUrl:"'.plugins_url('ajax.php?method=', __FILE__).'"'; //TODO get relative path WP
+		//$options[] = 'basePath:"'.home_url('', 'relative').'"';
+		$options[] = 'ajaxUrl:"'.plugins_url('ajax.php?action=', __FILE__).'"';
 		
 		if (($value = $params->get('msg_position', 'after')) != 'after')
 			$options[] = 'msgPosition:"'.$value.'"';
@@ -1259,11 +1260,11 @@ class PWebContact
 			'jQuery(document).ready(function($){'.
 				'if(typeof pwebContact'.$form_id.'Count=="undefined"){'.
 					// Check if document header has been loaded
-					'if(typeof pwebContact=="undefined")alert("PWeb debug: Contact form module has been loaded incorrect.'.
+					'if(typeof pwebContact=="undefined")alert("Perfect Contact Form Debug: Contact form module has been loaded incorrect.");'.
 					// Check if one module instance has been loaded only once
 					'pwebContact'.$form_id.'Count=$(".pwebcontact'.$form_id.'_form").length;'.
 					'if(pwebContact'.$form_id.'Count>1)'.
-						'alert("PWeb debug: Contact form module ID '.$form_id.' has been loaded "+pwebContact'.$form_id.'Count+" times. You can have multiple contact forms, but one instance of module can be loaded only once!")'.
+						'alert("Perfect Contact Form Debug: Contact form module ID '.$form_id.' has been loaded "+pwebContact'.$form_id.'Count+" times. You can have multiple contact forms, but one instance of module can be loaded only once!")'.
 				'}'.
 			'});'.
 			$script
@@ -1464,7 +1465,7 @@ class PWebContact
         if (function_exists('exceptions_error_handler'))
 			@set_error_handler('exceptions_error_handler');
 		
-		$form_id = isset($_POST['mid']) ? (int)$_POST['mid'] : 0;
+		$form_id = isset($_POST['mid']) ? (int)$_POST['mid'] : (isset($_GET['mid']) ? (int)$_GET['mid'] : 0);
 		$params = self::getParams($form_id);
 		
 		// Language
@@ -1517,12 +1518,15 @@ class PWebContact
 	public static function checkToken()
 	{
 		$response = true;
-		
+        
+        //TODO refresh token before each request
+		return $response;
+        
         $form_id = isset($_POST['mid']) ? (int)$_POST['mid'] : 0;
 		$token = wp_create_nonce('pwebcontact'.$form_id);
         
 		try {
-			if (!isset($_POST[$token]) OR (int)$_POST[$token] !== 1 OR wp_verify_nonce($_POST[$token], 'pwebcontact'.$form_id) === false)
+			if (!isset($_POST[$token]) OR (int)$_POST[$token] !== 1)
 			{
                 $response = array('status' => 302, 'msg' => __('Invalid security token. Refresh page and try again', 'pwebcontact'));
 			}
@@ -1740,9 +1744,9 @@ class PWebContact
             if ($field['type'] == 'mailto_list') 
 			{
                 if ($data['mailto'] > 0) {
-                    $rows = @explode(PHP_EOL, $field['values']);
+                    $rows = explode("\n", $field['values']);
                     if (array_key_exists($data['mailto']-1, $rows)) {
-                        $row = @explode('|', $rows[$data['mailto']-1]);
+                        $row = explode('|', $rows[$data['mailto']-1]);
                         if ($row[0]) {
                             $email_to[] = $row[0];
                             $email_vars['mailto_name'] = $row[1];
@@ -1822,7 +1826,7 @@ class PWebContact
 		
 		// CMS
 		if ($params->get('email_to')) {
-			$email_to = array_merge($email_to, @explode(',', $params->get('email_to')));
+			$email_to = array_merge($email_to, explode(',', $params->get('email_to')));
 		}
 		if ($params->get('email_cms_user')) 
 		{
@@ -2078,6 +2082,8 @@ class PWebContact
     
     
     protected function getVersion() {
+        
+        require_once ABSPATH.'wp-admin/includes/plugin.php';
         
         $data = get_plugin_data(dirname(__FILE__).'/pwebcontact.php');
         return $data['Version'];

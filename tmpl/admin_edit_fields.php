@@ -22,8 +22,8 @@ $this->_set_pro_options('fields', array(
     'checkbox',
     'checkbox_modal',
     'email_copy',
-    'separator_text',
-    'separator_header',
+    'custom_text',
+    'header',
     'upload',
     'mailto_list'
 ));
@@ -1590,7 +1590,7 @@ $this->_set_free_options('fields', array(
         </div>
         
         
-        <?php $field_type = 'separator_text'; ?>
+        <?php $field_type = 'custom_text'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?>" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Custom text/html', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
@@ -1645,7 +1645,7 @@ $this->_set_free_options('fields', array(
         </div>
         
         
-        <?php $field_type = 'separator_header'; ?>
+        <?php $field_type = 'header'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?>" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Header', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>

@@ -164,7 +164,7 @@ function_exists('add_action') or die;
         
         <?php echo $this->_get_field(array(
             'type' => 'filelist',
-            'name' => 'toggler_icon_gallery_image', //TODO change param name in front
+            'name' => 'toggler_icon_gallery_image',
             'label' => 'Gallery icon',
             'tooltip' => 'Select image from directory: `wp-content/plugins/pwebcontact/media/images/icons`.',
             'filter' => '\.(jpg|png|gif)$',
@@ -174,7 +174,7 @@ function_exists('add_action') or die;
         
         <?php echo $this->_get_field(array(
             'type' => 'image',
-            'name' => 'toggler_icon_custom_image', //TODO change param name in front
+            'name' => 'toggler_icon_custom_image',
             'label' => 'Custom icon',
             'tooltip' => 'Enter URL with custom image file with icon for Toggler Tab.',
             'parent' => array('toggler_icon_custom'),

@@ -23,7 +23,7 @@ PWebContact::setHeader('Last-Modified', gmdate('D, d M Y H:i:s') . ' GMT');
 PWebContact::setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 
 // HTTP 1.0
-$this->setHeader('Pragma', 'no-cache');
+PWebContact::setHeader('Pragma', 'no-cache');
 
 // Response
 $response = new stdClass();
@@ -33,7 +33,7 @@ $response->data = null;
 
 if (isset($_GET['action']) AND $_GET['action'])
 {
-    $action = preg_filter('/[^a-zA-Z0-9_]/', '', $_GET['action']);
+    $action = preg_replace('/[^a-zA-Z0-9_]+/', '', $_GET['action']);
     
     if (in_array($action, array('sendEmail', 'uploader', 'checkCaptcha', 'getToken')) 
             AND method_exists('PWebContact', $action.'Ajax'))

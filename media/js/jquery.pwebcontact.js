@@ -38,8 +38,6 @@ var pwebBoxes = pwebBoxes || [],
 			selectorClass: '.pwebcontact',
 			
 			debug: false,
-			basePath: '',
-			baseUrl: '',
 			ajaxUrl: '',
 			reloadToken: false,
 			bootstrap: 2,
@@ -118,9 +116,6 @@ var pwebBoxes = pwebBoxes || [],
 			var that = this;
 			
 			this.options = $.extend({}, this.defaults, options);
-			
-			this.options.baseUrl = document.location.protocol +'//'+ document.location.host + this.options.basePath + '/';
-			this.options.ajaxUrl = this.options.baseUrl + this.options.ajaxUrl;
 			
 			this.options.selector = this.options.selector + this.options.id;
 			this.options.selectorClass = this.options.selectorClass + this.options.id;
@@ -762,7 +757,7 @@ var pwebBoxes = pwebBoxes || [],
 					'text json': function(result) {
 						result = $.parseJSON(result);
 						
-						if (typeof result.data !== 'undefined') 
+						if (typeof result.data !== 'undefined' && result.data) 
 							result = result.data;
 						
 						return result;
@@ -770,7 +765,7 @@ var pwebBoxes = pwebBoxes || [],
 					'iframe json': function(iframe) {
 						iframe = $.parseJSON(iframe);
 						
-						if (typeof iframe.data !== 'undefined') 
+						if (typeof iframe.data !== 'undefined' && iframe.data) 
 							iframe = iframe.data;
 						
 						return iframe;
@@ -912,7 +907,7 @@ var pwebBoxes = pwebBoxes || [],
 				that.uploadQueue--;
 				if (!(data.getFilesFromResponse(data)).length) {
 					// empty server response
-					that.displayMsg(pwebcontact_l10n.upload.ERR, 'error');
+					that.displayMsg(pwebcontact_l10n.upload.ERR + (typeof data.result.message !== 'undefined' ? '. ' + data.result.message : ''), 'error');
 					if (data.autoUpload === false)
 						that.status = 5; // error
 				}

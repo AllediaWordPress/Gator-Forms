@@ -790,8 +790,8 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 .pweb-custom-field-type-multiple {
     background-color: #1FAD45;
 }
-.pweb-custom-field-type-separator_text,
-.pweb-custom-field-type-separator_header {
+.pweb-custom-field-type-custom_text,
+.pweb-custom-field-type-header {
     background-color: #CCAF0B;
 }
 .pweb-custom-field-type-checkbox,
