@@ -3,7 +3,7 @@
  * @version 1.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
- * @license http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @license Perfect Web License http://www.perfect-web.co/license
  * @author Piotr Moćko
  */
 
@@ -19,7 +19,7 @@ class PWebCompiler {
         '/^assets/i',
         '/^build/i'
     );
-    protected $excludeFreeFiles = array(
+    protected $excludeProFiles = array(
         'uploader.php',
         'UploadHandler.php',
         'media/css/animations.css', // Modal window animations
@@ -44,18 +44,20 @@ class PWebCompiler {
     protected function filterFileContents( &$contents = null ) {
         
         if ($this->is_pro) {
-            $contents = preg_replace('/([^\n]*<!-- FREE START -->).*?(<!-- FREE END -->[^\n]*\n)/s', '', $contents);
-            $contents = preg_replace('/([^\n]*\/\*\*\* FREE START \*\*\*\/).*?(\/\*\*\* FREE END \*\*\*\/[^\n]*\n)/s', '', $contents);
+            $contents = preg_replace('/([^\n\r]*<!-- FREE START -->).*?(<!-- FREE END -->[^\n]*\n)/s', '', $contents);
+            $contents = preg_replace('/([^\n\r]*\/\*\*\* FREE START \*\*\*\/).*?(\/\*\*\* FREE END \*\*\*\/[^\n]*\n)/s', '', $contents);
             
-            $contents = preg_replace('/\n[^\n]*<!-- PRO (START|END) -->.*/', '', $contents);
-            $contents = preg_replace('/\n[^\n]*\/\*\*\* PRO (START|END) \*\*\*\/.*/', '', $contents);
+            $contents = preg_replace('/\n[^\n\r]*<!-- PRO (START|END) -->.*/', '', $contents);
+            $contents = preg_replace('/\n[^\n\r]*\/\*\*\* PRO (START|END) \*\*\*\/.*/', '', $contents);
+            
+            $contents = preg_replace('/Plugin Name: [^\n\r]+/i', '\\0 Pro', $contents);
         }
         else {
-            $contents = preg_replace('/([^\n]*<!-- PRO START -->).*?(<!-- PRO END -->[^\n]*\n)/s', '', $contents);
-            $contents = preg_replace('/([^\n]*\/\*\*\* PRO START \*\*\*\/).*?(\/\*\*\* PRO END \*\*\*\/[^\n]*\n)/s', '', $contents);
+            $contents = preg_replace('/([^\n\r]*<!-- PRO START -->).*?(<!-- PRO END -->[^\n]*\n)/s', '', $contents);
+            $contents = preg_replace('/([^\n\r]*\/\*\*\* PRO START \*\*\*\/).*?(\/\*\*\* PRO END \*\*\*\/[^\n]*\n)/s', '', $contents);
             
-            $contents = preg_replace('/\n[^\n]*<!-- FREE (START|END) -->.*/', '', $contents);
-            $contents = preg_replace('/\n[^\n]*\/\*\*\* FREE (START|END) \*\*\*\/.*/', '', $contents);
+            $contents = preg_replace('/\n[^\n\r]*<!-- FREE (START|END) -->.*/', '', $contents);
+            $contents = preg_replace('/\n[^\n\r]*\/\*\*\* FREE (START|END) \*\*\*\/.*/', '', $contents);
         }
     }
     
@@ -79,7 +81,7 @@ class PWebCompiler {
                     }
                 }
                 
-                if (in_array($directory . $filename, $this->excludeFreeFiles)) {
+                if (in_array($directory . $filename, $this->excludeProFiles)) {
                     continue;
                 }
                 
@@ -87,14 +89,14 @@ class PWebCompiler {
                     if (in_array($directory . $filename, $this->filterFiles)) {
                         $contents = file_get_contents( $this->path . $directory . $filename );
                         $this->filterFileContents( $contents );
-                        $this->zip->addFromString( $directory . $filename, $contents );
+                        $this->zip->addFromString( $this->zip_base_path . $directory . $filename, $contents );
                     }
                     else {
-                        $this->zip->addFile( $this->path . $directory . $filename,  $directory . $filename );
+                        $this->zip->addFile( $this->path . $directory . $filename,  $this->zip_base_path . $directory . $filename );
                     }
                 }
                 elseif ($info->isDir()) {
-                    $this->zip->addEmptyDir( $directory . $filename );
+                    $this->zip->addEmptyDir( $this->zip_base_path . $directory . $filename );
                     $this->addFilesToZip( $directory . $filename . '/' );
                 }
             }
@@ -129,6 +131,9 @@ class PWebCompiler {
         
         $this->zip = new ZipArchive;
 		if (true === $this->zip->open($zip_path, ZipArchive::CREATE)) {
+            
+            $this->zip_base_path = 'pwebcontact/';
+            $this->zip->addEmptyDir( $this->zip_base_path );
             
             $this->addFilesToZip();
             $this->zip->close();
