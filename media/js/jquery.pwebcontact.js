@@ -74,8 +74,8 @@ var pwebBoxes = pwebBoxes || [],
 			modalBackdrop: true,
 			modalClose: true,
 			modalStyle: 'default',
-			modalEffect: 'square',	//animation style: rotate, smooth, square, default (turn off genie effect)
-			modalEffectDuration: 400,	//animation duration
+			modalEffect: 'fade', //animation style: fade, drop, rotate, smooth, square
+			modalEffectDuration: 400,
 			modalEaseIn: 'easeInCubic',
 			modalEaseOut: 'easeOutCubic',
 			
@@ -191,9 +191,6 @@ var pwebBoxes = pwebBoxes || [],
 					}
 				}
 				
-				// close other boxes
-				if (this.options.closeOther) pwebBoxes.push(this);
-				
 				// is Firefox
 				this.isFF = navigator.userAgent.indexOf('Gecko') != -1;
 				
@@ -265,7 +262,6 @@ var pwebBoxes = pwebBoxes || [],
 				this.initUploader();
 			
 			this.initTextareaCounters();
-			this.initChosen();
 			this.initCalendar();
 			this.initHiddenFields();
 			
@@ -299,6 +295,9 @@ var pwebBoxes = pwebBoxes || [],
 					e.preventDefault();
 					that.toggleForm(-1, -1, this, e);
 				});
+                
+                // close other boxes
+				if (this.options.closeOther) pwebBoxes.push(this);
 				
 				if (openOnLoad)
 				{
@@ -376,7 +375,7 @@ var pwebBoxes = pwebBoxes || [],
 				});
                 
                 // apply effect for animation if there is chosen one
-				if (this.options.modalEffect !== 'default'){
+				if (this.options.modalEffect !== 'fade' && this.options.modalEffect !== 'drop'){
 					this.initGenie();
 				}
 				
@@ -396,7 +395,15 @@ var pwebBoxes = pwebBoxes || [],
 			
 			if (typeof $.fn.modal === 'function')
 			{
+                // body class for opened modal
+                if (typeof this.options.modalClass === 'undefined') {
+                    this.options.modalClass = 'pwebcontact'+this.options.id+'_modal-open pweb-modal-open pweb-modal-' + this.options.modalStyle;
+                }
+                
 				links.click(function(e){
+                    // TODO open from HTML ID
+                    // TODO open URL in responsive iframe
+                    // if external or absolute link then open in new window
 					var href = $(this).attr('href');
 					if (href.indexOf('//') !== -1 && href.indexOf('//') <= 6 && href.indexOf(document.location.host) === -1) return;
 					
@@ -416,8 +423,22 @@ var pwebBoxes = pwebBoxes || [],
 					.appendTo(document.body)
 					.modal(opt)
 					.on(that.options.bootstrap === 2 ? 'hidden' : 'hidden.bs.modal', function() {
-						$(this).remove();
+                        // do not close if clicked inside modal
+                        e.stopPropagation();
+                        if (e.target !== e.currentTarget) return;
+                        
+                        $(this).remove();
+                        // remove opened class from body
+                        $(document.body).removeClass(that.options.modalClass);
 					})
+                    .on(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal', function(e) {
+                        // do not trigger if tooltip is the target
+                        e.stopPropagation();
+                        if (e.target !== e.currentTarget) return;
+                        
+                        // add opened class to body
+                        $(document.body).addClass(that.options.modalClass);
+                    })
 					.find('.modal-body').load(href, function(){
 						$(this).removeClass('pweb-progress');
 					});
@@ -613,24 +634,6 @@ var pwebBoxes = pwebBoxes || [],
 			}
 			
 			return true;
-		},
-		
-		initChosen: function()
-		{
-			return; //TODO chosen
-			
-			if (typeof $.fn.chosen === 'function')
-			{
-				this.Form.find('select').chosen({
-					disable_search_threshold: 50,
-					allow_single_deselect: true
-				});
-				
-				return true;
-			}
-			else if (this.options.debug) this.debug('jQuery Chosen Plugin is not loaded');
-			
-			return false;
 		},
 		
 		initLabelsOverFields: function()
@@ -1031,9 +1034,9 @@ var pwebBoxes = pwebBoxes || [],
 							if (that.tooltip && that.options.tooltips >= 2) 
 							{
 								if (element.hasClass('pweb-single-checkbox'))
-									element.next().tooltip('show');
+									element.next().tooltip(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal');
 								else 
-									element.tooltip('show');
+									element.tooltip(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal');
 							}
 						}
 						for (i = 0, elements = this.validElements(); elements[i]; i++) 
@@ -1115,8 +1118,6 @@ var pwebBoxes = pwebBoxes || [],
 				state = -1;
 			if (typeof bind === 'undefined') 
 				bind = this.Toggler;
-			
-			if (this.timer) clearTimeout(this.timer);
 		
 			// close
 			if (!this.hidden && (state === -1 || state === 0)) 
@@ -1128,6 +1129,10 @@ var pwebBoxes = pwebBoxes || [],
 					// change toggler name
 					if (this.options.togglerNameClose) 
 						this.Toggler.find('.pweb-text').text(this.options.togglerNameOpen);
+				}
+                
+                if (this.options.openAuto === false && this.timer) {
+					clearTimeout(this.timer);
 				}
 				
 				if (this.options.layout == 'slidebox') 
@@ -1158,12 +1163,12 @@ var pwebBoxes = pwebBoxes || [],
 				}
 				else if (this.options.layout == 'modal') 
 				{
-					if (this.options.modalEffect != 'default' && typeof this.eventSource !== 'undefined') {
+					if (this.options.modalEffect !== 'fade' && this.options.modalEffect !== 'drop' && typeof this.eventSource !== 'undefined') {
 						
 						this.Container.trigger('modalClose');
 					}
 					else {
-						this.Modal.modal('hide');
+						this.Modal.modal(this.options.bootstrap === 2 ? 'hide' : 'hide.bs.modal');
 					}
 				}
 				else if (this.options.layout == 'accordion') 
@@ -1182,7 +1187,22 @@ var pwebBoxes = pwebBoxes || [],
 			// open
 			else if (this.hidden && (state === -1 || state === 1)) 
 			{
-				// select recipient
+				// close other Perfect Web Boxes
+                if (this.options.closeOther) {
+                    $.each(pwebBoxes, function(){
+                        if (this.options.id != that.options.id && typeof this.close === 'function') this.close();
+                    });
+                }
+                
+                // disable auto-open when form is being opened
+                if (this.options.openAuto === 1 || this.options.openAuto === 2) {
+					this.options.openAuto = false;
+					if (this.timer) {
+						clearTimeout(this.timer);
+					}
+				}
+                
+                // select recipient
 				if (typeof recipient === 'number' && recipient >= 0) {
 					var select = $(this.options.selector+'_mailto');
 					if (select.length) {
@@ -1211,16 +1231,9 @@ var pwebBoxes = pwebBoxes || [],
 					if (this.options.togglerNameClose) 
 						this.Toggler.find('.pweb-text').text(this.options.togglerNameClose);
 				}
-				
+                
 				if (this.options.layout == 'slidebox') 
 				{
-					// close other Perfect Web Boxes
-					if (this.options.closeOther) {
-						$.each(pwebBoxes, function(){
-							if (this.options.id != that.options.id && typeof this.close === 'function') this.close();
-						});
-					}
-					
 					var css = { width: this.options.slideWidth };
 					css[this.options.position] = 0;
 					
@@ -1276,10 +1289,10 @@ var pwebBoxes = pwebBoxes || [],
 				}
 				else if (this.options.layout == 'modal') 
 				{
-					if (this.options.modalEffect != 'default' && $(bind).length) {
+					if (this.options.modalEffect !== 'fade' && this.options.modalEffect !== 'drop' && $(bind).length) {
                         this.eventSource = bind;
                     }
-					this.Modal.modal('show');
+					this.Modal.modal(this.options.bootstrap === 2 ? 'show' : 'show.bs.modal');
 				}
 				else if (this.options.layout == 'accordion') 
 				{
@@ -1617,7 +1630,7 @@ var pwebBoxes = pwebBoxes || [],
 		
 		autoPopupOnPageLoad: function()
 		{
-			if (this.options.openDelay)
+            if (this.options.openDelay)
 				this.timer = this.delay(this.toggleForm, this.options.openDelay, this, [1]);
 			else
 				this.toggleForm(1);
