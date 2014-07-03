@@ -480,18 +480,17 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     // load field options
                     var index = $target.find(".pweb-custom-field-options input:first").data("index");
                     $.each(field, function(key, value) {
-                        if (key === "required") {
-                            if (value !== "0" && value !== "1") {
-                                value = "0";
+                        if (key !== "type") {
+                            var $option = $target.find("#pweb_fields_"+index+"_"+key);
+                            if ($option.prop("tagName").toLowerCase() === "fieldset") {
+                                if (!value) {
+                                    value = "0";
+                                }
+                                $option.find("#pweb_fields_"+index+"_"+key+"_"+value.toString()).prop("checked", true);
                             }
-                            var $option = $target.find("#pweb_fields_"+index+"_"+key+"_"+value);
-                            if ($option.length) {
-                                $option.get(0).checked = true;
+                            else {
+                                $option.val( value.replace(/\\+/g, "\\") );
                             }
-                        }
-                        else if (key !== "type") {
-                            
-                            $target.find("#pweb_fields_"+index+"_"+key).val( value.replace(/\\+/g, "\\") );
                             
                             if (key === "label") {
                                 $target.find(".pweb-custom-field-label span").text(value);
