@@ -39,6 +39,7 @@ function pwebcontact_install_db() {
       `layout` varchar(20) NOT NULL DEFAULT 'slidebox',
       `modify_date` datetime NOT NULL,
       `params` text,
+      `fields` text,
 	  PRIMARY KEY (`id`)
 	) $charset_collate AUTO_INCREMENT=1;";
     

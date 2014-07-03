@@ -52,7 +52,10 @@ function_exists('add_action') or die;
     <?php endif; ?>
     
     
-    <?php //TODO check if copy to user field is allowed ?>
+    <?php 
+    //TODO check if copy to user field is allowed 
+    //TODO warn about shortcode and widget position
+    ?>
 
 
     <?php if (($result = $this->_check_cache_path()) !== true) : ?>

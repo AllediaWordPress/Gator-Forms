@@ -174,7 +174,7 @@ $message =
 								// Skip incorrect rows
 								if (!array_key_exists(1, $recipient)) continue;
 							?>
-								<option value="<?php echo $i++; ?>"><?php echo $recipient[1]; ?></option>
+								<option value="<?php echo $i++; ?>"><?php esc_html_e($recipient[1], 'pwebcontact'); ?></option>
 							<?php endforeach; ?>
 							</select>
 						</div>
@@ -240,18 +240,18 @@ $message =
                                     $types[] = $ext;
                                 }
                             }
-                            $field['title'][] = sprintf(__('Select a file or drag and drop on form. Max file size %s, max number of files %s, allowed file types: %s. ', 'pwebcontact'), 
+                            $field['title'][] = esc_attr(sprintf(__('Select a file or drag and drop on form. Max file size %s, max number of files %s, allowed file types: %s. ', 'pwebcontact'), 
                                 floatval($params->get('upload_size_limit', 1)).'MB',
                                 intval($params->get('upload_files_limit', 5)),
                                 implode(', ', $types)
-                            );
+                            ));
                         }
                         if ($value = $field['tooltip']) {
-                            $field['title'][] = __($value, 'pwebcontact');
+                            $field['title'][] = esc_attr__($value, 'pwebcontact');
                         }
                         if (count($field['title'])) {
                             $field['class'] = ' pweb-tooltip';
-                            $field['attributes'] .= ' title="'.htmlspecialchars(implode(' ', $field['title']), ENT_COMPAT, 'UTF-8').'"';
+                            $field['attributes'] .= ' title="'.implode(' ', $field['title']).'"';
                         }
 					?>
 					<div class="pweb-field-container pweb-field-uploader">
@@ -334,7 +334,7 @@ $message =
 								
 								if ($field['tooltip']) {
 									$field['classes'][] = 'pweb-tooltip';
-									$field['attributes'] .= ' title="'.htmlspecialchars($field['tooltip'], ENT_COMPAT, 'UTF-8').'"';
+									$field['attributes'] .= ' title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"';
 								}
 	
 								if (count($field['classes']))
@@ -357,7 +357,7 @@ $message =
 										$type = 'text';
 								}
 							?>
-							<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>"<?php echo $field['attributes']; ?> value="<?php echo htmlspecialchars($field['values'], ENT_COMPAT, 'UTF-8'); ?>" data-role="none">
+							<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>"<?php echo $field['attributes']; ?> value="<?php esc_attr_e($field['values'], 'pwebcontact'); ?>" data-role="none">
 							<?php 
                             /*** PRO START ***/
                             if ($field['type'] == 'date') : ?>
@@ -381,12 +381,12 @@ $message =
 								
 								if ($field['tooltip']) {
 									$field['classes'][] = 'pweb-tooltip';
-									$field['attributes'] .= ' title="'.htmlspecialchars($field['tooltip'], ENT_COMPAT, 'UTF-8').'"';
+									$field['attributes'] .= ' title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"';
 								}
 								if (count($field['classes']))
 									$field['attributes'] .= ' class="'.implode(' ', $field['classes']).'"';
 							?>
-							<textarea name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" cols="50"<?php echo $field['attributes']; ?> data-role="none"><?php echo htmlspecialchars($field['values'], ENT_COMPAT, 'UTF-8'); ?></textarea>
+							<textarea name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" cols="50"<?php echo $field['attributes']; ?> data-role="none"><?php esc_html_e($field['values'], 'pwebcontact'); ?></textarea>
 							<?php if ($field['maxlength']) : ?>
 							<div class="pweb-chars-counter"><?php echo sprintf(__('%s characters left', 'pwebcontact'), '<span id="'.$field['id'].'-limit">'.$field['maxlength'].'</span>'); ?></div>
 							<?php endif; ?>	
@@ -421,7 +421,7 @@ $message =
 								
 								if ($field['tooltip']) {
 									$field['classes'][] = 'pweb-tooltip';
-									$field['attributes'] .= ' title="'.htmlspecialchars($field['tooltip'], ENT_COMPAT, 'UTF-8').'"';
+									$field['attributes'] .= ' title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"';
 								}
 								
 								if (count($field['classes']))
@@ -429,11 +429,11 @@ $message =
 							?>
 							<select name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>"<?php echo $field['attributes']; ?> data-role="none">
 							<?php if ($field['type'] == 'select' AND $field['default']) : ?>
-								<option value=""><?php _e($field['default'], 'pwebcontact'); ?></option>
+								<option value=""><?php esc_html_e($field['default'], 'pwebcontact'); ?></option>
 							<?php endif; ?>
 							<?php foreach ($optValues as $value) : ?>
                                 <?php if (empty($value)) continue; ?>
-								<option value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>"><?php _e($value, 'pwebcontact'); ?></option>
+                                <option value="<?php echo esc_attr( preg_replace('/[\r\n]+/', '', $value) ); ?>"><?php esc_html_e($value, 'pwebcontact'); ?></option>
 							<?php endforeach; ?>
 							</select>
 							<?php 
@@ -460,16 +460,16 @@ $message =
 								if ($field['type'] == 'checkboxes') 
 									$field['name'] .= '[]';
 							?>
-							<fieldset id="<?php echo $field['id']; ?>" class="pweb-fields-group<?php if ($field['tooltip']) echo ' pweb-tooltip" title="'.htmlspecialchars($field['tooltip'], ENT_COMPAT, 'UTF-8'); ?>">
+							<fieldset id="<?php echo $field['id']; ?>" class="pweb-fields-group<?php if ($field['tooltip']) echo ' pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact'); ?>">
 							<?php 
 							/* ----- Options in multiple columns ----- */
 							if ($optRows) : ?>
 							<div class="pweb-column pweb-width-<?php echo $width; ?>">
 							<?php foreach ($optValues as $value) : ?>
                                 <?php if (empty($value)) continue; ?>
-								<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id'].'_'.$i; ?>" value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>" class="pweb-<?php echo $type; ?> pweb-fieldset<?php if ($i == 0 AND $field['required']) echo ' required'; ?>" data-role="none">
+								<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id'].'_'.$i; ?>" value="<?php echo esc_attr( preg_replace('/[\r\n]+/', '', $value) ); ?>" class="pweb-<?php echo $type; ?> pweb-fieldset<?php if ($i == 0 AND $field['required']) echo ' required'; ?>" data-role="none">
 								<label for="<?php echo $field['id'].'_'.$i++; ?>">
-									<?php _e($value, 'pwebcontact'); ?>
+									<?php esc_html_e($value, 'pwebcontact'); ?>
 								</label>
 							<?php // Column separator
 							if (($i % $optRows) == 0 AND $cols < $optColumns) : $cols++; ?>
@@ -484,9 +484,9 @@ $message =
 							else :
 							foreach ($optValues as $value) : ?>
                                 <?php if (empty($value)) continue; ?>
-								<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id'].'_'.$i; ?>" value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>" class="pweb-<?php echo $type; ?> pweb-fieldset<?php if ($i == 0 AND $field['required']) echo ' required'; ?>" data-role="none">
+								<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id'].'_'.$i; ?>" value="<?php echo esc_attr( preg_replace('/[\r\n]+/', '', $value) ); ?>" class="pweb-<?php echo $type; ?> pweb-fieldset<?php if ($i == 0 AND $field['required']) echo ' required'; ?>" data-role="none">
 								<label for="<?php echo $field['id'].'_'.$i++; ?>">
-									<?php _e($value, 'pwebcontact'); ?>
+									<?php esc_html_e($value, 'pwebcontact'); ?>
 								</label>
 							<?php endforeach;
 							endif; ?>
@@ -497,8 +497,8 @@ $message =
 							
 							/* ----- Single checkbox ------------------------------------------------------------------ */
 							elseif ($field['type'] == 'checkbox') : ?>
-								<input type="checkbox" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" class="pweb-checkbox pweb-single-checkbox<?php if ($field['required']) echo ' required'; ?>" value="<?php echo $field['values'] ? htmlspecialchars($field['values'], ENT_COMPAT, 'UTF-8') : 'JYes'; ?>" data-role="none">
-								<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl"<?php if ($field['tooltip']) echo ' class="pweb-tooltip" title="'.htmlspecialchars($field['tooltip'], ENT_COMPAT, 'UTF-8').'"'; ?>>
+								<input type="checkbox" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" class="pweb-checkbox pweb-single-checkbox<?php if ($field['required']) echo ' required'; ?>" value="1" data-role="none">
+								<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl"<?php if ($field['tooltip']) echo ' class="pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"'; ?>>
                                     <?php _e($field['label'], 'pwebcontact'); ?>
                                     <?php if ($field['required']) : ?>
                                         <span class="pweb-asterisk">*</span>
@@ -509,15 +509,15 @@ $message =
                             
                             /* ----- Single checkbox with Terms & Conditions ----------------------------------------- */
 							elseif ($field['type'] == 'checkbox_modal') : ?>
-								<input type="checkbox" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" class="pweb-checkbox pweb-single-checkbox<?php if ($field['required']) echo ' required'; ?>" value="<?php echo $field['values'] ? htmlspecialchars($field['values'], ENT_COMPAT, 'UTF-8') : 'JYes'; ?>" data-role="none">
-								<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl"<?php if ($field['tooltip']) echo ' class="pweb-tooltip" title="'.htmlspecialchars($field['tooltip'], ENT_COMPAT, 'UTF-8').'"'; ?>>
+								<input type="checkbox" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" class="pweb-checkbox pweb-single-checkbox<?php if ($field['required']) echo ' required'; ?>" value="1" data-role="none">
+								<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl"<?php if ($field['tooltip']) echo ' class="pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"'; ?>>
 								<?php if ($field['url']) : ?>
 									<a href="<?php echo $field['url']; ?>" target="_blank"<?php if ($field['target'] == 1) echo ' class="pweb-modal-url"'; ?>>
-                                        <?php _e($field['label'], 'pwebcontact'); ?>
+                                        <?php esc_html_e($field['label'], 'pwebcontact'); ?>
                                         <span class="glyphicon glyphicon-new-window"></span>
                                     </a>
 								<?php else : 
-									_e($field['label'], 'pwebcontact'); 
+									esc_html_e($field['label'], 'pwebcontact'); 
 								endif; ?>
 								<?php if ($field['required']) : ?>
 									<span class="pweb-asterisk">*</span>

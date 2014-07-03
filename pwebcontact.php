@@ -359,19 +359,33 @@ class PWebContact
         $form_id = $form_id ? $form_id : self::$form_id;
 		if (!isset(self::$params[$form_id]))
 		{
-            $sql =  $wpdb->prepare('SELECT `params`, `publish`, `position`, `layout` '.
+            $sql =  $wpdb->prepare('SELECT `params`, `fields`, `publish`, `position`, `layout` '.
                     'FROM `'.$wpdb->prefix.'pwebcontact_forms` '.
                     'WHERE `id` = %d', $form_id);
             
             $data = $wpdb->get_row($sql);
 			
-			$params = new PWebContact_Params($data->params);
+            $data->params = $data->params ? json_decode( $data->params, true ) : array();
+            array_walk($data->params, function(&$value, $key) {
+                $value = stripslashes($value); // TODO change if checkboxes are used in admin configuration
+            });
+            
+			$params = new PWebContact_Params( $data->params );
 			$params->def('id', (int)$form_id);
             $params->def('publish', $data->publish);
             $params->def('position', $data->position);
             $params->def('layout_type', $data->layout);
 				
 			self::$params[$form_id] = $params;
+            
+            
+            $fields = $data->fields ? json_decode( $data->fields, true ) : array();
+            foreach ($fields as &$field) {
+                array_walk($field, function(&$value, $key) {
+                    $value = stripslashes($value); // TODO change if checkboxes are used in admin fields configuration
+                });
+            }
+            self::$fields[$form_id] = $fields;
 			
 			if (!self::$form_id AND $form_id) self::$form_id = $form_id;
 		}
@@ -383,7 +397,12 @@ class PWebContact
 	{
 		if (self::$settings === null)
 		{
-            self::$settings = new PWebContact_Params( get_option('pwebcontact_settings', array()) );
+            $settings_a = get_option('pwebcontact_settings', array());
+            array_walk($settings_a, function(&$value, $key) {
+                $value = stripslashes($value);
+            });
+            
+            self::$settings = new PWebContact_Params( $settings_a );
 		}
 		return self::$settings;
 	}
@@ -394,11 +413,7 @@ class PWebContact
 		$form_id = $form_id ? $form_id : self::$form_id;
 		if (!isset(self::$fields[$form_id])) 
 		{
-			$params = self::getParams($form_id);
-			self::$fields[$form_id] = $params->get('fields', array());
-            if (!is_array(self::$fields[$form_id])) {
-                self::$fields[$form_id] = json_decode($params->get('fields', '[]'), true);
-            }
+			self::getParams($form_id);
 		}
 		return self::$fields[$form_id];
 	}
@@ -692,7 +707,7 @@ class PWebContact
 			}
 			
 			// Modal transfer effect
-			if (($value = (float)$params->get('modal_duration', 400)) !== 400) {
+			if (($value = (float)$params->get('effect_duration', 400)) !== 400) {
 				$declarations[0] = 'animation-duration:'.$value.'ms';
 				$declarations[] = '-o-'.$declarations[0];
 				$declarations[] = '-ms-'.$declarations[0];
@@ -902,7 +917,7 @@ class PWebContact
 				wp_enqueue_script('jquery-ui-core');
 			}
 		}
-		elseif ($layout == 'accordion' OR ($layout == 'modal' AND $params->get('effect') != 'modal:fade'))
+		elseif ($layout == 'accordion' OR ($layout == 'modal' AND $params->get('effect') != 'modal:fade' AND $params->get('effect') != 'modal:drop'))
 		{
 			if ($params->get('load_jquery_ui_effects', 1)) {
 				wp_enqueue_script('jquery-effects-core');
@@ -1201,9 +1216,9 @@ class PWebContact
 			if (($value = $params->get('form_width')) AND strpos($value, 'px') !== false)
 				$options[] = 'slideWidth:'.(int)$value;
 			if (($value = (int)$params->get('effect_duration')) > 0) //NEW
-				$options[] = 'effectDuration:'.$value;
+				$options[] = 'slideDuration:'.$value;
 			if (($value = $params->get('effect_transition')) != -1 AND $value != -2 AND $value) { //NEW
-				$options[] = 'effectTransition:"'.$value.'"';
+				$options[] = 'slideTransition:"'.$value.'"';
 			}
 		}
 		// Lightbox window
@@ -1216,9 +1231,15 @@ class PWebContact
 			if (($value = $params->get('style_bg', 'white')) != -1)
 				$options[] = 'modalStyle:"'.$value.'"';
 			if (($value = $params->get('effect_duration', 400)) != 400)
-				$options[] = 'effectDuration:'.(int)$value;
+				$options[] = 'modalEffectDuration:'.(int)$value;
 			if (($value = $params->get('effect', 'modal:fade')) != 'modal:fade')
-				$options[] = 'effect:"'.substr($value, strpos($value, ':')+1).'"';
+				$options[] = 'modalEffect:"'.substr($value, strpos($value, ':')+1).'"';
+		}
+        // Accordion
+		else if ($layout == 'accordion') 
+		{
+			if (($value = $params->get('effect_duration', 400)) != 500)
+				$options[] = 'accordionDuration:'.(int)$value;
 		}
         /*** PRO END ***/
         
@@ -1755,7 +1776,7 @@ class PWebContact
                         $row = explode('|', $rows[$data['mailto']-1]);
                         if ($row[0]) {
                             $email_to[] = $row[0];
-                            $email_vars['mailto_name'] = $row[1];
+                            $email_vars['mailto_name'] = preg_replace('/[\r\n]+/', '', $row[1]);
                         }
                     }
                 }
@@ -1798,6 +1819,10 @@ class PWebContact
                         else 
                             $user_cc[] = $value;
                     }
+                }
+                elseif ($field['type'] == 'checkbox' OR $field['type'] == 'checkbox_modal') 
+                {
+                    $data['fields'][$field['alias']] = $value ? 'Yes' : 'No';
                 }
                 else 
                 {
@@ -2155,6 +2180,7 @@ class PWebContact
 						}
 						break;
 					case 'checkbox':
+                    case 'checkbox_modal':
 					case 'radio':
 					case 'select':
 						if ($value) 
@@ -2365,8 +2391,9 @@ class PWebContact_Params {
     
     public function __construct($params) {
         
-        if (is_string($params))
-            $params = json_decode($params, true);
+        if (is_string($params)) {
+            $params = json_decode( $params, true );
+        }
         
         $this->data = $params;
     }

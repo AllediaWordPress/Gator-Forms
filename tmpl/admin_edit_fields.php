@@ -81,7 +81,7 @@ $this->_set_free_options('fields', array(
 	<?php echo $this->_get_field_control(array(
         'type' => 'hidden',
         'name' => 'fields',
-        'value' => json_encode( $this->_get_param('fields', array()) )
+        'value' => json_encode( $this->_get_param(null, array(), 'fields') )
     )); ?>
     
     <div class="pweb-fields-container">

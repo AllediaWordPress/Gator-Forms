@@ -666,7 +666,7 @@ class PWebContact_Admin {
         
         if ($this->data === null AND $this->id) {
         
-            $sql =  $wpdb->prepare('SELECT `title`, `publish`, `position`, `layout`, `modify_date`, `params` '.
+            $sql =  $wpdb->prepare('SELECT `title`, `publish`, `position`, `layout`, `modify_date`, `params`, `fields` '.
                     'FROM `'.$wpdb->prefix.'pwebcontact_forms` '.
                     'WHERE `id` = %d', $this->id);
             $this->data = $wpdb->get_row($sql);
@@ -675,9 +675,19 @@ class PWebContact_Admin {
                 $this->data = false;
             }
             else {
-                $this->data->params = json_decode($this->data->params, true);
+                $this->data->params = $this->data->params ? json_decode( $this->data->params, true ) : array();
                 $this->data->params['position'] = $this->data->position;
                 $this->data->params['layout_type'] = $this->data->layout;
+                array_walk($this->data->params, function(&$value, $key) {
+                    $value = stripslashes($value); // TODO change if checkboxes are used in admin configuration
+                });
+                
+                $this->data->fields = $this->data->fields ? json_decode( $this->data->fields, true ) : array();
+                foreach ($this->data->fields as &$field) {
+                    array_walk($field, function(&$value, $key) {
+                        $value = stripslashes($value); // TODO change if checkboxes are used in admin fields configuration
+                    });
+                }
                 
                 $this->_load_settings();
             }
@@ -691,6 +701,10 @@ class PWebContact_Admin {
             $this->data = new stdClass();
         }
         $this->data->settings = get_option('pwebcontact_settings', array());
+        
+        array_walk($this->data->settings, function(&$value, $key) {
+            $value = stripslashes($value);
+        });
     }
     
     
@@ -705,11 +719,15 @@ class PWebContact_Admin {
     
     protected function _get_param($key = null, $default = null, $group = 'params') {
         
-        if (isset($this->data->{$group}) AND 
-                isset($this->data->{$group}[$key]) AND 
+        if (isset($this->data->{$group})) {
+            if ($key === null) {
+                return $this->data->{$group};
+            }
+            elseif (isset($this->data->{$group}[$key]) AND 
                 $this->data->{$group}[$key] !== null AND 
                 $this->data->{$group}[$key] !== '') {
-            return $this->data->{$group}[$key];
+                return $this->data->{$group}[$key];
+            }
         }
         return $default;
     }
@@ -808,7 +826,7 @@ class PWebContact_Admin {
         
         $params =& $this->data->params;
         
-        // Validate params
+        // TODO Validate params
         // Int
         /*
         zindex
@@ -843,14 +861,14 @@ class PWebContact_Admin {
         email_to
         email_bcc*/
         
-        $fields = $this->_get_post('fields', array());
+        $this->data->fields = $this->_get_post('fields', array());
+        $fields =& $this->data->fields;
         ksort($fields);
-        $params['fields'] = $fields;
         
         $position = $this->_get_param('position');
         $layout = $this->_get_param('layout_type');
         
-        unset($params['position'], $params['layout_type']);
+        unset($params['position'], $params['layout_type'], $params['fields']);
         
         // Update data
         return false !== $wpdb->update($wpdb->prefix.'pwebcontact_forms', array(
@@ -859,8 +877,9 @@ class PWebContact_Admin {
                     'position' => $position,
                     'layout' => $layout,
                     'modify_date' => gmdate('Y-m-d H:i:s'),
-                    'params' => json_encode($params)
-                ), array('id' => $this->id), array('%s', /*'%d',*/ '%s', '%s', '%s'));
+                    'params' => json_encode($params),
+                    'fields' => json_encode($fields)
+                ), array('id' => $this->id), array('%s', /*'%d',*/ '%s', '%s', '%s', '%s'));
     }
     
     
@@ -1306,7 +1325,7 @@ class PWebContact_Admin {
                 $attributes['cols'] = isset($attributes['cols']) ? $attributes['cols'] : 30;
                 $attributes['rows'] = isset($attributes['rows']) ? $attributes['rows'] : 5;
                 
-                $html .= '<textarea name="'.$field_name.'"'. $this->_attr_to_str($attributes) .'>'. esc_attr($value) .'</textarea>';
+                $html .= '<textarea name="'.$field_name.'"'. $this->_attr_to_str($attributes) .'>'. esc_html($value) .'</textarea>';
                 break;
                 
                 
