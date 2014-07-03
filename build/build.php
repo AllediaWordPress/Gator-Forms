@@ -50,7 +50,7 @@ class PWebCompiler {
             $contents = preg_replace('/\n[^\n\r]*<!-- PRO (START|END) -->.*/', '', $contents);
             $contents = preg_replace('/\n[^\n\r]*\/\*\*\* PRO (START|END) \*\*\*\/.*/', '', $contents);
             
-            $contents = preg_replace('/Plugin Name: [^\n\r]+/i', '\\0 Pro', $contents);
+            $contents = preg_replace('/Plugin Name: [^\n\r]+/i', '\\0 PRO', $contents);
         }
         else {
             $contents = preg_replace('/([^\n\r]*<!-- PRO START -->).*?(<!-- PRO END -->[^\n]*\n)/s', '', $contents);
@@ -81,7 +81,7 @@ class PWebCompiler {
                     }
                 }
                 
-                if (in_array($directory . $filename, $this->excludeProFiles)) {
+                if (!$this->is_pro AND in_array($directory . $filename, $this->excludeProFiles)) {
                     continue;
                 }
                 
