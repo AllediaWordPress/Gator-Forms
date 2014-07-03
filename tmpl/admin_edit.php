@@ -23,48 +23,48 @@ function_exists('add_action') or die;
             <input type="text" name="title" value="<?php echo esc_attr($this->data->title); ?>" placeholder="<?php esc_attr_e( 'Form name', 'pwebcontact' ); ?>">
 
             <button type="submit" class="button button-primary" id="pweb-save-button">
-                <i class="icomoon-disk"></i> <span><?php _e( 'Save' ); ?></span>
+                <i class="glyphicon glyphicon-floppy-disk"></i> <span><?php _e( 'Save' ); ?></span>
             </button>
             <button type="button" class="button" id="pweb-close-button" onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact' ); ?>'">
-                <i class="icomoon-close"></i> <span><?php _e( 'Close' ); ?></span>
+                <i class="glyphicon glyphicon-remove"></i> <span><?php _e( 'Close' ); ?></span>
             </button>
 
             <span id="pweb-save-status"><?php _e( 'Saved on', 'pwebcontact' ); ?> <?php echo get_date_from_gmt($this->data->modify_date); ?></span>
             
             <?php if (!defined('PWEBCONTACT_PRO')) : ?>
             <button class="button button-primary right pweb-buy" id="pweb-buy-button">
-                <i class="icomoon-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
+                <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
                 <span>&amp; <?php _e( 'Get Support', 'pwebcontact' ); ?></span>
             </button>
             <?php endif; ?>
             <a class="button button-primary right" id="pweb-docs-button" href="<?php echo $this->documentation_url; ?>" target="_blank">
-                <i class="icomoon-support"></i> <span><?php _e( 'Documentation' ); ?></span>
+                <i class="glyphicon glyphicon-question-sign"></i> <span><?php _e( 'Documentation' ); ?></span>
             </a>
         </div>
 
         <h2 class="nav-tab-wrapper" id="pweb-tabs">
             <a href="#pweb-tab-location" id="pweb-tab-location" class="nav-tab nav-tab-active">
-                <i class="icomoon-stack"></i>
+                <i class="glyphicon glyphicon-th-large"></i>
                 <?php esc_html_e( 'Location & Effects', 'pwebcontact' ); ?>
             </a>
             <a href="#pweb-tab-fields" id="pweb-tab-fields" class="nav-tab">
-                <i class="icomoon-list"></i>
+                <i class="glyphicon glyphicon-th-list"></i>
                 <?php esc_html_e( 'Fields', 'pwebcontact' ); ?>
             </a>
             <a href="#pweb-tab-theme" id="pweb-tab-theme" class="nav-tab">
-                <i class="icomoon-paint-format"></i>
+                <i class="glyphicon glyphicon-tint"></i>
                 <?php esc_html_e( 'Theme', 'pwebcontact' ); ?>
             </a>
             <a href="#pweb-tab-email" id="pweb-tab-email" class="nav-tab">
-                <i class="icomoon-envelope"></i>
+                <i class="glyphicon glyphicon-envelope"></i>
                 <?php esc_html_e( 'Email settings', 'pwebcontact' ); ?>
             </a>
             <a href="#pweb-tab-check" id="pweb-tab-check" class="nav-tab">
-                <i class="icomoon-checkmark"></i>
+                <i class="glyphicon glyphicon-ok"></i>
                 <?php esc_html_e( 'Configuration check', 'pwebcontact' ); ?>
             </a>
             <a href="#pweb-tab-advanced" id="pweb-tab-advanced" class="nav-tab">
-                <i class="icomoon-cog"></i>
+                <i class="glyphicon glyphicon-cog"></i>
                 <?php esc_html_e( 'Advanced', 'pwebcontact' ); ?>
             </a>
         </h2>

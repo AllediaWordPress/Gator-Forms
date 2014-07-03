@@ -21,16 +21,16 @@ function_exists('add_action') or die;
             <?php $this->_display_messages(); ?>
 
             <button type="submit" class="button button-primary" id="pweb-save-button">
-                <i class="icomoon-disk"></i> <span><?php _e( 'Save' ); ?></span>
+                <i class="glyphicon glyphicon-floppy-disk"></i> <span><?php _e( 'Save' ); ?></span>
             </button>
             <button type="button" class="button" id="pweb-close-button" onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact' ); ?>'">
-                <i class="icomoon-close"></i> <span><?php _e( 'Close' ); ?></span>
+                <i class="glyphicon glyphicon-remove"></i> <span><?php _e( 'Close' ); ?></span>
             </button>
 
             <span id="pweb-save-status"></span>
             
             <a class="button button-primary right" id="pweb-docs-button" href="<?php echo $this->documentation_url; ?>" target="_blank">
-                <i class="icomoon-support"></i> <span><?php _e( 'Documentation' ); ?></span>
+                <i class="glyphicon glyphicon-question-sign"></i> <span><?php _e( 'Documentation' ); ?></span>
             </a>
         </div>
     </div>

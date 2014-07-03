@@ -162,20 +162,19 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 			dataType: "json",
             data: $(this).serialize(),
             beforeSend: function() {
-                $("#pweb-save-status").addClass("pweb-saving").text(pwebcontact_l10n.saving);
+                $("#pweb-save-status").html(pwebcontact_l10n.saving + ' <i class="glyphicon glyphicon-refresh"></i>');
             }
 		}).always(function(){
             $("#pweb-save-button").get(0).disabled = false;
-            $("#pweb-save-status").removeClass("pweb-saving");
             
         }).done(function(response, textStatus, jqXHR) {
 			if (response && typeof response.success === "boolean") 
 			{
-                $("#pweb-save-status").text(
+                $("#pweb-save-status").html(
                         response.success === true ? pwebcontact_l10n.saved_on+" "+(new Date()).toLocaleTimeString() : pwebcontact_l10n.error);
 			}
 		}).fail(function(jqXHR, textStatus, errorThrown) {
-            $("#pweb-save-status").text("Request error");
+            $("#pweb-save-status").html("Request error");
             alert(pwebcontact_l10n.request_error+ ". "+ jqXHR.status +" "+ errorThrown);
 		});
         

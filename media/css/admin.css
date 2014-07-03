@@ -202,10 +202,6 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     padding: 0 0 0 10px;
     color: #999;
 }
-#pweb-save-status.pweb-saving {
-    padding-right: 20px;
-    background: url(../../../../../wp-includes/images/wpspin.gif) 100% 50% no-repeat;
-}
 #wpbody div.error,
 #wpbody div.updated,
 #wpbody div.update-nag,
@@ -258,9 +254,9 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     -webkit-box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
 }
-#pweb-theme-preview a + i.icomoon-spinner,
-#pweb_load_fields + i.icomoon-spinner,
-.pweb-load-email-tmpl + i.icomoon-spinner {
+#pweb-theme-preview a + i.glyphicon-refresh,
+#pweb_load_fields + i.glyphicon-refresh,
+.pweb-load-email-tmpl + i.glyphicon-refresh {
     margin-left: 5px;
 }
 
@@ -486,8 +482,8 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 .pweb-advanced-options-toggler span {
     text-decoration: underline;
 }
-.pweb-advanced-options-toggler .dashicons,
-.pweb-advanced-options-toggler .dashicons:before {
+.pweb-advanced-options-toggler .glyphicon,
+.pweb-advanced-options-toggler .glyphicon:before {
     text-decoration: none;
 }
 .pweb-advanced-options-content {
@@ -865,11 +861,11 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 }
 
 
-.pweb-icomoon-list,
-.pweb-icomoon-list option {
+.pweb-glyphicon-list,
+.pweb-glyphicon-list option {
     line-height: 25px;
     font-size: 18px;
-    font-family: 'IcoMoon';
+    font-family: 'Glyphicons Halflings';
 }
 
 
@@ -937,7 +933,7 @@ span.pweb-free {
 	min-height: 0; /* support: IE7 */
 }
 
-.icomoon-spinner {
+.glyphicon-refresh {
     display: inline-block;
     -webkit-animation: pweb-spin 2s infinite linear;
     animation: pweb-spin 2s infinite linear;

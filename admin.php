@@ -600,7 +600,7 @@ class PWebContact_Admin {
         // load CSS
         //wp_enqueue_style('pwebcontact_jquery_ui_style', plugins_url('media/css/ui/jquery-ui-1.10.4.custom.css', __FILE__));
         wp_enqueue_style('pwebcontact_admin_style', plugins_url('media/css/admin.css', __FILE__));
-        wp_enqueue_style('pwebcontact_icomoon_style', plugins_url('media/css/icomoon.css', __FILE__));
+        wp_enqueue_style('pwebcontact_glyphicon_style', plugins_url('media/css/glyphicon.css', __FILE__));
         
         add_action('admin_head', array($this, 'admin_head'));
     }
@@ -1207,14 +1207,14 @@ class PWebContact_Admin {
                 break;
             
             
-            case 'icomoon':
+            case 'glyphicon':
 
                 $type = 'select';
                 
-                $css = file_get_contents( dirname(__FILE__).'/media/css/icomoon.css' );
-                if (preg_match_all('/\.(icomoon-[^:]+):before\s*\{\s*content:\s*"\\\([^"]+)";\s*\}/i', $css, $matches, PREG_SET_ORDER))
+                $css = file_get_contents( dirname(__FILE__).'/media/css/glyphicon.css' );
+                if (preg_match_all('/\.(glyphicon-[^:]+):before\s*\{\s*content:\s*"\\\([^"]+)";\s*\}/i', $css, $matches, PREG_SET_ORDER))
                 {
-                    $attributes['class'] .= ' pweb-icomoon-list';
+                    $attributes['class'] .= ' pweb-glyphicon-list';
                     
                     foreach ($matches as $icon) {
                         $options[] = array(

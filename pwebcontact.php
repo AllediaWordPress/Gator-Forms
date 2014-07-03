@@ -101,7 +101,7 @@ class PWebContact
             wp_register_style('pwebcontact-bootstrap-custom', $media_url.'css/bootstrap-custom.css');
             wp_register_style('pwebcontact-bootstrap-custom-rtl', $media_url.'css/bootstrap-custom-rtl.css');
 
-            wp_register_style('pwebcontact-icomoon', $media_url.'css/icomoon.css');
+            wp_register_style('pwebcontact-glyphicon', $media_url.'css/glyphicon.css');
 
             wp_register_style('pwebcontact-layout', $media_url.'css/layout.css');
             wp_register_style('pwebcontact-layout-rtl', $media_url.'css/layout-rtl.css');
@@ -479,7 +479,6 @@ class PWebContact
         /*** PRO END ***/
         
         if ($params->get('rtl', 0)) $moduleClasses[] = $togglerClasses[] = 'pweb-rtl';
-        if ($icon = $params->get('icons', 'icomoon')) $moduleClasses[] = 'pweb-'.$icon;
         
 		if ($moduleclass_sfx = $params->get('moduleclass_sfx')) {
 			$moduleclasses_sfx = explode(' ', $moduleclass_sfx);
@@ -561,8 +560,8 @@ class PWebContact
                         //TODO parse and encode URL with JS
 					$css .= '#pwebcontact'.$form_id.'_toggler .pweb-icon{background-image:url('.$value.')}'; //WP
 			}
-			elseif ($params->get('toggler_icon') == 'icomoon') {
-				if ($value = $params->get('toggler_icomoon'))
+			elseif ($params->get('toggler_icon') == 'glyphicon') {
+				if ($value = $params->get('toggler_glyphicon'))
 					$css .= '#pwebcontact'.$form_id.'_toggler .pweb-icon:before{content:"\\'.$value.'"}';
 			}
 				
@@ -774,8 +773,8 @@ class PWebContact
 		}
         /*** PRO END ***/
 
-		// Disable Boostrap glyphicons
-		if (!$params->get('boostrap_glyphicons', 1))
+		// Disable Boostrap 2 Glyphicons
+		if (!$params->get('boostrap2_glyphicons', 0))
 			$css .= '[class^="icon-"],[class*=" icon-"]{background-image:none !important}';
 
 
@@ -789,6 +788,7 @@ class PWebContact
 		$media_url 	= $params->get('media_url');
 		$layout 	= $params->get('layout_type', 'slidebox');
 		$debug 		= $params->get('debug');
+        $bootstrap  = false;
 
         
 		// jQuery
@@ -799,9 +799,11 @@ class PWebContact
 		if ($params->get('load_bootstrap', 1)) {
             if ($params->get('bootstrap_version', 2) == 2) {
                 wp_enqueue_script('pwebcontact-bootstrap-2');
+                $bootstrap = 2;
             }
             elseif ($params->get('bootstrap_version', 2) == 3) {
                 wp_enqueue_script('pwebcontact-bootstrap');
+                $bootstrap = 3;
             }
 		}
 		
@@ -843,16 +845,20 @@ class PWebContact
 			}
 		}
 
-        // Toggler and calendar field IcoMoon
-		if (($datapicker OR (in_array($params->get('handler', 'tab'), array('button', 'tab')) AND $params->get('toggler_icon') == 'icomoon' AND $params->get('toggler_icomoon'))) AND $params->get('load_icomoon', 1))
-			wp_enqueue_style('pwebcontact-icomoon');
+        // Toggler and calendar field glyphicon
+		if ($bootstrap !== 3 AND $params->get('load_glyphicon', 1) AND (
+                $datapicker OR (
+                    in_array($params->get('handler', 'tab'), array('button', 'tab')) AND $params->get('toggler_icon') == 'glyphicon' AND $params->get('toggler_glyphicon')
+            ))) {
+			wp_enqueue_style('pwebcontact-glyphicon');
+        }
 
 
         if ($params->get('show_upload', 0)) 
 		{
-			// Load IcoMoon for uploader
-            if ($params->get('icons', 'icomoon') == 'icomoon' AND $params->get('load_icomoon', 1))
-				wp_enqueue_style('pwebcontact-icomoon');
+			// Load glyphicon for uploader
+            if ($bootstrap !== 3 AND $params->get('load_glyphicon', 1))
+				wp_enqueue_style('pwebcontact-glyphicon');
 			
 			wp_enqueue_style('pwebcontact-uploader');
 			if ($params->get('rtl', 0)) 

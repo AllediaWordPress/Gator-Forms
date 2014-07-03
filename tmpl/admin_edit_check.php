@@ -25,7 +25,7 @@ function_exists('add_action') or die;
     <?php _e('Congratulations your form is ready! But you have chosen some PRO options so you need to BUY Pro Version in order to publish your form', 'pwebcontact'); ?>
     
     <button class="button button-primary pweb-buy">
-        <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
+        <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
     </button>
 </div>
 <?php endif; ?>
@@ -35,40 +35,43 @@ function_exists('add_action') or die;
 </div>
 
 <button type="button" class="button button-primary" id="pweb-cog-check-save">
-    <i class="icomoon-disk"></i> <span><?php _e( 'Save' ); ?></span>
+    <i class="glyphicon glyphicon-floppy-disk"></i> <span><?php _e( 'Save' ); ?></span>
 </button>
 
 <div id="pweb-cog-check">
     
     <div class="pweb-alert pweb-alert-danger" id="pweb-email-to-warning" style="display:none">
-        <i class="icomoon-warning"></i>
+        <i class="glyphicon glyphicon-warning"></i>
         <?php _e('Enter one or more emails to which message should be sent to in Email settings tab.', 'pwebcontact'); ?>
     </div>
 
     <?php if (($result = $this->_check_mailer()) !== true) : ?>
     <div class="pweb-alert pweb-alert-danger">
-        <i class="icomoon-warning"></i> <?php echo $result; ?>
+        <i class="glyphicon glyphicon-warning"></i> <?php echo $result; ?>
     </div>
     <?php endif; ?>
+    
+    
+    <?php //TODO check if copy to user field is allowed ?>
 
 
     <?php if (($result = $this->_check_cache_path()) !== true) : ?>
     <div class="pweb-alert pweb-alert-danger">
-        <i class="icomoon-warning"></i> <?php echo $result; ?>
+        <i class="glyphicon glyphicon-warning"></i> <?php echo $result; ?>
     </div>
     <?php endif; ?>
 
     
     <?php if (defined('PWEBCONTACT_PRO') AND ($result = $this->_check_upload_path()) !== true) : ?>
     <div class="pweb-alert pweb-alert-danger" id="pweb-upload-path-warning" style="display:none">
-        <i class="icomoon-warning"></i> <?php echo $result; ?>
+        <i class="glyphicon glyphicon-warning"></i> <?php echo $result; ?>
     </div>
     <?php endif; ?>
 
 
     <?php if (($result = $this->_check_image_text_creation()) !== true) : ?>
     <div class="pweb-alert pweb-alert-warning">
-        <i class="icomoon-warning"></i> <?php echo $result; ?>
+        <i class="glyphicon glyphicon-warning"></i> <?php echo $result; ?>
     </div>
     <?php endif; ?>
 

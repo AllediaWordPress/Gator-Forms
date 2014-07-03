@@ -175,8 +175,8 @@ form.pwebcontact-form .btn {
 	background-repeat: no-repeat;
 	background-position: center top;
 }
-.pwebcontact_toggler.pweb-icon-icomoon .pweb-icon:before {
-	font-family: 'IcoMoon';
+.pwebcontact_toggler.pweb-icon-glyphicon .pweb-icon:before {
+	font-family: 'Glyphicons Halflings';
 	speak: none;
 }
 .pwebcontact_toggler.pweb-icon-gallery.pweb-opened .pweb-icon {
@@ -733,7 +733,7 @@ form.pwebcontact-form .pweb-field-checkbox label.rokchecks {
 }
 form.pwebcontact-form input.pweb-checkbox, 
 form.pwebcontact-form input.pweb-radio {
-	margin: 3px 0 0 0;
+	margin: 3px 3px 0 0;
 	float: left;
 }
 form.pwebcontact-form fieldset input,
@@ -971,42 +971,6 @@ body div.calendar {
 	padding: 4px 0;
 	cursor: pointer;
 	text-align: center;
-}
-
-/* Icons
- * ---------------------------------------------------------------------
- */
-.pweb-icomoon .icon-calendar,
-.pweb-icomoon .icon-out,
-.pweb-icomoon .icon-remove-sign {
-	background-image: none !important;
-	margin: 0;
-}
-.pweb-icomoon .icon-calendar:before,
-.pweb-icomoon .icon-out:before,
-.pweb-icomoon .icon-remove-sign:before {
-	font-family: 'IcoMoon';
-	font-style: normal;
-	speak: none;
-	background: none;
-}
-.pweb-icomoon .icon-calendar:before {
-	content: "\43";
-}
-.pweb-icomoon .icon-out:before {
-	content: "\26";
-}
-.pweb-icomoon .icon-remove-sign:before {
-	content: "\4a";
-}
-.pweb-glyphicons .icon-calendar:before,
-.pweb-glyphicons .icon-out:before,
-.pweb-glyphicons .icon-remove-sign:before {
-	font-family: none !important;
-	content: "" !important;
-}
-.pweb-glyphicons .icon-out {
-	background-position: -120px -72px;
 }
 
 /* Tooltip

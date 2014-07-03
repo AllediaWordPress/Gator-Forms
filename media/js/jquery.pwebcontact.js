@@ -59,7 +59,6 @@ var pwebBoxes = pwebBoxes || [],
 			tooltips: 3,
 			msgPosition: 'after',
 			msgCloseDelay: 10,
-			rulesModal: false,
 			
 			togglerNameOpen: '',
 			togglerNameClose: '',
@@ -275,8 +274,7 @@ var pwebBoxes = pwebBoxes || [],
 			if (this.Box.hasClass('pweb-labels-over')) 
 				this.initLabelsOverFields();
 			
-			if (this.options.rulesModal)
-				this.initModalRules();
+			this.initModalRules();
 			
 			// assign buttons events
 			this.ButtonSend.click(function(){
@@ -392,7 +390,7 @@ var pwebBoxes = pwebBoxes || [],
 		initModalRules: function()
 		{
 			var that = this,
-				links = this.Form.find('.pweb-field-checkbox a');
+				links = this.Form.find('.pweb-modal-url');
 			
 			if (!links.length) return;
 			
@@ -563,7 +561,7 @@ var pwebBoxes = pwebBoxes || [],
 					e.stopPropagation();
 					if (e.target !== e.currentTarget) return;
 				}).on(this.options.bootstrap === 2 ? 'hide' : 'hide.bs.tooltip', function(e) {
-					if (that.options.bootstrap === 2) {
+					if (that.options.bootstrap === 3) {
 						e.preventDefault();
 						$(this).siblings('div.tooltip.in').removeClass('in');
 					}

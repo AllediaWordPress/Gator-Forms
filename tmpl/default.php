@@ -116,7 +116,7 @@ $message =
 						<div class="pweb-field">
 							<button id="pwebcontact<?php echo $form_id; ?>_send" type="button" class="btn" data-role="none"><?php _e($field['label'] ? $field['label'] : 'Send', 'pwebcontact') ?></button>
 							<?php if ($params->get('reset_form', 1) == 3) : ?>
-							<button id="pwebcontact<?php echo $form_id; ?>_reset" type="reset" class="btn" style="display:none" data-role="none"><i class="icon-remove-sign icon-white"></i> <?php _e($params->get('button_reset', 'Reset'), 'pwebcontact') ?></button>
+							<button id="pwebcontact<?php echo $form_id; ?>_reset" type="reset" class="btn" style="display:none" data-role="none"><i class="glyphicon glyphicon-remove-sign"></i> <?php _e($params->get('button_reset', 'Reset'), 'pwebcontact') ?></button>
 							<?php endif; ?>
                             <!-- PRO START -->
 							<?php if ($params->get('msg_position', 'after') == 'button' OR $params->get('msg_position', 'after') == 'popup') echo $message; ?>
@@ -203,9 +203,7 @@ $message =
                     
                     
                     /* ----- Email copy --------------------------------------------------------------------------- */
-                    elseif ($field['type'] == 'email_copy') :
-						
-                        if ($params->get('email_copy', 2) == 1) :
+                    elseif ($field['type'] == 'email_copy' AND $params->get('email_copy', 2) == 1) :
                             $field['id'] = 'pwebcontact'.$form_id.'_copy';
 					?>
 					<div class="pweb-field-container pweb-field-checkbox pweb-field-copy">
@@ -217,7 +215,7 @@ $message =
 						</div>
 					</div>
 					<?php 
-                        endif;
+                    
 					
 					/* ----- Upload ----------------------------------------------------------------------------------- */
 					elseif ($field['type'] == 'upload') :
@@ -266,7 +264,7 @@ $message =
 						<div class="pweb-field pweb-uploader" id="<?php echo $field['id']; ?>_container">
 							<div class="fileupload-buttonbar">
 								<span class="fileinput-button btn<?php echo $field['class']; ?>"<?php echo $field['attributes']; ?>>
-				                    <i class="icon-plus-sign icon-white"></i>
+				                    <i class="glyphicon glyphicon-plus-sign"></i>
 				                    <span><?php _e('Add files', 'pwebcontact'); ?></span>
 				                    <input type="file" name="files[]" multiple="multiple" id="<?php echo $field['id']; ?>"<?php if ($field['required']) echo ' class="pweb-validate-uploader"'; ?> data-role="none">
 				                </span>
@@ -274,21 +272,21 @@ $message =
 							<div class="files"></div>
 							<div class="templates" style="display:none" aria-hidden="true">
 								<div class="template-upload fade">
-									<span class="ready"><i class="icon-upload"></i></span>
-									<span class="warning"><i class="icon-warning-sign"></i></span>
+									<span class="ready"><i class="glyphicon glyphicon-upload"></i></span>
+									<span class="warning"><i class="glyphicon glyphicon-warning-sign"></i></span>
 				                	<span class="name"></span>
 				                	<span class="size"></span>
 				                	<span class="error invalid"></span>
-				                	<a href="#" class="cancel"><i class="icon-remove"></i><?php _e('Cancel', 'pwebcontact'); ?></a>
+				                	<a href="#" class="cancel"><i class="glyphicon glyphicon-remove"></i><?php _e('Cancel', 'pwebcontact'); ?></a>
 				                	<div class="progress progress-striped active"><div class="bar progress-bar" style="width:0%"></div></div>
 				                </div>
 								<div class="template-download fade">
-									<span class="success"><i class="icon-ok"></i></span>
-									<span class="warning"><i class="icon-warning-sign"></i></span>
+									<span class="success"><i class="glyphicon glyphicon-ok"></i></span>
+									<span class="warning"><i class="glyphicon glyphicon-warning-sign"></i></span>
 				                	<span class="name"></span>
 				                    <span class="size"></span>
 				                    <span class="error invalid"></span>
-				                    <a href="#" class="delete"><i class="icon-trash"></i><?php _e('Delete', 'pwebcontact'); ?></a>
+				                    <a href="#" class="delete"><i class="glyphicon glyphicon-trash"></i><?php _e('Delete', 'pwebcontact'); ?></a>
 				                </div>
 							</div>
 						</div>
@@ -363,7 +361,7 @@ $message =
 							<?php 
                             /*** PRO START ***/
                             if ($field['type'] == 'date') : ?>
-							<span class="pweb-calendar-btn" id="<?php echo $field['id']; ?>_btn"><i class="icomoon-calendar"></i></span>
+							<span class="pweb-calendar-btn" id="<?php echo $field['id']; ?>_btn"><i class="glyphicon glyphicon-calendar"></i></span>
 							<?php endif;
                             /*** PRO END ***/
                                 unset($type);
@@ -516,7 +514,7 @@ $message =
 								<?php if ($field['url']) : ?>
 									<a href="<?php echo $field['url']; ?>" target="_blank"<?php if ($field['target'] == 1) echo ' class="pweb-modal-url"'; ?>>
                                         <?php _e($field['label'], 'pwebcontact'); ?>
-                                        <span class="icon-out"></span>
+                                        <span class="glyphicon glyphicon-new-window"></span>
                                     </a>
 								<?php else : 
 									_e($field['label'], 'pwebcontact'); 
@@ -579,13 +577,13 @@ $message =
 			/* ----- Display pages navigation ------------------------------------------------------------------------- */
 				if ($pages_count > 1) : ?>
 					<div class="pweb-pagination">
-						<button id="pwebcontact<?php echo $form_id; ?>_prev" class="btn pweb-prev" type="button" data-role="none"><span class="icon-chevron-left"></span> <?php _e('Previous', 'pwebcontact'); ?></button>
+						<button id="pwebcontact<?php echo $form_id; ?>_prev" class="btn pweb-prev" type="button" data-role="none"><span class="glyphicon glyphicon-chevron-left"></span> <?php _e('Previous', 'pwebcontact'); ?></button>
 						<div class="pweb-counter">
 							<span id="pwebcontact<?php echo $form_id; ?>_page_counter">1</span>
 							<?php _e('of', 'pwebcontact'); ?>
 							<span><?php echo $pages_count; ?></span>
 						</div>
-						<button id="pwebcontact<?php echo $form_id; ?>_next" class="btn pweb-next" type="button" data-role="none"><?php _e('Next', 'pwebcontact'); ?> <span class="icon-chevron-right"></span></button>
+						<button id="pwebcontact<?php echo $form_id; ?>_next" class="btn pweb-next" type="button" data-role="none"><?php _e('Next', 'pwebcontact'); ?> <span class="glyphicon glyphicon-chevron-right"></span></button>
 					</div>
 				<?php endif;
 			?>

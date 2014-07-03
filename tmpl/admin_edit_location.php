@@ -17,16 +17,16 @@ function_exists('add_action') or die;
     -
     <?php _e('Decide how and where your form should be displayed', 'pwebcontact'); ?>
     <button class="button button-primary pweb-next-tab-button" type="button">
-        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="icomoon-arrow-right"></i>
+        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
 </h3>
 
 <?php if (!defined('PWEBCONTACT_PRO')) : ?>
 <div id="pweb_layout_type_warning" class="pweb-alert pweb-alert-info" style="display:none">
-    <?php _e('You need to go PRO', 'pwebcontact'); ?> <i class="icomoon-smiley"></i>
+    <?php _e('You need to go PRO :)', 'pwebcontact'); ?>
     <?php _e('You have chosen PRO layout. You can still save your form, but to display it buy PRO Version', 'pwebcontact'); ?>
     <button class="button button-primary pweb-buy">
-        <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
+        <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
     </button>
 </div>
 <?php endif; ?>

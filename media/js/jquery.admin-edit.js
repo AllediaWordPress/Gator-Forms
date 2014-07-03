@@ -255,18 +255,19 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     $(".pweb-advanced-options-toggler").click(function(e){
         e.preventDefault();
         
-        var $box = $(this).parent(),
-            $icon = $(this).find("i");
+        var that = this,
+            $box = $(this).parent();
         if ($box.hasClass("pweb-advanced-options-active")) {
             $box.removeClass("pweb-advanced-options-active");
             $(this).next().slideUp(400, function(){
-                $icon.removeClass("dashicons-arrow-up").addClass("dashicons-arrow-down");
+                $(that).find("i.glyphicon-chevron-up").removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down");
             });
         }
         else {
             $box.addClass("pweb-advanced-options-active");
-            $(this).next().slideDown(400);
-            $icon.removeClass("dashicons-arrow-down").addClass("dashicons-arrow-up");
+            $(this).next().slideDown(400, function(){
+                $(that).find("i.glyphicon-chevron-down").removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-up");
+            });
         }
         
         $(this).blur();
@@ -485,12 +486,12 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     dataType: "text",
                     data: data,
                     beforeSend: function() {
-                        $('<i class="icomoon-spinner"></i>').insertAfter(that);
+                        $('<i class="glyphicon glyphicon-refresh"></i>').insertAfter(that);
                     }
                 }).done(function(response, textStatus, jqXHR) {
 
                     // hide loading
-                    $(that).val("").next("i.icomoon-spinner").remove();
+                    $(that).val("").next("i.glyphicon-refresh").remove();
 
                     if (response) {
                         $("#"+id).val(response);
@@ -638,12 +639,12 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                             "theme": $("#pweb_load_theme").val()
                         },
                         beforeSend: function() {
-                            $('<i class="icomoon-spinner"></i>').insertAfter( $("#pweb-theme-preview a") );
+                            $('<i class="glyphicon glyphicon-refresh"></i>').insertAfter( $("#pweb-theme-preview a") );
                         }
                     }).done(function(response, textStatus, jqXHR) {
 
                         // hide loading
-                        $("#pweb-theme-preview i.icomoon-spinner").remove();
+                        $("#pweb-theme-preview i.glyphicon-refresh").remove();
 
                         if (response) {
                             // load
@@ -790,20 +791,19 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 			dataType: "json",
             data: $(this).serialize(),
             beforeSend: function() {
-                $("#pweb-save-status").addClass("pweb-saving").text(pwebcontact_l10n.saving);
+                $("#pweb-save-status").html(pwebcontact_l10n.saving + ' <i class="glyphicon glyphicon-refresh"></i>');
             }
 		}).always(function(){
             $("#pweb-save-button").get(0).disabled = false;
-            $("#pweb-save-status").removeClass("pweb-saving");
             
         }).done(function(response, textStatus, jqXHR) {
 			if (response && typeof response.success === "boolean") 
 			{
-                $("#pweb-save-status").text(
+                $("#pweb-save-status").html(
                         response.success === true ? pwebcontact_l10n.saved_on+" "+(new Date()).toLocaleTimeString() : pwebcontact_l10n.error);
 			}
 		}).fail(function(jqXHR, textStatus, errorThrown) {
-            $("#pweb-save-status").text("Request error");
+            $("#pweb-save-status").html("Request error");
             alert(pwebcontact_l10n.request_error+ ". "+ jqXHR.status +" "+ errorThrown);
 		});
         

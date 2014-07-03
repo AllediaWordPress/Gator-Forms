@@ -57,7 +57,7 @@ function_exists('add_action') or die;
 
 <div class="pweb-advanced-options">
     <a href="#" class="pweb-advanced-options-toggler">
-        <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+        <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
     </a>
     <div class="pweb-advanced-options-content">
         <?php echo $this->_get_field(array(
@@ -138,8 +138,8 @@ function_exists('add_action') or die;
                     'name' => 'Disabled'
                 ),
                 array(
-                    'value' => 'icomoon',
-                    'name' => 'IcoMoon',
+                    'value' => 'glyphicon',
+                    'name' => 'Glyphicons',
                     'is_parent' => true
                 ),
                 array(
@@ -156,10 +156,10 @@ function_exists('add_action') or die;
         )); ?>
 
         <?php echo $this->_get_field(array(
-            'type' => 'icomoon',
-            'name' => 'toggler_icomoon',
-            'label' => 'IcoMoon',
-            'parent' => array('toggler_icon_icomoon')
+            'type' => 'glyphicon',
+            'name' => 'toggler_glyphicon',
+            'label' => 'Glyphicons',
+            'parent' => array('toggler_icon_glyphicon')
         )); ?>
         
         <?php echo $this->_get_field(array(
@@ -218,11 +218,11 @@ function_exists('add_action') or die;
             'options' => array(
                 array(
                     'value' => -1,
-                    'name' => '-90&deg; <i class="icomoon-undo2"></i> (counter-clockwise)'
+                    'name' => '-90&deg; (counter-clockwise)' //TODO add utf8 rotate arrow
                 ),
                 array(
                     'value' => 1,
-                    'name' => ' 90&deg; <i class="icomoon-redo2"></i> (clockwise)'
+                    'name' => ' 90&deg; (clockwise)' //TODO add utf8 rotate arrow
                 )
             )
         )); ?>
@@ -233,7 +233,7 @@ function_exists('add_action') or die;
             'label' => 'TTF font for vertical Toggler Tab text',
             'tooltip' => 'Select font from directory: `wp-content/plugins/pwebcontact/media/fonts`. If it does not support your language then upload there other font file.',
             'default' => 'NotoSans-Regular',
-            'filter' => '^((?!icomoon).)+\.ttf$',
+            'filter' => '\.ttf$',
             'directory' => 'media/fonts',
             'strip_ext' => true,
             'parent' => array('toggler_vertical_1')

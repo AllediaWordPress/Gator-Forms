@@ -62,16 +62,16 @@ $this->_set_free_options('fields', array(
     <?php _e('or drag and drop fields', 'pwebcontact'); ?>
         
     <button class="button button-primary pweb-next-tab-button" type="button">
-        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="icomoon-arrow-right"></i>
+        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
 </h3>
 
 <?php if (!defined('PWEBCONTACT_PRO')) : ?>
 <div id="pweb_fields_pro_warning" class="pweb-alert pweb-alert-info" style="display:none">
-    <?php _e('You need to go PRO', 'pwebcontact'); ?> <i class="icomoon-smiley"></i>
+    <?php _e('You need to go PRO :)', 'pwebcontact'); ?>
     <?php _e('You have chosen some PRO fields. You can still save your form, but to display it buy PRO Version', 'pwebcontact'); ?>
     <button class="button button-primary pweb-buy">
-        <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
+        <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
     </button>
 </div>
 <?php endif; ?>
@@ -87,13 +87,13 @@ $this->_set_free_options('fields', array(
     <div class="pweb-fields-container">
         
         <div class="pweb-fields-add-row pweb-clearfix" id="pweb_fields_add_row_before">
-            <i class="icomoon-plus"></i> <?php _e('Add row', 'pwebcontact'); ?>
+            <i class="glyphicon glyphicon-plus"></i> <?php _e('Add row', 'pwebcontact'); ?>
         </div>
         <div class="pweb-fields-rows pweb-clearfix" id="pweb_fields_rows">
             
         </div>
         <div class="pweb-fields-add-row pweb-clearfix" id="pweb_fields_add_row_after">
-            <i class="icomoon-plus"></i> <?php _e('Add row', 'pwebcontact'); ?>
+            <i class="glyphicon glyphicon-plus"></i> <?php _e('Add row', 'pwebcontact'); ?>
         </div>
     </div>
     
@@ -107,7 +107,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Email field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -165,7 +165,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -202,7 +202,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Name field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -260,7 +260,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -307,7 +307,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Phone field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -365,7 +365,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -412,7 +412,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Subject field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -469,7 +469,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -516,7 +516,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Text input field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -573,7 +573,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -619,7 +619,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Multi-line textarea input field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -676,7 +676,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -735,7 +735,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Calendar field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -792,7 +792,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -839,7 +839,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Password field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -896,7 +896,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -942,7 +942,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Select list field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -1010,7 +1010,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1046,7 +1046,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Multiple select list field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -1114,7 +1114,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1152,7 +1152,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Radio group field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -1220,7 +1220,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1257,7 +1257,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Checkboxes group field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -1325,7 +1325,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1362,7 +1362,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Single checkbox field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -1419,7 +1419,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1446,7 +1446,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Agree to Terms & Conditions field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -1513,7 +1513,7 @@ $this->_set_free_options('fields', array(
                     
                     <div class="pweb-advanced-options">
                         <a href="#" class="pweb-advanced-options-toggler">
-                            <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </a>
                         <div class="pweb-advanced-options-content">
                             
@@ -1555,7 +1555,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Send copy to yourself field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -1566,6 +1566,9 @@ $this->_set_free_options('fields', array(
                 
                 <div class="pweb-custom-field-options">
                     <h3><?php _e('Send copy to yourself field options', 'pwebcontact'); ?></h3>
+                    
+                    <?php //TODO check if copy to user field is allowed ?>
+                    
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'hidden',
@@ -1596,7 +1599,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Custom text/html field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -1651,7 +1654,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Header field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -1691,7 +1694,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Upload field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -1765,7 +1768,7 @@ $this->_set_free_options('fields', array(
             <?php echo $this->_display_badge($field_type); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('List of recipients field', 'pwebcontact'); ?></span>
                     <?php echo $this->_display_badge($field_type); ?>
@@ -1833,7 +1836,7 @@ $this->_set_free_options('fields', array(
             <?php _e('Send button', 'pwebcontact'); ?>
             
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
-                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="icomoon-pencil2"></i></a>
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Send button', 'pwebcontact'); ?></span>
                 </div>
@@ -1869,7 +1872,7 @@ $this->_set_free_options('fields', array(
         
         <div class="pweb-advanced-options pweb-clear">
             <a href="#" class="pweb-advanced-options-toggler">
-                <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
             </a>
             <div class="pweb-advanced-options-content">
                 <?php echo $this->_get_field(array(
@@ -1920,7 +1923,7 @@ $this->_set_free_options('fields', array(
     
     
     <div class="pweb-fields-options" id="pweb_fields_options">
-        <button type="button" id="pweb_fields_options_close" class="button"><i class="icomoon-undo2"></i> <?php _e('Back'); ?></button>
+        <button type="button" id="pweb_fields_options_close" class="button"><i class="glyphicon glyphicon-chevron-up"></i> <?php _e('Back'); ?></button>
         <div id="pweb_fields_options_content"></div>
         
         
@@ -1976,7 +1979,7 @@ $this->_set_free_options('fields', array(
 
             <div class="pweb-advanced-options">
                 <a href="#" class="pweb-advanced-options-toggler">
-                    <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+                    <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                 </a>
                 <div class="pweb-advanced-options-content">
 

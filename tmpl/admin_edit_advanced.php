@@ -17,7 +17,7 @@ function_exists('add_action') or die;
 
 <div class="pweb-advanced-options">
     <a href="#" class="pweb-advanced-options-toggler">
-        <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+        <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
     </a>
     <div class="pweb-advanced-options-content">
 
@@ -159,7 +159,8 @@ function_exists('add_action') or die;
             'options' => array(
                 array(
                     'value' => 2,
-                    'name' => '2.3.2'
+                    'name' => '2.3.2',
+                    'is_parent' => true
                 ),
                 array(
                     'value' => 3,
@@ -210,31 +211,10 @@ function_exists('add_action') or die;
             )
         )); ?>
 
-
         <?php echo $this->_get_field(array(
             'type' => 'radio',
-            'name' => 'icons',
-            'label' => 'Icons type',
-            'header' => 'Icons',
-            'default' => 'icomoon',
-            'class' => 'pweb-radio-group',
-            'options' => array(
-                array(
-                    'value' => 'icomoon',
-                    'name' => 'IcoMoon'
-                ),
-                array(
-                    'value' => 'glyphicons',
-                    'name' => 'Bootstrap Glyphicons'
-                )
-            )
-        )); ?>
-
-        <?php echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'load_icomoon',
-            'label' => 'Load IcoMoon',
-            'tooltip' => 'It is being loaded only if needed. Disable this option only if you have already loaded IcoMoon with other extension. Required for toggler tab with IcoMoon and other icons.',
+            'name' => 'boostrap_glyphicons',
+            'label' => 'Load Bootstrap 3 Glyphicons',
             'default' => 1,
             'class' => 'pweb-radio-group',
             'options' => array(
@@ -248,16 +228,15 @@ function_exists('add_action') or die;
                 )
             )
         )); ?>
-
-
-
+        
         <?php echo $this->_get_field(array(
             'type' => 'radio',
-            'name' => 'boostrap_glyphicons',
-            'label' => 'Load Bootstrap Glyphicons',
-            'tooltip' => 'Disable this option only if you can see two icons over themselves. Do not disable this option if you have selected Glyphicons in Layout tab of configuration.',
-            'default' => 1,
+            'name' => 'boostrap2_glyphicons',
+            'label' => 'Disable Bootstrap 2 Glyphicons',
+            'tooltip' => 'Enable this option if your WP theme has own icons and you can see two icons over themselves.',
+            'default' => 0,
             'class' => 'pweb-radio-group',
+            'parent' => array('bootstrap_version_2'),
             'options' => array(
                 array(
                     'value' => 0,

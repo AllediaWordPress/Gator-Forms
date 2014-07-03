@@ -28,7 +28,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 			type: "get", 
 			dataType: "json",
             beforeSend: function() {
-                $(that).removeClass("pweb-text-success pweb-text-danger").find("i").get(0).className = "icomoon-spinner";
+                $(that).removeClass("pweb-text-success pweb-text-danger").find("i").get(0).className = "glyphicon glyphicon-refresh";
             }
 		}).done(function(response, textStatus, jqXHR) {
 			
@@ -39,13 +39,13 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     // change state icon and color
                     $(that).data("state", response.state)
                             .addClass(response.state ? "pweb-text-success" : "pweb-text-danger")
-                            .find("i").get(0).className = response.state ? "icomoon-checkmark-circle" : "icomoon-cancel-circle";
+                            .find("i").get(0).className = "glyphicon " + (response.state ? "glyphicon-ok-sign" : "glyphicon-remove-sign");
 				}
 				else 
                 {
                     // restore state icon and color and alert response message
                     $(that).addClass(!response.state ? "pweb-text-success" : "pweb-text-danger")
-                            .find("i").get(0).className = !response.state ? "icomoon-checkmark-circle" : "icomoon-cancel-circle";
+                            .find("i").get(0).className = "glyphicon " + (!response.state ? "glyphicon-ok-sign" : "glyphicon-remove-sign");
                     alert(response.message);
                 }
 			}
@@ -53,7 +53,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 			
             // restore state icon and color
             $(that).addClass($(that).data("state") ? "pweb-text-success" : "pweb-text-danger")
-                    .find("i").get(0).className = ( $(that).data("state") ? "icomoon-checkmark-circle" : "icomoon-cancel-circle" );
+                    .find("i").get(0).className = "glyphicon " + ( $(that).data("state") ? "glyphicon-ok-sign" : "glyphicon-remove-sign" );
 			alert(pwebcontact_l10n.request_error+'. '+ jqXHR.status +' '+ errorThrown);
 		});
     });
@@ -91,7 +91,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                         type: "get", 
                         dataType: "json",
                         beforeSend: function() {
-                            $element.find("i").get(0).className = "icomoon-spinner";
+                            $element.find("i").get(0).className = "glyphicon glyphicon-refresh";
                         }
                     }).done(function(response, textStatus, jqXHR) {
 
@@ -107,14 +107,14 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                             else 
                             {
                                 // restore delete button icon and alert response message
-                                $element.find("i").get(0).className = "icomoon-remove2";
+                                $element.find("i").get(0).className = "glyphicon glyphicon-trash";
                                 alert(response.message);
                             }
                         }
                     }).fail(function(jqXHR, textStatus, errorThrown) {
 
                         // restore delete button icon
-                        $element.find("i").get(0).className = "icomoon-remove2";
+                        $element.find("i").get(0).className = "glyphicon glyphicon-trash";
                         alert(pwebcontact_l10n.request_error+'. '+ jqXHR.status +' '+ errorThrown);
                     });
                 }

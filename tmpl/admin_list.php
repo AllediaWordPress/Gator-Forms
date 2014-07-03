@@ -21,21 +21,21 @@ function_exists('add_action') or die;
     
     <?php if ($this->can_edit) : ?>
         <a class="add-new-h2" href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=pwebcontact&task=new' ), 'new-form'); ?>">
-            <i class="icomoon-plus"></i> <?php echo esc_html_x('Add New', 'link'); ?></a>
+            <i class="glyphicon glyphicon-plus"></i> <?php echo esc_html_x('Add New', 'link'); ?></a>
     
         <a class="add-new-h2" href="<?php echo admin_url( 'admin.php?page=pwebcontact&task=settings' ); ?>">
-            <i class="icomoon-cog"></i> <?php _e( 'Settings' ); ?></a>
+            <i class="glyphicon glyphicon-cog"></i> <?php _e( 'Settings' ); ?></a>
     <?php endif; ?>
     
     <a class="add-new-h2" href="<?php echo $this->documentation_url; ?>" target="_blank">
-        <i class="icomoon-support"></i> <?php _e( 'Documentation' ); ?></a>
+        <i class="glyphicon glyphicon-question-sign"></i> <?php _e( 'Documentation' ); ?></a>
     
     <?php $debug = get_option('pwebcontact_debug', 0); ?>
     <a href="#" class="add-new-h2 pweb-action-toggle-state pweb-has-tooltip pweb-text-<?php echo $debug ? 'success' : 'danger'; ?>" 
        title="Enable this option if contact form is not showing or sending emails. Then reload front-end page and try to send email again. It would display more informations."
        data-action="<?php echo admin_url( 'admin.php?page=pwebcontact&task=debug&ajax=1&_wpnonce='. wp_create_nonce('edit-debug-state').'&state=' ); ?>"
        data-state="<?php echo $debug; ?>">
-        <i class="icomoon-<?php echo $debug ? 'checkmark-circle' : 'cancel-circle'; ?>"></i> <?php _e( 'Debug mode' ); ?></a>
+        <i class="glyphicon glyphicon-<?php echo $debug ? 'ok-sign' : 'remove-sign'; ?>"></i> <?php _e( 'Debug mode' ); ?></a>
 </h2>
 
 
@@ -80,25 +80,25 @@ function_exists('add_action') or die;
         <div class="theme-name pweb-actions">
             <button type="button"<?php if (!$this->can_edit) echo ' disabled="disabled"'; ?> class="button button-primary" 
                     onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact&task=edit&id='.(int)$form->id ); ?>'">
-                <i class="icomoon-pencil2"></i> <?php _e( 'Edit' ); ?>
+                <i class="glyphicon glyphicon-edit"></i> <?php _e( 'Edit' ); ?>
             </button>
             <button type="button"<?php if (!$this->can_edit) echo ' disabled="disabled"'; ?> 
                     class="button pweb-action-toggle-state pweb-text-<?php echo $form->publish ? 'success' : 'danger'; ?> pweb-has-tooltip" 
                     title="<?php esc_attr_e( 'Toggle form publish state', 'pwebcontact' ); ?>" 
                     data-action="<?php echo admin_url( 'admin.php?page=pwebcontact&task=edit_state&id='.(int)$form->id.'&ajax=1&_wpnonce='. wp_create_nonce('edit-form-state_'.$form->id).'&state=' ); ?>"
                     data-state="<?php echo $form->publish; ?>">
-                <i class="icomoon-<?php echo $form->publish ? 'checkmark-circle' : 'cancel-circle'; ?>"></i> 
+                <i class="glyphicon glyphicon-<?php echo $form->publish ? 'ok-sign' : 'remove-sign'; ?>"></i> 
             </button>
             <button type="button"<?php if (!$this->can_edit) echo ' disabled="disabled"'; ?> 
                     class="button pweb-has-tooltip" title="<?php esc_attr_e( 'Copy' ); ?>" 
                     onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact&task=copy&id='.(int)$form->id.'&_wpnonce='. wp_create_nonce('copy-form_'.$form->id) ); ?>'">
-                <i class="icomoon-copy"></i> 
+                <i class="glyphicon glyphicon-file"></i> 
             </button>
             <button type="button"<?php if (!$this->can_edit) echo ' disabled="disabled"'; ?> 
                     class="button pweb-action-delete pweb-has-tooltip" title="<?php esc_attr_e( 'Delete' ); ?>" 
                     data-form-title="<?php echo esc_attr($form->title); ?>" 
                     data-action="<?php echo admin_url( 'admin.php?page=pwebcontact&task=delete&id='.(int)$form->id.'&ajax=1&_wpnonce='. wp_create_nonce('delete-form_'.$form->id) ); ?>">
-                <i class="icomoon-remove2"></i> 
+                <i class="glyphicon glyphicon-trash"></i> 
             </button>
         </div>
     </div>
@@ -106,11 +106,11 @@ function_exists('add_action') or die;
 
     <div class="theme active pweb-panel-box pweb-panel-pro">
         <div class="theme-screenshot pweb-buy">
-			<i class="icomoon-cart"></i>
+			<i class="glyphicon glyphicon-shopping-cart"></i>
 		</div>
         <h3 class="theme-name">
             <a class="button button-primary right pweb-buy" href="<?php echo $this->buy_url; ?>" target="_blank">
-                <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
+                <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
             </a>
             <?php _e( 'Get PRO version & support', 'pwebcontact' ); ?>
         </h3>
@@ -118,11 +118,11 @@ function_exists('add_action') or die;
     
     <?php /*<div class="theme active pweb-panel-box pweb-panel-support">
         <div class="theme-screenshot" onclick="document.location.href='<?php echo $this->buy_url; ?>'">
-			<i class="icomoon-support"></i>
+			<i class="glyphicon glyphicon-question-sign"></i>
 		</div>
         <h3 class="theme-name">
             <a class="button button-primary right" href="<?php echo $this->buy_url; ?>" target="_blank">
-                <i class="icomoon-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
+                <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
             </a>
             <?php _e( 'Get support only', 'pwebcontact' ); ?>
         </h3>

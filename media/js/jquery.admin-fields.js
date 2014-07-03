@@ -47,7 +47,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                         +'<input type="hidden" name="fields['+pwebcontact_admin.counter+'][type]" value="row" data-index="'+pwebcontact_admin.counter+'">'
                         +'<div class="pweb-fields-sort-row pweb-has-tooltip" title="'+pwebcontact_l10n.drag_row+'">&varr;</div>'
                         +'<div class="pweb-fields-cols"></div>'
-                        +'<div class="pweb-fields-add-col pweb-has-tooltip" title="'+pwebcontact_l10n.add_column+'"><i class="icomoon-plus"></i></div>'
+                        +'<div class="pweb-fields-add-col pweb-has-tooltip" title="'+pwebcontact_l10n.add_column+'"><i class="glyphicon glyphicon-plus"></i></div>'
                     +'</div>');
         
         $row.data("cols", 0).find(".pweb-fields-cols").sortable({
@@ -173,7 +173,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     // create new column
                     var $col = $('<div class="pweb-fields-col">'
                                     +'<input type="hidden" name="fields['+pwebcontact_admin.counter+'][type]" value="column" data-index="'+pwebcontact_admin.counter+'">'
-                                    +'<div class="pweb-fields-remove-col pweb-has-tooltip" title="'+pwebcontact_l10n.delete+'"><i class="icomoon-close"></i></div>'
+                                    +'<div class="pweb-fields-remove-col pweb-has-tooltip" title="'+pwebcontact_l10n.delete+'"><i class="glyphicon glyphicon-remove"></i></div>'
                                 +'</div>');
 
                     // insert field by droping field type on column
@@ -471,7 +471,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     //TODO use function
                     $addCol.trigger("click");
                 }
-                if (field.type !== "column") {
+                if (field.type !== "column" && $("#pweb_field_type_"+field.type).length) {
                     var $target = $cols.children().last();
                     // add field
                     //TODO pass column return
@@ -484,7 +484,10 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                             if (value !== "0" && value !== "1") {
                                 value = "0";
                             }
-                            $target.find("#pweb_fields_"+index+"_"+key+"_"+value).get(0).checked = true;
+                            var $option = $target.find("#pweb_fields_"+index+"_"+key+"_"+value);
+                            if ($option.length) {
+                                $option.get(0).checked = true;
+                            }
                         }
                         else if (key !== "type") {
                             
@@ -519,12 +522,12 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                         "fields": $(this).val()
                     },
                     beforeSend: function() {
-                        $('<i class="icomoon-spinner"></i>').insertAfter( that );
+                        $('<i class="glyphicon glyphicon-refresh"></i>').insertAfter( that );
                     }
                 }).done(function(response, textStatus, jqXHR) {
 
                     // hide loading
-                    $(that).next("i.icomoon-spinner").remove();
+                    $(that).next("i.glyphicon-refresh").remove();
 
                     if (response) {
                         // hide options to remove them

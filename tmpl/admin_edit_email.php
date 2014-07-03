@@ -44,7 +44,7 @@ function_exists('add_action') or die;
     <?php _e('or define your own', 'pwebcontact'); ?>
     
     <button class="button button-primary pweb-next-tab-button" type="button">
-        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="icomoon-arrow-right"></i>
+        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
 </h3>
 
@@ -172,7 +172,7 @@ function_exists('add_action') or die;
 
 <div class="pweb-advanced-options">
     <a href="#" class="pweb-advanced-options-toggler">
-        <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+        <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
     </a>
     <div class="pweb-advanced-options-content">
         
@@ -552,7 +552,7 @@ function_exists('add_action') or die;
             'class' => 'pweb-input-xlarge'
         )); ?>
         
-        
+        <!-- TODO Google Analytics tracking tips -->
         
         <?php echo $this->_get_field(array(
             'type' => 'textarea',

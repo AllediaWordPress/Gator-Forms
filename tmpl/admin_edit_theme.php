@@ -39,14 +39,14 @@ function_exists('add_action') or die;
     <?php _e('or create it in advanced options ', 'pwebcontact'); ?>
     
     <button class="button button-primary pweb-next-tab-button" type="button">
-        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="icomoon-arrow-right"></i>
+        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
 </h3>
 
 
 <?php if (!defined('PWEBCONTACT_PRO')) : ?>
 <div id="pweb_theme_warning" class="pweb-alert pweb-alert-info" style="display:none">
-    <?php _e('You need to go PRO', 'pwebcontact'); ?> <i class="icomoon-smiley"></i>
+    <?php _e('You need to go PRO :)', 'pwebcontact'); ?>
     <?php _e('You have chosen theme with some PRO options. You can still save your form, but to display it buy PRO Version', 'pwebcontact'); ?>
     <button class="button button-primary pweb-buy">
          <?php _e( 'Buy', 'pwebcontact' ); ?>
@@ -72,7 +72,7 @@ function_exists('add_action') or die;
 
 <div class="pweb-advanced-options">
     <a href="#" class="pweb-advanced-options-toggler">
-        <i class="icomoon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span><i class="dashicons dashicons-arrow-down"></i>
+        <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
     </a>
     <div class="pweb-advanced-options-content">
 
