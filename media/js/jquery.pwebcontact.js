@@ -351,7 +351,7 @@ var pwebBoxes = pwebBoxes || [],
 					keyboard: false,
 					// to disable closing backdrop set: static
 					backdrop: !this.options.modalClose && this.options.modalBackdrop ? 'static' : this.options.modalBackdrop
-				}).on(that.options.bootstrap === 2 ? 'hidden' : 'hidden.bs.modal', function(e) {
+				}).on(this.options.bootstrap === 2 ? 'hidden' : 'hidden.bs.modal', function(e) {
 					// do not close if clicked on form
 					e.stopPropagation();
 					if (e.target !== e.currentTarget) return;
@@ -360,7 +360,7 @@ var pwebBoxes = pwebBoxes || [],
 					that.toggleForm(0);
 					// remove opened class from body
 					$(document.body).removeClass(that.options.modalClass);
-				}).on(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal', function(e) {
+				}).on(this.options.bootstrap === 2 ? 'show' : 'show.bs.modal', function(e) {
 					// do not trigger if tooltip is the target
 					e.stopPropagation();
 					if (e.target !== e.currentTarget) return;
@@ -431,7 +431,8 @@ var pwebBoxes = pwebBoxes || [],
                         // remove opened class from body
                         $(document.body).removeClass(that.options.modalClass);
 					})
-                    .on(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal', function(e) {
+                    //TODO test why show event is not working and shown has to be used
+                    .on(that.options.bootstrap === 2 ? 'shown' : 'shown.bs.modal', function(e) {
                         // do not trigger if tooltip is the target
                         e.stopPropagation();
                         if (e.target !== e.currentTarget) return;
@@ -474,7 +475,7 @@ var pwebBoxes = pwebBoxes || [],
 		    }
 			
 			// modal window events
-			this.Modal.on(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal', function(e) {
+			this.Modal.on(this.options.bootstrap === 2 ? 'show' : 'show.bs.modal', function(e) {
 				// do not trigger if tooltip is the target
 				e.stopPropagation();
 				if (e.target !== e.currentTarget) return;
@@ -483,7 +484,7 @@ var pwebBoxes = pwebBoxes || [],
 					// hide container
 					that.Container.css({ visibility: 'hidden' });
 				}
-			}).on(that.options.bootstrap === 2 ? 'shown' : 'shown.bs.modal', function(e) {
+			}).on(this.options.bootstrap === 2 ? 'shown' : 'shown.bs.modal', function(e) {
 				// do not trigger if tooltip is the target
 				e.stopPropagation();
 				if (e.target !== e.currentTarget) return;
@@ -569,7 +570,7 @@ var pwebBoxes = pwebBoxes || [],
 					html: false
 				});
 				// fields without focus, only hover
-				this.Form.find('fieldset.pweb-tooltip,.pweb-field-checkbox label.pweb-tooltip,.fileinput-button.pweb-tooltip').tooltip({
+				this.Form.find('fieldset.pweb-tooltip,.pweb-field-checkbox label.pweb-tooltip,.pweb-field-checkbox_modal label.pweb-tooltip,.fileinput-button.pweb-tooltip').tooltip({
 					trigger: this.options.tooltips == 2 ? 'manual' : 'hover',
 					html: false
 				});
@@ -1034,9 +1035,9 @@ var pwebBoxes = pwebBoxes || [],
 							if (that.tooltip && that.options.tooltips >= 2) 
 							{
 								if (element.hasClass('pweb-single-checkbox'))
-									element.next().tooltip(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal');
+									element.next().tooltip('show');
 								else 
-									element.tooltip(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal');
+									element.tooltip('show');
 							}
 						}
 						for (i = 0, elements = this.validElements(); elements[i]; i++) 
@@ -1168,7 +1169,7 @@ var pwebBoxes = pwebBoxes || [],
 						this.Container.trigger('modalClose');
 					}
 					else {
-						this.Modal.modal(this.options.bootstrap === 2 ? 'hide' : 'hide.bs.modal');
+						this.Modal.modal('hide');
 					}
 				}
 				else if (this.options.layout == 'accordion') 
@@ -1292,7 +1293,7 @@ var pwebBoxes = pwebBoxes || [],
 					if (this.options.modalEffect !== 'fade' && this.options.modalEffect !== 'drop' && $(bind).length) {
                         this.eventSource = bind;
                     }
-					this.Modal.modal(this.options.bootstrap === 2 ? 'show' : 'show.bs.modal');
+					this.Modal.modal('show');
 				}
 				else if (this.options.layout == 'accordion') 
 				{

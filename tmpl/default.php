@@ -319,8 +319,9 @@ $message =
 							if (in_array($field['type'], array('text', 'name', 'email', 'phone', 'subject', 'password', 'date'))) : 
 								
                                 /*** PRO START ***/
-								if ($user->ID AND ($field['type'] == 'name' OR $field['type'] == 'email') AND $params->get('user_data', 1)) {
-									$field['values'] = $field['type'] == 'email' ? $user->email : $user->display_name;
+								if ($user->ID AND ($field['type'] == 'name' OR $field['type'] == 'email') AND $params->get('user_data', 1) > 0) {
+									$field['value'] = $field['type'] == 'email' ? $user->user_email : $user->display_name;
+                                    //TODO addHiddenField(); ob_clean(); continue; remove some CSS
 								}
                                 /*** PRO END ***/
 								
@@ -357,7 +358,7 @@ $message =
 										$type = 'text';
 								}
 							?>
-							<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>"<?php echo $field['attributes']; ?> value="<?php esc_attr_e($field['values'], 'pwebcontact'); ?>" data-role="none">
+							<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>"<?php echo $field['attributes']; ?> value="<?php esc_attr_e($field['value'], 'pwebcontact'); ?>" data-role="none">
 							<?php 
                             /*** PRO START ***/
                             if ($field['type'] == 'date') : ?>
@@ -386,7 +387,7 @@ $message =
 								if (count($field['classes']))
 									$field['attributes'] .= ' class="'.implode(' ', $field['classes']).'"';
 							?>
-							<textarea name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" cols="50"<?php echo $field['attributes']; ?> data-role="none"><?php esc_html_e($field['values'], 'pwebcontact'); ?></textarea>
+							<textarea name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" cols="50"<?php echo $field['attributes']; ?> data-role="none"><?php esc_html_e($field['value'], 'pwebcontact'); ?></textarea>
 							<?php if ($field['maxlength']) : ?>
 							<div class="pweb-chars-counter"><?php echo sprintf(__('%s characters left', 'pwebcontact'), '<span id="'.$field['id'].'-limit">'.$field['maxlength'].'</span>'); ?></div>
 							<?php endif; ?>	

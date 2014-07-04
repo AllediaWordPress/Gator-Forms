@@ -534,9 +534,10 @@ class PWebContact
 					.'#pwebcontact'.$form_id.'.pweb-bottom'
 					.'{z-index:'.$value.'}';
 			// Lightbox window
-			if ($layout == 'modal' AND $value > 1030) {
+			if (($layout == 'modal' OR $params->get('load_modal_backdrop')) AND $value > 1030) {
 				$css .= '.pweb-modal-open .modal-backdrop{z-index:'.($value+10).'}';
 				$css .= '.pwebcontact-modal.modal{z-index:'.($value+20).'}';
+                $css .= '.pweb-modal.modal{z-index:'.($value+21).'}';
 				$css .= '.ui-effects-transfer.pweb-genie{z-index:'.($value+19).'}';
 			}
 		}
@@ -694,9 +695,9 @@ class PWebContact
 			$declarations = array();
 		}
 		
-		if ($layout == 'modal') 
-		{
-			// Modal backdrop
+        if ($layout == 'modal' OR $params->get('load_modal_backdrop')) {
+            
+            // Modal backdrop
 			if (($value = (float)$params->get('modal_opacity')) > 0) 
 				$declarations[] = 'opacity:'.$value;
 			if ($value = $params->get('modal_bg')) 
@@ -705,7 +706,10 @@ class PWebContact
 				$css .= '.pwebcontact'.$form_id.'_modal-open .modal-backdrop.fade.in{'.implode(';', $declarations).'}';
 				$declarations = array();
 			}
-			
+        }
+        
+		if ($layout == 'modal') 
+		{
 			// Modal transfer effect
 			if (($value = (float)$params->get('effect_duration', 400)) !== 400) {
 				$declarations[0] = 'animation-duration:'.$value.'ms';
@@ -849,7 +853,7 @@ class PWebContact
         /*** PRO START ***/
 		wp_enqueue_style('pwebcontact-animations');
 
-        // Check if calendar field will be used
+        // Check if calendar field modal rules will be used
         $datapicker = false;
 		$fields = self::getFields();
 		foreach ($fields as $field)
@@ -857,6 +861,10 @@ class PWebContact
             if ($field['type'] == 'date')
 			{
 				$datapicker = true;
+			}
+            elseif ($field['type'] == 'checkbox_modal' AND $field['target'])
+			{
+				$params->def('load_modal_backdrop', 1);
 			}
 		}
 
@@ -1537,8 +1545,15 @@ class PWebContact
 		{
 			self::$logs[] = 'Ajax response exit';
 		}
+        
+        if (count(self::$logs)) {
+            array_walk(self::$logs, function(&$value, $key) {
+                $value = esc_html($value);
+            });
+            return self::$logs;
+        }
 
-		return count(self::$logs) ? self::$logs : null;
+		return null;
 	}
 
 
@@ -1705,11 +1720,13 @@ class PWebContact
 		$form_id 	= (int)$params->get('id');
 		
 		// mail from
-		$global_name  = $settings->get('email_from_name', get_bloginfo('name'));
-		$global_email = $settings->get('email_from', get_bloginfo('email'));
-        /*** PRO START ***/
+		/*** FREE START ***/
 		$global_name  = $params->get('email_from_name', $global_name);
 		$global_email = $params->get('email_from', $global_email);
+        /*** FREE END ***/
+        /*** PRO START ***/
+		$global_name  = $params->get( 'email_from_name', $settings->get('email_from_name', get_bloginfo('name')) );
+		$global_email = $params->get( 'email_from', $settings->get('email_from', get_bloginfo('admin_email')) );
         /*** PRO END ***/
 		if (!$global_email) {
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Invalid Global Configuration';
@@ -1765,7 +1782,7 @@ class PWebContact
 		foreach ($fields as $field)
 		{
 			// skip all separators which does not have any data
-			if (strpos($field['type'], 'separator') !== false OR in_array($field['type'], array('button_send', 'email_copy', 'captcha'))) continue;
+			if (in_array($field['type'], array('page', 'row', 'column', 'button_send', 'email_copy', 'captcha', 'custom_text', 'header'))) continue;
 			
             /*** PRO START ***/
             if ($field['type'] == 'mailto_list') 
@@ -1797,7 +1814,17 @@ class PWebContact
                 // get field from request
                 if (isset($data['fields'][$field['alias']])) {
                     $value = $data['fields'][$field['alias']];
-                } else {
+                    if (is_string($value)) {
+                        $value = stripslashes( $value );
+                    }
+                    elseif (is_array($value)) {
+                        array_walk($value, function(&$val, $key) {
+                            $val = stripslashes($val);
+                        });
+                    }
+                    $data['fields'][$field['alias']] = $value;
+                } 
+                else {
                     $data['fields'][$field['alias']] = $value = null;
                 }
 
@@ -1900,7 +1927,11 @@ class PWebContact
 				$success_msg = sprintf(__($params->get('msg_success', 'Message successfully sent. Your ticket is: %s'), 'pwebcontact'), $email_vars['ticket']);
 				
 				// email subject with ticket
-				$data['subject'] = sprintf(__($params->get('email_subject', '%s Message sent from'), 'pwebcontact'), $email_vars['ticket']);
+				$data['subject'] = __($params->get('email_subject', '%s Message sent from'), 'pwebcontact');
+                if (strpos($data['subject'], '%s') === false) {
+                    $data['subject'] = '%s '.$data['subject']; //TODO test if change place for RTL
+                }
+                $data['subject'] = sprintf($data['subject'], $email_vars['ticket']);
 			}
 		}
         /*** PRO START ***/
@@ -1918,17 +1949,17 @@ class PWebContact
         /*** PRO START ***/
         // user subject
         if ($data['user_subject']) {
-            $data['subject'] .= $data['user_subject'];
+            $data['subject'] = trim($data['subject']) .' '. $data['user_subject'];
         }
         
 		// email subject suffix
 		switch ($params->get('email_subject_sfx', 2))
 		{
 			case 1:
-				$data['subject'] .= ' '.$email_vars['site_name'];
+				$data['subject'] = trim($data['subject']) .' '. $email_vars['site_name'];
 				break;
 			case 2:
-				$data['subject'] .= ' '.$data['title'];
+				$data['subject'] = trim($data['subject']) .' '. $data['title'];
 		}
         /*** PRO END ***/
 
@@ -1953,21 +1984,21 @@ class PWebContact
             {
                 self::$logs[] = 'User email: '.$user_email;
                 self::$logs[] = 'User email subject: '.$data['subject'];
-                self::$logs[] = 'User email sender: '.$global_email;
+                self::$logs[] = 'User email sender: '.$global_name.' <'.$global_email.'>';
             }
             
 			// set reply to
 			if ($params->get('email_replyto')) 
 			{
-                $headers[] = 'Reply-To: '.$params->get( 'email_replyto_name', $global_name).' <'.$params->get('email_replyto').'>';
-				if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email reply to: '.$params->get('email_replyto');
+                $headers[] = 'Reply-To: '.$params->get('email_replyto_name', $global_name).' <'.$params->get('email_replyto').'>';
+				if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email reply-to: '.$params->get('email_replyto_name', $global_name).' <'.$params->get('email_replyto').'>';
 			}
             
 			// Add carbon copy recipients
 			if (count($user_cc))
 			{
 				$headers[] = 'CC: '.implode(', ', $user_cc);
-				if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email: '.implode(', ', $user_cc);
+				if (PWEBCONTACT_DEBUG) self::$logs[] = 'User CC recipients: '.implode(', ', $user_cc);
 			}
 			
             // TODO option to include or not attachments in email to user
@@ -2028,12 +2059,12 @@ class PWebContact
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email Sender: '.$user_email;
 		} else {
             $headers[] = "From: $global_name <$global_email>";
-			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email Sender: '.$global_email;
+			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email Sender: '.$global_name.' <'.$global_email.'>';
 			
 			// set reply to
 			if ($user_email) {
 				$headers[] = "Reply-To: $user_name <$user_email>";
-				if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email reply to: '.$user_email;
+				if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email reply-to: '.$user_name.' <'.$user_email.'>';
 			}
 		}
 
@@ -2157,11 +2188,13 @@ class PWebContact
 			foreach ($fields as $field)
 			{
 				// skip all separators which does not have any data
-				if (strpos($field['type'], 'separator') !== false) continue;
+                if (in_array($field['type'], array('page', 'row', 'column', 'button_send', 'email_copy', 'captcha', 'custom_text', 'header'))) continue;
 				
-				if (isset(self::$data['fields'][$field['alias']])) {
+                
+                if (isset(self::$data['fields'][$field['alias']])) {
 					$value = self::$data['fields'][$field['alias']];
-				} else {
+				} 
+                else {
 					$value = null;
 				}
 				
@@ -2186,13 +2219,15 @@ class PWebContact
 						if ($value) 
 							$value = __($value, 'pwebcontact');
 						break;
+                    case 'mailto_list':
+                        $value = self::$email_vars['mailto_name'];
 				}
 				
 				$patterns[] 	= '{'.$field['alias'].'.value}';
 				$replacements[] = $value;
 				
 				$patterns[] 	= '{'.$field['alias'].'.label}';
-				$replacements[] = $name = __($field['name'], 'pwebcontact');
+				$replacements[] = $name = __($field['label'], 'pwebcontact');
 				
 				if ($search_fields AND !isset(self::$email_tmpls[$cache_fields_key])) {
 					//TODO test RTL if need to change position of sprintf arguments
@@ -2414,7 +2449,7 @@ class PWebContact_Params {
     public function get($key = null, $default = null) {
         
         if ($key) {
-            if (isset($this->data[$key]) AND $this->data[$key]) {
+            if (isset($this->data[$key]) AND $this->data[$key] !== null AND $this->data[$key] !== '') {
                 return $this->data[$key];
             }
             return $default;

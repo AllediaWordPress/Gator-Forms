@@ -183,7 +183,7 @@ $this->_set_free_options('fields', array(
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
-                                'name' => 'values',
+                                'name' => 'value',
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Default value'
@@ -278,7 +278,7 @@ $this->_set_free_options('fields', array(
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
-                                'name' => 'values',
+                                'name' => 'value',
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Default value'
@@ -382,7 +382,7 @@ $this->_set_free_options('fields', array(
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
-                                'name' => 'values',
+                                'name' => 'value',
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Default value'
@@ -487,7 +487,7 @@ $this->_set_free_options('fields', array(
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
-                                'name' => 'values',
+                                'name' => 'value',
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Default value'
@@ -590,7 +590,7 @@ $this->_set_free_options('fields', array(
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
-                                'name' => 'values',
+                                'name' => 'value',
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Default value'
@@ -693,7 +693,7 @@ $this->_set_free_options('fields', array(
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
-                                'name' => 'values',
+                                'name' => 'value',
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Default value'
@@ -809,7 +809,7 @@ $this->_set_free_options('fields', array(
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
-                                'name' => 'values',
+                                'name' => 'value',
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Default value'
@@ -913,7 +913,7 @@ $this->_set_free_options('fields', array(
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
-                                'name' => 'values',
+                                'name' => 'value',
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Default value'
@@ -1826,6 +1826,26 @@ $this->_set_free_options('fields', array(
                         'group' => 'fields',
                         'value' => 1
                     )); ?>
+                    
+                    <div class="pweb-advanced-options">
+                        <a href="#" class="pweb-advanced-options-toggler">
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
+                        </a>
+                        <div class="pweb-advanced-options-content">
+                            
+                            <?php echo $this->_get_field(array(
+                                'disabled' => true,
+                                'type' => 'text',
+                                'name' => 'alias',
+                                'index' => 'X',
+                                'group' => 'fields',
+                                'label' => 'Alias for email template',
+                                'value' => 'mailto',
+                                'readonly' => true
+                            )); ?>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

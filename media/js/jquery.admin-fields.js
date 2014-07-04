@@ -482,18 +482,20 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     $.each(field, function(key, value) {
                         if (key !== "type") {
                             var $option = $target.find("#pweb_fields_"+index+"_"+key);
-                            if ($option.prop("tagName").toLowerCase() === "fieldset") {
-                                if (!value) {
-                                    value = "0";
+                            if ($option.length) {
+                                if ($option.prop("tagName").toLowerCase() === "fieldset") {
+                                    if (!value) {
+                                        value = "0";
+                                    }
+                                    $option.find("#pweb_fields_"+index+"_"+key+"_"+value.toString()).prop("checked", true);
                                 }
-                                $option.find("#pweb_fields_"+index+"_"+key+"_"+value.toString()).prop("checked", true);
-                            }
-                            else {
-                                $option.val( value.replace(/\\+/g, "\\") );
-                            }
-                            
-                            if (key === "label") {
-                                $target.find(".pweb-custom-field-label span").text(value);
+                                else {
+                                    $option.val( value.replace(/\\+/g, "\\") );
+                                }
+
+                                if (key === "label") {
+                                    $target.find(".pweb-custom-field-label span").text(value);
+                                }
                             }
                         }
                     });

@@ -52,6 +52,7 @@ function_exists('add_action') or die;
     'type' => 'text',
     'name' => 'msg_success',
     'label' => 'Enter message which will appear after successful sending email by contact form',
+    'tooltip' => 'If you are using tickets then you can display it in your custom message by adding %s. It will be replaced with defined ticket format. Do not use characters: &#x22; &#x5c;',
     'class' => 'pweb-input-large'
 )); ?>
 
@@ -375,7 +376,7 @@ function_exists('add_action') or die;
             'name' => 'email_subject',
             'label' => 'Subject of email',
             'header' => 'Email subject',
-            'tooltip' => '',
+            'tooltip' => 'If blank then will be set: Message sent from SUFFIX. If you are using tickets then by default it will be placed at the beginning of subject. You can display ticket in another place by adding %s. It will be replaced with defined ticket format.',
             'class' => 'pweb-input-large'
         )); ?>
         
@@ -434,7 +435,7 @@ function_exists('add_action') or die;
             'type' => 'text',
             'name' => 'ticket_format',
             'label' => 'Ticket format',
-            'tooltip' => '',
+            'tooltip' => 'Type pattern of your ticket, e.g. [#%s].<br>Use string %s for date-time ticket or %06d for number counter.',
             'parent' => array('ticket_enable_1', 'ticket_enable_2')
         )); ?>
         
@@ -596,7 +597,7 @@ function_exists('add_action') or die;
         <li><code>{lang:Word}</code> - <?php esc_html_e('displays translation of "Word" from language file', 'pwebcontact'); ?> </li>
         <li><code>{fields}</code> - <?php esc_html_e('displays all fields, each "Label: Value" pair in new line', 'pwebcontact'); ?> </li>
         <li><code>{field_alias.label}</code> - <?php printf(esc_html__('displays field label, will be translated if present in language file, replace %s with alias of field', 'pwebcontact'), '<code>field_alias</code>'); ?> </li>
-        <li><code>{field_alias.value}</code> - <?php esc_html_e('displays field value, replace <code>field_alias</code> with alias of field', 'pwebcontact'); ?> </li>
+        <li><code>{field_alias.value}</code> - <?php printf(esc_html__('displays field value, replace %s with alias of field', 'pwebcontact'), '<code>field_alias</code>'); ?> </li>
         <li><code>{name}</code> - <?php esc_html_e('User name', 'pwebcontact'); ?> </li>
         <li><code>{email}</code> - <?php esc_html_e('User email', 'pwebcontact'); ?> </li>
         <li><code>{username}</code> - <?php esc_html_e('Joomla Username if logged in', 'pwebcontact'); ?> </li>
