@@ -59,7 +59,7 @@ function_exists('add_action') or die;
 <div class="pweb-field pweb-field-text">
     <?php echo $this->_get_label(array(
         'name' => 'email_to',
-        'label' => 'Enter one or more emails to which message should be sent to',
+        'label' => 'Enter one or more Administrator emails to which message should be sent to',
     )); ?>
     <div class="pweb-field-control">
         <?php echo $this->_get_field_control(array(
@@ -75,6 +75,13 @@ function_exists('add_action') or die;
             'tooltip' => 'Enable this option to send email to selected WordPress Administrator. Do not use this option if Administrator has the same email address as in above field!'
         )); ?>
     </div>
+</div>
+
+
+<div class="pweb-field">
+    <h3><?php _e( 'Legend', 'pwebcontact' ); ?></h3>
+    <p><strong><?php _e( 'Administrator', 'pwebcontact' ); ?></strong> - <?php _e( 'the owner of website', 'pwebcontact' ); ?></p>
+    <p><strong><?php _e( 'User', 'pwebcontact' ); ?></strong> - <?php _e( 'a visitor of webiste who wants to contact with website owner', 'pwebcontact' ); ?></p>
 </div>
 
 
@@ -600,16 +607,31 @@ function_exists('add_action') or die;
         <li><code>{field_alias.value}</code> - <?php printf(esc_html__('displays field value, replace %s with alias of field', 'pwebcontact'), '<code>field_alias</code>'); ?> </li>
         <li><code>{name}</code> - <?php esc_html_e('User name', 'pwebcontact'); ?> </li>
         <li><code>{email}</code> - <?php esc_html_e('User email', 'pwebcontact'); ?> </li>
-        <li><code>{username}</code> - <?php esc_html_e('Joomla Username if logged in', 'pwebcontact'); ?> </li>
-        <li><code>{ip_address}</code> - <?php esc_html_e('User IP address', 'pwebcontact'); ?> </li>
-        <li><code>{browser}</code> - <?php esc_html_e('User browser name', 'pwebcontact'); ?> </li>
-        <li><code>{os}</code> - <?php esc_html_e('User operating system name', 'pwebcontact'); ?> </li>
-        <li><code>{screen_resolution}</code> - <?php esc_html_e('User screen resolution', 'pwebcontact'); ?> </li>
-        <li><code>{title}</code> - <?php esc_html_e('title of page', 'pwebcontact'); ?> </li>
+        <li><code>{username}</code> - <?php esc_html_e('WordPress Username if logged in', 'pwebcontact'); ?> </li>
         <li><code>{url}</code> - <?php esc_html_e('page URL', 'pwebcontact'); ?> </li>
+        <li><code>{title}</code> - <?php esc_html_e('title of page', 'pwebcontact'); ?> </li>
         <li><code>{site_name}</code> - <?php esc_html_e('site name', 'pwebcontact'); ?> </li>
-        <li><code>{mailto_name}</code> - <?php esc_html_e('name of recipient selected by User from "Mail to list" field', 'pwebcontact'); ?> </li>
-        <li><code>{ticket}</code> - <?php esc_html_e('formatted ticket', 'pwebcontact'); ?> </li>
-        <li><code>{files}</code> - <?php esc_html_e('links to uploaded files if "Attachment type" set to: "Links to files"', 'pwebcontact'); ?> </li>
+        <li><code>{ip_address}</code> - <?php esc_html_e('User IP address', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
+        <li><code>{browser}</code> - <?php esc_html_e('User browser name', 'pwebcontact'); ?>. 
+            <?php _e('Requires 3rd-part plugin', 'pwebcontact'); ?> 
+            - <a href="http://wordpress.org/plugins/<?php 
+                $plugin = 'php-browser-detection';
+                $plugin_file = $plugin.'/'.$plugin.'.php';
+                echo $plugin; ?>" target="_blank"><?php _e('Details'); ?></a> 
+            -
+            <?php if (!is_file(WP_PLUGIN_DIR.'/'.$plugin_file)) : ?>
+                <a href="<?php echo wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin='.$plugin), 'install-plugin_'.$plugin); ?>" target="_blank"><?php _e('Install Now'); ?></a>
+            <?php elseif (is_plugin_inactive($plugin_file)) : ?>
+                <a href="<?php  echo wp_nonce_url(self_admin_url('plugins.php?action=activate&plugin='.$plugin_file), 'activate-plugin_'.$plugin_file); ?>" target="_blank"><?php _e('Activate'); ?></a>
+            <?php else : ?>
+                <strong class="pweb-text-success"><i class="glyphicon glyphicon-ok-sign"></i> <?php _e('Installed'); ?></strong>
+            <?php endif; ?>
+            
+            <?php if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?></li>
+        <li><code>{os}</code> - <?php esc_html_e('User operating system name', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
+        <li><code>{screen_resolution}</code> - <?php esc_html_e('User screen resolution', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
+        <li><code>{mailto_name}</code> - <?php esc_html_e('name of recipient selected by User from "Mail to list" field', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
+        <li><code>{ticket}</code> - <?php esc_html_e('formatted ticket', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
+        <li><code>{files}</code> - <?php esc_html_e('links to uploaded files if "Attachment type" set to: "Links to files"', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
     </ul>
 </div>
