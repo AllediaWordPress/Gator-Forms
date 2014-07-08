@@ -162,7 +162,7 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 }
 
 .pweb-panels.theme-browser .theme .theme-screenshot.pweb-layout-slidebox {
-    background-image: url(../images/admin/slidebox-slide.png);
+    background-image: url(../images/admin/slidebox.png);
 }
 .pweb-panels.theme-browser .theme .theme-screenshot.pweb-layout-modal {
     background-image: url(../images/admin/modal.png);
@@ -431,6 +431,12 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 #pweb_params_handler_tab-lbl {
     background-image: url(../images/admin/toggler-tab.png);
 }
+#pweb_params_handler_static-lbl {
+    background-image: url(../images/admin/static.png);
+}
+#pweb_params_handler_hidden-lbl {
+    background-image: url(../images/admin/toggler-hidden.png);
+}
 
 #pweb_params_effect_slidebox_slide_in-lbl {
     background-image: url(../images/admin/slidebox-slide.png);
@@ -451,7 +457,7 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     background-image: url(../images/admin/modal-enlarge.png);
 }
 #pweb_params_effect_accordion_slide_down-lbl {
-    background-image: url(../images/admin/accordion.png);
+    background-image: url(../images/admin/accordion-slide-down.png);
 }
 #pweb_params_effect_static_none-lbl {
     background-image: url(../images/admin/static.png);
