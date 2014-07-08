@@ -343,6 +343,19 @@ class PWebContact
 	{
 		return self::$logs[] = $log;
 	}
+    
+    
+    protected static function recursive_stripslashes(&$input) {
+        
+        if (is_array($input)) {
+            foreach ($input as &$item) {
+                self::recursive_stripslashes($item);
+            }
+        }
+        elseif (is_string($input)) {
+            $input = stripslashes($input);
+        }
+    }
 	
 
 	public static function setParams(&$params) 
@@ -366,9 +379,7 @@ class PWebContact
             $data = $wpdb->get_row($sql);
 			
             $data->params = $data->params ? json_decode( $data->params, true ) : array();
-            array_walk($data->params, function(&$value, $key) {
-                $value = stripslashes($value); // TODO change if checkboxes are used in admin configuration
-            });
+            self::recursive_stripslashes($data->params);
             
 			$params = new PWebContact_Params( $data->params );
 			$params->def('id', (int)$form_id);
@@ -379,13 +390,10 @@ class PWebContact
 			self::$params[$form_id] = $params;
             
             
-            $fields = $data->fields ? json_decode( $data->fields, true ) : array();
-            foreach ($fields as &$field) {
-                array_walk($field, function(&$value, $key) {
-                    $value = stripslashes($value); // TODO change if checkboxes are used in admin fields configuration
-                });
-            }
-            self::$fields[$form_id] = $fields;
+            $data->fields = $data->fields ? json_decode( $data->fields, true ) : array();
+            self::recursive_stripslashes($data->fields);
+            
+            self::$fields[$form_id] = $data->fields;
 			
 			if (!self::$form_id AND $form_id) self::$form_id = $form_id;
 		}
@@ -1742,7 +1750,7 @@ class PWebContact
 			'mailto'			=> isset($_POST['mailto'])              ? (int)$_POST['mailto'] : null,
 			'title' 			=> isset($_POST['title'])               ? (string)$_POST['title'] : null,
 			'url' 				=> isset($_POST['url'])                 ? (string)$_POST['url'] : null,
-			'screen_resolution' => isset($_POST['screen_resolution'])   ? (string)$_POST['screen_resolution'] : null,
+            'screen_resolution' => isset($_POST['screen_resolution'])   ? (string)$_POST['screen_resolution'] : null,
 			'attachments' 		=> isset($_POST['attachments'])         ? (array)$_POST['attachments'] : array()
 		);
 
@@ -1758,15 +1766,25 @@ class PWebContact
 			'name'				=> '',
 			'email'				=> '',
 			'username' 			=> $user->display_name, //WP
-			'ip_address' 		=> $data['ip_address'],
+			/*** FREE START ***/
+            'ip_address' 		=> 'PRO',
+			'browser' 			=> 'PRO',
+			'os' 				=> 'PRO',
+			'screen_resolution' => 'PRO',
+			'mailto_name'		=> 'PRO',
+			'ticket'			=> 'PRO',
+            /*** FREE END ***/
+            /*** PRO START ***/
+            'ip_address' 		=> $data['ip_address'],
 			'browser' 			=> $data['browser'],
 			'os' 				=> $data['os'],
 			'screen_resolution' => $data['screen_resolution'],
-			'title' 			=> $data['title'],
-			'url' 				=> $data['url'],
-			'site_name' 		=> get_bloginfo('name'), //WP
 			'mailto_name'		=> '',
-			'ticket'			=> ''
+			'ticket'			=> '',
+            /*** PRO END ***/
+            'url' 				=> $data['url'],
+			'title' 			=> $data['title'],
+			'site_name' 		=> get_bloginfo('name') //WP
 		);
 		
 		$fields = self::getFields();
@@ -2299,21 +2317,25 @@ class PWebContact
 
 	protected static function detectBrowser()
 	{
-		/* Requires plugin
+		/*** PRO START ***/
+        /* Requires plugin
          * http://wordpress.org/plugins/php-browser-detection/
          */
 		
         if (function_exists('get_browser_name') AND function_exists('get_browser_version')) {
             return ucfirst( get_browser_name() ).' '.get_browser_version();
         }
-        
+        /*** PRO END ***/
 		return null;
 	}
 
 
 	protected static function detectIP()
 	{
-		if (isset($_SERVER['REMOTE_ADDR'])) 
+		$ip = null;
+        
+        /*** PRO START ***/
+        if (isset($_SERVER['REMOTE_ADDR'])) 
 			$ip = $_SERVER['REMOTE_ADDR'];
 		elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) 
 			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -2321,9 +2343,8 @@ class PWebContact
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
 		elseif (isset($_SERVER['HTTP_VIA'])) 
 			$ip = $_SERVER['HTTP_VIA'];
-		else 
-			$ip = 'unknown';
-		
+		/*** PRO END ***/
+        
 		return $ip;
 	}
 
@@ -2331,6 +2352,8 @@ class PWebContact
 	protected static function detectOS()
 	{
 		$os_name = null;
+        
+        /*** PRO START ***/
 		$os = array(
 			// Mircrosoft Windows Operating Systems
 			'Windows 8.1' => 'Windows NT 6.3',
@@ -2415,7 +2438,8 @@ class PWebContact
 				break;
 			}
 		}
-		
+		/*** PRO END ***/
+        
 		return $os_name;
 	}
 }
