@@ -19,7 +19,8 @@
 
 /* Text color */
 .pweb-bg-white form.pwebcontact-form label,
-.pweb-bg-white form.pwebcontact-form .pweb-separator-text,
+.pweb-bg-white form.pwebcontact-form .pweb-field-custom-text,
+.pweb-bg-white form.pwebcontact-form .pweb-field-header,
 .pweb-bg-white form.pwebcontact-form .pweb-msg,
 .pweb-bg-white form.pwebcontact-form .pweb-chars-counter,
 .pweb-bg-white form.pwebcontact-form .pweb-uploader,

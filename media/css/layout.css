@@ -834,17 +834,16 @@ form.pwebcontact-form textarea:focus {
 /* Text separator
  * ---------------------------------------------------------------------
  */
-.pweb-separator-text {
+.pweb-field-custom-text {
 	line-height: 150%;
 }
 
 /* Header separator
  * ---------------------------------------------------------------------
  */
-.pweb-separator-header {
+.pweb-field-header {
 	font-size: 200%;
-    line-height: 200%;
-    margin: 10px 0;
+    line-height: 150%;
 }
 
 /* Labels invalid 
@@ -1157,6 +1156,7 @@ form.pwebcontact-form label .pweb-asterisk {
 .pweb-fields:before, .pweb-fields:after,
 .pweb-fields-group:before, .pweb-fields-group:after,
 .pweb-field-container:before, .pweb-field-container:after,
+.pweb-row:before, .pweb-row:after,
 .pweb-uploader .files > div:before, .pweb-uploader .files > div:after {
 	content: "";
 	display: table;
@@ -1166,6 +1166,7 @@ form.pwebcontact-form label .pweb-asterisk {
 .pweb-fields, .pweb-fields:after,
 .pweb-fields-group:after,
 .pweb-field-container:after,
+.pweb-row:after,
 .pweb-uploader .files > div:after {
 	clear: both;
 }
