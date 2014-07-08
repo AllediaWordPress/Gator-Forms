@@ -68,12 +68,13 @@ function_exists('add_action') or die;
             'class' => 'pweb-effect-modal-fade pweb-related-modal pweb-related-modal-button',
             'is_parent' => true
         ),
-        array(
+        // TODO css for modal drop
+        /*array(
             'value' => 'modal:drop',
             'name' => 'Lightbox - Drop from top and fade-in',
             'class' => 'pweb-effect-modal-drop pweb-related-modal pweb-related-modal-button',
             'is_parent' => true
-        ),
+        ),*/
         array(
             'value' => 'modal:rotate',
             'name' => 'Lightbox - Move from toggler, rotate, enlarge and fade-in',

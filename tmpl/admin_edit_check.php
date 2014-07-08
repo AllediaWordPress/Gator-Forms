@@ -22,7 +22,11 @@ function_exists('add_action') or die;
 
 <?php if (!defined('PWEBCONTACT_PRO')) : ?>
 <div id="pweb-cog-check-warning" class="pweb-alert pweb-alert-success" style="display:none">
-    <?php _e('Congratulations your form is ready! But you have chosen some PRO options so you need to BUY Pro Version in order to publish your form', 'pwebcontact'); ?>
+    <?php _e('Congratulations your form is ready! But you have chosen some PRO options so you need to BUY Pro Version in order to publish your form', 'pwebcontact'); 
+        //TODO check if tooltips are used
+        //TODO check if characters limit for textarea is used 
+        //TODO check email template for: ip_address, browser, os, screen_resolution, mailto_name, ticket
+    ?>
     
     <button class="button button-primary pweb-buy">
         <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
@@ -55,6 +59,7 @@ function_exists('add_action') or die;
     <?php 
     //TODO check if copy to user field is allowed 
     //TODO warn about shortcode and widget position
+    //TODO warn about browser detection if used in email template and 3-rd part plugin not installed
     ?>
 
 

@@ -33,6 +33,7 @@ class PWebContact_Admin {
     protected static $pro = array(
         'load' => array(),
         'fields' => array(),
+        'field_types' => array(),
         'settings' => array(),
         'params' => array(
             'accordion_boxed',
@@ -154,6 +155,7 @@ class PWebContact_Admin {
     protected static $free = array(
         'load' => array(),
         'fields' => array(),
+        'field_types' => array(),
         'settings' => array(),
         'params' => array(
 			'effect::slidebox:slide_in',
@@ -643,6 +645,19 @@ class PWebContact_Admin {
     }
     
     
+    protected function _recursive_stripslashes(&$input) {
+        
+        if (is_array($input)) {
+            foreach ($input as &$item) {
+                $this->_recursive_stripslashes($item);
+            }
+        }
+        elseif (is_string($input)) {
+            $input = stripslashes($input);
+        }
+    }
+    
+    
     protected function _load_forms() {
         
         global $wpdb;
@@ -678,16 +693,10 @@ class PWebContact_Admin {
                 $this->data->params = $this->data->params ? json_decode( $this->data->params, true ) : array();
                 $this->data->params['position'] = $this->data->position;
                 $this->data->params['layout_type'] = $this->data->layout;
-                array_walk($this->data->params, function(&$value, $key) {
-                    $value = stripslashes($value); // TODO change if checkboxes are used in admin configuration
-                });
+                $this->_recursive_stripslashes($this->data->params);
                 
                 $this->data->fields = $this->data->fields ? json_decode( $this->data->fields, true ) : array();
-                foreach ($this->data->fields as &$field) {
-                    array_walk($field, function(&$value, $key) {
-                        $value = stripslashes($value); // TODO change if checkboxes are used in admin fields configuration
-                    });
-                }
+                $this->_recursive_stripslashes($this->data->fields);
                 
                 $this->_load_settings();
             }
@@ -701,10 +710,7 @@ class PWebContact_Admin {
             $this->data = new stdClass();
         }
         $this->data->settings = get_option('pwebcontact_settings', array());
-        
-        array_walk($this->data->settings, function(&$value, $key) {
-            $value = stripslashes($value);
-        });
+        $this->_recursive_stripslashes($this->data->settings);
     }
     
     
@@ -923,8 +929,8 @@ class PWebContact_Admin {
     endif; ?>
     
     <p class="pweb-copyrights">
-		Copyright &copy; 2014 Perfect Web sp. z o.o., All rights reserved. Distributed under GPL by
-		<a href="http://www.perfect-web.co/wordpress" target="_blank"><strong>Perfect-Web.co</strong></a>.<br>
+		Copyright &copy; 2014 Perfect Web sp. z o.o., All rights reserved.
+		Distributed under <a href="http://www.perfect-web.co/license" target="_blank"><strong>Perfect Web License</strong></a>.<br>
 		All other trademarks and copyrights are property of their respective owners.
 	</p>
 </div>
@@ -1455,7 +1461,7 @@ class PWebContact_Admin {
     
     protected function _is_pro_field($field_type = null)
     {
-        return !defined('PWEBCONTACT_PRO') AND in_array($field_type, self::$pro['fields']);
+        return !defined('PWEBCONTACT_PRO') AND in_array($field_type, self::$pro['field_types']);
     }
     
     protected function _set_pro_options($group = null, $options = array())

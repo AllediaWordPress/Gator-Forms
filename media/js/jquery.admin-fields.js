@@ -43,6 +43,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         
         pwebcontact_admin.counter++;
         
+        //TODO add unique class to row input element - will be used for saving, keep index
         var $row = $('<div class="pweb-fields-row pweb-clearfix">'
                         +'<input type="hidden" name="fields['+pwebcontact_admin.counter+'][type]" value="row" data-index="'+pwebcontact_admin.counter+'">'
                         +'<div class="pweb-fields-sort-row pweb-has-tooltip" title="'+pwebcontact_l10n.drag_row+'">&varr;</div>'
@@ -64,14 +65,14 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     
                     //TODO function
                     
-                    
                     if (pwebcontact_admin.stop_sorting !== false) {
                         pwebcontact_admin.stop_sorting.append(ui.item);
                         pwebcontact_admin.stop_sorting = false;
                     }
                     else {
+						var $row = ui.item.closest(".pweb-fields-row");
                         //TODO arg do not create column
-                        var $row = addRow( ui.item.closest(".pweb-fields-row").index(), ui.item.index() >= 3 );
+                        $row = addRow( $row.index(), ui.item.index()+1 > $row.data("cols") );
                         $row.find(".pweb-fields-col").remove();
                         $row.find(".pweb-fields-cols").append(ui.item);
                     }
@@ -97,10 +98,38 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 }
             },
             change: function( event, ui ) {
+			
                 $rows.find(".pweb-placeholder-top").removeClass("pweb-placeholder-top");
-                var i = ui.placeholder.index(),
-                    l = ui.placeholder.parent().children().length - 1;
-                if (i !== 0 && i !== l) {
+				
+				var helper_row_index = ui.helper.closest(".pweb-fields-row").index(),
+					helper_row_columns = ui.helper.closest(".pweb-fields-row").data("cols"),
+					placeholder_row_index = ui.placeholder.closest(".pweb-fields-row").index(),
+					placeholder_index = ui.placeholder.index(),
+                    placeholder_row_columns = ui.placeholder.closest(".pweb-fields-row").data("cols");
+                
+				ui.placeholder.show();
+				
+				if (helper_row_columns === 1) {
+				
+					if (helper_row_index - placeholder_row_index === 1) {
+						// before
+						if (placeholder_index === placeholder_row_columns) {
+							// skip before
+							ui.placeholder.hide();
+							return;
+						}
+					}
+					else if (helper_row_index - placeholder_row_index === -1) {
+						// after
+						if (placeholder_index === 0) {
+							// skip after
+							ui.placeholder.hide();
+							return;
+						}
+					}
+				}
+				
+				if (placeholder_index !== 0 && placeholder_index !== placeholder_row_columns) {
                     ui.placeholder.parent().addClass("pweb-placeholder-top");
                 }
             },
@@ -170,6 +199,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 //TODO function createColumn
                 if (pwebcontact_admin.create_column) {
                     
+                    //TODO add unique class to column input element - will be used for saving, keep index
                     // create new column
                     var $col = $('<div class="pweb-fields-col">'
                                     +'<input type="hidden" name="fields['+pwebcontact_admin.counter+'][type]" value="column" data-index="'+pwebcontact_admin.counter+'">'
@@ -219,10 +249,16 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                                 // enable droping of field types on add column button
                                 $col.removeClass("pweb-has-field pweb-custom-field-active pweb-custom-field-type-"+$field.data("type"))
                                         .droppable("enable");
+                                //TODO remove index update
+                                // get field index which might change after form saving and update it for column
+                                var index = $field.find("input:first").data("index");
                                 // destroy DOM element
                                 $field.remove();
+                                // update index of column
+                                var $col_type = $col.find("input");
+                                $col_type.attr( "name", $col_type.attr("name").replace("["+$col_type.data("index")+"]", "["+index+"]") ).data("index", index);
                                 // enable field type of column
-                                $col.find("input").get(0).disabled = false;
+                                $col_type.get(0).disabled = false;
                             }
                             else $("#pweb-dialog-field-delete").data("element", $(this)).dialog("open");
                         }
@@ -382,6 +418,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     function dropField(source, target, show_options) {
         
+        //TODO remove index
         // get index of current column
         var inputIndex = target.find("input"),
             index = inputIndex.data("index");
@@ -389,25 +426,26 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         // disable field type of column
         inputIndex.get(0).disabled = true;
         
+        //TODO add unique class to all options of this field - will be used for saving
         // Change options IDs and names
         var $field = source.find(".pweb-custom-field-container").clone(true);
         $field.find("input,textarea").each(function(){
             this.disabled = false;
             $(this)
-                .data("index", index)
-                .attr("id", $(this).attr("id").replace(/_X_/g, "_"+index+"_") )
-                .attr("name", $(this).attr("name").replace(/\[X\]/g, "["+index+"]") );
+                .data("index", index) //TODO remove index
+                .attr("id", $(this).attr("id").replace(/_X_/g, "_"+index+"_") ) //TODO remove index, use fields global counter
+                .attr("name", $(this).attr("name").replace(/\[X\]/g, "["+index+"]") ); //TODO remove index, use fields global counter
         });
         $field.find("fieldset").each(function(){
             this.disabled = false;
-            $(this).attr("id", $(this).attr("id").replace(/_X_/g, "_"+index+"_") );
+            $(this).attr("id", $(this).attr("id").replace(/_X_/g, "_"+index+"_") ); //TODO remove index, use fields global counter
         });
         $field.find("label").each(function(){
             $(this)
-                .attr("id", $(this).attr("id").replace(/_X_/g, "_"+index+"_") )
-                .attr("for", $(this).attr("for").replace(/_X_/g, "_"+index+"_") );
+                .attr("id", $(this).attr("id").replace(/_X_/g, "_"+index+"_") ) //TODO remove index, use fields global counter
+                .attr("for", $(this).attr("for").replace(/_X_/g, "_"+index+"_") ); //TODO remove index, use fields global counter
         });
-        $field.attr("id", "pweb_fields_"+index+"_container").removeClass("pweb-custom-field-type-"+$field.data("type"));
+        $field.attr("id", "pweb_fields_"+index+"_container").removeClass("pweb-custom-field-type-"+$field.data("type")); //TODO remove index, use fields global counter
 
         // Disable adding new fields into this column and insert field details
         target.droppable("disable").addClass("pweb-has-field pweb-custom-field-type-"+$field.data("type")).prepend($field);
@@ -533,6 +571,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     if (response) {
                         // hide options to remove them
                         $("#pweb_fields_options_close").click();
+                        // remove fields
+						pwebcontact_admin.confirm = false;
+						$rowsChildren.find(".pweb-fields-remove-col").click();
                         // remove rows with columns and fields without confirmation
                         $rowsChildren.remove();
                         // load sample fields

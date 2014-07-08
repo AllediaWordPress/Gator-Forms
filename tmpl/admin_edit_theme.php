@@ -21,10 +21,10 @@ function_exists('add_action') or die;
         'type' => 'filelist',
         'group' => 'load',
         'name' => 'theme',
-        'filter' => '\.jpg$',
+        'filter' => '\.(jpg|png)$',
         'directory' => 'media/theme_settings',
         'strip_ext' => true,
-        'default' => 'Clean FREE',
+        'default' => 'blue-white',
         'attributes' => array(
             'data-action' => admin_url( 'admin.php?page=pwebcontact&task=load_theme&ajax=1&_wpnonce='. wp_create_nonce('load-theme') )
         ),
@@ -61,7 +61,7 @@ function_exists('add_action') or die;
             <?php _e( 'Load settings for this theme', 'pwebcontact' ); ?>
         </a>
     </p>
-    <img src="<?php echo plugins_url('pwebcontact/media/theme_settings/Clean FREE.jpg'); ?>" alt="<?php _e('Theme preview', 'pwebcontact'); ?>">
+    <img src="<?php echo plugins_url('pwebcontact/media/theme_settings/blue-white.png'); ?>" alt="<?php _e('Theme preview', 'pwebcontact'); ?>">
 </div>
 
 <div id="pweb-dialog-theme" title="<?php esc_attr_e( 'Load theme settings', 'pwebcontact' ); ?>" style="display:none">

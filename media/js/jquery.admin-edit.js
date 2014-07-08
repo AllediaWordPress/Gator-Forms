@@ -596,7 +596,11 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     // Load theme preview
     $("#pweb_load_theme").change(function(){
         if (this.selectedIndex) {
-            $("#pweb-theme-preview img").attr("src", pwebcontact_admin.plugin_url + "media/theme_settings/" + $(this).val() + ".jpg");
+            var img = $(this).val();
+            if (img.indexOf(".jpg") === -1 && img.indexOf(".png") === -1) {
+                img = img + ".png";
+            }
+            $("#pweb-theme-preview img").attr("src", pwebcontact_admin.plugin_url + "media/theme_settings/" + img);
         }
         
         var $warning = $("#pweb_theme_warning");
@@ -636,7 +640,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                         type: "POST", 
                         dataType: "json",
                         data: {
-                            "theme": $("#pweb_load_theme").val()
+                            "theme": $("#pweb_load_theme").val().replace(/\.(jpg|png)$/i, '')
                         },
                         beforeSend: function() {
                             $('<i class="glyphicon glyphicon-refresh"></i>').insertAfter( $("#pweb-theme-preview a") );
@@ -768,11 +772,14 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         // change index in names of fields to match current order
         var counter = 0, last = 0;
         $("#pweb_fields_rows").find("input,textarea").not(":disabled").each(function(){
+            //TODO instead of field index use unique class generated for each field
+            //TODO store unique class in array as key and as value keep counter value, that each field with the same class would have the same index
             if (typeof $(this).data("index") !== "undefined" && $(this).data("index") !== last) {
                 last = $(this).data("index");
                 counter++;
             }
-            $(this).attr( "name", $(this).attr("name").replace("["+last+"]", "["+counter+"]") );
+            //TODO always update data index with counter
+            $(this).attr( "name", $(this).attr("name").replace("["+last+"]", "["+counter+"]") ).data("index", counter);
             
             // generate alias for email template
             if ($(this).hasClass("pweb-custom-field-alias") && !$(this).val()) {
@@ -783,6 +790,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 }
             }
         });
+        //TODO get disabled inputs and update name and index with global counter, that when field will be removed from column, then column wuld have unique index and name
         
         // save with ajax
         $.ajax({

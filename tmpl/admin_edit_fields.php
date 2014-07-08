@@ -10,7 +10,7 @@
 // No direct access
 function_exists('add_action') or die;
 
-$this->_set_pro_options('fields', array(
+$this->_set_pro_options('field_types', array(
     'phone',
     'subject',
     'date',
@@ -28,7 +28,12 @@ $this->_set_pro_options('fields', array(
     'mailto_list'
 ));
 
-$this->_set_free_options('fields', array(
+$this->_set_pro_options('fields', array(
+    'maxlength',
+    'tooltip'
+));
+
+$this->_set_free_options('field_types', array(
     'email',
     'name',
     'text',
@@ -291,7 +296,8 @@ $this->_set_free_options('fields', array(
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Validation regular expression',
-                                'tooltip' => 'JavaScript regular expression for validation of field value'
+                                'tooltip' => 'JavaScript regular expression for validation of field value',
+                                'class' => 'pweb-input-large'
                             )); ?>
                             
                         </div>
@@ -396,7 +402,8 @@ $this->_set_free_options('fields', array(
                                 'group' => 'fields',
                                 'label' => 'Validation regular expression',
                                 'tooltip' => 'JavaScript regular expression for validation of field value',
-                                'default' => '/[\d\-\+() ]+/'
+                                'default' => '/[\d\-\+() ]+/',
+                                'class' => 'pweb-input-large'
                             )); ?>
                             
                         </div>
@@ -500,7 +507,8 @@ $this->_set_free_options('fields', array(
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Validation regular expression',
-                                'tooltip' => 'JavaScript regular expression for validation of field value'
+                                'tooltip' => 'JavaScript regular expression for validation of field value',
+                                'class' => 'pweb-input-large'
                             )); ?>
                             
                         </div>
@@ -603,7 +611,8 @@ $this->_set_free_options('fields', array(
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Validation regular expression',
-                                'tooltip' => 'JavaScript regular expression for validation of field value'
+                                'tooltip' => 'JavaScript regular expression for validation of field value',
+                                'class' => 'pweb-input-large'
                             )); ?>
                             
                         </div>
@@ -926,7 +935,8 @@ $this->_set_free_options('fields', array(
                                 'index' => 'X',
                                 'group' => 'fields',
                                 'label' => 'Validation regular expression',
-                                'tooltip' => 'JavaScript regular expression for validation of field value'
+                                'tooltip' => 'JavaScript regular expression for validation of field value',
+                                'class' => 'pweb-input-large'
                             )); ?>
                             
                         </div>
@@ -1508,7 +1518,8 @@ $this->_set_free_options('fields', array(
                         'name' => 'url',
                         'index' => 'X',
                         'group' => 'fields',
-                        'label' => 'Agree to Terms & Conditions URL'
+                        'label' => 'Agree to Terms & Conditions URL',
+                        'class' => 'pweb-input-xlarge'
                     )); ?>
                     
                     <div class="pweb-advanced-options">
@@ -2049,9 +2060,10 @@ $this->_set_free_options('fields', array(
                         'name' => 'upload_path',
                         'label' => 'Upload path',
                         'content' => $upload_dir['basedir'].'/pwebcontact/'.$this->id.'/'
-                            . ' <span class="pweb-text-'. ($this->_check_upload_path() === true ? 'success' : 'danger').'">('
+                            . ' <span class="pweb-text-'. ($this->_check_upload_path() === true ? 'success' : 'danger').'">'
+                            . '<i class="glyphicon glyphicon-'. ($this->_check_upload_path() === true ? 'ok-sign' : 'remove-sign').'"></i>'
                             . ($this->_check_upload_path() === true ? __('writable', 'pwebcontact') : __('unwritable', 'pwebcontact')) 
-                            . ')</span>'
+                            . '</span>'
                     )); ?>
 
                 </div>
