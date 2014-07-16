@@ -44,7 +44,8 @@ function_exists('add_action') or die;
 <div class="theme-browser pweb-panels pweb-clearfix">
 <div class="themes">
 
-<?php foreach ($this->data as $form) : ?>
+<?php if (isset($this->data->forms)) :
+    foreach ($this->data->forms as $form) : ?>
     <div class="theme pweb-panel-box">
         <div class="theme-screenshot pweb-layout-<?php echo $form->layout; ?>" onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact&task=edit&id='.(int)$form->id ); ?>'">
 			<?php if (!defined('PWEBCONTACT_PRO') AND $form->layout !== 'slidebox') : ?>
@@ -102,7 +103,8 @@ function_exists('add_action') or die;
             </button>
         </div>
     </div>
-<?php endforeach; ?>
+<?php endforeach; 
+endif; ?>
 
     <div class="theme active pweb-panel-box pweb-panel-pro">
         <div class="theme-screenshot pweb-buy">

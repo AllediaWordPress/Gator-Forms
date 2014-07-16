@@ -663,14 +663,18 @@ class PWebContact_Admin {
         
         global $wpdb;
         
-        if ($this->data === null) {
+        if (!is_object($this->data)) {
+            $this->data = new stdClass();
+        }
+        
+        if (!isset($this->data->forms)) {
         
             $sql =  'SELECT `id`, `title`, `publish`, `position`, `modify_date`, `layout` '.
                     'FROM `'.$wpdb->prefix.'pwebcontact_forms` ';
-            $this->data = $wpdb->get_results($sql);
+            $this->data->forms = $wpdb->get_results($sql);
             
-            if ($this->data === null) {
-                $this->data = array();
+            if ($this->data->forms === null) {
+                $this->data->forms = array();
             }
         }
     }
@@ -1016,7 +1020,7 @@ class PWebContact_Admin {
         return 
 			  '(function(){'
 			. 'var pw=document.createElement("script");pw.type="text/javascript";pw.async=true;'
-			. 'pw.src="https://www.perfect-web.co/index.php?option=com_pwebshop&view=updates&format=raw&extension=wp_pwebcontact&version='.$this->_get_version().'&wpversion='.$wp_version;.'&uid='.md5(home_url()).'";'
+			. 'pw.src="https://www.perfect-web.co/index.php?option=com_pwebshop&view=updates&format=raw&extension=wp_pwebcontact&version='.$this->_get_version().'&wpversion='.$wp_version.'&uid='.md5(home_url()).'";'
 			. 'var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(pw,s);'
 			. '})();';
     }
