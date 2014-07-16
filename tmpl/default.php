@@ -308,7 +308,7 @@ $message =
 						<div class="pweb-label">
 							<label id="<?php echo $field['id']; ?>-lbl"<?php if ($field['type'] != 'checkboxes' AND $field['type'] != 'radio') echo ' for="'.$field['id'].'"'; ?>>
 								<?php _e($field['label'], 'pwebcontact'); ?>
-								<?php if ($field['required']) : ?><span class="pweb-asterisk">*</span><?php endif; ?>
+								<?php if (isset($field['required']) AND $field['required']) : ?><span class="pweb-asterisk">*</span><?php endif; ?>
 							</label>
 						</div>
 						<?php endif; ?>
@@ -539,7 +539,12 @@ $message =
 				
                     // create new column slot
                     $column++;
-                    $pages[$page][$row][$column] .= ob_get_clean(); 
+                    if (isset($pages[$page][$row][$column])) {
+                        $pages[$page][$row][$column] .= ob_get_clean(); 
+                    }
+                    else {
+                        $pages[$page][$row][$column] = ob_get_clean(); 
+                    }
 				
 				endif;
 			endforeach; 

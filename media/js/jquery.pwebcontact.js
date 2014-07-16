@@ -402,61 +402,72 @@ var pwebBoxes = pwebBoxes || [],
 		
 		initModalRules: function()
 		{
-            var that = this,
+			var that = this,
 				links = this.Form.find('.pweb-modal-url');
 			
 			if (!links.length) return;
 			
 			if (typeof $.fn.modal === 'function')
 			{
-                // body class for opened modal
+				// body class for opened modal
                 if (typeof this.options.modalClass === 'undefined') {
                     this.options.modalClass = 'pwebcontact'+this.options.id+'_modal-open pweb-modal-open pweb-modal-' + this.options.modalStyle;
                 }
                 
 				links.click(function(e){
-                    // TODO open from HTML ID
-                    // TODO open URL in responsive iframe
-                    // if external or absolute link then open in new window
-					var href = $(this).attr('href');
-					if (href.indexOf('//') !== -1 && href.indexOf('//') <= 6 && href.indexOf(document.location.host) === -1) return;
-					
 					e.preventDefault();
+					var href = $(this).attr('href');
 					
-					var opt = {};
-					if (that.options.layout == 'modal') 
-						opt.backdrop = 0;
-					else
-						opt.backdrop = true;
+					// stop event if modal content is HTML element and does not exists
+					if (href.indexOf('#') === 0 && $(href).length === 0) return;
 					
-					$('<div class="pweb-modal modal fade' + (that.options.bootstrap === 2 ? ' hide' : '') + (that.Box.hasClass('pweb-rtl') ? ' pweb-rtl' : '') + '">'
+					$('body').on(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal', 'div.pweb-modal-rules', function(e) {
+                        // do not trigger if tooltip is the target
+                        e.stopPropagation();
+                        if (e.target !== e.currentTarget) return;
+                        // add opened class to body
+                        $(document.body).addClass(that.options.modalClass);
+                    });
+					
+					var $modal = $('<div class="pweb-modal pweb-modal-rules modal fade' + (that.options.bootstrap == 2 ? ' hide' : '') + (that.Box.hasClass('pweb-rtl') ? ' pweb-rtl' : '') + '">'
 						+'<button type="button" class="pweb-button-close" data-dismiss="modal" aria-hidden="true">&times;</button>'
 						+'<div class="modal-body pweb-progress"></div>'
 					 +'</div>'
 					)
 					.appendTo(document.body)
-					.modal(opt)
+					.modal({
+						show: true, 
+						backdrop: (that.options.layout == 'modal' ? 0 : true)
+					})
 					.on(that.options.bootstrap === 2 ? 'hidden' : 'hidden.bs.modal', function() {
                         // do not close if clicked inside modal
                         e.stopPropagation();
-                        if (e.target !== e.currentTarget) return;
-                        
-                        $(this).remove();
-                        // remove opened class from body
+						// restore content
+                        if (href.indexOf('#') === 0) $(href).append( $modalContent ); 
+						// remove opened class from body
                         $(document.body).removeClass(that.options.modalClass);
-					})
-                    //TODO test why show event is not working and shown has to be used
-                    .on(that.options.bootstrap === 2 ? 'shown' : 'shown.bs.modal', function(e) {
-                        // do not trigger if tooltip is the target
-                        e.stopPropagation();
-                        if (e.target !== e.currentTarget) return;
-                        
-                        // add opened class to body
-                        $(document.body).addClass(that.options.modalClass);
-                    })
-					.find('.modal-body').load(href, function(){
-						$(this).removeClass('pweb-progress');
+						// destroy modal
+                        $(this).remove();
 					});
+					
+					// display modal content
+					if ( href.indexOf('#') !== 0 ){
+						$modal.find('.modal-body')
+							.html('<iframe width="100%" height="100%" frameborder="0" scrolling="yes" allowtransparency="true" src="'+href+'"></iframe>')
+							.css({
+								'width': 'auto',
+								'height': '100%', 
+								'padding': '0',
+								'overflow': 'hidden'
+			            })
+						.find('iframe').on('load', function(){
+							$(this).parent().removeClass('pweb-progress');
+						});
+					}
+					else {
+						var $modalContent = $( href ).children();
+						$modal.find('.modal-body').append( $modalContent ).removeClass('pweb-progress');
+					}
 				});
 				
 				return true;

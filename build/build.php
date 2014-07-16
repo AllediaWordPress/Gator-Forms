@@ -15,7 +15,7 @@ class PWebCompiler {
     protected $excludeRegExps = array(
         '/^\./',
         '/^media\/cache\/.+\.((?!html).)+$/i',
-        '/^media\/js\/jquery\.pwebcontact\.js$/i',
+        //'/^media\/js\/jquery\.pwebcontact\.js$/i',
         '/^assets/i',
         '/^build/i'
     );
@@ -38,6 +38,8 @@ class PWebCompiler {
     );
     protected $filterFiles = array(
         'pwebcontact.php',
+        'media/js/jquery.pwebcontact.js',
+        //'media/js/jquery.pwebcontact.min.js',
         'tmpl/default.php'
     );
     

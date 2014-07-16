@@ -1,3 +1,0 @@
-{lang:Ticket}: {ticket}
-
-{fields}

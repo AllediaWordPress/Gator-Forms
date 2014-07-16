@@ -15,4 +15,3 @@ echo Build ZIP archive with PRO version...
 php "%CURRENTPATH%build.php" --pro
 echo.
 
-pause

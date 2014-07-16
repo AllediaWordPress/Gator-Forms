@@ -3,7 +3,7 @@
  * Plugin Name: Perfect Easy & Powerful Contact Form
  * Plugin URI: http://www.perfect-web.co/wordpress/contact-form
  * Description: Intuitive for dummies. Handy for pros!
- * Version: 1.0.0
+ * Version: 1.0.1
  * Text Domain: pwebcontact
  * Author: Piotr Moćko
  * Author URI: http://www.perfect-web.co
@@ -19,18 +19,35 @@ define('PWEBCONTACT_PRO', true);
 
 if ( is_admin() ) {
     
-    require_once dirname( __FILE__ ) . '/install.php';
-    require_once dirname( __FILE__ ) . '/admin.php';
-    
-    register_activation_hook( __FILE__, 'pwebcontact_install' );
-    register_uninstall_hook( __FILE__, 'pwebcontact_uninstall' );
+    if (defined( 'DOING_AJAX' )) {
+        
+        add_action('wp_ajax_pwebcontact_sendEmail', array('PWebContact', 'sendEmailAjax'));
+        add_action('wp_ajax_nopriv_pwebcontact_sendEmail', array('PWebContact', 'sendEmailAjax'));
+        
+        add_action('wp_ajax_pwebcontact_checkCaptcha', array('PWebContact', 'checkCaptchaAjax'));
+        add_action('wp_ajax_nopriv_pwebcontact_checkCaptcha', array('PWebContact', 'checkCaptchaAjax'));
+        
+        add_action('wp_ajax_pwebcontact_uploader', array('PWebContact', 'uploaderAjax'));
+        add_action('wp_ajax_nopriv_pwebcontact_uploader', array('PWebContact', 'uploaderAjax'));
+        
+        add_action('wp_ajax_pwebcontact_getToken', array('PWebContact', 'getTokenAjax'));
+        add_action('wp_ajax_nopriv_pwebcontact_getToken', array('PWebContact', 'getTokenAjax'));
+    }
+    else {
+        
+        require_once dirname( __FILE__ ) . '/install.php';
+        require_once dirname( __FILE__ ) . '/admin.php';
+
+        register_activation_hook( __FILE__, 'pwebcontact_install' );
+        register_uninstall_hook( __FILE__, 'pwebcontact_uninstall' );
+    }
 } 
 else {
-    
+
     add_action('init', array('PWebContact', 'init'));
-    
+
     add_action('wp_footer', array('PWebContact', 'displayFormsInFooter'), 100);
-    
+
     /*** PRO START ***/
     add_shortcode('pwebcontact', array('PWebContact', 'displayFormByShortcode'));
     /*** PRO END ***/
@@ -861,7 +878,7 @@ class PWebContact
         /*** PRO START ***/
 		wp_enqueue_style('pwebcontact-animations');
 
-        // Check if calendar field modal rules will be used
+        // Check if calendar field or modal rules will be used
         $datapicker = false;
 		$fields = self::getFields();
 		foreach ($fields as $field)
@@ -1112,12 +1129,13 @@ class PWebContact
 		if (($value = (int)$params->get('bootstrap_version', 2)) != 2)
 			$options[] = 'bootstrap:'.$value;
 		
+        //$options[] = 'basePath:"'.home_url('', 'relative').'"';
+		$options[] = 'ajaxUrl:"'.admin_url( 'admin-ajax.php?action=pwebcontact_' ).'"';
+		
 		/*** PRO START ***/
 		$options[] = 'layout:"'.$layout.'"';
 		$options[] = 'position:"'.$position.'"';
 		$options[] = 'offsetPosition:"'.$params->get('toggler_offset_position').'"';
-		//$options[] = 'basePath:"'.home_url('', 'relative').'"';
-		$options[] = 'ajaxUrl:"'.plugins_url('ajax.php?action=', __FILE__).'"';
 		
 		if (($value = $params->get('msg_position', 'after')) != 'after')
 			$options[] = 'msgPosition:"'.$value.'"';
@@ -1538,30 +1556,44 @@ class PWebContact
 		$params->set('upload_url',  $upload_dir['baseurl'].'/pwebcontact/'.$form_id.'/'); //WP
 		$params->set('upload_path', $upload_dir['basedir'].'/pwebcontact/'.$form_id.'/'); //WP
         /*** PRO END ***/
-        
-		// Internet Explorer < 10
-		if (!isset($_SERVER['HTTP_ACCEPT']) OR strpos($_SERVER['HTTP_ACCEPT'], 'application/json') === false) {
-			// Change response Content-Type
-			self:setHeader('Content-Type', 'text/plain', true);
-		}
 	}
 
 
-	public static function closeAjaxResponse() 
+	public static function closeAjaxResponse( $data = array() ) 
 	{
-		if (PWEBCONTACT_DEBUG) 
+		if (defined('PWEBCONTACT_DEBUG') AND PWEBCONTACT_DEBUG) 
 		{
 			self::$logs[] = 'Ajax response exit';
 		}
         
+        $data['debug'] = null;
         if (count(self::$logs)) {
-            array_walk(self::$logs, function(&$value, $key) {
+            $data['debug'] = self::$logs;
+            array_walk($data['debug'], function(&$value, $key) {
                 $value = esc_html($value);
             });
-            return self::$logs;
         }
-
-		return null;
+        
+        // Internet Explorer < 10
+		if (!isset($_SERVER['HTTP_ACCEPT']) OR strpos($_SERVER['HTTP_ACCEPT'], 'application/json') === false) {
+			// Change response Content-Type
+			self:setHeader('Content-Type', 'text/plain', true);
+		}
+        
+        // Send headers
+        foreach (self::getHeaders() as $header => $value) {
+            header($header . ($value ? ': '.$value : ''));
+        }
+        
+        // Response
+        $response = new stdClass();
+        $response->success = true;
+        $response->message = null;
+        $response->data = $data;
+        
+		echo json_encode($response);
+        
+        die();
 	}
 
 
@@ -1592,7 +1624,9 @@ class PWebContact
 	{
         $form_id = isset($_POST['mid']) ? (int)$_POST['mid'] : 0;
         
-		return array('status' => 103, 'token' => wp_create_nonce('pwebcontact'.$form_id));
+		$response = array('status' => 103, 'token' => wp_create_nonce('pwebcontact'.$form_id));
+        
+        self::closeAjaxResponse($response);
 	}
 
 
@@ -1620,9 +1654,7 @@ class PWebContact
 			$response = array('status' => 301, 'msg' => __('WordPress error', 'pwebcontact'));
 		}
 		
-		$response['debug'] = self::closeAjaxResponse();
-		
-		return $response;
+		self::closeAjaxResponse($response);
 	}
 	/*** PRO END ***/
     
@@ -1645,9 +1677,7 @@ class PWebContact
 			$response = array('status' => 400, 'msg' => __('WordPress error', 'pwebcontact'));
 		}
 		
-		$response['debug'] = self::closeAjaxResponse();
-		
-		return $response;
+		self::closeAjaxResponse($response);
 	}
     /*** PRO END ***/
 
@@ -1686,9 +1716,7 @@ class PWebContact
 		}
         /*** PRO END ***/
 		
-		$response['debug'] = self::closeAjaxResponse();
-		
-		return $response;
+		self::closeAjaxResponse($response);
 	}
     
     
@@ -1729,8 +1757,8 @@ class PWebContact
 		
 		// mail from
 		/*** FREE START ***/
-		$global_name  = $params->get('email_from_name', $global_name);
-		$global_email = $params->get('email_from', $global_email);
+		$global_name  = $params->get('email_from_name', get_bloginfo('name'));
+		$global_email = $params->get('email_from', get_bloginfo('admin_email'));
         /*** FREE END ***/
         /*** PRO START ***/
 		$global_name  = $params->get( 'email_from_name', $settings->get('email_from_name', get_bloginfo('name')) );
@@ -1847,7 +1875,7 @@ class PWebContact
                 }
 
                 // is required
-                if ($field['required'] AND ($value === null OR $value === '')) {
+                if (isset($field['required']) AND $field['required'] AND ($value === null OR $value === '')) {
                     // required field is empty
                     $invalid_fields[] = 'field-'.$field['alias'];
                     continue;
@@ -1880,8 +1908,9 @@ class PWebContact
                     }
 
                     // validate fields with regular expression
-                    if (in_array($field['type'], array('text', 'name', 'phone', 'subject', 'password')) AND $field['validation'] AND $value AND !preg_match($field['validation'], $value)) { //WP
-                        $invalid_fields[] = 'field-'.$field['alias']['alias'];
+                    if (in_array($field['type'], array('text', 'name', 'phone', 'subject', 'password')) AND isset($field['validation']) AND $field['validation'] AND $value 
+                            AND !preg_match($field['validation'], $value)) { //WP
+                        $invalid_fields[] = 'field-'.$field['alias'];
                     }
                 }
             /*** PRO START ***/
@@ -1952,7 +1981,7 @@ class PWebContact
                 $data['subject'] = sprintf($data['subject'], $email_vars['ticket']);
 			}
 		}
-        /*** PRO START ***/
+        /*** PRO END ***/
 		
 		// success message
 		if (!isset($success_msg)) $success_msg = __($params->get('msg_success', 'Message successfully sent', 'pwebcontact'));
@@ -2161,7 +2190,7 @@ class PWebContact
 	}
     
     
-    protected function getVersion() {
+    protected static function getVersion() {
         
         require_once ABSPATH.'wp-admin/includes/plugin.php';
         
@@ -2206,7 +2235,9 @@ class PWebContact
 			foreach ($fields as $field)
 			{
 				// skip all separators which does not have any data
-                if (in_array($field['type'], array('page', 'row', 'column', 'button_send', 'email_copy', 'captcha', 'custom_text', 'header'))) continue;
+                if (!isset($field['alias']) OR in_array($field['type'], array('page', 'row', 'column', 'button_send', 'email_copy', 'captcha', 'upload', 'custom_text', 'header'))) {
+                    continue;
+                }
 				
                 
                 if (isset(self::$data['fields'][$field['alias']])) {
