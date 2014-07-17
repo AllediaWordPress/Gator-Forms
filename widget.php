@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.2
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license Perfect Web License http://www.perfect-web.co/license
@@ -88,7 +88,7 @@ class PWebContact_Widget extends WP_Widget {
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $instance['title']; ?>" class="widefat" />
+			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php if (isset($instance['title'])) echo $instance['title']; ?>" class="widefat" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'form_id' ); ?>"><?php _e('Contact form:', 'pwebcontact'); ?></label>

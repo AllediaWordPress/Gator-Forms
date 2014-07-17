@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.2
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license Perfect Web License http://www.perfect-web.co/license
@@ -258,7 +258,7 @@ $message =
 						<div class="pweb-label">
 							<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl">
 								<?php _e($field['label'] ? $field['label'] : 'Attachment', 'pwebcontact'); ?>
-								<?php if ($field['required']) : ?><span class="pweb-asterisk">*</span><?php endif; ?>
+								<?php if (isset($field['required']) AND $field['required']) : ?><span class="pweb-asterisk">*</span><?php endif; ?>
 							</label>
 						</div>
 						<div class="pweb-field pweb-uploader" id="<?php echo $field['id']; ?>_container">
@@ -266,7 +266,7 @@ $message =
 								<span class="fileinput-button btn<?php echo $field['class']; ?>"<?php echo $field['attributes']; ?>>
 				                    <i class="glyphicon glyphicon-plus-sign"></i>
 				                    <span><?php _e('Add files', 'pwebcontact'); ?></span>
-				                    <input type="file" name="files[]" multiple="multiple" id="<?php echo $field['id']; ?>"<?php if ($field['required']) echo ' class="pweb-validate-uploader"'; ?> data-role="none">
+				                    <input type="file" name="files[]" multiple="multiple" id="<?php echo $field['id']; ?>"<?php if (isset($field['required']) AND $field['required']) echo ' class="pweb-validate-uploader"'; ?> data-role="none">
 				                </span>
 							</div>
 							<div class="files"></div>
@@ -327,7 +327,7 @@ $message =
 								
 								$field['attributes'] = null;
 								$field['classes'] = array('pweb-input');
-								if ($field['required']) 
+								if (isset($field['required']) AND $field['required']) 
 									$field['classes'][] = 'required';
 								
 								if (isset($field['validation']) AND $field['validation']) 
@@ -377,7 +377,7 @@ $message =
 								if ($field['maxlength']) {
 									$field['attributes'] .= ' maxlength="'.$field['maxlength'].'"';
 								}
-								if ($field['required']) 
+								if (isset($field['required']) AND $field['required']) 
 									$field['classes'][] = 'required';
 								
 								if ($field['tooltip']) {
@@ -401,7 +401,7 @@ $message =
 								$field['attributes'] = null;
 								$field['classes'] = array();
 								
-								if ($field['required']) 
+								if (isset($field['required']) AND $field['required']) 
 									$field['classes'][] = 'required';
 								
 								if ($field['type'] == 'multiple') 
@@ -468,7 +468,7 @@ $message =
 							<div class="pweb-column pweb-width-<?php echo $width; ?>">
 							<?php foreach ($optValues as $value) : ?>
                                 <?php if (empty($value)) continue; ?>
-								<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id'].'_'.$i; ?>" value="<?php echo esc_attr( preg_replace('/[\r\n]+/', '', $value) ); ?>" class="pweb-<?php echo $type; ?> pweb-fieldset<?php if ($i == 0 AND $field['required']) echo ' required'; ?>" data-role="none">
+								<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id'].'_'.$i; ?>" value="<?php echo esc_attr( preg_replace('/[\r\n]+/', '', $value) ); ?>" class="pweb-<?php echo $type; ?> pweb-fieldset<?php if ($i == 0 AND isset($field['required']) AND $field['required']) echo ' required'; ?>" data-role="none">
 								<label for="<?php echo $field['id'].'_'.$i++; ?>">
 									<?php esc_html_e($value, 'pwebcontact'); ?>
 								</label>
@@ -485,7 +485,7 @@ $message =
 							else :
 							foreach ($optValues as $value) : ?>
                                 <?php if (empty($value)) continue; ?>
-								<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id'].'_'.$i; ?>" value="<?php echo esc_attr( preg_replace('/[\r\n]+/', '', $value) ); ?>" class="pweb-<?php echo $type; ?> pweb-fieldset<?php if ($i == 0 AND $field['required']) echo ' required'; ?>" data-role="none">
+								<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id'].'_'.$i; ?>" value="<?php echo esc_attr( preg_replace('/[\r\n]+/', '', $value) ); ?>" class="pweb-<?php echo $type; ?> pweb-fieldset<?php if ($i == 0 AND isset($field['required']) AND $field['required']) echo ' required'; ?>" data-role="none">
 								<label for="<?php echo $field['id'].'_'.$i++; ?>">
 									<?php esc_html_e($value, 'pwebcontact'); ?>
 								</label>
@@ -498,10 +498,10 @@ $message =
 							
 							/* ----- Single checkbox ------------------------------------------------------------------ */
 							elseif ($field['type'] == 'checkbox') : ?>
-								<input type="checkbox" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" class="pweb-checkbox pweb-single-checkbox<?php if ($field['required']) echo ' required'; ?>" value="1" data-role="none">
+								<input type="checkbox" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" class="pweb-checkbox pweb-single-checkbox<?php if (isset($field['required']) AND $field['required']) echo ' required'; ?>" value="1" data-role="none">
 								<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl"<?php if ($field['tooltip']) echo ' class="pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"'; ?>>
                                     <?php _e($field['label'], 'pwebcontact'); ?>
-                                    <?php if ($field['required']) : ?>
+                                    <?php if (isset($field['required']) AND $field['required']) : ?>
                                         <span class="pweb-asterisk">*</span>
                                     <?php endif; ?>
 								</label>
@@ -510,7 +510,7 @@ $message =
                             
                             /* ----- Single checkbox with Terms & Conditions ----------------------------------------- */
 							elseif ($field['type'] == 'checkbox_modal') : ?>
-								<input type="checkbox" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" class="pweb-checkbox pweb-single-checkbox<?php if ($field['required']) echo ' required'; ?>" value="1" data-role="none">
+								<input type="checkbox" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" class="pweb-checkbox pweb-single-checkbox<?php if (isset($field['required']) AND $field['required']) echo ' required'; ?>" value="1" data-role="none">
 								<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl"<?php if ($field['tooltip']) echo ' class="pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"'; ?>>
 								<?php if ($field['url']) : ?>
 									<a href="<?php echo $field['url']; ?>" target="_blank"<?php if ($field['target'] == 1) echo ' class="pweb-modal-url"'; ?>>
@@ -520,7 +520,7 @@ $message =
 								<?php else : 
 									esc_html_e($field['label'], 'pwebcontact'); 
 								endif; ?>
-								<?php if ($field['required']) : ?>
+								<?php if (isset($field['required']) AND $field['required']) : ?>
 									<span class="pweb-asterisk">*</span>
 								<?php endif; ?>
 								</label>
