@@ -1,5 +1,5 @@
 /**
- * @version 1.0.0
+ * @version 1.0.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license Perfect Web License http://www.perfect-web.co/license
@@ -421,14 +421,6 @@ var pwebBoxes = pwebBoxes || [],
 					// stop event if modal content is HTML element and does not exists
 					if (href.indexOf('#') === 0 && $(href).length === 0) return;
 					
-					$('body').on(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal', 'div.pweb-modal-rules', function(e) {
-                        // do not trigger if tooltip is the target
-                        e.stopPropagation();
-                        if (e.target !== e.currentTarget) return;
-                        // add opened class to body
-                        $(document.body).addClass(that.options.modalClass);
-                    });
-					
 					var $modal = $('<div class="pweb-modal pweb-modal-rules modal fade' + (that.options.bootstrap == 2 ? ' hide' : '') + (that.Box.hasClass('pweb-rtl') ? ' pweb-rtl' : '') + '">'
 						+'<button type="button" class="pweb-button-close" data-dismiss="modal" aria-hidden="true">&times;</button>'
 						+'<div class="modal-body pweb-progress"></div>'
@@ -436,7 +428,7 @@ var pwebBoxes = pwebBoxes || [],
 					)
 					.appendTo(document.body)
 					.modal({
-						show: true, 
+						show: false, 
 						backdrop: (that.options.layout == 'modal' ? 0 : true)
 					})
 					.on(that.options.bootstrap === 2 ? 'hidden' : 'hidden.bs.modal', function() {
@@ -450,9 +442,21 @@ var pwebBoxes = pwebBoxes || [],
                         $(this).remove();
 					});
 					
+					$('body').on(that.options.bootstrap === 2 ? 'show' : 'show.bs.modal', 'div.pweb-modal-rules', function(e) {
+                        // do not trigger if tooltip is the target
+                        e.stopPropagation();
+                        if (e.target !== e.currentTarget) return;
+                        // add opened class to body
+                        $(document.body).addClass(that.options.modalClass);
+                    });
+					
 					// display modal content
-					if ( href.indexOf('#') !== 0 ){
-						$modal.find('.modal-body')
+					if ( href.indexOf('#') !== 0 ) {
+						$modal.on(that.options.bootstrap === 2 ? 'shown' : 'shown.bs.modal', function(){
+							// resize iframe
+							$(this).find('iframe').height( $(this).height() );
+						})
+						.find('.modal-body')
 							.html('<iframe width="100%" height="100%" frameborder="0" scrolling="yes" allowtransparency="true" src="'+href+'"></iframe>')
 							.css({
 								'width': 'auto',
@@ -468,6 +472,8 @@ var pwebBoxes = pwebBoxes || [],
 						var $modalContent = $( href ).children();
 						$modal.find('.modal-body').append( $modalContent ).removeClass('pweb-progress');
 					}
+					
+					$modal.modal('show');
 				});
 				
 				return true;

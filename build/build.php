@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.4
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license Perfect Web License http://www.perfect-web.co/license
@@ -22,6 +22,7 @@ class PWebCompiler {
     protected $excludeProFiles = array(
         'uploader.php',
         'UploadHandler.php',
+        'widget.php',
         'media/css/animations.css', // Modal window animations
         'media/css/uploader.css',
         'media/css/uploader-rtl.css',
@@ -34,7 +35,8 @@ class PWebCompiler {
         'media/js/jquery.fileupload-ui.js',
         'media/js/jquery.fileupload-validate.js',
         'media/js/jquery.iframe-transport.js', // fileupload
-        'media/tickets'
+        'media/tickets',
+        'update-checker'
     );
     protected $filterFiles = array(
         'pwebcontact.php',

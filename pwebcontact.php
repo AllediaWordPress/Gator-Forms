@@ -3,7 +3,7 @@
  * Plugin Name: Perfect Easy & Powerful Contact Form
  * Plugin URI: http://www.perfect-web.co/wordpress/contact-form
  * Description: Intuitive for dummies. Handy for pros!
- * Version: 1.0.2
+ * Version: 1.0.4
  * Text Domain: pwebcontact
  * Author: Piotr Moćko
  * Author URI: http://www.perfect-web.co
@@ -1850,7 +1850,7 @@ class PWebContact
 			}
             elseif ($field['type'] == 'upload') 
 			{
-                if ($field['required'] AND !count($data['attachments'])) {
+                if (isset($field['required']) AND $field['required'] AND !count($data['attachments'])) {
                     $invalid_fields[] = 'uploader';
                 }
             }

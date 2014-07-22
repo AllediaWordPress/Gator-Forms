@@ -4,7 +4,7 @@ Donate link:
 Tags: contact form, file upload, AJAX, responsive contact form, multiple contact forms plugin, shortcode contact form, widget contact form, contact form plugin, contact form maker, drag and drop contact form, form builder, file upload form, contact me, call me back, popup contact form, popup form, reservation form, contact helpdesk form, feedback form, post feedback, form, resnponsive form, rwd form, contacts form plugin, easy contact form plugin, button, contact, contacts, cnotact, conact, contatc, send copy, feedback, request, send
 Requires at least: 3.5.0
 Tested up to: 3.9.1
-Stable tag: 1.0.2
+Stable tag: 1.0.4
 License: Perfect Web License
 License URI: http://www.perfect-web.co/license
 
@@ -14,12 +14,12 @@ Intuitive for dummies. Handy for pros!
 
 Intuitive for dummies. Handy for pros!
 
-★ 5-click setup
-★ Fully responsive
-★ Drag & Drop form builder
-★ Spam protection without annoying captcha
-★ Ready-made themes
-★ Cool visual and animations effects
+* 5-click setup
+* Fully responsive
+* Drag & Drop form builder
+* Spam protection without annoying captcha
+* Ready-made themes
+* Cool visual and animations effects
 
 Discover Perfect Easy & Powerful Contact Form developed for WordPress. First of all see cool visual effects you can use on your website such as smooth slide in effect, impressive lightbox appear effects or on-site display with possible accordation effect. As you see your possibilities are practically unlimited. What is more learn about key features of Perfect Contact Form starting from handy upload, trough excellent spam protection, to unlimited number of forms and fields you can use. Thirdly explore our ready-made responsive layouts you can easily adjust to your needs. No matter you need a call me back option, an application or reservation form, support ticket submission form or a poll Perfect Contact Form will suit your needs perfectly.
 Try it it’s easy!
@@ -114,15 +114,15 @@ To ask a support question or post a bug report, fill a [support form](http://www
 
 == Screenshots ==
 
-1. Slide contact form from any page edge
-2. Select predefined colors of fields and buttons, background and opening tab
-3. Create forms with unlimited fields, display labels above fields, inline with them or inside as placeholder
-4. Display contact form in modal window (lightbox)
-5. Display opening tab horizontal or vertical
-6. Display static contact form in widget or insite with shortcode. You can also display form in accordion.
-7. Step 1 - you can decide here where and with what effects you want your form displayed
-8. Step 1 - you can decide here where and with what effects you want your form displayed
-9. Step 1 - you can decide here where and with what effects you want your form displayed
+01. Slide contact form from any page edge
+02. Select predefined colors of fields and buttons, background and opening tab
+03. Create forms with unlimited fields, display labels above fields, inline with them or inside as placeholder
+04. Display contact form in modal window (lightbox)
+05. Display opening tab horizontal or vertical
+06. Display static contact form in widget or insite with shortcode. You can also display form in accordion.
+07. Step 1 - you can decide here where and with what effects you want your form displayed
+08. Step 1 - you can decide here where and with what effects you want your form displayed
+09. Step 1 - you can decide here where and with what effects you want your form displayed
 10. Step 2 - use our easy drag & drop form builder to create your own form
 11. Step 2 - use our easy drag & drop form builder to create your own form
 12. Step 3 - you can choose one of predefined theme or create your own
@@ -137,6 +137,13 @@ To ask a support question or post a bug report, fill a [support form](http://www
 
 == Changelog ==
 
+= 1.0.4 / 22-07-2014 =
+* Automatic updates for PRO version
+
+= 1.0.3 / 21-07-2014 =
+* Fixed copying fields when coyping a form
+* Improved display of Rules & Terms in modal window
+
 = 1.0.2 / 17-07-2014 =
 * Fixed some PHP notices
 
@@ -148,4 +155,17 @@ To ask a support question or post a bug report, fill a [support form](http://www
 
 == Upgrade Notice ==
 
-N/A
+= 1.0.4 =
+To update PRO version download it from Perfect-Web.co website. After this upadte you will be able to automatically update PRO version form your WordPress dashbord.
+
+= 1.0.3 =
+To update PRO version download it from Perfect-Web.co website and upload by FTP.
+
+= 1.0.2 =
+To update PRO version download it from Perfect-Web.co website and upload by FTP.
+
+= 1.0.1 =
+To update PRO version download it from Perfect-Web.co website and upload by FTP.
+
+= 1.0.0 =
+To update PRO version download it from Perfect-Web.co website and upload by FTP.
