@@ -1,5 +1,5 @@
 /**
- * @version 1.0.3
+ * @version 1.0.5
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license Perfect Web License http://www.perfect-web.co/license
@@ -129,7 +129,9 @@ var pwebBoxes = pwebBoxes || [],
 			this.Token 			= $(this.options.selector+'_token');
 			
 			// reset fields
-			this.Form[0].reset();
+            if (this.Form.get(0)) {
+                this.Form.get(0).reset();
+            }
 			
             /*** PRO START ***/
 			// enable captcha
@@ -279,13 +281,20 @@ var pwebBoxes = pwebBoxes || [],
 			
 			if (this.options.layout != 'static')
 			{
-				// apply events for opening form with custom links			
+				/*** FREE START ***/
+                // apply events for opening form with custom links
 				$(this.options.selectorClass+'_toggler').click(function(e){
 					e.preventDefault();
 					that.toggleForm(-1, -1, this, e);
 				});
-                
+                /*** FREE END ***/
                 /*** PRO START ***/
+                // apply events for opening form with custom links
+				$(this.options.selectorClass+'_toggler, a[href='+this.options.selector+'_toggler]').click(function(e){
+					e.preventDefault();
+					that.toggleForm(-1, -1, this, e);
+				});
+                
                 // clear toggler name if is hidden
 				if (this.options.togglerNameClose)
 					this.options.togglerNameOpen = this.Toggler.find('.pweb-text').text();
@@ -1375,7 +1384,9 @@ var pwebBoxes = pwebBoxes || [],
 				// reset form and validator
 				if (this.validator)
 					this.validator.resetForm();
-				this.Form[0].reset();
+                if (this.Form.get(0)) {
+                    this.Form.get(0).reset();
+                }
 				
                 /*** PRO START ***/
                 captcha[this.options.id].status = -1;

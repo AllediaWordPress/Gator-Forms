@@ -29,7 +29,7 @@ class PWebContact_Widget extends WP_Widget {
 		$widget_ops = array( 'classname' => 'pwebcontact', 'description' => __('Ajax Popup Contact Form.', 'pwebcontact') );
 
 		/* Widget control settings. */
-		$control_ops = array( 'width' => 300, 'height' => 500, 'id_base' => 'pwebcontact-widget' ); //TODO id_base czy unikalne dla kazdego widgetu?
+		$control_ops = array( 'width' => 300, 'height' => 500, 'id_base' => 'pwebcontact-widget' );
 
 		/* Create the widget. */
 		$this->WP_Widget( 'pwebcontact-widget', __('Perfect Contact Form', 'pwebcontact'), $widget_ops, $control_ops );

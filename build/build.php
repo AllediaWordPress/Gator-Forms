@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.4
+ * @version 1.0.5
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license Perfect Web License http://www.perfect-web.co/license
@@ -15,7 +15,7 @@ class PWebCompiler {
     protected $excludeRegExps = array(
         '/^\./',
         '/^media\/cache\/.+\.((?!html).)+$/i',
-        //'/^media\/js\/jquery\.pwebcontact\.js$/i',
+        '/^media\/js\/jquery\.pwebcontact\.js$/i',
         '/^assets/i',
         '/^build/i'
     );
@@ -40,8 +40,8 @@ class PWebCompiler {
     );
     protected $filterFiles = array(
         'pwebcontact.php',
-        'media/js/jquery.pwebcontact.js',
-        //'media/js/jquery.pwebcontact.min.js',
+        //'media/js/jquery.pwebcontact.js',
+        'media/js/jquery.pwebcontact.min.js',
         'tmpl/default.php'
     );
     

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.2
+ * @version 1.0.5
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license Perfect Web License http://www.perfect-web.co/license
@@ -150,7 +150,7 @@ $message =
 					/* ----- Mail to list ------------------------------------------------------------------------------- */
 					elseif ($field['type'] == 'mailto_list') :
 						
-						$optValues = explode("\n", $field['values']);
+						$optValues = isset($field['values']) ? explode("\n", $field['values']) : array();
                         if (count($optValues)) :
 
                             $field['id'] 	= 'pwebcontact'.$form_id.'_mailto';
@@ -246,8 +246,8 @@ $message =
                                 implode(', ', $types)
                             ));
                         }
-                        if ($value = $field['tooltip']) {
-                            $field['title'][] = esc_attr__($value, 'pwebcontact');
+                        if (isset($field['tooltip']) AND $field['tooltip']) {
+                            $field['title'][] = esc_attr__($field['tooltip'], 'pwebcontact');
                         }
                         if (count($field['title'])) {
                             $field['class'] = ' pweb-tooltip';
@@ -333,7 +333,7 @@ $message =
 								if (isset($field['validation']) AND $field['validation']) 
 									$field['classes'][] = 'pweb'.$form_id.'-validate-'.$field['alias'];
 								
-								if ($field['tooltip']) {
+								if (isset($field['tooltip']) AND $field['tooltip']) {
 									$field['classes'][] = 'pweb-tooltip';
 									$field['attributes'] .= ' title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"';
 								}
@@ -374,13 +374,13 @@ $message =
 								$field['classes'] = array();
 								
 								$field['attributes'] .= ' rows="'.($field['rows'] ? (int)$field['rows'] : 5).'"';
-								if ($field['maxlength']) {
+								if (isset($field['maxlength']) AND $field['maxlength']) {
 									$field['attributes'] .= ' maxlength="'.$field['maxlength'].'"';
 								}
 								if (isset($field['required']) AND $field['required']) 
 									$field['classes'][] = 'required';
 								
-								if ($field['tooltip']) {
+								if (isset($field['tooltip']) AND $field['tooltip']) {
 									$field['classes'][] = 'pweb-tooltip';
 									$field['attributes'] .= ' title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"';
 								}
@@ -397,7 +397,7 @@ $message =
                             /*** PRO START ***/
 							/* ----- Select and Multiple select ------------------------------------------------------- */
 							elseif ($field['type'] == 'select' OR $field['type'] == 'multiple') : 
-								$optValues = is_array($field['values']) ? $field['values'] : explode("\n", $field['values']);
+								$optValues = isset($field['values']) ? explode("\n", $field['values']) : array();
 								$field['attributes'] = null;
 								$field['classes'] = array();
 								
@@ -410,7 +410,7 @@ $message =
 									$field['name'] 		 .= '[]';
 									
 									$optCount 		= count($optValues);
-									$field['rows'] 	= $field['rows'] ? (int)$field['rows'] : 4;
+									$field['rows'] 	= (isset($field['rows']) AND $field['rows']) ? (int)$field['rows'] : 4;
 									$field['rows'] 	= $field['rows'] > $optCount ? $optCount : $field['rows'];
 									unset($optCount);
                                     
@@ -420,7 +420,7 @@ $message =
 									$field['classes'][] = 'pweb-select';
 								}
 								
-								if ($field['tooltip']) {
+								if (isset($field['tooltip']) AND $field['tooltip']) {
 									$field['classes'][] = 'pweb-tooltip';
 									$field['attributes'] .= ' title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"';
 								}
@@ -446,10 +446,10 @@ $message =
 								$i 			= 0;
 								
 								$type 		= $field['type'] == 'checkboxes' ? 'checkbox' : 'radio';
-								$optValues 	= is_array($field['values']) ? $field['values'] : explode("\n", $field['values']);
+                                $optValues  = isset($field['values']) ? explode("\n", $field['values']) : array();
 								
 								$optCount 	= count($optValues);
-								$optColumns = (int)$field['cols'];
+								$optColumns = isset($field['cols']) ? (int)$field['cols'] : 0;
 								$optRows	= false;
 								if ($optColumns > 1 AND $optCount >= $optColumns) 
 								{
@@ -461,7 +461,7 @@ $message =
 								if ($field['type'] == 'checkboxes') 
 									$field['name'] .= '[]';
 							?>
-							<fieldset id="<?php echo $field['id']; ?>" class="pweb-fields-group<?php if ($field['tooltip']) echo ' pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact'); ?>">
+							<fieldset id="<?php echo $field['id']; ?>" class="pweb-fields-group<?php if (isset($field['tooltip']) AND $field['tooltip']) echo ' pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact'); ?>">
 							<?php 
 							/* ----- Options in multiple columns ----- */
 							if ($optRows) : ?>
@@ -499,7 +499,7 @@ $message =
 							/* ----- Single checkbox ------------------------------------------------------------------ */
 							elseif ($field['type'] == 'checkbox') : ?>
 								<input type="checkbox" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" class="pweb-checkbox pweb-single-checkbox<?php if (isset($field['required']) AND $field['required']) echo ' required'; ?>" value="1" data-role="none">
-								<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl"<?php if ($field['tooltip']) echo ' class="pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"'; ?>>
+								<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl"<?php if (isset($field['tooltip']) AND $field['tooltip']) echo ' class="pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"'; ?>>
                                     <?php _e($field['label'], 'pwebcontact'); ?>
                                     <?php if (isset($field['required']) AND $field['required']) : ?>
                                         <span class="pweb-asterisk">*</span>
@@ -511,8 +511,8 @@ $message =
                             /* ----- Single checkbox with Terms & Conditions ----------------------------------------- */
 							elseif ($field['type'] == 'checkbox_modal') : ?>
 								<input type="checkbox" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" class="pweb-checkbox pweb-single-checkbox<?php if (isset($field['required']) AND $field['required']) echo ' required'; ?>" value="1" data-role="none">
-								<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl"<?php if ($field['tooltip']) echo ' class="pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"'; ?>>
-								<?php if ($field['url']) : ?>
+								<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl"<?php if (isset($field['tooltip']) AND $field['tooltip']) echo ' class="pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"'; ?>>
+								<?php if (isset($field['url']) AND $field['url']) : ?>
 									<a href="<?php echo $field['url']; ?>" target="_blank"<?php if ($field['target'] == 1) echo ' class="pweb-modal-url"'; ?>>
                                         <?php esc_html_e($field['label'], 'pwebcontact'); ?>
                                         <span class="glyphicon glyphicon-new-window"></span>
