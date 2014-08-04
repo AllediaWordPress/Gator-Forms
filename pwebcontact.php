@@ -3,7 +3,7 @@
  * Plugin Name: Perfect Easy & Powerful Contact Form
  * Plugin URI: http://www.perfect-web.co/wordpress/contact-form
  * Description: Intuitive for dummies. Handy for pros!
- * Version: 1.0.5
+ * Version: 1.0.6
  * Text Domain: pwebcontact
  * Author: Piotr Moćko
  * Author URI: http://www.perfect-web.co
@@ -59,8 +59,6 @@ require_once dirname( __FILE__ ) . '/widget.php';
 
 class PWebContact
 {
-	// current module ID
-	protected static $form_id       = 0;
 	// multiple instances
 	protected static $params 		= array();
 	protected static $fields 		= array();
@@ -347,10 +345,10 @@ class PWebContact
         $params->set('media_url', $media_url);
 
         // Load CSS and JS files and JS translations
-        self::initHeader();
+        self::initHeader($form_id);
 
         // Module CSS classes
-        self::initCssClassess();
+        self::initCssClassess($form_id);
         
         return true;
 	}
@@ -377,16 +375,16 @@ class PWebContact
 
 	public static function setParams(&$params) 
 	{
-		self::$form_id = (int)$params->get('id');
-		self::$params[self::$form_id] = $params;
+		$form_id = (int)$params->get('id');
+		self::$params[$form_id] = $params;
 	}
 
 
-	public static function getParams($form_id = 0)
+	public static function getParams($form_id = 0, $global = false)
 	{
 		global $wpdb;
         
-        $form_id = $form_id ? $form_id : self::$form_id;
+        $form_id = (int)$form_id;
 		if (!isset(self::$params[$form_id]))
 		{
             $sql =  $wpdb->prepare('SELECT `params`, `fields`, `publish`, `position`, `layout` '.
@@ -411,8 +409,11 @@ class PWebContact
             self::recursive_stripslashes($data->fields);
             
             self::$fields[$form_id] = $data->fields;
-			
-			if (!self::$form_id AND $form_id) self::$form_id = $form_id;
+            
+            if ($global === true) {
+                self::$params[0] =& self::$params[$form_id];
+                self::$fields[0] =& self::$fields[$form_id];
+            }
 		}
 		return self::$params[$form_id];
 	}
@@ -435,7 +436,6 @@ class PWebContact
 
 	public static function getFields($form_id = 0) 
 	{
-		$form_id = $form_id ? $form_id : self::$form_id;
 		if (!isset(self::$fields[$form_id])) 
 		{
 			self::getParams($form_id);
@@ -625,7 +625,7 @@ class PWebContact
 					.'.png';
 				
 				if (!file_exists($toggler_dir.$toggler_file)) //WP
-					self::createToggleImage($toggler_dir, $toggler_file); //WP
+					self::createToggleImage($form_id, $toggler_dir, $toggler_file); //WP
 				
 				//$css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url('.$params->get('media_url').'toggler/'.$toggler_file.')}';
 				$css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url(data:image/png;base64,'
@@ -880,7 +880,7 @@ class PWebContact
 
         // Check if calendar field or modal rules will be used
         $datapicker = false;
-		$fields = self::getFields();
+		$fields = self::getFields($form_id);
 		foreach ($fields as $field)
 		{
             if ($field['type'] == 'date')
@@ -1278,7 +1278,7 @@ class PWebContact
         /*** PRO END ***/
         
 		// Custom validation rules and calendar fields
-		$fields = self::getFields();
+		$fields = self::getFields($form_id);
 		$rules = $calendars = array();
 		foreach ($fields as $field)
 		{
@@ -1337,9 +1337,9 @@ class PWebContact
 
 
     /*** PRO START ***/
-	protected static function createToggleImage($path = null, $file = null)
+	protected static function createToggleImage($form_id = 0, $path = null, $file = null)
 	{
-		$params 		= self::getParams();
+		$params 		= self::getParams($form_id);
 		
 		$font_path 		= $params->get('media_path') . 'fonts/'.$params->get('toggler_font', 'NotoSans-Regular').'.ttf'; //WP
 		$font_size 		= (int)$params->get('toggler_font_size', 12);
@@ -1490,9 +1490,9 @@ class PWebContact
     /*** PRO END ***/
 
 
-	public static function getHiddenFields() 
+	public static function getHiddenFields($form_id = 0) 
 	{
-		$params = self::getParams();
+		$params = self::getParams($form_id);
 		$html = '';
 		
 		// CMS and extension version
@@ -1527,7 +1527,7 @@ class PWebContact
 			@set_error_handler('exceptions_error_handler');
 		
 		$form_id = isset($_POST['mid']) ? (int)$_POST['mid'] : (isset($_GET['mid']) ? (int)$_GET['mid'] : 0);
-		$params = self::getParams($form_id);
+		$params = self::getParams($form_id, true);
 		
 		// Language
 		if ($params->get('rtl', 2) == 2) {
@@ -1815,7 +1815,7 @@ class PWebContact
 			'site_name' 		=> get_bloginfo('name') //WP
 		);
 		
-		$fields = self::getFields();
+		$fields = self::getFields($form_id);
 		
 		$user_email = null;
 		$user_name 	= null;
@@ -2206,6 +2206,7 @@ class PWebContact
 		if (!isset(self::$email_tmpls[$cache_key]))
 		{
 			$params = self::getParams();
+            $form_id = (int)$params->get('id');
 			
 			$patterns = $replacements = $fields_replacements = array();
 			
@@ -2230,7 +2231,7 @@ class PWebContact
 			// Varaibles with fields
 			$cache_fields_key = $lang_code .'_'. (int)$is_html .'_fields';
 			$search_fields = strpos($content, '{fields}') !== false;
-			$fields = self::getFields();
+			$fields = self::getFields($form_id);
 			
 			foreach ($fields as $field)
 			{

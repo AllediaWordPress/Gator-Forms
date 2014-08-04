@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.5
+ * @version 1.0.6
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -597,7 +597,7 @@ $message =
 			
 			<?php if ($params->get('msg_position', 'after') == 'after') echo $message; ?>
 			
-			<?php echo PWebContact::getHiddenFields(); ?>
+			<?php echo PWebContact::getHiddenFields($form_id); ?>
 			<input type="hidden" name="<?php echo wp_create_nonce('pwebcontact'.$form_id); ?>" value="1" id="pwebcontact<?php echo $form_id; ?>_token">
 		</form>
 		
