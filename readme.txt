@@ -145,6 +145,8 @@ To ask a support question or post a bug report, fill a [support form](http://www
 
 = 1.0.7 / 20-08-2014 =
 * Fixed field type of: List of recipients
+* Updated jQuery File Upload, Validation and Cookie plugin
+* Updated Bootstrap to version 3.2.0
 
 = 1.0.6 / 04-08-2014 =
 * Fixed loading multiple contact forms at one page
