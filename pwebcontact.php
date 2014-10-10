@@ -3,7 +3,7 @@
  * Plugin Name: Perfect Easy & Powerful Contact Form
  * Plugin URI: http://www.perfect-web.co/wordpress/contact-form
  * Description: Intuitive for dummies. Handy for pros!
- * Version: 1.0.9
+ * Version: 1.0.10
  * Text Domain: pwebcontact
  * Author: Piotr Moćko
  * Author URI: http://www.perfect-web.co
@@ -1344,19 +1344,28 @@ class PWebContact
 		$font_path 		= $params->get('media_path') . 'fonts/'.$params->get('toggler_font', 'NotoSans-Regular').'.ttf'; //WP
 		$font_size 		= (int)$params->get('toggler_font_size', 12);
 		
+		$text_open 		= $params->get('toggler_name_open');
+		$text_close 	= $params->get('toggler_name_close');
+		
 		if ($params->get('rtl')) {
-			$text_open 	= self::utf8_strrev($params->get('toggler_name_open'));
-			$text_close = self::utf8_strrev($params->get('toggler_name_close'));
-		} else {
-			$text_open 	= $params->get('toggler_name_open');
-			$text_close = $params->get('toggler_name_close');
+			$text_open 	= self::utf8_strrev($text_open);
+		}
+		$text_length 	= strlen($text_open);
+		$text_open 		= self::utf8_strconvert($text_open);
+		
+		if ($text_close) 
+		{
+			if ($params->get('rtl')) {
+				$text_close = self::utf8_strrev($text_close);
+			}
+			if (strlen($text_close) > $text_length) {
+				$text_length = strlen($text_close);
+			}
+			$text_close = self::utf8_strconvert($text_close);
 		}
 		
-		$length 		= strlen($text_open);
-		if ($text_close AND strlen($text_close) > $length) $length = strlen($text_close);
-		
 		$width 			= $params->get('toggler_width', 30);
-	    $height 		= is_numeric($params->get('toggler_height')) ? $params->get('toggler_height') : $length * $font_size / 1.2;
+	    $height 		= is_numeric($params->get('toggler_height')) ? $params->get('toggler_height') : $text_length * $font_size / 1.2;
 		
 		$rotate 		= (int)$params->get('toggler_rotate', 1);
 		
@@ -1441,7 +1450,26 @@ class PWebContact
 
 
     /*** PRO START ***/
-	protected static function utf8_strrev($str)
+	protected static function utf8_strconvert($str)
+	{
+		if (function_exists('mb_detect_encoding') AND is_callable('mb_detect_encoding') AND
+			function_exists('mb_convert_encoding') AND is_callable('mb_convert_encoding') AND
+			function_exists('mb_encode_numericentity') AND is_callable('mb_encode_numericentity'))
+		{
+			$encoding = mb_detect_encoding($str, 'UTF-8, ISO-8859-1');
+			if ($encoding != 'UTF-8') {
+				$str = mb_convert_encoding($str, 'UTF-8', $encoding);
+			}
+			$str = mb_encode_numericentity($str, array(0x0, 0xffff, 0, 0xffff), 'UTF-8');
+		}
+		
+		return $str;
+	}
+    /*** PRO END ***/
+
+
+    /*** PRO START ***/
+    protected static function utf8_strrev($str)
 	{
 		if (empty($str)) return null;
 		
