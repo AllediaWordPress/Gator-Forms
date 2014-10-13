@@ -16,10 +16,6 @@ function_exists('add_action') or die;
 // Do not use any PHP 5.3+ syntax in this file
 
 if (version_compare($GLOBALS['wp_version'], '3.5', '>=') AND version_compare(PHP_VERSION, '5.3', '>=')) {
-    
-    /*** PRO START ***/
-    define('PWEBCONTACT_PRO', true);
-    /*** PRO END ***/
 
     require_once dirname( __FILE__ ) . '/site.php';
     

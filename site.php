@@ -2501,3 +2501,7 @@ if (!function_exists('exceptions_error_handler'))
 		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 	}
 }
+
+/*** PRO START ***/
+define('PWEBCONTACT_PRO', true);
+/*** PRO END ***/
