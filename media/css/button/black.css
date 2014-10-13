@@ -1,0 +1,69 @@
+/**
+ * @version 2.0.0
+ * @package Perfect Easy & Powerful Contact Form
+ * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @author Piotr Moćko
+ */
+
+/* Font family and size */
+.pweb-button-black form.pwebcontact-form button,
+.pweb-button-black form.pwebcontact-form .btn {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+}
+
+/* Links */
+.pweb-button-black form.pwebcontact-form a,
+.pweb-button-black .pweb-button-close {
+    color: #000;
+	text-decoration: none;
+	background: none;
+}
+.pweb-button-black form.pwebcontact-form a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons */
+.pweb-button-black form.pwebcontact-form button,
+.pweb-button-black form.pwebcontact-form .btn {
+	color: #fff !important;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	border: 1px solid;
+	border-color: #000;
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+	background: #000;
+	background-image: -moz-linear-gradient(top,#333,#000);
+	background-image: -ms-linear-gradient(top,#333, #000);
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#333),to(#000));
+	background-image: -webkit-linear-gradient(top,#333,#000);
+	background-image: -o-linear-gradient(top,#333,#000);
+	background-image: linear-gradient(to bottom,#333,#000);
+	background-repeat: repeat-x;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+/* Buttons shadow */
+.pweb-button-black.pweb-shadow form.pwebcontact-form button,
+.pweb-button-black.pweb-shadow form.pwebcontact-form .btn {
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+/* Buttons on mouse over */
+.pweb-button-black form.pwebcontact-form button:hover,
+.pweb-button-black form.pwebcontact-form .btn:hover {
+	background-color: #000;
+	background-position: 0 -30px;
+}
+
+/* Calendar button */
+.pweb-button-black form.pwebcontact-form .pweb-calendar-btn {
+	
+}
+/* Upload progress */
+.pweb-button-black .pweb-uploader .progress.progress-striped .bar.progress-bar {
+	background-color: #000;
+	background-image: none;
+}

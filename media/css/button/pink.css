@@ -1,0 +1,69 @@
+/**
+* @version 3.2.5
+* @package PWebContact
+* @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+* @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
+* @author Piotr Moćko
+*/
+
+/* Font family and size */
+.pweb-button-pink form.pwebcontact-form button,
+.pweb-button-pink form.pwebcontact-form .btn {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+}
+
+/* Links */
+.pweb-button-pink form.pwebcontact-form a,
+.pweb-button-pink .pweb-button-close {
+    color: #CE1458;
+	text-decoration: none;
+	background: none;
+}
+.pweb-button-pink form.pwebcontact-form a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons */
+.pweb-button-pink form.pwebcontact-form button,
+.pweb-button-pink form.pwebcontact-form .btn {
+	color: #fff !important;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	border: 1px solid;
+	border-color: #CE1458 #CE1458 #BA0547;
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+	background: #CE1458;
+	background-image: -moz-linear-gradient(top,#E5276C,#CE1458);
+	background-image: -ms-linear-gradient(top,#E5276C, #CE1458);
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#E5276C),to(#CE1458));
+	background-image: -webkit-linear-gradient(top,#E5276C,#CE1458);
+	background-image: -o-linear-gradient(top,#E5276C,#CE1458);
+	background-image: linear-gradient(to bottom,#E5276C,#CE1458);
+	background-repeat: repeat-x;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+/* Buttons shadow */
+.pweb-button-pink.pweb-shadow form.pwebcontact-form button,
+.pweb-button-pink.pweb-shadow form.pwebcontact-form .btn {
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+/* Buttons on mouse over */
+.pweb-button-pink form.pwebcontact-form button:hover,
+.pweb-button-pink form.pwebcontact-form .btn:hover {
+	background-color: #CE1458;
+	background-position: 0 -30px;
+}
+
+/* Calendar button */
+.pweb-button-pink form.pwebcontact-form .pweb-calendar-btn {
+	
+}
+/* Upload progress */
+.pweb-button-pink .pweb-uploader .progress.progress-striped .bar.progress-bar {
+	background-color: #CE1458;
+	background-image: none;
+}

@@ -3,7 +3,7 @@
  * Plugin Name: Perfect Easy & Powerful Contact Form
  * Plugin URI: http://www.perfect-web.co/wordpress/contact-form
  * Description: Intuitive for dummies. Handy for pros!
- * Version: 1.0.10
+ * Version: 2.0.0
  * Text Domain: pwebcontact
  * Author: Piotr Moćko
  * Author URI: http://www.perfect-web.co
@@ -13,49 +13,63 @@
 // No direct access
 function_exists('add_action') or die;
 
-/*** PRO START ***/
-define('PWEBCONTACT_PRO', true);
-/*** PRO END ***/
+// Do not use any PHP 5.3+ syntax in this file
 
-if ( is_admin() ) {
+if (version_compare($GLOBALS['wp_version'], '3.5', '>=') AND version_compare(PHP_VERSION, '5.3', '>=')) {
     
-    if (defined( 'DOING_AJAX' )) {
-        
-        add_action('wp_ajax_pwebcontact_sendEmail', array('PWebContact', 'sendEmailAjax'));
-        add_action('wp_ajax_nopriv_pwebcontact_sendEmail', array('PWebContact', 'sendEmailAjax'));
-        
-        add_action('wp_ajax_pwebcontact_checkCaptcha', array('PWebContact', 'checkCaptchaAjax'));
-        add_action('wp_ajax_nopriv_pwebcontact_checkCaptcha', array('PWebContact', 'checkCaptchaAjax'));
-        
-        add_action('wp_ajax_pwebcontact_uploader', array('PWebContact', 'uploaderAjax'));
-        add_action('wp_ajax_nopriv_pwebcontact_uploader', array('PWebContact', 'uploaderAjax'));
-        
-        add_action('wp_ajax_pwebcontact_getToken', array('PWebContact', 'getTokenAjax'));
-        add_action('wp_ajax_nopriv_pwebcontact_getToken', array('PWebContact', 'getTokenAjax'));
-    }
-    else {
-        
-        require_once dirname( __FILE__ ) . '/install.php';
-        require_once dirname( __FILE__ ) . '/admin.php';
-
-        register_activation_hook( __FILE__, 'pwebcontact_install' );
-        register_uninstall_hook( __FILE__, 'pwebcontact_uninstall' );
-    }
-} 
-else {
-
-    add_action('init', array('PWebContact', 'init'));
-
-    add_action('wp_footer', array('PWebContact', 'displayFormsInFooter'), 100);
-
     /*** PRO START ***/
-    add_shortcode('pwebcontact', array('PWebContact', 'displayFormByShortcode'));
+    define('PWEBCONTACT_PRO', true);
     /*** PRO END ***/
-}
 
-/*** PRO START ***/
-require_once dirname( __FILE__ ) . '/widget.php';
-/*** PRO END ***/
+    //require_once dirname( __FILE__ ) . '/site.php';
+    
+    if ( is_admin() ) {
+
+        if (defined( 'DOING_AJAX' )) {
+
+            add_action('wp_ajax_pwebcontact_sendEmail', array('PWebContact', 'sendEmailAjax'));
+            add_action('wp_ajax_nopriv_pwebcontact_sendEmail', array('PWebContact', 'sendEmailAjax'));
+
+            add_action('wp_ajax_pwebcontact_checkCaptcha', array('PWebContact', 'checkCaptchaAjax'));
+            add_action('wp_ajax_nopriv_pwebcontact_checkCaptcha', array('PWebContact', 'checkCaptchaAjax'));
+
+            add_action('wp_ajax_pwebcontact_uploader', array('PWebContact', 'uploaderAjax'));
+            add_action('wp_ajax_nopriv_pwebcontact_uploader', array('PWebContact', 'uploaderAjax'));
+
+            add_action('wp_ajax_pwebcontact_getToken', array('PWebContact', 'getTokenAjax'));
+            add_action('wp_ajax_nopriv_pwebcontact_getToken', array('PWebContact', 'getTokenAjax'));
+        }
+        else {
+
+            require_once dirname( __FILE__ ) . '/install.php';
+            require_once dirname( __FILE__ ) . '/admin.php';
+
+            register_activation_hook( __FILE__, 'pwebcontact_install' );
+            register_uninstall_hook( __FILE__, 'pwebcontact_uninstall' );
+        }
+    } 
+    else {
+
+        add_action('init', array('PWebContact', 'init'));
+
+        add_action('wp_footer', array('PWebContact', 'displayFormsInFooter'), 100);
+
+        add_shortcode('pwebcontact', array('PWebContact', 'displayFormByShortcode'));
+    }
+
+    require_once dirname( __FILE__ ) . '/widget.php';
+}
+else {
+    
+    function pwebcontact_requirements_notice() {
+        ?>
+        <div class="error">
+            <p><?php printf(__( 'Perfect Easy & Powerful Contact Form plugin requires WordPress %s and PHP %s', 'pwebcore' ), '3.5+', '5.3+'); ?></p>
+        </div>
+        <?php
+    }
+    add_action( 'admin_notices', 'pwebcontact_requirements_notice' );
+}
 
 class PWebContact
 {
@@ -84,7 +98,7 @@ class PWebContact
             load_plugin_textdomain( 'pwebcontact', false, basename(dirname(__FILE__)).'/languages' );
             
             $media_path = dirname(__FILE__) . '/media/';
-            $media_url = plugins_url('media/', __FILE__);
+            $media_url = plugins_url('media/', dirname(__FILE__) . '/pwebcontact.php');
             
             $debug = ((defined('WP_DEBUG') AND WP_DEBUG === true) OR isset($_GET['debug']) OR get_option('pwebcontact_debug', false));
             define('PWEBCONTACT_DEBUG', $debug);
@@ -99,9 +113,9 @@ class PWebContact
             wp_register_script('pwebcontact-jquery-fileupload-validate', $media_url.'js/jquery.fileupload-validate.js', array('jquery'), null, true);
             wp_register_script('pwebcontact-jquery-fileupload-ui', $media_url.'js/jquery.fileupload-ui.js', array('jquery'), null, true);
             wp_register_script('pwebcontact-jquery-fileupload', $media_url.'js/jquery.fileupload'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
+            /*** PRO END ***/
             
             wp_register_script('pwebcontact-jquery-cookie', $media_url.'js/jquery.cookie'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
-            /*** PRO END ***/
             
             wp_register_script('pwebcontact-jquery-validate', $media_url.'js/jquery.validate'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
             
@@ -121,15 +135,17 @@ class PWebContact
             wp_register_style('pwebcontact-layout', $media_url.'css/layout.css');
             wp_register_style('pwebcontact-layout-rtl', $media_url.'css/layout-rtl.css');
             
-            /*** PRO START ***/
             wp_register_style('pwebcontact-animations', $media_url.'css/animations.css');
             
+            /*** PRO START ***/
             wp_register_style('pwebcontact-uploader', $media_url.'css/uploader.css');
             wp_register_style('pwebcontact-uploader-rtl', $media_url.'css/uploader-rtl.css');
             
             wp_register_style('pwebcontact-jquery-ui-datepicker', $media_url.'jquery-ui/smoothness/jquery-ui.datapicker'.($debug ? '' : '.min').'.css');
             /*** PRO END ***/
-            
+            /*** FREE START ***/
+            wp_register_style('pwebcontact-default', $media_url.'css/default.css');
+            /*** FREE END ***/
             wp_register_style('pwebcontact-custom', $media_url.'css/custom.css');
             
             // Register styles for Internet Explorer
@@ -172,7 +188,6 @@ class PWebContact
     }
     
     
-    /*** PRO START ***/
     public static function displayFormByShortcode($atts, $content = null, $tag) {
         
         extract( shortcode_atts( array (
@@ -189,7 +204,6 @@ class PWebContact
         
         return $output;
     }
-    /*** PRO END ***/
     
     
     public static function displayForm($form_id = 0) 
@@ -234,18 +248,6 @@ class PWebContact
         // Get layout name
         $layout = $params->get('layout_type', 'slidebox');
         
-        /*** FREE START ***/
-        if ($layout !== 'slidebox') {
-            $params->set('publish', 0);
-        }
-        else {
-            $params->set('handler', 'tab');
-            $params->set('toggler_vertical', 0);
-            $params->set('toggler_slide', 0);
-            $params->set('msg_position', 'after');
-        }
-        /*** FREE END ***/
-        
         // TODO Show or hide module on Mobile browser
         
         if (!$params->get('publish')) { //WP
@@ -258,14 +260,9 @@ class PWebContact
         self::$forms[$form_id] = true;
         
         // Position and offset
-        /*** FREE START ***/
-        $position = array('left', 'top');
-        /*** FREE END ***/
-        /*** PRO START ***/
-        $position = explode(':', $params->get('toggler_position', 'left:top'));
-        /*** PRO END ***/
-        $params->set('toggler_position', $position[0]);
-        $params->def('toggler_offset_position', array_key_exists(1, $position) ? $position[1] : 'top');
+        $toggler_position = explode(':', $params->get('toggler_position', 'left:top'));
+        $params->set('toggler_position', $toggler_position[0]);
+        $params->def('toggler_offset_position', array_key_exists(1, $toggler_position) ? $toggler_position[1] : 'top');
 
         // Auto RTL
         if ($params->get('rtl', 2) == 2) {
@@ -293,7 +290,6 @@ class PWebContact
             }
         }
 
-        /*** PRO START ***/
         // Set static position for static and accordion layouts
         if (in_array($layout, array('static', 'accordion'))) {
             $params->set('toggler_position', 'static');
@@ -325,15 +321,9 @@ class PWebContact
         if ($layout == 'static') {
             $params->set('open_toggler', 0);
         }
-        /*** PRO END ***/
 
         // Toggler tab name
-        /*** FREE START ***/
-        $toggler_name = array('Contact form');
-        /*** FREE END ***/
-        /*** PRO START ***/
         $toggler_name = explode('|', $params->get('toggler_name', 'Contact form')); //WP
-        /*** PRO END ***/
         $params->def('toggler_name_open', str_replace('"', '', __($toggler_name[0], 'pwebcontact'))); //WP
         $params->def('toggler_name_close', array_key_exists(1, $toggler_name) ? str_replace('"', '', __($toggler_name[1], 'pwebcontact')) : null); //WP
         
@@ -341,7 +331,7 @@ class PWebContact
         // Set media path
         $media_path = dirname(__FILE__) . '/media/'; //WP
         $params->set('media_path', $media_path);
-        $media_url = plugins_url('media/', __FILE__); //WP
+        $media_url = plugins_url('media/', dirname(__FILE__) . '/pwebcontact.php'); //WP
         $params->set('media_url', $media_url);
 
         // Load CSS and JS files and JS translations
@@ -424,9 +414,9 @@ class PWebContact
 		if (self::$settings === null)
 		{
             $settings_a = get_option('pwebcontact_settings', array());
-            array_walk($settings_a, function(&$value, $key) {
+            foreach ($settings_a as &$value) {
                 $value = stripslashes($value);
-            });
+            }
             
             self::$settings = new PWebContact_Params( $settings_a );
 		}
@@ -448,49 +438,45 @@ class PWebContact
 	{
 		$params = self::getParams($form_id);
 		
+        $moduleClasses = array();
+        $positionClasses = array();
+        $togglerClasses = array();
+        $boxClasses = array();
+        
+        $layout = $params->get('layout_type', 'slidebox');
+        $moduleClasses[] = 'pweb-'.$layout;
+        
         /*** FREE START ***/
-        $moduleClasses = array(
-			'pweb-slidebox',
-			'pweb-labels-above'
-		);
+		$moduleClasses[] = 'pweb-labels-above';
         /*** FREE END ***/
         /*** PRO START ***/
-        $layout = $params->get('layout_type', 'slidebox');
+        $moduleClasses[] = 'pweb-labels-'.$params->get('labels_position', 'inline');
         
-		$moduleClasses = array(
-			'pweb-'.$layout,
-			'pweb-labels-'.$params->get('labels_position', 'inline')
-		);
-        /*** PRO END ***/
+        if ($params->get('rounded')) $moduleClasses[] = $togglerClasses[] = 'pweb-radius';
+		if ($params->get('shadow')) $moduleClasses[] = $togglerClasses[] = 'pweb-shadow';
         
-        $positionClasses = $togglerClasses = $boxClasses = array();
-		
 		if (($class = $params->get('style_bg', 'white')) != -1) $moduleClasses[] = 'pweb-bg-'.$class;
 		if (($class = $params->get('style_form', 'blue')) != -1) $moduleClasses[] = 'pweb-form-'.$class;
-		
-        /*** FREE START ***/
-        if (($class = $params->get('style_toggler', 'blue')) != -1) $togglerClasses[] = 'pweb-toggler-'.$class;
+		if (($class = $params->get('style_button', 'blue')) != -1) $moduleClasses[] = 'pweb-button-'.$class;
+		/*** PRO END ***/
         
-        $positionClasses[] = 'pweb-left';
-		$positionClasses[] = 'pweb-offset-top';
-        $moduleClasses[] = 'pweb-horizontal';
-        
-        if (!$params->get('debug')) $boxClasses[] = 'pweb-init';
-        /*** FREE END ***/
-        
-        /*** PRO START ***/
 		if ($layout != 'static') 
 		{
 			if (in_array($layout, array('slidebox', 'modal')))
 			{
 				$positionClasses[] = 'pweb-'.$params->get('toggler_position', 'left');
 				$positionClasses[] = 'pweb-offset-'.$params->get('toggler_offset_position', 'top');
+                
+                /*** PRO START ***/
 				if ($params->get('toggler_vertical')) {
 					$moduleClasses[] = 'pweb-vertical';
 					if ($params->get('toggler_rotate', 1) == -1) $togglerClasses[] = 'pweb-rotate';
 				} else {
+                /*** PRO END ***/
 					$moduleClasses[] = 'pweb-horizontal';
+                /*** PRO START ***/
 				}
+                /*** PRO END ***/
 				
 				if ($layout == 'slidebox')
 				{
@@ -505,18 +491,17 @@ class PWebContact
 				if (!$params->get('debug')) $boxClasses[] = 'pweb-init';
 			}
 			
+            /*** PRO START ***/
 			if (($class = $params->get('style_toggler', 'blue')) != -1) $togglerClasses[] = 'pweb-toggler-'.$class;
 			if ($icon = $params->get('toggler_icon')) $togglerClasses[] = 'pweb-icon pweb-icon-'.$icon;
-		
+            /*** PRO END ***/
         }
         
-		if ($params->get('rounded')) $moduleClasses[] = $togglerClasses[] = 'pweb-radius';
-		if ($params->get('shadow')) $moduleClasses[] = $togglerClasses[] = 'pweb-shadow';
 		if ($params->get('user_data', 1) == 2) {
 			$user = wp_get_current_user(); //WP
 			if ($user->ID) $moduleClasses[] = 'pweb-hide-user';
 		}
-        /*** PRO END ***/
+        
         
         if ($params->get('rtl', 0)) $moduleClasses[] = $togglerClasses[] = 'pweb-rtl';
         
@@ -543,13 +528,17 @@ class PWebContact
 		$layout 		= $params->get('layout_type', 'slidebox');
 		$css 			= null;
 		$declarations 	= array();
+        
+        // Form width
+		if ($value = $params->get('form_width')) {
+			if ($layout != 'slidebox' OR strpos($value, 'px') !== false)
+				$css .= '#pwebcontact'.$form_id.'_box{max-width:'.$value.'}';
+		}
 
-        /*** PRO START ***/
 		// Position offset
 		if ($value = $params->get('offset'))
 			$css .= '#pwebcontact'.$form_id.'{'.$params->get('toggler_offset_position', '').':'.$value.'}';
-		
-		
+
 		// Layer level
 		if ($value = (int)$params->get('zindex')) {
 			// Slide box and Lightbox toggler
@@ -571,6 +560,7 @@ class PWebContact
 		if ($layout == 'slidebox' OR (in_array($layout, array('accordion', 'modal')) AND in_array($params->get('handler', 'tab'), array('button', 'tab'))) )
 		{
 			// Toggler
+            /*** PRO START ***/
 			if ($value = $params->get('toggler_color'))
 				$declarations[] = 'color:'.$value;
 			if ($value = $params->get('toggler_bg')) {
@@ -582,6 +572,7 @@ class PWebContact
 				$declarations[] = 'font-size:'.$value;
 			if ($value = $params->get('toggler_font_family'))
 				$declarations[] = 'font-family:'.$value;
+            /*** PRO END ***/
 			if ($value = $params->get('toggler_width'))
 				$declarations[] = 'width:'.(int)$value.'px';
 			if ($value = $params->get('toggler_height'))
@@ -591,6 +582,7 @@ class PWebContact
 				$declarations = array();
 			}
 			
+            /*** PRO START ***/
 			// Toggler icon
 			if ($params->get('toggler_icon') == 'gallery') {
 				if ($value = $params->get('toggler_icon_gallery_image'))
@@ -632,9 +624,10 @@ class PWebContact
 						.base64_encode(file_get_contents($toggler_dir.$toggler_file)) //WP
 						.')}';
 			}
+            /*** PRO END ***/
 		}
 		
-		
+		/*** PRO START ***/
 		// Form container
 		if ($value = $params->get('form_font_size'))
 			$declarations[] = 'font-size:'.$value;
@@ -671,12 +664,6 @@ class PWebContact
 			$css .= '#pwebcontact'.$form_id.'_container{'.$container_bg.'}';
 		}
 		
-		
-		// Form width
-		if ($value = $params->get('form_width')) {
-			if ($layout != 'slidebox' OR strpos($value, 'px') !== false)
-				$css .= '#pwebcontact'.$form_id.'_box{max-width:'.$value.'}';
-		}
 		// Labels width
 		if ($params->get('labels_position', 'inline') == 'inline' AND ($value = (int)$params->get('labels_width'))) 
 		{
@@ -692,7 +679,7 @@ class PWebContact
 			$css .= '#pwebcontact'.$form_id.'_form .pweb-msg .pweb-error{color:'.$value.'}';
 		
 		
-		// Buttons, fields, links
+		// Buttons, links
 		if ($value = $params->get('buttons_fields_color')) {
 			$declarations[] = 'background-image:none';
 			$declarations[] = 'background-color:'.$value;
@@ -702,20 +689,36 @@ class PWebContact
 					.'#pwebcontact'.$form_id.'_container a:hover,'
 					.'#pwebcontact'.$form_id.'_container .pweb-button-close'
 					.'{color:'.$value.' !important}';
-			
-			$css .=  '#pwebcontact'.$form_id.'_form input.pweb-input,'
-			 		.'#pwebcontact'.$form_id.'_form select,'
-			 		.'#pwebcontact'.$form_id.'_form textarea{border-color:'.$value.'}';
-			$css .=  '#pwebcontact'.$form_id.'_form input.pweb-input:focus,'
-			 		.'#pwebcontact'.$form_id.'_form select:focus,'
-			 		.'#pwebcontact'.$form_id.'_form textarea:focus'
-			 		.'{border-color:'.$value.' !important}';
 		}
 		if ($value = $params->get('buttons_text_color'))
 			$declarations[] = 'color:'.$value.' !important';
 		if (count($declarations)) {
 			$css .=  '#pwebcontact'.$form_id.'_form button,'
 					.'#pwebcontact'.$form_id.'_form .btn'
+					.'{'.implode(';', $declarations).'}';
+			$declarations = array();
+		}
+        
+        // Fields
+		if ($value = $params->get('fields_color')) {
+            $border_color = self::parseToRgbColor($value);
+			foreach ($border_color as &$color) {
+				$color -= 25; // 10% from 255
+				if ($color < 0) $color = 0;
+			}
+			$declarations[] = 'background-image:none';
+			$declarations[] = 'background-color:'.$value;
+            $declarations[] = 'border-color:rgb('.$border_color['r'].','.$border_color['g'].','.$border_color['b'].') !important';
+		}
+		if ($value = $params->get('fields_text_color'))
+			$declarations[] = 'color:'.$value.' !important';
+		if (count($declarations)) {
+			$css .=  '#pwebcontact'.$form_id.'_form input.pweb-input,'
+			 		.'#pwebcontact'.$form_id.'_form select,'
+			 		.'#pwebcontact'.$form_id.'_form textarea,'
+                    .'#pwebcontact'.$form_id.'_form input.pweb-input:focus,'
+			 		.'#pwebcontact'.$form_id.'_form select:focus,'
+			 		.'#pwebcontact'.$form_id.'_form textarea:focus'
 					.'{'.implode(';', $declarations).'}';
 			$declarations = array();
 		}
@@ -733,26 +736,6 @@ class PWebContact
 			}
         }
         
-		if ($layout == 'modal') 
-		{
-			// Modal transfer effect
-			if (($value = (float)$params->get('effect_duration', 400)) !== 400) {
-				$declarations[0] = 'animation-duration:'.$value.'ms';
-				$declarations[] = '-o-'.$declarations[0];
-				$declarations[] = '-ms-'.$declarations[0];
-				$declarations[] = '-moz-'.$declarations[0];
-				$declarations[] = '-webkit-'.$declarations[0];
-			}
-			if (isset($container_bg))
-				$declarations[] = $container_bg;
-			if (count($declarations)) {
-				if (($class = $params->get('style_bg', 'white')) != -1) 
-					$css .= '.pweb-bg-'.$class;
-				$css .= '.ui-effects-transfer.pweb-genie.pwebcontact'.$form_id.'-genie{'.implode(';', $declarations).'}';
-				$declarations = array();
-			}
-		}
-		
 		// Background image
 		$declarations_mobile = array();
 		if ($value = $params->get('bg_image')) {
@@ -817,6 +800,26 @@ class PWebContact
 		}
         /*** PRO END ***/
 
+        if ($layout == 'modal') 
+		{
+			// Modal transfer effect
+			if (($value = (float)$params->get('effect_duration', 400)) !== 400) {
+				$declarations[0] = 'animation-duration:'.$value.'ms';
+				$declarations[] = '-o-'.$declarations[0];
+				$declarations[] = '-ms-'.$declarations[0];
+				$declarations[] = '-moz-'.$declarations[0];
+				$declarations[] = '-webkit-'.$declarations[0];
+			}
+			if (isset($container_bg))
+				$declarations[] = $container_bg;
+			if (count($declarations)) {
+				if (($class = $params->get('style_bg', 'white')) != -1) 
+					$css .= '.pweb-bg-'.$class;
+				$css .= '.ui-effects-transfer.pweb-genie.pwebcontact'.$form_id.'-genie{'.implode(';', $declarations).'}';
+				$declarations = array();
+			}
+		}
+		
 		// Disable Boostrap 2 Glyphicons
 		if (!$params->get('boostrap2_glyphicons', 0))
 			$css .= '[class^="icon-"],[class*=" icon-"]{background-image:none !important}';
@@ -830,6 +833,7 @@ class PWebContact
 	{
 		$params 	= self::getParams($form_id);
 		$media_url 	= $params->get('media_url');
+		$media_path = $params->get('media_path');
 		$layout 	= $params->get('layout_type', 'slidebox');
 		$debug 		= $params->get('debug');
         $bootstrap  = false;
@@ -875,9 +879,10 @@ class PWebContact
 		if ($params->get('rtl', 0))
 			wp_enqueue_style('pwebcontact-layout-rtl');
 
-        /*** PRO START ***/
+        
 		wp_enqueue_style('pwebcontact-animations');
 
+        /*** PRO START ***/
         // Check if calendar field or modal rules will be used
         $datapicker = false;
 		$fields = self::getFields($form_id);
@@ -901,7 +906,7 @@ class PWebContact
 			wp_enqueue_style('pwebcontact-glyphicon');
         }
 
-
+        
         if ($params->get('show_upload', 0)) 
 		{
 			// Load glyphicon for uploader
@@ -943,6 +948,23 @@ class PWebContact
                 ));
 			}
 		}
+        
+        // Load jQuery Datapicker for calendar field
+        if ($datapicker AND $params->get('load_jquery_ui', 1)) {
+            wp_enqueue_script('jquery-ui-datepicker');
+            wp_enqueue_style('pwebcontact-jquery-ui-datepicker');
+            
+            //TODO load datapicker translations
+            /*if (!isset(self::$loaded['datapicker_text'])) 
+			{
+				self::$loaded['datapicker_text'] = true;
+				
+                wp_localize_script('jquery-ui-datapicker', 'pwebcontact_l10n = pwebcontact_l10n || {}; pwebcontact_l10n.datapicker', array(
+                    '' => __('', 'pwebcontact'),
+                ));
+			}*/
+        }
+        /*** PRO END ***/
 
         if ($layout == 'slidebox') 
 		{
@@ -960,35 +982,19 @@ class PWebContact
 			}
 		}
         
-        // Load jQuery Datapicker for calendar field
-        if ($datapicker AND $params->get('load_jquery_ui', 1)) {
-            wp_enqueue_script('jquery-ui-datepicker');
-            wp_enqueue_style('pwebcontact-jquery-ui-datepicker');
-            
-            //TODO load datapicker translations
-            /*if (!isset(self::$loaded['datapicker_text'])) 
-			{
-				self::$loaded['datapicker_text'] = true;
-				
-                wp_localize_script('jquery-ui-datapicker', 'pwebcontact_l10n = pwebcontact_l10n || {}; pwebcontact_l10n.datapicker', array(
-                    '' => __('', 'pwebcontact'),
-                ));
-			}*/
-        }
-        
         // Load jQuery Cookie for auto-open count
         if ($params->get('open_toggler') AND $params->get('open_count') AND $params->get('load_jquery_cookie', 1)) {
 			wp_enqueue_script('pwebcontact-jquery-cookie');
         }
-        /*** PRO END ***/
         
-        
+        // Load jQuery Form Validator
 		if ($params->get('load_jquery_validate', 1)) 
 			wp_enqueue_script('pwebcontact-jquery-validate');
 		
 		wp_enqueue_script('pwebcontact');
 
 
+        /*** PRO START ***/
 		// CSS styles
 		if (($file = $params->get('style_bg', 'white')) != -1) {
             wp_register_style('pwebcontact-background-'.$file, $media_url.'css/background/'.$file.'.css');
@@ -998,13 +1004,25 @@ class PWebContact
 			wp_register_style('pwebcontact-form-'.$file, $media_url.'css/form/'.$file.'.css');
             wp_enqueue_style('pwebcontact-form-'.$file);
         }
+        if (($file = $params->get('style_button', 'blue')) != -1) {
+			wp_register_style('pwebcontact-button-'.$file, $media_url.'css/button/'.$file.'.css');
+            wp_enqueue_style('pwebcontact-button-'.$file);
+        }
 		if (($layout == 'slidebox' OR in_array($params->get('handler', 'tab'), array('button', 'tab'))) AND ($file = $params->get('style_toggler', 'blue')) != -1) {
 			wp_register_style('pwebcontact-toggler-'.$file, $media_url.'css/toggler/'.$file.'.css');
             wp_enqueue_style('pwebcontact-toggler-'.$file);
         }
+        /*** PRO END ***/
+        /*** FREE START ***/
+        if (is_file($media_path.'css/default.css')) {
+            wp_enqueue_style('pwebcontact-default');
+        }
+        /*** FREE END ***/
 		
         // Custom styles
-        wp_enqueue_style('pwebcontact-custom', $media_url.'css/custom.css');
+        if (is_file($media_path.'css/custom.css')) {
+            wp_enqueue_style('pwebcontact-custom');
+        }
         
         
 		// Set custom styles
@@ -1082,7 +1100,7 @@ class PWebContact
 
             if ($wpdb->get_var($sql) > 0)
             {
-                $media_url = plugins_url('media/', __FILE__); //WP
+                $media_url = plugins_url('media/', dirname(__FILE__) . '/pwebcontact.php'); //WP
 
                 echo
                      '<!--[if IE 8]>'."\r\n"
@@ -1115,7 +1133,6 @@ class PWebContact
 	{
 		$params = self::getParams($form_id);
 		
-		$form_id 	= (int)$params->get('id');
 		$layout 	= $params->get('layout_type', 'slidebox');
 		$position 	= $params->get('toggler_position', 'left');
 		
@@ -1132,7 +1149,6 @@ class PWebContact
         //$options[] = 'basePath:"'.home_url('', 'relative').'"';
 		$options[] = 'ajaxUrl:"'.admin_url( 'admin-ajax.php?action=pwebcontact_' ).'"';
 		
-		/*** PRO START ***/
 		$options[] = 'layout:"'.$layout.'"';
 		$options[] = 'position:"'.$position.'"';
 		$options[] = 'offsetPosition:"'.$params->get('toggler_offset_position').'"';
@@ -1222,7 +1238,7 @@ class PWebContact
 			$options[] = 'onClose:function(){try{'.strip_tags($value)."\r\n".'}catch(e){this.debug(e)}}';
 		}
 		
-		
+		/*** PRO START ***/
 		// Uploader
 		if ($params->get('show_upload', 0)) 
 		{
@@ -1242,6 +1258,7 @@ class PWebContact
 			if (!$params->get('upload_autostart', 1))
 				$options[] = 'uploadAutoStart:0';
 		}
+        /*** PRO END ***/
 		
 		// Slide Box
 		if ($layout == 'slidebox') 
@@ -1258,12 +1275,14 @@ class PWebContact
 		// Lightbox window
 		else if ($layout == 'modal') 
 		{
+            /*** PRO START ***/
 			if ($params->get('modal_opacity', -1) == 0) 
 				$options[] = 'modalBackdrop:0';
-			if ($params->get('modal_disable_close'))
-				$options[] = 'modalClose:0';
 			if (($value = $params->get('style_bg', 'white')) != -1)
 				$options[] = 'modalStyle:"'.$value.'"';
+            /*** PRO END ***/
+			if ($params->get('modal_disable_close'))
+				$options[] = 'modalClose:0';
 			if (($value = $params->get('effect_duration', 400)) != 400)
 				$options[] = 'modalEffectDuration:'.(int)$value;
 			if (($value = $params->get('effect', 'modal:fade')) != 'modal:fade')
@@ -1275,7 +1294,6 @@ class PWebContact
 			if (($value = $params->get('effect_duration', 400)) != 500)
 				$options[] = 'accordionDuration:'.(int)$value;
 		}
-        /*** PRO END ***/
         
 		// Custom validation rules and calendar fields
 		$fields = self::getFields($form_id);
@@ -1576,7 +1594,7 @@ class PWebContact
 		}
 		
 		// Set media path
-		$params->set('media_url', 	plugins_url('media/', __FILE__)); //WP
+		$params->set('media_url', 	plugins_url('media/', dirname(__FILE__) . '/pwebcontact.php')); //WP
 		$params->set('media_path', 	dirname(__FILE__) . '/media/'); //WP
         
         /*** PRO START ***/
@@ -1597,9 +1615,9 @@ class PWebContact
         $data['debug'] = null;
         if (count(self::$logs)) {
             $data['debug'] = self::$logs;
-            array_walk($data['debug'], function(&$value, $key) {
+            foreach ($data['debug'] as &$value) {
                 $value = esc_html($value);
-            });
+            }
         }
         
         // Internet Explorer < 10
@@ -1784,14 +1802,8 @@ class PWebContact
 		$form_id 	= (int)$params->get('id');
 		
 		// mail from
-		/*** FREE START ***/
-		$global_name  = $params->get('email_from_name', get_bloginfo('name'));
-		$global_email = $params->get('email_from', get_bloginfo('admin_email'));
-        /*** FREE END ***/
-        /*** PRO START ***/
 		$global_name  = $params->get( 'email_from_name', $settings->get('email_from_name', get_bloginfo('name')) );
 		$global_email = $params->get( 'email_from', $settings->get('email_from', get_bloginfo('admin_email')) );
-        /*** PRO END ***/
 		if (!$global_email) {
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Invalid Global Configuration';
 			return array('status' => 303, 'msg' => __('MOD_PWEBCONTACT_GLOBAL_CONFIG_ERR', 'pwebcontact'));
@@ -1892,9 +1904,9 @@ class PWebContact
                         $value = stripslashes( $value );
                     }
                     elseif (is_array($value)) {
-                        array_walk($value, function(&$val, $key) {
+                        foreach ($value as &$val) {
                             $val = stripslashes($val);
-                        });
+                        }
                     }
                     $data['fields'][$field['alias']] = $value;
                 } 
@@ -2026,6 +2038,7 @@ class PWebContact
         if ($data['user_subject']) {
             $data['subject'] = trim($data['subject']) .' '. $data['user_subject'];
         }
+        /*** PRO END ***/
         
 		// email subject suffix
 		switch ($params->get('email_subject_sfx', 2))
@@ -2036,16 +2049,15 @@ class PWebContact
 			case 2:
 				$data['subject'] = trim($data['subject']) .' '. $data['title'];
 		}
-        /*** PRO END ***/
-
-		// HOOK PROCCESS DATA - here you can add custom code to proccess variables: $data, $email_vars
-
         
         /*** FREE START ***/
-            $email_copy = ($params->get('email_copy', 2) == 2);
+        $email_copy = ($params->get('email_copy', 2) == 2);
         /*** FREE END ***/
 		/*** PRO START ***/
-            $email_copy = ($params->get('email_copy', 2) == 2 OR ($params->get('email_copy', 2) == 1 AND isset($_POST['copy']) AND (int)$_POST['copy']));
+        // process form input data and email template variables
+        do_action('pwebcontact_data', array('data' => $data, 'email_vars' => $email_vars));
+        
+        $email_copy = ($params->get('email_copy', 2) == 2 OR ($params->get('email_copy', 2) == 1 AND isset($_POST['copy']) AND (int)$_POST['copy']));
         /*** PRO END ***/
         
 		// User email copy or auto-reply
@@ -2150,7 +2162,6 @@ class PWebContact
 			self::$logs[] = 'Admin BCC debug recipient: '.$user_email;
 		}
 
-		/*** PRO START ***/
 		// Add blind carbon copy recipients
 		if ($params->get('email_bcc')) 
 		{
@@ -2158,6 +2169,7 @@ class PWebContact
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin BCC recipients: '.$params->get('email_bcc');
 		}
 		
+        /*** PRO START ***/
 		// set attachments as files
         $attachments = array();
 		if ($params->get('attachment_type', 1) == 1 AND count($data['attachments']))
@@ -2167,15 +2179,11 @@ class PWebContact
 				$attachments[] = $path . $file;
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email attachments: '.implode(', ', $data['attachments']);
 		}
+        /*** PRO END ***/
 
 		// set email format
         $is_html = $params->get('email_admin_tmpl_format', 1) === 2;
         $headers[] = 'Content-Type: '.($is_html ? 'text/html' : 'text/plain');
-        /*** PRO END ***/
-        /*** FREE START ***/
-        $is_html = false;
-        $headers[] = 'Content-Type: text/plain';
-        /*** FREE END ***/
         
         // load email body template
         $body = $params->get('email_admin_tmpl');

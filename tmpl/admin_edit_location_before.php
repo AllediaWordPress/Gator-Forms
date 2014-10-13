@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -51,7 +51,7 @@ function_exists('add_action') or die;
     'type' => 'text',
     'name' => 'toggler_name',
     'label' => 'Define text shown on Toggler Tab or Button',
-    'default' => 'Contact form',
+    'default' => 'Contact us',
     'parent' => array('handler_button', 'handler_tab')
 )); ?>
 
@@ -125,71 +125,11 @@ function_exists('add_action') or die;
 
         <?php echo $this->_get_field(array(
             'type' => 'radio',
-            'name' => 'toggler_icon',
-            'label' => 'Toggler icon',
-            'header' => 'Toggler Tab',
-            'tooltip' => 'Select source for Toggler Tab icon.',
-            'default' => 0,
-            'parent' => array('handler_tab', 'handler_button'),
-            'class' => 'pweb-radio-group',
-            'options' => array(
-                array(
-                    'value' => 0,
-                    'name' => 'Disabled'
-                ),
-                array(
-                    'value' => 'glyphicon',
-                    'name' => 'Glyphicons',
-                    'is_parent' => true
-                ),
-                array(
-                    'value' => 'gallery',
-                    'name' => 'Gallery',
-                    'is_parent' => true
-                ),
-                array(
-                    'value' => 'custom',
-                    'name' => 'Custom image',
-                    'is_parent' => true
-                )
-            )
-        )); ?>
-
-        <?php echo $this->_get_field(array(
-            'type' => 'glyphicon',
-            'name' => 'toggler_glyphicon',
-            'label' => 'Glyphicons',
-            'parent' => array('toggler_icon_glyphicon')
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'filelist',
-            'name' => 'toggler_icon_gallery_image',
-            'label' => 'Gallery icon',
-            'tooltip' => 'Select image from directory: `wp-content/plugins/pwebcontact/media/images/icons`.',
-            'filter' => '\.(jpg|png|gif)$',
-            'directory' => 'media/images/icons',
-            'parent' => array('toggler_icon_gallery')
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'image',
-            'name' => 'toggler_icon_custom_image',
-            'label' => 'Custom icon',
-            'tooltip' => 'Enter URL with custom image file with icon for Toggler Tab.',
-            'parent' => array('toggler_icon_custom'),
-            'class' => 'pweb-input-xlarge'
-        )); ?>
-
-
-
-        <?php echo $this->_get_field(array(
-            'type' => 'radio',
             'name' => 'toggler_vertical',
             'label' => 'Vertical Toggler Tab',
             'header' => 'Vertical Toggler Tab',
             'tooltip' => 'Flip toggler tab to vertical orientation.',
-            'desc' => 'Default vertical text color is white, change it in `Layout` tab.<br>Reload browser cache on front-end to see changes.<br>If you see rectangles instead of letters then you have to use other `TTF font`.<br>If text is cut then enlarge height of toggler in `Layout` tab. Width leave blank.',
+            'desc' => 'Default vertical text color is white, change it in `Theme` tab.<br>Reload browser cache on front-end to see changes.<br>If you see rectangles instead of letters then you have to use other `TTF font`.<br>If text is cut then enlarge height of toggler in `Theme` tab. Width leave blank.',
             'default' => 0,
             'parent' => array('toggler_position_left', 'toggler_position_right'),
             'class' => 'pweb-radio-group',
@@ -211,7 +151,7 @@ function_exists('add_action') or die;
         <?php echo $this->_get_field(array(
             'type' => 'radio',
             'name' => 'toggler_rotate',
-            'label' => 'Rotate Toggler Tab text',
+            'label' => 'Rotate Vertical Toggler Tab text',
             'tooltip' => 'Rotate text by 90&deg; to the left or right.',
             'default' => 1,
             'parent' => array('toggler_vertical_1'),
@@ -230,7 +170,7 @@ function_exists('add_action') or die;
         <?php echo $this->_get_field(array(
             'type' => 'filelist',
             'name' => 'toggler_font',
-            'label' => 'TTF font for vertical Toggler Tab text',
+            'label' => 'TTF font for Vertical Toggler Tab text',
             'tooltip' => 'Select font from directory: `wp-content/plugins/pwebcontact/media/fonts`. If it does not support your language then upload there other font file.',
             'default' => 'NotoSans-Regular',
             'filter' => '\.ttf$',

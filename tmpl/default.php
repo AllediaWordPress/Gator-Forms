@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.9
+ * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -31,13 +31,11 @@ $message =
 ?>
 <!-- PWebContact -->
 
-<!-- PRO START -->
 <?php if ($layout == 'modal' AND $params->get('handler') == 'button') : ?>
 <div class="<?php echo $params->get('moduleClass'); ?>" dir="<?php echo $params->get('rtl', 0) ? 'rtl' : 'ltr'; ?>">
 	<?php echo $toggler; ?>
 </div>
 <?php endif; ?>
-<!-- PRO END -->
 
 <div id="pwebcontact<?php echo $form_id; ?>" class="pwebcontact <?php echo $params->get('positionClass').' '.$params->get('moduleClass'); ?>" dir="<?php echo $params->get('rtl', 0) ? 'rtl' : 'ltr'; ?>">
 	
@@ -48,28 +46,22 @@ $message =
         echo $toggler; 
     ?>
 	
-    <!-- PRO START -->
 	<?php if ($layout == 'modal') : ?><div id="pwebcontact<?php echo $form_id; ?>_modal" class="pwebcontact-modal modal fade<?php if ((int)$params->get('bootstrap_version', 2) === 2) echo ' hide'; ?>" style="display:none"><?php endif; ?>
-	<!-- PRO END -->
     
     <div id="pwebcontact<?php echo $form_id; ?>_box" class="pwebcontact-box <?php echo $params->get('moduleClass').' '.$params->get('boxClass'); ?>" dir="<?php echo $params->get('rtl', 0) ? 'rtl' : 'ltr'; ?>">
 	<div id="pwebcontact<?php echo $form_id; ?>_container" class="pwebcontact-container<?php if ($layout == 'modal' AND (int)$params->get('bootstrap_version', 2) === 3) echo ' modal-dialog'; ?>">
 	
 		<?php if ($layout == 'slidebox' AND $params->get('handler') == 'tab' AND $params->get('toggler_slide')) echo $toggler; ?>
 		
-		<!-- PRO START -->
 		<?php if ($layout == 'accordion' OR ($layout == 'modal' AND !$params->get('modal_disable_close', 0))) : ?>
 		<button type="button" class="pwebcontact<?php echo $form_id; ?>_toggler pweb-button-close" aria-hidden="true"<?php if ($value = $params->get('toggler_name_close')) echo ' title="'.$value.'"' ?> data-role="none">&times;</button>
 		<?php endif; ?>
-		<!-- PRO END -->
 		
 		<?php if ($layout == 'accordion') : ?><div class="pweb-arrow"></div><?php endif; ?>
 		
 		<form name="pwebcontact<?php echo $form_id; ?>_form" id="pwebcontact<?php echo $form_id; ?>_form" class="pwebcontact-form" action="<?php echo esc_url( home_url() ); ?>" method="post" accept-charset="utf-8">
 			
-            <!-- PRO START -->
 			<?php if ($params->get('msg_position', 'after') == 'before') echo $message; ?>
-            <!-- PRO END -->
 			
 			<div class="pweb-fields">
 			<?php 
@@ -119,9 +111,7 @@ $message =
 							<?php if ($params->get('reset_form', 1) == 3) : ?>
 							<button id="pwebcontact<?php echo $form_id; ?>_reset" type="reset" class="btn" style="display:none" data-role="none"><i class="glyphicon glyphicon-remove-sign"></i> <?php _e($params->get('button_reset', 'Reset'), 'pwebcontact') ?></button>
 							<?php endif; ?>
-                            <!-- PRO START -->
 							<?php if ($params->get('msg_position', 'after') == 'button' OR $params->get('msg_position', 'after') == 'popup') echo $message; ?>
-                            <!-- PRO END -->
                         </div>
 					</div>
                     <?php
@@ -319,12 +309,10 @@ $message =
 							/* ----- Text fields: text, name, email, phone, subject, password, date ------------------------- */
 							if (in_array($field['type'], array('text', 'name', 'email', 'phone', 'subject', 'password', 'date'))) : 
 								
-                                /*** PRO START ***/
 								if ($user->ID AND ($field['type'] == 'name' OR $field['type'] == 'email') AND $params->get('user_data', 1) > 0) {
 									$field['value'] = $field['type'] == 'email' ? $user->user_email : $user->display_name;
                                     //TODO addHiddenField(); ob_clean(); continue; remove some CSS
 								}
-                                /*** PRO END ***/
 								
 								$field['attributes'] = null;
 								$field['classes'] = array('pweb-input');
@@ -610,9 +598,7 @@ $message =
         
 	</div>
 	</div>
-    <!-- PRO START -->
 	<?php if ($layout == 'modal') : ?></div><?php endif; ?>
-    <!-- PRO END -->
 </div>
 
 <script type="text/javascript">

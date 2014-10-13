@@ -1,5 +1,5 @@
 /**
- * @version 1.0.7
+ * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -228,8 +228,8 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 
 
 .pweb-steps {
-    text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    margin-left: 20px;
 } 
 .pweb-steps button.button, .pweb-steps button.button:focus {
     vertical-align: middle;
@@ -262,8 +262,16 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 }
 
 
+.pweb-width-33 {
+    width: 33.3%;
+    float: left;
+}
 .pweb-width-40 {
     width: 39.9%;
+    float: left;
+}
+.pweb-width-50 {
+    width: 49.9%;
     float: left;
 }
 .pweb-width-60 {
@@ -518,6 +526,9 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     display: inline-block;
     margin-right: 20px;
     min-width: 50px;
+}
+.pweb-radio-group-vertical .pweb-field-option {
+    display: block;
 }
 
 .pweb-field.pweb-desc p {
@@ -781,6 +792,17 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 #pweb_fields .pweb-custom-fields-type:hover {
     border-color: rgba(0,0,0, 0.6);
 }
+#pweb_fields .pweb-fields-types .pweb-custom-fields-single.pweb-custom-fields-disabled {
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+    cursor: not-allowed;
+}
+#pweb_fields .pweb-fields-types .pweb-custom-fields-separator {
+    float: left;
+    height: 40px;
+    width: 100%;
+}
+
 .pweb-custom-field-type-email,
 .pweb-custom-field-type-name,
 .pweb-custom-field-type-phone,
