@@ -565,29 +565,6 @@ class PWebContact_Admin {
             header('Content-type: text/plain');
             die( $content );
         }
-        elseif ( $task == 'load_theme' ) {
-            
-            check_ajax_referer( 'load-theme' );
-            //wp_verify_nonce( $_POST['_wp_nonce'], 'load-theme' );
-            
-            $content = '';
-            if (isset($_GET['ajax']) AND isset($_POST['theme']) AND $_POST['theme']) {
-                
-                $path = dirname(__FILE__) .'/media/theme_settings/'. basename($_POST['theme']) . '.txt';
-                if (WP_Filesystem()) {
-                    global $wp_filesystem;
-                    if ($wp_filesystem->is_file($path)) {
-                        $content = $wp_filesystem->get_contents($path);
-                    }
-                }
-                elseif (is_file($path)) {
-                    $content = file_get_contents($path);
-                }
-            }
-            
-            header('Content-type: application/json');
-            die( $content );
-        }
         elseif ( $task == 'load_fields' ) {
             
             check_ajax_referer( 'load-fields' );
