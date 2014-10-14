@@ -702,7 +702,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             $("#pweb-cog-check-error").show();
             $("#pweb-cog-check-save").hide();
         }
-        else if (!pwebcontact_admin.is_pro && ($("#pweb_layout_type_warning").css("display") !== "none" || $("#pweb_fields_pro_warning").css("display") !== "none" || ($("#pweb_params_theme").val() !== "free" && $("#pweb_params_theme").val() !== ""))) {
+        else if (!pwebcontact_admin.is_pro && ($("#pweb_fields_pro_warning").css("display") !== "none" || ($("#pweb_params_theme").val() !== "free" && $("#pweb_params_theme").val() !== ""))) {
             $("#pweb-cog-check-success").hide();
             $("#pweb-cog-check-warning").show();
             $("#pweb-cog-check-error").hide();
