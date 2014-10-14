@@ -15,41 +15,63 @@ function_exists('add_action') or die;
 <h3 class="pweb-steps">
     <?php printf(__('Step %d of %d', 'pwebcontact'), 3, 4); ?>
     -
-    <?php if (!defined('PWEBCONTACT_PRO')) :
-        _e('Using our themes requires PRO version. You can buy it here. You can set your own themes for FREE jut by editing CSS files.', 'pwebcontact');
-    else :
-        _e('Choose predefined theme or create it in advanced options', 'pwebcontact');
-    endif; ?>
+    <?php _e('Choose predefined theme or create own in advanced options', 'pwebcontact'); ?>
     
     <button class="button button-primary pweb-next-tab-button" type="button">
         <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
 </h3>
 
-
-<?php if (!defined('PWEBCONTACT_PRO')) : ?>
-<div id="pweb_theme_warning" class="pweb-alert pweb-alert-info" style="display:none">
-    <?php _e('You need to go PRO :)', 'pwebcontact'); ?>
-    <?php _e('You have chosen theme with some PRO options. You can still save your form, but to display it buy PRO Version', 'pwebcontact'); ?>
-    <button class="button button-primary pweb-buy">
-         <?php _e( 'Buy', 'pwebcontact' ); ?>
-    </button>
+<?php $themes = $this->_get_themes(); ?>
+<div class="flipster" id="pweb-themes-coverflow">
+    <ul>
+        <?php foreach ($themes as $theme) : ?>
+        <li<?php if ($theme->is_active === true) echo ' class="pweb-active-theme"'; ?>>
+            <div class="pweb-theme" data-name="<?php echo $theme->name; ?>" data-settings='<?php echo $theme->settings; ?>'>
+                <?php if (!defined('PWEBCONTACT_PRO')) : ?>
+                <div class="pweb-theme-badge<?php echo $theme->name === 'free' ? '-free' : ''; ?>"><?php echo $theme->name === 'free' ? 'Free' : 'Pro'; ?></div>
+                <?php endif; ?>
+                <img src="<?php echo $theme->image; ?>" alt="<?php echo $theme->title; ?>">
+                <h3 class="pweb-theme-caption"><?php echo $theme->title; ?></h3>
+            </div>
+        </li>
+        <?php endforeach; ?>
+    </ul>
 </div>
-<?php endif; ?>
-
-
-<div id="pweb-theme-preview">
-    <p>
-        <a href="#" class="button button-primary">
-            <?php _e( 'Load settings for this theme', 'pwebcontact' ); ?>
-        </a>
-    </p>
+<div id="pweb-themes-coverflow-controls">
+    <button id="pweb-themes-coverflow-control-prev" class="button button-primary" type="button">
+        <i class="glyphicon glyphicon-chevron-left"></i> <?php _e( 'Previous', 'pwebcontact' ); ?>
+    </button>
+    <button id="pweb-themes-coverflow-control-load" class="button button-primary pweb-has-tooltip" type="button" title="<?php esc_attr_e( 'Theme settings would only change colors of your form. It would have no influence on layout and fields.', 'pwebcontact' ); ?>">
+        <?php _e( 'Load theme settings', 'pwebcontact' ); ?>
+    </button>
+    <button id="pweb-themes-coverflow-control-next" class="button button-primary" type="button">
+        <i class="glyphicon glyphicon-chevron-right"></i> <?php _e( 'Next', 'pwebcontact' ); ?>
+    </button>
+    
+    <?php echo $this->_get_field_control(array(
+        'type' => 'hidden',
+        'name' => 'theme'
+    )); ?>
 </div>
 
 <div id="pweb-dialog-theme" title="<?php esc_attr_e( 'Load theme settings', 'pwebcontact' ); ?>" style="display:none">
     <p><?php _e( 'Are you sure you want to load settings for selected theme? It would change your current theme settings.', 'pwebcontact' ); ?></p>
 </div>
 
+
+<?php if (!defined('PWEBCONTACT_PRO')) : ?>
+<div id="pweb_theme_warning" class="pweb-alert pweb-alert-info">
+    <?php _e('Using our themes requires PRO version.', 'pwebcontact'); ?>
+    <button class="button button-primary pweb-buy">
+        <?php _e( 'Buy', 'pwebcontact' ); ?>
+    </button>
+    <?php _e('You can create your own theme for FREE just by editing CSS files.', 'pwebcontact'); ?>
+    <a class="button" target="_blank" href="<?php echo admin_url('plugin-editor.php?file='.urlencode('pwebcontact/media/css/default.css').'&amp;plugin='.urlencode('pwebcontact/pwebcontact.php')); ?>">
+        <i class="glyphicon glyphicon-edit"></i> <?php _e( 'Edit CSS', 'pwebcontact' ); ?>
+    </a>
+</div>
+<?php endif; ?>
 
 
 <div class="pweb-advanced-options">
@@ -61,16 +83,21 @@ function_exists('add_action') or die;
         <div class="pweb-clearfix">
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
-                    'type' => 'filelist',
                     'name' => 'style_toggler',
                     'label' => 'Predefined Toggler style',
                     'header' => 'Toggler Button and Tab',
+                    /*** FREE START ***/
+                    'type' => 'select',
+                    'disabled' => true,
+                    /*** FREE END ***/
+                    /*** PRO START ***/
+                    'type' => 'filelist',
                     'tooltip' => 'If you want to change colors of Toggler Tab then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/toggler`.',
                     'default' => 'blue',
                     'filter' => '\.css$',
                     'directory' => 'media/css/toggler',
                     'strip_ext' => true,
-                    'disabled' => !defined('PWEBCONTACT_PRO'),
+                    /*** PRO END ***/
                     'parent' => array('handler_tab', 'handler_button'),
                     'options' => array(
                         array(
@@ -191,16 +218,21 @@ function_exists('add_action') or die;
 
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
-                    'type' => 'filelist',
                     'name' => 'style_button',
                     'label' => 'Predefined buttons and links style',
                     'header' => 'Buttons and links',
+                    /*** FREE START ***/
+                    'type' => 'select',
+                    'disabled' => true,
+                    /*** FREE END ***/
+                    /*** PRO START ***/
+                    'type' => 'filelist',
                     'tooltip' => 'If you want to change colors of buttons and links then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/button`.',
                     'default' => 'blue',
                     'filter' => '\.css$',
                     'directory' => 'media/css/button',
                     'strip_ext' => true,
-                    'disabled' => !defined('PWEBCONTACT_PRO'),
+                    /*** PRO END ***/
                     'options' => array(
                         array(
                             'value' => -1,
@@ -224,16 +256,21 @@ function_exists('add_action') or die;
                 )); ?>
                 
                 <?php echo $this->_get_field(array(
-                    'type' => 'filelist',
                     'name' => 'style_form',
-                    'label' => 'Fields style',
-                    'header' => 'Predefined fields style',
+                    'label' => 'Predefined fields style',
+                    'header' => 'Fields',
+                    /*** FREE START ***/
+                    'type' => 'select',
+                    'disabled' => true,
+                    /*** FREE END ***/
+                    /*** PRO START ***/
+                    'type' => 'filelist',
                     'tooltip' => 'If you want to change colors fields then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/form`.',
                     'default' => 'blue',
                     'filter' => '\.css$',
                     'directory' => 'media/css/form',
                     'strip_ext' => true,
-                    'disabled' => !defined('PWEBCONTACT_PRO'),
+                    /*** PRO END ***/
                     'options' => array(
                         array(
                             'value' => -1,
@@ -275,16 +312,21 @@ function_exists('add_action') or die;
 
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
-                    'type' => 'filelist',
                     'name' => 'style_bg',
                     'label' => 'Predefined background style',
                     'header' => 'Background',
-                    'default' => 'white',
+                    /*** FREE START ***/
+                    'type' => 'select',
+                    'disabled' => true,
+                    /*** FREE END ***/
+                    /*** PRO START ***/
+                    'type' => 'filelist',
                     'tooltip' => 'If you want to change colors of background then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/background`.',
+                    'default' => 'white',
                     'filter' => '\.css$',
                     'directory' => 'media/css/background',
                     'strip_ext' => true,
-                    'disabled' => !defined('PWEBCONTACT_PRO'),
+                    /*** PRO END ***/
                     'options' => array(
                         array(
                             'value' => -1,
@@ -477,7 +519,7 @@ function_exists('add_action') or die;
                     'label' => 'Form width [px, %]',
                     'tooltip' => 'Width of form is also a width of Lightbox window. If you want to maximize the window then set 100%.',
                     'class' => 'pweb-filter-unit pweb-input-mini'
-                )); ?>=
+                )); ?>
             </div>
 
 

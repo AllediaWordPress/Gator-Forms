@@ -245,22 +245,48 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 }
 
 
-#pweb-theme-preview {
+#pweb-themes-coverflow {
     text-align: center;
 }
-#pweb-theme-preview img {
+#pweb-themes-coverflow .pweb-theme {
+	overflow: hidden;
+    position: relative;
+}
+#pweb-themes-coverflow .pweb-theme img {
     margin: 0 auto;
-    background: #FFFFFF;
-    padding: 10px;
+    border: 10px solid #FFFFFF;
     -webkit-box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
-#pweb-theme-preview a + i.glyphicon-refresh,
-#pweb_load_fields + i.glyphicon-refresh,
-.pweb-load-email-tmpl + i.glyphicon-refresh {
-    margin-left: 5px;
+#pweb-themes-coverflow .pweb-theme .pweb-theme-badge,
+#pweb-themes-coverflow .pweb-theme .pweb-theme-badge-free{
+	position: absolute;
+	top: 15px;
+	right: -45px;
+	width: 150px;
+	padding: 2px 0 2px;
+	text-align: center;
+	font-size: 24px;
+	line-height: 30px;
+	color: #fff;
+	background-color: #AA0000;
+	transform:rotate(45deg);
+	-ms-transform:rotate(45deg); /* IE 9 */
+	-webkit-transform:rotate(45deg); /* Safari and Chrome */
 }
-
+#pweb-themes-coverflow .pweb-theme .pweb-theme-badge-free {
+	background-color: #009E0A;
+}
+#pweb-themes-coverflow.flipster-coverflow .flip-items {
+    padding-bottom: 2%;
+}
+#pweb-themes-coverflow-controls {
+    text-align: center;
+    margin: 0 auto 20px auto;
+}
 
 .pweb-width-33 {
     width: 33.3%;

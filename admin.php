@@ -252,6 +252,11 @@ class PWebContact_Admin {
                 $this->_load_form();
                 
                 // load JS files
+                wp_enqueue_script('pwebcontact_flipster_script', plugins_url('media/js/jquery.flipster.js', __FILE__), 
+                        array(
+                            'jquery'
+                        ));
+                
                 wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-edit.js', __FILE__), 
                         array(
                             'jquery',
@@ -295,6 +300,8 @@ class PWebContact_Admin {
                 
                 // load CSS
                 wp_enqueue_style('wp-jquery-ui-dialog');
+                
+                wp_enqueue_style('pwebcontact_flipster_style', plugins_url('media/css/jquery.flipster.css', __FILE__));
             }
         }
         elseif ( $task == 'save' AND isset($_POST['id'])) {
@@ -544,7 +551,13 @@ class PWebContact_Admin {
             if (isset($_GET['ajax']) AND isset($_POST['format']) AND $_POST['format'] AND isset($_POST['tmpl']) AND $_POST['tmpl']) {
                 
                 $path = dirname(__FILE__) .'/media/email_tmpl/'. basename($_POST['tmpl']) . ((int)$_POST['format'] === 2 ? '.html' : '.txt');
-                if (is_file($path)) {
+                if (WP_Filesystem()) {
+                    global $wp_filesystem;
+                    if ($wp_filesystem->is_file($path)) {
+                        $content = $wp_filesystem->get_contents($path);
+                    }
+                }
+                elseif (is_file($path)) {
                     $content = file_get_contents($path);
                 }
             }
@@ -561,7 +574,13 @@ class PWebContact_Admin {
             if (isset($_GET['ajax']) AND isset($_POST['theme']) AND $_POST['theme']) {
                 
                 $path = dirname(__FILE__) .'/media/theme_settings/'. basename($_POST['theme']) . '.txt';
-                if (is_file($path)) {
+                if (WP_Filesystem()) {
+                    global $wp_filesystem;
+                    if ($wp_filesystem->is_file($path)) {
+                        $content = $wp_filesystem->get_contents($path);
+                    }
+                }
+                elseif (is_file($path)) {
                     $content = file_get_contents($path);
                 }
             }
@@ -578,7 +597,13 @@ class PWebContact_Admin {
             if (isset($_GET['ajax']) AND isset($_POST['fields']) AND $_POST['fields']) {
                 
                 $path = dirname(__FILE__) .'/media/fields_settings/'. basename($_POST['fields']) . '.txt';
-                if (is_file($path)) {
+                if (WP_Filesystem()) {
+                    global $wp_filesystem;
+                    if ($wp_filesystem->is_file($path)) {
+                        $content = $wp_filesystem->get_contents($path);
+                    }
+                }
+                elseif (is_file($path)) {
                     $content = file_get_contents($path);
                 }
             }
@@ -991,6 +1016,56 @@ class PWebContact_Admin {
     protected function _display_edit_form() {
         
         $this->_load_tmpl('edit');
+    }
+    
+    
+    protected function _get_themes() {
+        
+        $themes = array();
+        $active_theme = $this->_get_param('theme', defined('PWEBCONTACT_PRO') ? null : 'free');
+        
+        $url = plugins_url('/media/themes/', dirname(__FILE__) .'/pwebcontact.php');
+        
+        $dir = new DirectoryIterator( dirname(__FILE__) .'/media/themes/' );
+        foreach( $dir as $item ) {
+            
+            if ($item->isFile() AND preg_match('/\.jpg$/i', $item->getFilename())) {
+                
+                $basename = $item->getBasename('.jpg');
+                
+                if (defined('PWEBCONTACT_PRO') AND $basename === 'free') {
+                    continue;
+                }
+                
+                $settings_file = $item->getPath() . '/' . $basename . '.json';
+                $settings = null;
+                
+                if (WP_Filesystem()) {
+                    global $wp_filesystem;
+                    if ($wp_filesystem->is_file($settings_file)) {
+                        $settings = $wp_filesystem->get_contents($settings_file);
+                    }
+                }
+                elseif (is_file($settings_file)) {
+                    $settings = file_get_contents($settings_file);
+                }
+                
+                
+                if ($settings) {
+                
+                    $theme = new stdClass();
+                    $theme->name = $basename;
+                    $theme->title = ucfirst( str_replace('_', ' ', $basename) );
+                    $theme->image = $url . $item->getFilename();
+                    $theme->settings = $settings;
+                    $theme->is_active = ($active_theme === $theme->name);
+                    
+                    $themes[] = $theme;
+                }
+            }
+        }
+        
+        return $themes;
     }
 
 

@@ -1,5 +1,5 @@
 /**
- * @version 1.0.5
+ * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -23,7 +23,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     $(window).resize(function(){
         $tabs.css("padding-top", $(this).width() < 768 ? 0 : $adminBar.height());
-    }).trigger("resize");
+    });
     
     // Initialize tooltips
     $(".pweb-has-tooltip").tooltip({
@@ -40,6 +40,8 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 
         $tabs.find(".nav-tab-content-active").removeClass("nav-tab-content-active");
         $($(this).attr("href")+"-content").addClass("nav-tab-content-active");
+        
+        $(window).trigger("resize");
     });
     
     $tabs.find(".pweb-next-tab-button").click(function(e){
@@ -275,7 +277,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     
     // Select current Administrator if Email to is empty
-    if ($("#pweb_params_email_to").val() == "") {
+    if ($("#pweb_params_email_to").val() === "") {
         var $email_cms_user = $("#pweb_params_email_cms_user");
         if ($email_cms_user.get(0).options.length > 1) {
             $email_cms_user.val(userSettings.uid);
@@ -287,97 +289,97 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
 	
 	// validate single email
-	$('.pweb-filter-email').on('change', function() {
+	$(".pweb-filter-email").on("change", function() {
 		if (this.value) {
 			var regex=/^[a-zA-Z0-9.!#$%&‚Äô*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 			if (regex.test(this.value)) {
-				$(this).removeClass('pweb-invalid');
+				$(this).removeClass("pweb-invalid");
 			} else {
-				$(this).addClass('pweb-invalid');
+				$(this).addClass("pweb-invalid");
 			}
 		}
 	});
 	
 	// validate coma separated emails
-	$('.pweb-filter-emails').on('change', function() {
+	$(".pweb-filter-emails").on("change", function() {
 		if (this.value) {
 			var regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w+(,[ ]*\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w+)*$/;
 			if (regex.test(this.value)) {
-				$(this).removeClass('pweb-invalid');
+				$(this).removeClass("pweb-invalid");
 			} else {
-				$(this).addClass('pweb-invalid');
+				$(this).addClass("pweb-invalid");
 			}
 		}
 	});
 	
 	// validate list of email recipients
-	$('.pweb-filter-emailRecipients').on('change', function() {
+	$(".pweb-filter-emailRecipients").on("change", function() {
 		if (this.value) {
 			var regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w+[\|]{1}[^\r\n\|]+([\r]?\n\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w+[\|]{1}[^\r\n\|]+)*$/;
 			if (regex.test(this.value)) {
-				$(this).removeClass('pweb-invalid');
+				$(this).removeClass("pweb-invalid");
 			} else {
-				$(this).addClass('pweb-invalid');
+				$(this).addClass("pweb-invalid");
 			}
 		}
 	});
 	
 	// validate int
-	$('.pweb-filter-int').on('change', function() {
-		if (this.value && this.value !== 'auto') {
+	$(".pweb-filter-int").on("change", function() {
+		if (this.value && this.value !== "auto") {
 			var value = parseInt(this.value);
-			this.value = isNaN(value) ? '' : value;
+			this.value = isNaN(value) ? "" : value;
 		}
 	});
 	
 	// validate float
-	$('.pweb-filter-float').on('change', function() {
-		if (this.value && this.value !== 'auto') {
+	$(".pweb-filter-float").on("change", function() {
+		if (this.value && this.value !== "auto") {
 			var value = parseFloat(this.value);
-			this.value = isNaN(value) ? '' : value;
+			this.value = isNaN(value) ? "" : value;
 		}
 	});
 	
 	// validate unit
-	$('.pweb-filter-unit').on('change', function() {
+	$(".pweb-filter-unit").on("change", function() {
 		var regex = /^\d+(px|em|ex|cm|mm|in|pt|pc|%){1}$/i;
-		if (!this.value || this.value === 'auto' || regex.test(this.value)) {
-			$(this).removeClass('pweb-invalid');
+		if (!this.value || this.value === "auto" || regex.test(this.value)) {
+			$(this).removeClass("pweb-invalid");
 		} else {
 			var value = parseInt(this.value);
 			if (!isNaN(value)) {
-				this.value = value+'px';
-				$(this).removeClass('pweb-invalid');
+				this.value = value+"px";
+				$(this).removeClass("pweb-invalid");
 			} else {
-				$(this).addClass('pweb-invalid');
+				$(this).addClass("pweb-invalid");
 			}
 		}
 	});
 	
 	// validate color
-	$('.pweb-filter-color').on('change', function() {
+	$(".pweb-filter-color").on("change", function() {
 		var regex = /^(\w|#[0-9a-f]{3}|#[0-9a-f]{6}|rgb\(\d{1,3},[ ]?\d{1,3},[ ]?\d{1,3}\)|rgba\(\d{1,3},[ ]?\d{1,3},[ ]?\d{1,3},[ ]?[0]?\.\d{1}\))$/i;
 		if (!this.value || regex.test(this.value)) {
-			$(this).removeClass('pweb-invalid');
+			$(this).removeClass("pweb-invalid");
 		} else {
-			$(this).addClass('pweb-invalid');
+			$(this).addClass("pweb-invalid");
 		}
 	});
 	
 	// validate url
-	$('.pweb-filter-url').on('change', function() {
+	$(".pweb-filter-url").on("change", function() {
 		this.value = encodeURI(decodeURI(this.value));
         
         var regex = /^((http|https):){0,1}\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/i;
 		if (!this.value || regex.test(this.value)) {
-			$(this).removeClass('pweb-invalid');
+			$(this).removeClass("pweb-invalid");
 		} else {
-			$(this).addClass('pweb-invalid');
+			$(this).addClass("pweb-invalid");
 		}
 	});
 	
 	// validate upload file size
-	$('.pweb-filter-upload-max-size').on('change', function() {
+	$(".pweb-filter-upload-max-size").on("change", function() {
 		if (this.value) {
 			var maxSize = pwebUploadMaxSize || 0,
 				value = parseFloat(this.value);
@@ -388,8 +390,8 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	});
 	
 	// Validate upload files extensions
-	$('.pweb-filter-ext').on('change', function(){
-		this.value = this.value.toLowerCase().replace(/[^a-z0-9|?]+/g, '');
+	$(".pweb-filter-ext").on("change", function(){
+		this.value = this.value.toLowerCase().replace(/[^a-z0-9|?]+/g, "");
 	});
     
     
@@ -413,7 +415,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     }).trigger("change");
     
     $("#pweb_params_smtp_host").change(function(e){
-        $(this).removeClass('pweb-invalid');
+        $(this).removeClass("pweb-invalid");
         if (!pwebcontact_admin.isLocalhost && $("#pweb_params_mailer input:checked").val() === "smtp") {
             // SMTP host from other domain than site
             var host = $(this).val().toLowerCase();
@@ -501,7 +503,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     }
                 }).fail(function(jqXHR, textStatus, errorThrown) {
 
-                    alert(pwebcontact_l10n.request_error+'. '+ jqXHR.status +' '+ errorThrown);
+                    alert(pwebcontact_l10n.request_error+". "+ jqXHR.status +" "+ errorThrown);
                 });
             }
             else {
@@ -593,34 +595,36 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
     
     
-    // Load theme preview
-    $("#pweb_load_theme").change(function(){
-        if (this.selectedIndex) {
-            var img = $(this).val();
-            if (img.indexOf(".jpg") === -1 && img.indexOf(".png") === -1) {
-                img = img + ".png";
-            }
-            $("#pweb-theme-preview img").attr("src", pwebcontact_admin.plugin_url + "media/theme_settings/" + img);
-        }
-        
-        var $warning = $("#pweb_theme_warning");
-        if ($warning.length) {
-            if ($(this).val().indexOf("PRO") > -1) {
-                $warning.fadeIn("slow");
-            }
-            else {
-                $warning.fadeOut("slow");
-            }
-        }
+    // Themes coverflow
+    var $flipster = $("#pweb-themes-coverflow");
+    var start = $flipster.find(".pweb-active-theme").index();
+    $flipster.flipster({
+        itemContainer: "ul",
+        itemSelector: "li",
+        style: "coverflow",
+        start: start > -1 ? start : "center",
+        enableKeyboard: true,
+        enableMousewheel: true,
+        enableTouch: true,
+        enableNav: false,
+        enableNavButtons: false
+    });
+    
+    // Themes coverflow navigation
+    $("#pweb-themes-coverflow-control-prev").click(function(e){
+        e.preventDefault();
+        $flipster.flipster("jump", "left");
+    });
+    $("#pweb-themes-coverflow-control-next").click(function(e){
+        e.preventDefault();
+        $flipster.flipster("jump", "right");
     });
     
     // Load theme settings
-    $("#pweb-theme-preview a").click(function(e){
+    $("#pweb-themes-coverflow-control-load").click(function(e){
         e.preventDefault();
-        if ($("#pweb_load_theme").val()) {
-            $(this).blur();
-            $("#pweb-dialog-theme").dialog("open");
-        }
+        $(this).blur();
+        $("#pweb-dialog-theme").dialog("open");
     });
     
     // Load theme settings dialog
@@ -635,34 +639,16 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 class : "button-primary",
                 click: function(e) {
                     $(this).dialog("close");
-                    $.ajax({
-                        url: $("#pweb_load_theme").data("action"),
-                        type: "POST", 
-                        dataType: "json",
-                        data: {
-                            "theme": $("#pweb_load_theme").val().replace(/\.(jpg|png)$/i, '')
-                        },
-                        beforeSend: function() {
-                            $('<i class="glyphicon glyphicon-refresh"></i>').insertAfter( $("#pweb-theme-preview a") );
-                        }
-                    }).done(function(response, textStatus, jqXHR) {
-
-                        // hide loading
-                        $("#pweb-theme-preview i.glyphicon-refresh").remove();
-
-                        if (response) {
-                            // load
-                            $.each(response, function(option, value) {
-                                $("#pweb_params_"+option).val(value);
-                            });
-                        }
-                        else {
-                            alert(pwebcontact_l10n.missing_theme_settings);
-                        }
-                    }).fail(function(jqXHR, textStatus, errorThrown) {
-
-                        alert(pwebcontact_l10n.request_error+'. '+ jqXHR.status +' '+ errorThrown);
-                    });
+                    // Find current theme
+                    var $theme = $flipster.find(".flip-current .pweb-theme");
+                    // Store theme name
+                    $("#pweb_params_theme").val( $theme.data("name") );
+                    // Load theme settings
+                    if (pwebcontact_admin.is_pro) {
+                        $.each( $theme.data("settings"), function(option, value) {
+                            $("#pweb_params_"+option).val(value);
+                        });
+                    }
                 }
             },
             {
@@ -716,7 +702,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             $("#pweb-cog-check-error").show();
             $("#pweb-cog-check-save").hide();
         }
-        else if (!pwebcontact_admin.is_pro && ($("#pweb_layout_type_warning").css("display") !== "none" || $("#pweb_fields_pro_warning").css("display") !== "none" || $("#pweb_theme_warning").css("display") !== "none")) {
+        else if (!pwebcontact_admin.is_pro && ($("#pweb_layout_type_warning").css("display") !== "none" || $("#pweb_fields_pro_warning").css("display") !== "none" || ($("#pweb_params_theme").val() !== "free" && $("#pweb_params_theme").val() !== ""))) {
             $("#pweb-cog-check-success").hide();
             $("#pweb-cog-check-warning").show();
             $("#pweb-cog-check-error").hide();
@@ -785,7 +771,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             if ($(this).hasClass("pweb-custom-field-alias") && !$(this).val()) {
                 var $alias = $(this).closest(".pweb-custom-field-options").find("input.pweb-custom-field-label-input");
                 if ($alias.length) {
-                    var alias = $alias.val().replace(/[^a-z0-9\_]+/gi, '').toLowerCase();
+                    var alias = $alias.val().replace(/[^a-z0-9\_]+/gi, "").toLowerCase();
                     $(this).val( alias ? alias : "field_"+counter );
                 }
             }
@@ -822,6 +808,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     // Open last active tab
     if (document.location.hash) {
         $(document.location.hash).click();
+    }
+    else {
+        $(window).trigger("resize");
     }
     
     // Set duration of showing/hiding options
