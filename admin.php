@@ -605,7 +605,8 @@ class PWebContact_Admin {
         }
         
         add_menu_page($title, __('Perfect Contact Forms', 'pwebcontact'), 
-                'manage_options', 'pwebcontact', array($this, 'configuration'));
+                'manage_options', 'pwebcontact', array($this, 'configuration'),
+                plugins_url('media/images/admin/menu-icon.png', dirname(__FILE__).'/pwebcontact.php'));
     }
     
     
