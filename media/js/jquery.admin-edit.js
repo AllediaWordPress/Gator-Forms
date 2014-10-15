@@ -11,6 +11,10 @@ var pwebcontact_l10n = pwebcontact_l10n || {},
 
 if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 	
+    if (typeof pwebcontact_admin.is_pro === "undefined") {
+        pwebcontact_admin.is_pro = false;
+    }
+    
     pwebcontact_admin.confirm = true;
     pwebcontact_admin.confirmed = false;
     pwebcontact_admin.running_related = false;
@@ -661,6 +665,13 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         ]
     });
     
+    // Disable predefined styles in Contact Form upgraded from verison 1.0
+    $("#pweb-themes-disable-predefined").click(function(e){
+        e.preventDefault();
+        $("#pweb_params_style_toggler").val(-1);
+        $("#pweb_params_style_form").val(-1);
+        $("#pweb_params_style_bg").val(-1);
+    });
     
     //TODO select background image
     

@@ -28,11 +28,14 @@ function_exists('add_action') or die;
         <?php foreach ($themes as $theme) : ?>
         <li<?php if ($theme->is_active === true) echo ' class="pweb-active-theme"'; ?>>
             <div class="pweb-theme" data-name="<?php echo $theme->name; ?>" data-settings='<?php echo $theme->settings; ?>'>
-                <?php if (!defined('PWEBCONTACT_PRO')) : ?>
+                <!-- FREE START -->
                 <div class="pweb-theme-badge<?php echo $theme->name === 'free' ? '-free' : ''; ?>"><?php echo $theme->name === 'free' ? 'Free' : 'Pro'; ?></div>
-                <?php endif; ?>
+                <!-- FREE END -->
                 <img src="<?php echo $theme->image; ?>" alt="<?php echo $theme->title; ?>">
-                <h3 class="pweb-theme-caption"><?php echo $theme->title; ?></h3>
+                <div class="pweb-theme-caption">
+                    <h3><?php echo $theme->title; ?></h3>
+                    <p><?php echo $theme->description; ?></p>
+                </div>
             </div>
         </li>
         <?php endforeach; ?>
@@ -45,8 +48,11 @@ function_exists('add_action') or die;
     <button id="pweb-themes-coverflow-control-load" class="button button-primary pweb-has-tooltip" type="button" title="<?php esc_attr_e( 'Theme settings would only change colors of your form. It would have no influence on layout and fields.', 'pwebcontact' ); ?>">
         <?php _e( 'Load theme settings', 'pwebcontact' ); ?>
     </button>
+    <button id="pweb-themes-coverflow-control-reset" class="button button-primary pweb-has-tooltip" type="button" title="<?php esc_attr_e( 'Theme settings would only change colors of your form. It would have no influence on layout and fields.', 'pwebcontact' ); ?>">
+        <?php _e( 'TODO Reset theme settings', 'pwebcontact' ); ?>
+    </button>
     <button id="pweb-themes-coverflow-control-next" class="button button-primary" type="button">
-        <i class="glyphicon glyphicon-chevron-right"></i> <?php _e( 'Next', 'pwebcontact' ); ?>
+        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
     
     <?php echo $this->_get_field_control(array(
@@ -60,18 +66,18 @@ function_exists('add_action') or die;
 </div>
 
 
-<?php if (!defined('PWEBCONTACT_PRO')) : ?>
+<!-- FREE START -->
 <div id="pweb_theme_warning" class="pweb-alert pweb-alert-info">
     <?php _e('Using our themes requires PRO version.', 'pwebcontact'); ?>
     <button class="button button-primary pweb-buy">
-        <?php _e( 'Buy', 'pwebcontact' ); ?>
+        <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
     </button>
     <?php _e('You can create your own theme for FREE just by editing CSS files.', 'pwebcontact'); ?>
-    <a class="button" target="_blank" href="<?php echo admin_url('plugin-editor.php?file='.urlencode('pwebcontact/media/css/default.css').'&amp;plugin='.urlencode('pwebcontact/pwebcontact.php')); ?>">
+    <a class="button" target="_blank" href="<?php echo admin_url('plugin-editor.php?file='.urlencode('pwebcontact/media/css/themes/free.css').'&amp;plugin='.urlencode('pwebcontact/pwebcontact.php')); ?>">
         <i class="glyphicon glyphicon-edit"></i> <?php _e( 'Edit CSS', 'pwebcontact' ); ?>
     </a>
 </div>
-<?php endif; ?>
+<!-- FREE END -->
 
 
 <div class="pweb-advanced-options">
@@ -83,34 +89,10 @@ function_exists('add_action') or die;
         <div class="pweb-clearfix">
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
-                    'name' => 'style_toggler',
-                    'label' => 'Predefined Toggler style',
-                    'header' => 'Toggler Button and Tab',
-                    /*** FREE START ***/
-                    'type' => 'select',
-                    'disabled' => true,
-                    /*** FREE END ***/
-                    /*** PRO START ***/
-                    'type' => 'filelist',
-                    'tooltip' => 'If you want to change colors of Toggler Tab then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/toggler`.',
-                    'default' => 'blue',
-                    'filter' => '\.css$',
-                    'directory' => 'media/css/toggler',
-                    'strip_ext' => true,
-                    /*** PRO END ***/
-                    'parent' => array('handler_tab', 'handler_button'),
-                    'options' => array(
-                        array(
-                            'value' => -1,
-                            'name' => '- Do not use -'
-                        )
-                    )
-                )); ?>
-
-                <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'toggler_bg',
-                    'label' => 'Custom color of Toggler',
+                    'header' => 'Toggler Button and Tab',
+                    'label' => 'Color of Toggler',
                     'tooltip' => 'Select background color of Toggler Tab.',
                     'parent' => array('handler_tab', 'handler_button')
                 )); ?>
@@ -118,7 +100,7 @@ function_exists('add_action') or die;
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'toggler_color',
-                    'label' => 'Custom color of Toggler text',
+                    'label' => 'Color of Toggler text',
                     'tooltip' => 'Select text color of Toggler Tab',
                     'parent' => array('handler_tab', 'handler_button')
                 )); ?>
@@ -215,81 +197,42 @@ function_exists('add_action') or die;
                     'parent' => array('handler_tab', 'handler_button')
                 )); ?>
             </div>
-
+            
             <div class="pweb-width-33">
-                <?php echo $this->_get_field(array(
-                    'name' => 'style_button',
-                    'label' => 'Predefined buttons and links style',
-                    'header' => 'Buttons and links',
-                    /*** FREE START ***/
-                    'type' => 'select',
-                    'disabled' => true,
-                    /*** FREE END ***/
-                    /*** PRO START ***/
-                    'type' => 'filelist',
-                    'tooltip' => 'If you want to change colors of buttons and links then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/button`.',
-                    'default' => 'blue',
-                    'filter' => '\.css$',
-                    'directory' => 'media/css/button',
-                    'strip_ext' => true,
-                    /*** PRO END ***/
-                    'options' => array(
-                        array(
-                            'value' => -1,
-                            'name' => '- Do not use -'
-                        )
-                    )
-                )); ?>
-
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'buttons_fields_color',
-                    'label' => 'Custom color of buttons and links',
-                    'tooltip' => 'Select color of buttons background and links text color'
+                    'header' => 'Buttons and Links',
+                    'label' => 'Color of buttons and links',
+                    'tooltip' => 'Select color of buttons background, links text color and upload progress bar.'
                 )); ?>
 
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'buttons_text_color',
-                    'label' => 'Custom color of buttons text',
+                    'label' => 'Color of buttons text',
                     'tooltip' => 'Select color of buttons text'
-                )); ?>
-                
-                <?php echo $this->_get_field(array(
-                    'name' => 'style_form',
-                    'label' => 'Predefined fields style',
-                    'header' => 'Fields',
-                    /*** FREE START ***/
-                    'type' => 'select',
-                    'disabled' => true,
-                    /*** FREE END ***/
-                    /*** PRO START ***/
-                    'type' => 'filelist',
-                    'tooltip' => 'If you want to change colors fields then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/form`.',
-                    'default' => 'blue',
-                    'filter' => '\.css$',
-                    'directory' => 'media/css/form',
-                    'strip_ext' => true,
-                    /*** PRO END ***/
-                    'options' => array(
-                        array(
-                            'value' => -1,
-                            'name' => '- Do not use -'
-                        )
-                    )
                 )); ?>
 
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'fields_color',
-                    'label' => 'Custom color of fields',
+                    'header' => 'Fields',
+                    'label' => 'Color of fields',
                     'tooltip' => 'Select background color of fields'
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'fields_border_color',
+                    'label' => 'Color of fields border',
+                    'tooltip' => 'Select border color of fields. Active field will have 10% darker color.'
                 )); ?>
 
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'fields_text_color',
-                    'label' => 'Custom color of fields text',
+                    'label' => 'Color of fields text',
                     'tooltip' => 'Select text color of fields'
                 )); ?>
 
@@ -309,36 +252,12 @@ function_exists('add_action') or die;
                     'tooltip' => 'Name of font used for form. Separate multiple names with coma and wrap name which contains space with single quote.'
                 )); ?>
             </div>
-
             <div class="pweb-width-33">
-                <?php echo $this->_get_field(array(
-                    'name' => 'style_bg',
-                    'label' => 'Predefined background style',
-                    'header' => 'Background',
-                    /*** FREE START ***/
-                    'type' => 'select',
-                    'disabled' => true,
-                    /*** FREE END ***/
-                    /*** PRO START ***/
-                    'type' => 'filelist',
-                    'tooltip' => 'If you want to change colors of background then edit or upload new CSS file to directory: `wp-content/plugins/pwebcontact/media/css/background`.',
-                    'default' => 'white',
-                    'filter' => '\.css$',
-                    'directory' => 'media/css/background',
-                    'strip_ext' => true,
-                    /*** PRO END ***/
-                    'options' => array(
-                        array(
-                            'value' => -1,
-                            'name' => '- Do not use -'
-                        )
-                    )
-                )); ?>
-
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'bg_color',
-                    'label' => 'Custom color of form background and opacity',
+                    'header' => 'Background',
+                    'label' => 'Color of form background and opacity',
                 )); ?>
 
                 <?php echo $this->_get_field_control(array(
@@ -362,11 +281,9 @@ function_exists('add_action') or die;
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'text_color',
-                    'label' => 'Custom color of form text',
+                    'label' => 'Color of form text',
                     'tooltip' => 'Select color of text'
                 )); ?>
-                
-                
                 
                 <?php echo $this->_get_field(array(
                     'type' => 'image',
@@ -435,7 +352,7 @@ function_exists('add_action') or die;
             </div>
         </div>
 
-        
+        <hr>
         
         <div class="pweb-clearfix">
             <div class="pweb-width-33">
@@ -472,6 +389,24 @@ function_exists('add_action') or die;
                         array(
                             'value' => 1,
                             'name' => 'Yes'
+                        )
+                    )
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'gradient',
+                    'label' => 'Choose desing',
+                    'default' => 1,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 1,
+                            'name' => 'Gradients'
+                        ),
+                        array(
+                            'value' => 2,
+                            'name' => 'Flat'
                         )
                     )
                 )); ?>
@@ -557,6 +492,105 @@ function_exists('add_action') or die;
                 )); ?>
             </div>
         </div>
-
+        
+        <hr>
+        
+        <?php /* @deprecated since 2.0 */
+        $media_css_dir = dirname(dirname(__FILE__)) .'/media/css/'; 
+        if (is_dir($media_css_dir .'background') OR is_dir($media_css_dir .'form') OR is_dir($media_css_dir .'toggler')) : ?>
+        <div class="pweb-clearfix">
+            
+            <div class="pweb-alert pweb-alert-warning">
+                
+                <strong><?php _e( 'Predefined styles', 'pwebcontact' ); ?></strong><br>
+                <!-- PRO START -->
+                <?php _e( 'In Contact Form version 2.1 predefined styles will be removed. You should disable those options and select desire colors in above options to be ready for next upgrade.', 'pwebcontact' ); ?>
+                <button type="button" class="button" id="pweb-themes-disable-predefined">
+                    <?php _e( 'Disable predefined styles', 'pwebcontact' ); ?>
+                </button>
+                <!-- PRO END -->
+                <!-- FREE START -->
+                <?php _e( 'In Contact Form Free and Pro version 2.0 predefined styles were removed. To change colors edit Free theme CSS file or buy Pro version to use colors options.', 'pwebcontact' ); ?>
+                <a class="button" target="_blank" href="<?php echo admin_url('plugin-editor.php?file='.urlencode('pwebcontact/media/css/themes/free.css').'&amp;plugin='.urlencode('pwebcontact/pwebcontact.php')); ?>">
+                    <i class="glyphicon glyphicon-edit"></i> <?php _e( 'Edit CSS', 'pwebcontact' ); ?>
+                </a>
+                <button class="button button-primary pweb-buy">
+                    <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy Pro', 'pwebcontact' ); ?>
+                </button>
+                <!-- FREE END -->
+            </div>
+            
+            <?php if (is_dir($media_css_dir .'toggler')) : ?>
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'name' => 'style_toggler',
+                    'label' => 'Toggler style',
+                    'type' => 'filelist',
+                    'default' => -1,
+                    'filter' => '\.css$',
+                    'directory' => 'media/css/toggler',
+                    'strip_ext' => true,
+                    /*** FREE START ***/
+                    'disabled' => true,
+                    /*** FREE END ***/
+                    'parent' => array('handler_tab', 'handler_button'),
+                    'options' => array(
+                        array(
+                            'value' => -1,
+                            'name' => '- Do not use -'
+                        )
+                    )
+                )); ?>
+            </div>
+            <?php endif; ?>
+            
+            <?php if (is_dir($media_css_dir .'form')) : ?>
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'name' => 'style_form',
+                    'label' => 'Fields, buttons and links style',
+                    'type' => 'filelist',
+                    'default' => -1,
+                    'filter' => '\.css$',
+                    'directory' => 'media/css/form',
+                    'strip_ext' => true,
+                    /*** FREE START ***/
+                    'disabled' => true,
+                    /*** FREE END ***/
+                    'options' => array(
+                        array(
+                            'value' => -1,
+                            'name' => '- Do not use -'
+                        )
+                    )
+                )); ?>
+            </div>
+            <?php endif; ?>
+            
+            <?php if (is_dir($media_css_dir .'background')) : ?>
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'name' => 'style_bg',
+                    'label' => 'Background style',
+                    'type' => 'filelist',
+                    'default' => -1,
+                    'filter' => '\.css$',
+                    'directory' => 'media/css/background',
+                    'strip_ext' => true,
+                    /*** FREE START ***/
+                    'disabled' => true,
+                    /*** FREE END ***/
+                    'options' => array(
+                        array(
+                            'value' => -1,
+                            'name' => '- Do not use -'
+                        )
+                    )
+                )); ?>
+            </div>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
+        
     </div>
 </div>

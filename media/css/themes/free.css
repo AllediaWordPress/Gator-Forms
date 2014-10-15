@@ -1,0 +1,284 @@
+/**
+ * @version 2.0.0
+ * @package Perfect Easy & Powerful Contact Form
+ * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @author Piotr Moćko
+ */
+
+/* Form background */
+.pweb-theme-free .pwebcontact-container,
+.pweb-theme-free.ui-effects-transfer.pweb-genie {
+	background-color: #FFF;
+}
+.pweb-theme-free.pweb-slidebox .pwebcontact-container {
+	border: 1px solid #bbb;
+	border-color: rgba(0,0,0,0.2);
+	background-color: rgba(255,255,255, 0.9);
+}
+
+/* Text color */
+.pweb-theme-free form.pwebcontact-form label,
+.pweb-theme-free form.pwebcontact-form .pweb-field-custom-text,
+.pweb-theme-free form.pwebcontact-form .pweb-field-header,
+.pweb-theme-free form.pwebcontact-form .pweb-msg,
+.pweb-theme-free form.pwebcontact-form .pweb-chars-counter,
+.pweb-theme-free form.pwebcontact-form .pweb-uploader,
+.pweb-theme-free .pwebcontact-box .pweb-dropzone {
+	color: #333;
+}
+
+/* Message success */
+.pweb-theme-free form.pwebcontact-form .pweb-msg .pweb-success {
+	color: #009E0A;
+}
+/* Message error */
+.pweb-theme-free form.pwebcontact-form .pweb-msg .pweb-error {
+	color: #A80000;
+}
+
+/* Star of required fields */
+.pweb-theme-free form.pwebcontact-form label .pweb-asterisk {
+	color: #f00;
+}
+
+/* Accordion Box */
+.pweb-theme-free.pwebcontact-box.pweb-accordion.pweb-accordion-boxed .pwebcontact-container {
+ 	-moz-box-shadow: inset 0 0 4px rgba(0,0,0, 0.3);
+	-webkit-box-shadow: inset 0 0 4px rgba(0,0,0, 0.3);
+ 	box-shadow: inset 0 0 4px rgba(0,0,0, 0.3);
+	border-color: #B2B2B2;
+	border-color: rgba(0,0,0, 0.3);
+}
+.pweb-theme-free.pwebcontact-box.pweb-accordion.pweb-accordion-boxed.pweb-shadow .pwebcontact-container {
+	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5), inset 0 0 4px rgba(0,0,0, 0.3);
+	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5), inset 0 0 4px rgba(0,0,0, 0.3);
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.5), inset 0 0 4px rgba(0,0,0, 0.3);
+}
+ /* Accordion Arrow */
+.pweb-theme-free.pwebcontact-box.pweb-accordion.pweb-accordion-boxed .pweb-arrow {
+	border-bottom-color: #B2B2B2;
+	border-bottom-color: rgba(0,0,0, 0.3);
+}
+
+/* Lightbox Window */
+.pweb-theme-free.pwebcontact-box.pweb-modal .pwebcontact-container,
+.pweb-theme-free.ui-effects-transfer.pweb-genie {
+	border: 1px solid #bbb;
+	border-color: rgba(0,0,0,0.3);
+}
+/* Lightbox Window close button */
+.pweb-theme-free.pwebcontact-box.pweb-modal .close {
+	
+}
+/* Lightbox Window overlay */
+body.pweb-modal-white .modal-backdrop.fade.in {
+	
+}
+
+/* Upload dropzone */
+.pweb-theme-free.pwebcontact-box.pweb-dragged .pweb-dropzone {
+	background-color: #FFF;
+	background-color: rgba(255, 255, 255, 0.7);
+	-moz-box-shadow: 0 0 50px rgba(0,0,0, 0.2) inset;
+	-webkit-box-shadow: 0 0 50px rgba(0,0,0, 0.2) inset;
+	box-shadow: 0 0 50px rgba(0,0,0, 0.2) inset;
+}
+
+
+/* Fields font family and size */
+.pweb-theme-free .pwebcontact-box,
+.pweb-theme-free form.pwebcontact-form label
+.pweb-theme-free form.pwebcontact-form input,
+.pweb-theme-free form.pwebcontact-form textarea,
+.pweb-theme-free form.pwebcontact-form select {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+}
+
+/* Labels invalid */
+.pweb-theme-free form.pwebcontact-form .invalid,
+.pweb-theme-free form.pwebcontact-form .invalid a {
+	color: #f00 !important;
+}
+/* Fields */
+.pweb-theme-free form.pwebcontact-form input.pweb-input, 
+.pweb-theme-free form.pwebcontact-form select, 
+.pweb-theme-free form.pwebcontact-form textarea {
+	background: #fff;
+	color: #333;
+	border: 1px solid #aaa;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset;
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset;
+}
+/* Fields shadow */
+.pweb-theme-free.pweb-shadow form.pwebcontact-form input.pweb-input, 
+.pweb-theme-free.pweb-shadow form.pwebcontact-form select, 
+.pweb-theme-free.pweb-shadow form.pwebcontact-form textarea {
+	-webkit-box-shadow: 0 0 5px #999, 0 1px 2px rgba(0,0,0,0.2) inset;
+	-moz-box-shadow: 0 0 5px #999, 0 1px 2px rgba(0,0,0,0.2) inset;
+	box-shadow: 0 0 5px #999, 0 1px 2px rgba(0,0,0,0.2) inset;
+}
+/* Fields invalid */
+.pweb-theme-free form.pwebcontact-form input.invalid.pweb-input, 
+.pweb-theme-free form.pwebcontact-form select.invalid, 
+.pweb-theme-free form.pwebcontact-form textarea.invalid { 
+	border-color: #f00 !important;
+	-webkit-box-shadow: 0 0 5px #f00, 0 1px 2px rgba(0,0,0,0.2) inset !important;
+	-moz-box-shadow: 0 0 5px #f00, 0 1px 2px rgba(0,0,0,0.2) inset !important;
+	box-shadow: 0 0 5px #f00, 0 1px 2px rgba(0,0,0,0.2) inset !important;
+}
+/* Fields active */
+.pweb-theme-free form.pwebcontact-form input.pweb-input:focus, 
+.pweb-theme-free form.pwebcontact-form select:focus, 
+.pweb-theme-free form.pwebcontact-form textarea:focus {
+	border-color: #000 !important;
+	-webkit-box-shadow: 0 0 5px #000, 0 1px 2px rgba(0,0,0,0.2) inset !important;
+	-moz-box-shadow: 0 0 5px #000, 0 1px 2px rgba(0,0,0,0.2) inset !important;
+	box-shadow: 0 0 5px #000, 0 1px 2px rgba(0,0,0,0.2) inset !important;
+}
+
+/* Labels over fields */
+.pweb-theme-free.pweb-labels-over form.pwebcontact-form .pweb-field-text label,
+.pweb-theme-free.pweb-labels-over form.pwebcontact-form .pweb-field-name label,
+.pweb-theme-free.pweb-labels-over form.pwebcontact-form .pweb-field-email label,
+.pweb-theme-free.pweb-labels-over form.pwebcontact-form .pweb-field-phone label,
+.pweb-theme-free.pweb-labels-over form.pwebcontact-form .pweb-field-subject label,
+.pweb-theme-free.pweb-labels-over form.pwebcontact-form .pweb-field-password label,
+.pweb-theme-free.pweb-labels-over form.pwebcontact-form .pweb-field-date label,
+.pweb-theme-free.pweb-labels-over form.pwebcontact-form .pweb-field-textarea label,
+.pweb-theme-free.pweb-labels-over form.pwebcontact-form .pweb-field-select label,
+.pweb-theme-free.pweb-labels-over form.pwebcontact-form .pweb-field-multiple label {
+	color: #aaa;
+}
+
+
+/* Buttons font family and size */
+.pweb-theme-free form.pwebcontact-form button,
+.pweb-theme-free form.pwebcontact-form .btn {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+}
+
+/* Links */
+.pweb-theme-free form.pwebcontact-form a,
+.pweb-theme-free .pweb-button-close {
+    color: #000;
+	text-decoration: none;
+	background: none;
+}
+.pweb-theme-free form.pwebcontact-form a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons */
+.pweb-theme-free form.pwebcontact-form button,
+.pweb-theme-free form.pwebcontact-form .btn {
+	color: #fff !important;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	border: 1px solid;
+	border-color: #000;
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+	background: #000;
+	background-image: -moz-linear-gradient(top,#333,#000);
+	background-image: -ms-linear-gradient(top,#333, #000);
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#333),to(#000));
+	background-image: -webkit-linear-gradient(top,#333,#000);
+	background-image: -o-linear-gradient(top,#333,#000);
+	background-image: linear-gradient(to bottom,#333,#000);
+	background-repeat: repeat-x;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+/* Buttons shadow */
+.pweb-theme-free.pweb-shadow form.pwebcontact-form button,
+.pweb-theme-free.pweb-shadow form.pwebcontact-form .btn {
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+/* Buttons on mouse over */
+.pweb-theme-free form.pwebcontact-form button:hover,
+.pweb-theme-free form.pwebcontact-form .btn:hover {
+	background-color: #000;
+	background-position: 0 -30px;
+}
+
+/* Calendar button */
+.pweb-theme-free form.pwebcontact-form .pweb-calendar-btn {
+	
+}
+/* Upload progress */
+.pweb-theme-free .pweb-uploader .progress.progress-striped .bar.progress-bar {
+	background-color: #000;
+	background-image: none;
+}
+
+/* Toggler font family and size */
+.pwebcontact_toggler.pweb-theme-free {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+}
+.pwebcontact_toggler.pweb-theme-free .pweb-icon {
+	font-size: 16px;
+}
+
+/* Toggler tab */
+.pwebcontact_toggler.pweb-theme-free {
+	color: #fff;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	border: 1px solid;
+	border-color: #000;
+	
+	background-color: #000;
+	background-image: -moz-linear-gradient(top,#333,#000);
+	background-image: -ms-linear-gradient(top,#333, #000);
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#333),to(#000));
+	background-image: -webkit-linear-gradient(top,#333,#000);
+	background-image: -o-linear-gradient(top,#333,#000);
+	background-image: linear-gradient(to bottom,#333,#000);
+}
+.pweb-top .pwebcontact_toggler.pweb-theme-free {
+	background-image: -moz-linear-gradient(bottom,#333,#000);
+	background-image: -ms-linear-gradient(bottom,#333, #000);
+	background-image: -webkit-gradient(linear,0 100%,0 0,from(#333),to(#000));
+	background-image: -webkit-linear-gradient(bottom,#333,#000);
+	background-image: -o-linear-gradient(bottom,#333,#000);
+	background-image: linear-gradient(to top,#333,#000);
+}
+.pweb-vertical.pweb-left .pwebcontact_toggler.pweb-theme-free {
+	background-image: -moz-linear-gradient(right,#333,#000);
+	background-image: -ms-linear-gradient(right,#333, #000);
+	background-image: -webkit-gradient(linear,100% 0,0 0,from(#333),to(#000));
+	background-image: -webkit-linear-gradient(right,#333,#000);
+	background-image: -o-linear-gradient(right,#333,#000);
+	background-image: linear-gradient(to left,#333,#000);
+}
+.pweb-vertical.pweb-right .pwebcontact_toggler.pweb-theme-free {
+	background-image: -moz-linear-gradient(left,#333,#000);
+	background-image: -ms-linear-gradient(left,#333, #000);
+	background-image: -webkit-gradient(linear,0 0,100% 0,from(#333),to(#000));
+	background-image: -webkit-linear-gradient(left,#333,#000);
+	background-image: -o-linear-gradient(left,#333,#000);
+	background-image: linear-gradient(to right,#333,#000);
+}
+
+.pwebcontact_toggler.pweb-theme-free:hover,
+.pwebcontact_toggler.pweb-theme-free.pweb-opened {
+	background-image: none !important;
+	background-position: 0 -30px;
+}
+.pweb-top .pwebcontact_toggler.pweb-theme-free:hover,
+.pweb-top .pwebcontact_toggler.pweb-theme-free.pweb-opened {
+	background-position: 0 30px;
+}
+.pweb-vertical.pweb-left .pwebcontact_toggler.pweb-theme-free:hover,
+.pweb-vertical.pweb-left .pwebcontact_toggler.pweb-theme-free.pweb-opened {
+	background-position: -30px 0;
+}
+.pweb-vertical.pweb-right .pwebcontact_toggler.pweb-theme-free:hover,
+.pweb-vertical.pweb-right .pwebcontact_toggler.pweb-theme-free.pweb-opened {
+	background-position: 30px 0;
+}

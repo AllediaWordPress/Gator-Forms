@@ -10,6 +10,7 @@
 // No direct access
 function_exists('add_action') or die;
 
+/*** FREE START ***/
 $this->_set_pro_options('field_types', array(
     'phone',
     'subject',
@@ -27,13 +28,7 @@ $this->_set_pro_options('field_types', array(
     'upload',
     'mailto_list'
 ));
-
-$this->_set_free_options('field_types', array(
-    'email',
-    'name',
-    'text',
-    'textarea'
-));
+/*** FREE END ***/
 ?>
 
 <h3 class="pweb-steps">
@@ -66,7 +61,7 @@ $this->_set_free_options('field_types', array(
     </button>
 </h3>
 
-<?php if (!defined('PWEBCONTACT_PRO')) : ?>
+<!-- FREE START -->
 <div id="pweb_fields_pro_warning" class="pweb-alert pweb-alert-info" style="display:none">
     <?php _e('You need to go PRO :)', 'pwebcontact'); ?>
     <?php _e('You have chosen some PRO fields. You can still save your form, but to display it buy PRO Version', 'pwebcontact'); ?>
@@ -74,7 +69,7 @@ $this->_set_free_options('field_types', array(
         <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
     </button>
 </div>
-<?php endif; ?>
+<!-- FREE END -->
 
 <div id="pweb_fields" class="pweb-clearfix">
 	
@@ -562,9 +557,9 @@ $this->_set_free_options('field_types', array(
         
         
         
-        <?php if (!defined('PWEBCONTACT_PRO')) : ?>
-        <div class="pweb-custom-fields-separator">&nbsp;</div>
-        <?php endif; ?>
+        <!-- FREE START -->
+        <div class="pweb-custom-fields-separator"><hr></div>
+        <!-- FREE END -->
         
         
         

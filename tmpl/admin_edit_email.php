@@ -53,7 +53,7 @@ function_exists('add_action') or die;
     'name' => 'msg_success',
     'label' => 'Enter message which will appear after successful sending email by contact form',
     'tooltip' => 'If you are using tickets then you can display it in your custom message by adding %s. It will be replaced with defined ticket format. Do not use characters: &#x22; &#x5c;',
-    'class' => 'pweb-input-large'
+    'class' => 'widefat'
 )); ?>
 
 <div class="pweb-field pweb-field-text">
@@ -77,6 +77,7 @@ function_exists('add_action') or die;
     </div>
 </div>
 
+<hr>
 
 <div class="pweb-field">
     <h3><?php _e( 'Legend', 'pwebcontact' ); ?></h3>
@@ -264,7 +265,7 @@ function_exists('add_action') or die;
             </div>
         </div>
         
-
+        <hr>
 
         <div class="pweb-clearfix">
             <h3><?php _e('Email subject', 'pwebcontact'); ?></h3>
@@ -304,8 +305,8 @@ function_exists('add_action') or die;
                 )); ?>
             </div>
         </div>
-
-
+        
+        
 
         <div class="pweb-clearfix">
             <h3><?php _e('Tickets', 'pwebcontact'); ?></h3>
@@ -347,7 +348,7 @@ function_exists('add_action') or die;
             </div>
         </div>
 
-
+        <hr>
 
         <div class="pweb-clearfix">
             <h3><?php _e('Email settings', 'pwebcontact'); ?></h3>
@@ -405,7 +406,7 @@ function_exists('add_action') or die;
             </div>
         </div>
 
-
+        <hr>
 
         <div class="pweb-clearfix">
             <h3><?php _e('System message', 'pwebcontact'); ?></h3>
@@ -465,7 +466,7 @@ function_exists('add_action') or die;
             </div>
         </div>
 
-
+        <hr>
 
         <div class="pweb-clearfix">
             <h3><?php _e('Others', 'pwebcontact'); ?></h3>
@@ -529,7 +530,7 @@ function_exists('add_action') or die;
             </div>
         </div>
 
-
+        <hr>
 
         <div class="pweb-clearfix">
             <div class="pweb-width-50">
@@ -594,7 +595,7 @@ function_exists('add_action') or die;
             </div>
         </div>
 
-
+        <hr>
 
         <div class="pweb-field pweb-desc">
             <h3><?php _e('Google Analytics Tracking', 'pwebcontact'); ?></h3>
@@ -689,17 +690,21 @@ function_exists('add_action') or die;
 <div id="pweb-email-tmpl-vars" style="display:none">
     <p><?php _e('Use following syntax in email templates to display data collected by form.', 'pwebcontact'); ?></p>
     <ul>
-        <li><code>{lang:Word}</code> - <?php esc_html_e('displays translation of "Word" from language file', 'pwebcontact'); ?> </li>
-        <li><code>{fields}</code> - <?php esc_html_e('displays all fields, each "Label: Value" pair in new line', 'pwebcontact'); ?> </li>
-        <li><code>{field_alias.label}</code> - <?php printf(esc_html__('displays field label, will be translated if present in language file, replace %s with alias of field', 'pwebcontact'), '<code>field_alias</code>'); ?> </li>
-        <li><code>{field_alias.value}</code> - <?php printf(esc_html__('displays field value, replace %s with alias of field', 'pwebcontact'), '<code>field_alias</code>'); ?> </li>
-        <li><code>{name}</code> - <?php esc_html_e('User name', 'pwebcontact'); ?> </li>
-        <li><code>{email}</code> - <?php esc_html_e('User email', 'pwebcontact'); ?> </li>
-        <li><code>{username}</code> - <?php esc_html_e('WordPress Username if logged in', 'pwebcontact'); ?> </li>
-        <li><code>{url}</code> - <?php esc_html_e('page URL', 'pwebcontact'); ?> </li>
-        <li><code>{title}</code> - <?php esc_html_e('title of page', 'pwebcontact'); ?> </li>
-        <li><code>{site_name}</code> - <?php esc_html_e('site name', 'pwebcontact'); ?> </li>
-        <li><code>{ip_address}</code> - <?php esc_html_e('User IP address', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
+        <li><code>{lang:Word}</code> - <?php esc_html_e('displays translation of "Word" from language file', 'pwebcontact'); ?></li>
+        <li><code>{fields}</code> - <?php esc_html_e('displays all fields, each "Label: Value" pair in new line', 'pwebcontact'); ?></li>
+        <li><code>{field_alias.label}</code> - <?php printf(esc_html__('displays field label, will be translated if present in language file, replace %s with alias of field', 'pwebcontact'), '<code>field_alias</code>'); ?></li>
+        <li><code>{field_alias.value}</code> - <?php printf(esc_html__('displays field value, replace %s with alias of field', 'pwebcontact'), '<code>field_alias</code>'); ?></li>
+        <li><code>{name}</code> - <?php esc_html_e('User name', 'pwebcontact'); ?></li>
+        <li><code>{email}</code> - <?php esc_html_e('User email', 'pwebcontact'); ?></li>
+        <li><code>{username}</code> - <?php esc_html_e('WordPress Username if logged in', 'pwebcontact'); ?></li>
+        <li><code>{url}</code> - <?php esc_html_e('page URL', 'pwebcontact'); ?></li>
+        <li><code>{title}</code> - <?php esc_html_e('title of page', 'pwebcontact'); ?></li>
+        <li><code>{site_name}</code> - <?php esc_html_e('site name', 'pwebcontact'); ?></li>
+        <li><code>{ip_address}</code> - <?php esc_html_e('User IP address', 'pwebcontact'); ?>
+            <!-- FREE START -->
+            <?php echo $this->_display_badge_pro(); ?>
+            <!-- FREE END -->
+        </li>
         <li><code>{browser}</code> - <?php esc_html_e('User browser name', 'pwebcontact'); ?>. 
             <?php _e('Requires 3rd-part plugin', 'pwebcontact'); ?> 
             - <a href="http://wordpress.org/plugins/<?php 
@@ -714,12 +719,34 @@ function_exists('add_action') or die;
             <?php else : ?>
                 <strong class="pweb-text-success"><i class="glyphicon glyphicon-ok-sign"></i> <?php _e('Installed'); ?></strong>
             <?php endif; ?>
-            
-            <?php if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?></li>
-        <li><code>{os}</code> - <?php esc_html_e('User operating system name', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
-        <li><code>{screen_resolution}</code> - <?php esc_html_e('User screen resolution', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
-        <li><code>{mailto_name}</code> - <?php esc_html_e('name of recipient selected by User from "Mail to list" field', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
-        <li><code>{ticket}</code> - <?php esc_html_e('formatted ticket', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
-        <li><code>{files}</code> - <?php esc_html_e('links to uploaded files if "Attachment type" set to: "Links to files"', 'pwebcontact'); if (!defined('PWEBCONTACT_PRO')) echo $this->_display_badge_pro(); ?> </li>
+            <!-- FREE START -->
+            <?php echo $this->_display_badge_pro(); ?>
+            <!-- FREE END -->
+        </li>
+        <li><code>{os}</code> - <?php esc_html_e('User operating system name', 'pwebcontact'); ?>
+            <!-- FREE START -->
+            <?php echo $this->_display_badge_pro(); ?>
+            <!-- FREE END -->
+        </li>
+        <li><code>{screen_resolution}</code> - <?php esc_html_e('User screen resolution', 'pwebcontact'); ?>
+            <!-- FREE START -->
+            <?php echo $this->_display_badge_pro(); ?>
+            <!-- FREE END -->
+        </li>
+        <li><code>{mailto_name}</code> - <?php esc_html_e('name of recipient selected by User from "Mail to list" field', 'pwebcontact'); ?>
+            <!-- FREE START -->
+            <?php echo $this->_display_badge_pro(); ?>
+            <!-- FREE END -->
+        </li>
+        <li><code>{ticket}</code> - <?php esc_html_e('formatted ticket', 'pwebcontact'); ?>
+            <!-- FREE START -->
+            <?php echo $this->_display_badge_pro(); ?>
+            <!-- FREE END -->
+        </li>
+        <li><code>{files}</code> - <?php esc_html_e('links to uploaded files if "Attachment type" set to: "Links to files"', 'pwebcontact'); ?>
+            <!-- FREE START -->
+            <?php echo $this->_display_badge_pro(); ?>
+            <!-- FREE END -->
+        </li>
     </ul>
 </div>

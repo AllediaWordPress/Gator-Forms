@@ -83,9 +83,7 @@ class PWebContact
             
             wp_register_style('pwebcontact-jquery-ui-datepicker', $media_url.'jquery-ui/smoothness/jquery-ui.datapicker'.($debug ? '' : '.min').'.css');
             /*** PRO END ***/
-            /*** FREE START ***/
-            wp_register_style('pwebcontact-default', $media_url.'css/default.css');
-            /*** FREE END ***/
+            
             wp_register_style('pwebcontact-custom', $media_url.'css/custom.css');
             
             // Register styles for Internet Explorer
@@ -267,7 +265,14 @@ class PWebContact
         $params->def('toggler_name_open', str_replace('"', '', __($toggler_name[0], 'pwebcontact'))); //WP
         $params->def('toggler_name_close', array_key_exists(1, $toggler_name) ? str_replace('"', '', __($toggler_name[1], 'pwebcontact')) : null); //WP
         
-
+        // Theme
+        /*** FREE START ***/
+        $params->set('theme', 'free');
+        /*** FREE END ***/
+        /*** PRO START ***/
+        $params->set('theme', $params->get('theme', $params->get('style_form', -1) === -1 ? 'clean' : null));
+        /*** PRO END ***/
+        
         // Set media path
         $media_path = dirname(__FILE__) . '/media/'; //WP
         $params->set('media_path', $media_path);
@@ -386,6 +391,8 @@ class PWebContact
         $layout = $params->get('layout_type', 'slidebox');
         $moduleClasses[] = 'pweb-'.$layout;
         
+        if (($class = $params->get('theme'))) $moduleClasses[] = 'pweb-theme-'.$class;
+        
         /*** FREE START ***/
 		$moduleClasses[] = 'pweb-labels-above';
         /*** FREE END ***/
@@ -395,9 +402,9 @@ class PWebContact
         if ($params->get('rounded')) $moduleClasses[] = $togglerClasses[] = 'pweb-radius';
 		if ($params->get('shadow')) $moduleClasses[] = $togglerClasses[] = 'pweb-shadow';
         
-		if (($class = $params->get('style_bg', 'white')) != -1) $moduleClasses[] = 'pweb-bg-'.$class;
-		if (($class = $params->get('style_form', 'blue')) != -1) $moduleClasses[] = 'pweb-form-'.$class;
-		if (($class = $params->get('style_button', 'blue')) != -1) $moduleClasses[] = 'pweb-button-'.$class;
+        /* @deprecated since 2.1 */
+		if (($class = $params->get('style_bg', -1)) != -1) $moduleClasses[] = 'pweb-bg-'.$class;
+		if (($class = $params->get('style_form', -1)) != -1) $moduleClasses[] = 'pweb-form-'.$class;
 		/*** PRO END ***/
         
 		if ($layout != 'static') 
@@ -432,7 +439,10 @@ class PWebContact
 			}
 			
             /*** PRO START ***/
-			if (($class = $params->get('style_toggler', 'blue')) != -1) $togglerClasses[] = 'pweb-toggler-'.$class;
+            /* @deprecated since 2.1 */
+			if (($class = $params->get('style_toggler', -1)) != -1) $togglerClasses[] = 'pweb-toggler-'.$class;
+            
+            if (($class = $params->get('theme'))) $togglerClasses[] = 'pweb-theme-'.$class;
 			if ($icon = $params->get('toggler_icon')) $togglerClasses[] = 'pweb-icon pweb-icon-'.$icon;
             /*** PRO END ***/
         }
@@ -936,28 +946,27 @@ class PWebContact
 
         /*** PRO START ***/
 		// CSS styles
+        if (($theme = $params->get('theme')) !== null) {
+            wp_register_style('pwebcontact-theme-'.$theme, $media_url.'css/themes/'.$theme.'.css');
+			wp_enqueue_style('pwebcontact-theme-'.$theme);
+        }
+        
+        /* @deprecated since 2.1 */
 		if (($file = $params->get('style_bg', 'white')) != -1) {
             wp_register_style('pwebcontact-background-'.$file, $media_url.'css/background/'.$file.'.css');
 			wp_enqueue_style('pwebcontact-background-'.$file);
         }
+        /* @deprecated since 2.1 */
 		if (($file = $params->get('style_form', 'blue')) != -1) {
 			wp_register_style('pwebcontact-form-'.$file, $media_url.'css/form/'.$file.'.css');
             wp_enqueue_style('pwebcontact-form-'.$file);
         }
-        if (($file = $params->get('style_button', 'blue')) != -1) {
-			wp_register_style('pwebcontact-button-'.$file, $media_url.'css/button/'.$file.'.css');
-            wp_enqueue_style('pwebcontact-button-'.$file);
-        }
+        /* @deprecated since 2.1 */
 		if (($layout == 'slidebox' OR in_array($params->get('handler', 'tab'), array('button', 'tab'))) AND ($file = $params->get('style_toggler', 'blue')) != -1) {
 			wp_register_style('pwebcontact-toggler-'.$file, $media_url.'css/toggler/'.$file.'.css');
             wp_enqueue_style('pwebcontact-toggler-'.$file);
         }
         /*** PRO END ***/
-        /*** FREE START ***/
-        if (is_file($media_path.'css/default.css')) {
-            wp_enqueue_style('pwebcontact-default');
-        }
-        /*** FREE END ***/
 		
         // Custom styles
         if (is_file($media_path.'css/custom.css')) {
@@ -1093,6 +1102,8 @@ class PWebContact
 		$options[] = 'position:"'.$position.'"';
 		$options[] = 'offsetPosition:"'.$params->get('toggler_offset_position').'"';
 		
+        if (!$params->get('msg_scroll', 1))
+			$options[] = 'msgScroll:0';
 		if (($value = $params->get('msg_position', 'after')) != 'after')
 			$options[] = 'msgPosition:"'.$value.'"';
 		if (($value = (int)$params->get('msg_close_delay', 10)) != 10)
@@ -1775,12 +1786,12 @@ class PWebContact
 			'email'				=> '',
 			'username' 			=> $user->display_name, //WP
 			/*** FREE START ***/
-            'ip_address' 		=> 'PRO',
-			'browser' 			=> 'PRO',
-			'os' 				=> 'PRO',
-			'screen_resolution' => 'PRO',
-			'mailto_name'		=> 'PRO',
-			'ticket'			=> 'PRO',
+            'ip_address' 		=> 'Requires PRO version',
+			'browser' 			=> 'Requires PRO version',
+			'os' 				=> 'Requires PRO version',
+			'screen_resolution' => 'Requires PRO version',
+			'mailto_name'		=> 'Requires PRO version',
+			'ticket'			=> 'Requires PRO version',
             /*** FREE END ***/
             /*** PRO START ***/
             'ip_address' 		=> $data['ip_address'],
@@ -2502,6 +2513,3 @@ if (!function_exists('exceptions_error_handler'))
 	}
 }
 
-/*** PRO START ***/
-define('PWEBCONTACT_PRO', true);
-/*** PRO END ***/

@@ -99,6 +99,7 @@ function_exists('add_action') or die;
 <?php endforeach; 
 endif; ?>
 
+    <!-- FREE START -->
     <div class="theme active pweb-panel-box pweb-panel-pro">
         <div class="theme-screenshot pweb-buy">
 			<i class="glyphicon glyphicon-shopping-cart"></i>
@@ -110,7 +111,7 @@ endif; ?>
             <?php _e( 'Get PRO version & support', 'pwebcontact' ); ?>
         </h3>
     </div>
-        
+    <!-- FREE END -->
 </div>
 </div>
 

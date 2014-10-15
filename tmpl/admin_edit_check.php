@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -20,7 +20,7 @@ function_exists('add_action') or die;
     <?php _e('Congratulations! All options you had to choose to get your form working properly are chosen.', 'pwebcontact'); ?>
 </div>
 
-<?php if (!defined('PWEBCONTACT_PRO')) : ?>
+<!-- FREE START -->
 <div id="pweb-cog-check-warning" class="pweb-alert pweb-alert-success" style="display:none">
     <?php _e('Congratulations your form is ready! But you have chosen some PRO options so you need to BUY Pro Version in order to enjoy using them', 'pwebcontact'); 
         //TODO check email template for: ip_address, browser, os, screen_resolution, mailto_name, ticket
@@ -30,7 +30,7 @@ function_exists('add_action') or die;
         <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
     </button>
 </div>
-<?php endif; ?>
+<!-- FREE END -->
 
 <div id="pweb-cog-check-error" class="pweb-alert pweb-alert-danger" style="display:none">
     <?php _e('There are still some options required to get your form working', 'pwebcontact'); ?>
@@ -67,13 +67,13 @@ function_exists('add_action') or die;
     </div>
     <?php endif; ?>
 
-    
-    <?php if (defined('PWEBCONTACT_PRO') AND ($result = $this->_check_upload_path()) !== true) : ?>
+    <!-- PRO START -->
+    <?php if (($result = $this->_check_upload_path()) !== true) : ?>
     <div class="pweb-alert pweb-alert-danger" id="pweb-upload-path-warning" style="display:none">
         <i class="glyphicon glyphicon-warning"></i> <?php echo $result; ?>
     </div>
     <?php endif; ?>
-
+    <!-- PRO END -->
 
     <?php if (($result = $this->_check_image_text_creation()) !== true) : ?>
     <div class="pweb-alert pweb-alert-warning">

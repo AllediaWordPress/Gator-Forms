@@ -11,9 +11,9 @@
 function_exists('add_action') or die;
 
 ?>
-<h3>
+<div class="pweb-alert pweb-alert-warning">
     <?php _e( 'These are really advanced options. That is why they are not only in Advanced Tab, but also hidden below. Change them only if you do know what you are doing.', 'pwebcontact' ); ?>
-</h3>
+</div>
 
 <div class="pweb-advanced-options">
     <a href="#" class="pweb-advanced-options-toggler">
@@ -56,6 +56,25 @@ function_exists('add_action') or die;
             <div class="pweb-width-50">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
+                    'name' => 'msg_scroll',
+                    'label' => 'Scroll to message',
+                    'tooltip' => 'Scroll website to success message if it is above or beneath Browser window.',
+                    'default' => 1,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'No'
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Yes'
+                        )
+                    )
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
                     'name' => 'demo',
                     'label' => 'Demo mode',
                     'tooltip' => 'Sends email message to User only.',
@@ -75,7 +94,7 @@ function_exists('add_action') or die;
             </div>
         </div>
 
-
+        <hr>
 
         <div class="pweb-clearfix">
             <div class="pweb-width-50">

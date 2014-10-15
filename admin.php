@@ -34,6 +34,7 @@ class PWebContact_Admin {
         'field_types' => array(),
         'settings' => array(),
         'params' => array(
+            /*** FREE START ***/
             'attachment_delete',
 			'attachment_type',
             'bg_color',
@@ -58,10 +59,6 @@ class PWebContact_Admin {
             'rounded',
             'shadow',
             'show_upload',
-            'style_bg',
-			'style_form',
-			'style_button',
-			'style_toggler',
             'text_color',
             'ticket_enable',
 			'ticket_format',
@@ -84,83 +81,7 @@ class PWebContact_Admin {
 			'upload_path',
 			'upload_show_limits',
 			'upload_size_limit'
-        )
-    );
-    
-    protected static $free = array(
-        'load' => array(),
-        'fields' => array(),
-        'field_types' => array(),
-        'settings' => array(),
-        'params' => array(
-            'accordion_boxed',
-			'adcenter_url',
-			'adwords_url',
-			'button_reset',
-			'close_delay',
-			'close_other',
-			'close_toggler',
-			'cookie_lifetime',
-            'effect::accordion:slide_down',
-			'effect::modal:fade',
-            'effect::modal:drop',
-            'effect::modal:rotate',
-            'effect::modal:square',
-            'effect::modal:smooth',
-            'effect::slidebox:slide_in',
-            'effect::static:none',
-			'effect_duration',
-			'effect_transition',
-			'email_admin_tmpl',
-			'email_admin_tmpl_format',
-			'email_admin_tmpl_list',
-			'email_autoreply_tmpl',
-			'email_autoreply_tmpl_format',
-			'email_autoreply_tmpl_list',
-			'email_bcc',
-			'email_cms_user',
-			'email_copy',
-			'email_from',
-			'email_from_name',
-			'email_replyto',
-			'email_replyto_name',
-			'email_subject',
-			'email_subject_sfx',
-			'email_to',
-			'email_user_tmpl',
-			'email_user_tmpl_format',
-			'email_user_tmpl_list',
-			'form_width',
-			'handler',
-			'modal_disable_close',
-            'moduleclass_sfx',
-			'msg_close_delay',
-			'msg_position',
-			'msg_success',
-			'offset',
-			'onclose',
-			'oncomplete',
-			'onerror',
-			'onload',
-			'onopen',
-			'open_count',
-			'open_delay',
-			'open_toggler',
-            'position',
-			'redirect',
-			'redirect_delay',
-			'redirect_url',
-			'reset_form',
-            'rtl',
-			'toggler_height',
-			'toggler_name',
-			'toggler_position',
-			'toggler_slide',
-			'toggler_width',
-			'tooltips_focus',
-			'tooltips_validation',
-			'user_data',
-			'zindex'
+            /*** FREE END ***/
         )
     );
     
@@ -180,9 +101,9 @@ class PWebContact_Admin {
     
     function init() {
         
-        if (defined('PWEBCONTACT_PRO')) {
-            $this->_check_updates();
-        }
+        /*** PRO START ***/
+        $this->_check_updates();
+        /*** PRO END ***/
         
         if (!isset($_GET['page']) OR $_GET['page'] !== 'pwebcontact') {
             return;
@@ -626,10 +547,12 @@ class PWebContact_Admin {
 
 ?>
 <script type="text/javascript">
-    var pwebcontact_admin = pwebcontact_admin || {};
-    pwebcontact_admin.is_pro = <?php echo (defined('PWEBCONTACT_PRO') ? 'true' : 'false'); ?>;
-    pwebcontact_admin.plugin_url = "<?php echo plugins_url('pwebcontact/'); ?>";
-    pwebcontact_admin.buy_url = "<?php echo $this->buy_url; ?>";
+var pwebcontact_admin = pwebcontact_admin || {};
+pwebcontact_admin.plugin_url = "<?php echo plugins_url('pwebcontact/'); ?>";
+pwebcontact_admin.buy_url = "<?php echo $this->buy_url; ?>";
+/*** PRO START ***/
+pwebcontact_admin.is_pro = true;
+/*** PRO END ***/
 </script>
 <?php
     }
@@ -999,42 +922,45 @@ class PWebContact_Admin {
     protected function _get_themes() {
         
         $themes = array();
-        $active_theme = $this->_get_param('theme', defined('PWEBCONTACT_PRO') ? null : 'free');
         
-        $url = plugins_url('/media/themes/', dirname(__FILE__) .'/pwebcontact.php');
+        /*** FREE START ***/
+        $active_theme = $this->_get_param('theme', 'free');
+        /*** FREE END ***/
+        /*** PRO START ***/
+        $active_theme = $this->_get_param('theme', $this->_get_param('style_form', -1) === -1 ? 'clean' : null);
+        /*** PRO END ***/
         
-        $dir = new DirectoryIterator( dirname(__FILE__) .'/media/themes/' );
+        $themes_url = plugins_url('/media/themes/', dirname(__FILE__) .'/pwebcontact.php');
+        $media_dir = dirname(__FILE__) .'/media/';
+        
+        $dir = new DirectoryIterator( $media_dir . 'themes' );
         foreach( $dir as $item ) {
             
-            if ($item->isFile() AND preg_match('/\.jpg$/i', $item->getFilename())) {
+            if ($item->isFile() AND preg_match('/\.json$/i', $item->getFilename())) {
                 
-                $basename = $item->getBasename('.jpg');
-                
-                if (defined('PWEBCONTACT_PRO') AND $basename === 'free') {
-                    continue;
-                }
-                
-                $settings_file = $item->getPath() . '/' . $basename . '.json';
+                $basename = $item->getBasename('.json');
                 $settings = null;
                 
                 if (WP_Filesystem()) {
                     global $wp_filesystem;
-                    if ($wp_filesystem->is_file($settings_file)) {
-                        $settings = $wp_filesystem->get_contents($settings_file);
+                    if ($wp_filesystem->is_file( $item->getPath() . '/' . $basename . '.jpg' )) {
+                        $settings = $wp_filesystem->get_contents($item->getPathname());
                     }
                 }
-                elseif (is_file($settings_file)) {
-                    $settings = file_get_contents($settings_file);
+                elseif (is_file( $item->getPath() . '/' . $basename . '.jpg' )) {
+                    $settings = file_get_contents($item->getPathname());
                 }
-                
                 
                 if ($settings) {
                 
+                    $settings = json_decode($settings);
+                    
                     $theme = new stdClass();
                     $theme->name = $basename;
-                    $theme->title = ucfirst( str_replace('_', ' ', $basename) );
-                    $theme->image = $url . $item->getFilename();
-                    $theme->settings = $settings;
+                    $theme->title = isset($settings->title) ? $settings->title : ucfirst( str_replace('_', ' ', $basename) );
+                    $theme->description = isset($settings->description) ? $settings->description : '';
+                    $theme->image = $themes_url . $basename . '.jpg';
+                    $theme->settings = isset($settings->params) ? json_encode($settings->params) : '{}';
                     $theme->is_active = ($active_theme === $theme->name);
                     
                     $themes[] = $theme;
@@ -1084,19 +1010,16 @@ class PWebContact_Admin {
             'header' => null,
             'parent' => null,
             'disabled' => false,
-            'is_pro' => null,
-            'is_free' => null
+            'is_pro' => null
         ), $opt);
         
         extract( $opt );
         
-        if (!defined('PWEBCONTACT_PRO') AND $is_pro === null) {
+        /*** FREE START ***/
+        if ($is_pro === null) {
             $opt['is_pro'] = $is_pro = in_array($name, self::$pro[$group]);
-            
-            if ($is_pro === false AND $is_free === null) {
-                $opt['is_free'] = $is_free = in_array($name, self::$free[$group]);
-            }
         }
+        /*** FREE END ***/
         
         if ($parent !== null) {
             $names = array();
@@ -1132,8 +1055,7 @@ class PWebContact_Admin {
             'label' => null,
             'tooltip' => null,
             'required' => false,
-            'is_pro' => null,
-            'is_free' => null
+            'is_pro' => null
         ), $opt);
         
         extract( $opt );
@@ -1141,13 +1063,11 @@ class PWebContact_Admin {
         if (empty($id)) {
             $id = 'pweb_'. $group .'_'. ($index !== null ? $index.'_' : '') . $name;
         }
-        if (!defined('PWEBCONTACT_PRO') AND $is_pro === null) {
+        /*** FREE START ***/
+        if ($is_pro === null) {
             $is_pro = in_array($name, self::$pro[$group]);
-            
-            if ($is_pro === false AND $is_free === null) {
-                $is_free = in_array($name, self::$free[$group]);
-            }
         }
+        /*** FREE END ***/
         
         return '<label for="'.esc_attr($id).'" id="'.esc_attr($id).'-lbl"' .
                 ' class="' . ($tooltip ? 'pweb-has-tooltip' : '') . ($required ? ' required' : '') . '"' .
@@ -1157,8 +1077,7 @@ class PWebContact_Admin {
                 ($required ? ' <span class="pweb-star">*</span>' : '') .
                 
                 '</label>' .
-                ($is_pro === true ? $this->_display_badge_pro() : '') .
-                ($is_free === true ? $this->_display_badge_free() : '');
+                ($is_pro === true ? $this->_display_badge_pro() : '');
     }
     
     
@@ -1179,8 +1098,7 @@ class PWebContact_Admin {
             'attributes' => array(),
             'options' => array(),
             'is_parent' => false,
-            'is_pro' => null,
-            'is_free' => null
+            'is_pro' => null
         ), $opt);
         
         extract( $opt );
@@ -1195,14 +1113,11 @@ class PWebContact_Admin {
         
         $field_name = esc_attr($group. ($index !== null ? '['.$index.']' : '') . '['.$name.']');
         
-        if (!defined('PWEBCONTACT_PRO') AND $is_pro === null) {
+        /*** FREE START ***/
+        if ($is_pro === null) {
             $is_pro = in_array($name, self::$pro[$group]);
-            
-            if ($is_pro === false AND $is_free === null) {
-                $is_free = in_array($name, self::$free[$group]);
-            }
         }
-        
+        /*** FREE END ***/
         
         if (!isset($attributes['class'])) {
             $attributes['class'] = '';
@@ -1452,8 +1367,12 @@ class PWebContact_Admin {
                         }
                     }
                     
-                    $option['is_pro'] = (!defined('PWEBCONTACT_PRO') AND $is_pro !== true AND in_array($name.'::'.$option['value'], self::$pro[$group]));
-                    $option['is_free'] = (!defined('PWEBCONTACT_PRO') AND in_array($name.'::'.$option['value'], self::$free[$group]));
+                    /*** FREE START ***/
+                    $option['is_pro'] = ($is_pro !== true AND in_array($name.'::'.$option['value'], self::$pro[$group]));
+                    /*** FREE END ***/
+                    /*** PRO START ***/
+                    $option['is_pro'] = false;
+                    /*** PRO END ***/
                     
                     $option_id = $id .'_'. preg_replace('/[^a-z0-9-_]/i', '', str_replace(':', '_', $option['value']));
                     
@@ -1468,13 +1387,11 @@ class PWebContact_Admin {
                             . ' class="'
                             . (($is_parent === true OR (isset($option['is_parent']) AND $option['is_parent'] === true)) ? 'pweb-parent' : '')
                             . ($option['is_pro'] ? ' pweb-pro' : '')
-                            . ($option['is_free'] ? ' pweb-free' : '')
                             . '">';
                     
                     $html .= '<label for="'.$option_id.'" id="'.$option_id.'-lbl"'
                             . '>'. __($option['name'], 'pwebcontact') . (isset($option['after']) ? $option['after'] : '')
                             . ($option['is_pro'] ? $this->_display_badge_pro() : '')
-                            . ($option['is_free'] ? $this->_display_badge_free() : '')
                             . '</label>';
                     
                     $html .= '</div>';
@@ -1497,19 +1414,11 @@ class PWebContact_Admin {
     
     protected function _display_badge($field_type = null)
     {
-        if (!defined('PWEBCONTACT_PRO')) {
-            if (in_array($field_type, self::$pro['field_types'])) {
-                return $this->_display_badge_pro();
-            }
-            elseif (in_array($field_type, self::$free['field_types'])) {
-                return $this->_display_badge_free();
-            }
+        /*** FREE START ***/
+        if (in_array($field_type, self::$pro['field_types'])) {
+            return $this->_display_badge_pro();
         }
-    }
-    
-    protected function _display_badge_free()
-    {
-        return '';
+        /*** FREE END ***/
     }
     
     protected function _display_badge_pro()
@@ -1519,17 +1428,17 @@ class PWebContact_Admin {
     
     protected function _is_pro_field($field_type = null)
     {
-        return !defined('PWEBCONTACT_PRO') AND in_array($field_type, self::$pro['field_types']);
+        /*** FREE START ***/
+        return in_array($field_type, self::$pro['field_types']);
+        /*** FREE END ***/
+        /*** PRO START ***/
+        return false;
+        /*** PRO END ***/
     }
     
     protected function _set_pro_options($group = null, $options = array())
     {
         self::$pro[$group] = $options;
-    }
-    
-    protected function _set_free_options($group = null, $options = array())
-    {
-        self::$free[$group] = $options;
     }
     
     private function _convert_size($str)

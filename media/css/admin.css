@@ -825,7 +825,7 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 }
 #pweb_fields .pweb-fields-types .pweb-custom-fields-separator {
     float: left;
-    height: 40px;
+    padding: 20px 0;
     width: 100%;
 }
 
