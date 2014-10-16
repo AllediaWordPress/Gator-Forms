@@ -538,7 +538,8 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 .pweb-field {
     margin-bottom: 20px;
 }
-.pweb-field > label + .pweb-field-control {
+.pweb-field > label + .pweb-field-control,
+.pweb-field > label + span.pweb-pro + .pweb-field-control{
     margin-top: 10px;
 }
 .pweb-field .pweb-field-control {

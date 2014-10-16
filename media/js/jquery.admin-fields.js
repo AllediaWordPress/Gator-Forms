@@ -11,6 +11,10 @@ var pwebcontact_l10n = pwebcontact_l10n || {},
 
 if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
+    if (typeof pwebcontact_admin.is_pro === "undefined") {
+        pwebcontact_admin.is_pro = false;
+    }
+    
     pwebcontact_admin.item_index = 0;
     pwebcontact_admin.counter = 0;
     pwebcontact_admin.pro_fields = 0;
