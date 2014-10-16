@@ -650,7 +650,19 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                     // Load theme settings
                     if (pwebcontact_admin.is_pro) {
                         $.each( $theme.data("settings"), function(option, value) {
-                            $("#pweb_params_"+option).val(value);
+                            var $option = $("#pweb_params_"+option);
+                            if ($option.prop("tagName").toLowerCase() === "fieldset") {
+                                if (!value) {
+                                    value = "0";
+                                }
+                                $option.find("#pweb_params_"+option+"_"+value.toString()).prop("checked", true);
+                            }
+                            else {
+                                $option.val(value);
+                                if ($option.hasClass("wp-color-picker")) {
+                                    $option.trigger("change");
+                                }
+                            }
                         });
                     }
                 }
