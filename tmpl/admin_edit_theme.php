@@ -89,6 +89,389 @@ function_exists('add_action') or die;
         <div class="pweb-clearfix">
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'rounded',
+                    'header' => 'Common',
+                    'label' => 'Display rounded corners',
+                    'default' => 0,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'No'
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Yes'
+                        )
+                    )
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'shadow',
+                    'label' => 'Display shadow',
+                    'default' => 0,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'No'
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Yes'
+                        )
+                    )
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'gradient',
+                    'label' => 'Choose desing',
+                    'default' => 1,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 1,
+                            'name' => 'Gradients'
+                        ),
+                        array(
+                            'value' => 2,
+                            'name' => 'Flat'
+                        )
+                    )
+                )); ?>
+            </div>
+
+
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'labels_position',
+                    'header' => 'Labels and From size',
+                    'label' => 'Labels position',
+                    'tooltip' => 'Select placement of fields labels. For mobile devices (phones) labels inline are displayed above fields.',
+                    'default' => 'above',
+                    'class' => 'pweb-radio-group-vertical',
+                    'options' => array(
+                        array(
+                            'value' => 'inline',
+                            'name' => 'Inline with field',
+                            'is_parent' => true
+                        ),
+                        array(
+                            'value' => 'above',
+                            'name' => 'Above field'
+                        ),
+                        array(
+                            'value' => 'over',
+                            'name' => 'Inside field as placeholder'
+                        )
+                    )
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'labels_invalid_color',
+                    'label' => 'Color of invalid labels',
+                    'tooltip' => 'Select text color of invalid labels',
+                    'default' => '#AA0000'
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'text',
+                    'name' => 'labels_width',
+                    'label' => 'Labels width [%]',
+                    'tooltip' => 'Set labels width in percents.',
+                    'class' => 'pweb-filter-int pweb-input-mini',
+                    'parent' => 'labels_position_inline'
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'text',
+                    'name' => 'form_width',
+                    'label' => 'Form width [px, %]',
+                    'tooltip' => 'Width of form is also a width of Lightbox window. If you want to maximize the window then set 100%.',
+                    'class' => 'pweb-filter-unit pweb-input-mini'
+                )); ?>
+            </div>
+            
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'text_color',
+                    'header' => 'Form text',
+                    'label' => 'Color of form text',
+                    'tooltip' => 'Select color of text'
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'text',
+                    'name' => 'form_font_size',
+                    'label' => 'Form font size',
+                    'tooltip' => 'Size of form font, e.g. 12px, 10pt, 100%',
+                    'class' => 'pweb-filter-unit pweb-input-mini'
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'text',
+                    'name' => 'form_font_family',
+                    'label' => 'Form font family',
+                    'tooltip' => 'Name of font used for form. Separate multiple names with coma and wrap name which contains space with single quote.'
+                )); ?>
+            </div>
+        </div>
+
+        <hr>
+        
+        <div class="pweb-clearfix">
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'fields_color',
+                    'header' => 'Fields',
+                    'label' => 'Color of fields',
+                    'tooltip' => 'Select background color of fields'
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'fields_border_color',
+                    'label' => 'Color of fields border',
+                    'tooltip' => 'Select border color of fields'
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'fields_text_color',
+                    'label' => 'Color of fields text',
+                    'tooltip' => 'Select text color of fields'
+                )); ?>
+            </div>
+            
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'fields_active_color',
+                    'header' => 'Fields active',
+                    'label' => 'Color of active field',
+                    'tooltip' => 'Select background color of active field'
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'fields_active_border_color',
+                    'label' => 'Color of active field border',
+                    'tooltip' => 'Select border color of active field'
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'fields_active_text_color',
+                    'label' => 'Color of active field text',
+                    'tooltip' => 'Select text color of active field'
+                )); ?>
+            </div>
+            
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'fields_invalid_color',
+                    'header' => 'Fields invalid',
+                    'label' => 'Color of invalid fields',
+                    'tooltip' => 'Select background color of invalid fields'
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'fields_invalid_border_color',
+                    'label' => 'Color of invalid fields border',
+                    'tooltip' => 'Select border color of invalid fields',
+                    'default' => '#AA0000'
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'fields_invalid_text_color',
+                    'label' => 'Color of invalid fields text',
+                    'tooltip' => 'Select text color of invalid fields',
+                    'default' => '#AA0000'
+                )); ?>
+            </div>
+        </div>
+            
+        <hr>
+        
+        <div class="pweb-clearfix">
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'buttons_fields_color',
+                    'header' => 'Buttons and Links',
+                    'label' => 'Color of buttons and links',
+                    'tooltip' => 'Select color of buttons background, links text color and upload progress bar.'
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'buttons_text_color',
+                    'label' => 'Color of buttons text',
+                    'tooltip' => 'Select color of buttons text'
+                )); ?>
+            </div>
+            
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'type' => 'color',
+                    'name' => 'bg_color',
+                    'header' => 'Background',
+                    'label' => 'Color of form background and opacity',
+                )); ?>
+
+                <?php echo $this->_get_field_control(array(
+                    'type' => 'select',
+                    'name' => 'bg_opacity',
+                    'default' => 0.9,
+                    'options' => array(
+                        array('value' => 0.1),
+                        array('value' => 0.2),
+                        array('value' => 0.3),
+                        array('value' => 0.4),
+                        array('value' => 0.5),
+                        array('value' => 0.6),
+                        array('value' => 0.7),
+                        array('value' => 0.8),
+                        array('value' => 0.9),
+                        array('value' => 1.0)
+                    )
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'select',
+                    'name' => 'bg_padding_position',
+                    'label' => 'Form padding',
+                    'tooltip' => 'Select where you want to create space for background image.',
+                    'options' => array(
+                        array(
+                            'value' => '',
+                            'name' => '- Disabled -'
+                        ),
+                        array(
+                            'value' => 'left',
+                            'name' => 'Left'
+                        ),
+                        array(
+                            'value' => 'right',
+                            'name' => 'Right'
+                        ),
+                        array(
+                            'value' => 'top',
+                            'name' => 'Top'
+                        ),
+                        array(
+                            'value' => 'bottom',
+                            'name' => 'Bottom'
+                        ),
+                        array(
+                            'value' => 'all',
+                            'name' => 'All around'
+                        ),
+                    )
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'text',
+                    'name' => 'bg_padding',
+                    'label' => 'Padding value [px, %]',
+                    'tooltip' => 'Size of space for background image.',
+                    'class' => 'pweb-filter-unit pweb-input-mini'
+                )); ?>
+            </div>
+            
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'type' => 'image',
+                    'name' => 'bg_image',
+                    'header' => 'Background image',
+                    'label' => 'Background image',
+                    'tooltip' => 'Enter URL of image which will be shown in background of contact form. Image will not be repeated.',
+                    'class' => 'pweb-filter-url pweb-input-xlarge'
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'select',
+                    'name' => 'bg_position',
+                    'label' => 'Background image alignment',
+                    'tooltip' => 'Select position of background image: horizontal vertical.',
+                    'options' => array(
+                        array('value' => '', 'name' => '- Use default -'),
+                        array('value' => 'left top'),
+                        array('value' => 'left center'),
+                        array('value' => 'left bottom'),
+                        array('value' => 'right top'),
+                        array('value' => 'right center'),
+                        array('value' => 'right bottom'),
+                        array('value' => 'center top'),
+                        array('value' => 'center center'),
+                        array('value' => 'center bottom')
+                    )
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'select',
+                    'name' => 'bg_repeat',
+                    'label' => 'Background repeat',
+                    'tooltip' => '',
+                    'default' => 'no-repeat',
+                    'options' => array(
+                        array(
+                            'value' => 'no-repeat',
+                            'name' => 'No repeat'
+                        ),
+                        array(
+                            'value' => 'repeat',
+                            'name' => 'Repeat'
+                        ),
+                        array(
+                            'value' => 'repeat-x',
+                            'name' => 'Repeat X'
+                        ),
+                        array(
+                            'value' => 'repeat-y',
+                            'name' => 'Repeat Y'
+                        )
+                    )
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'select',
+                    'name' => 'bg_size',
+                    'label' => 'Background scale',
+                    'tooltip' => '',
+                    'options' => array(
+                        array(
+                            'value' => '',
+                            'name' => '- Use default -'
+                        ),
+                        array(
+                            'value' => 'cover',
+                            'name' => 'Cover'
+                        ),
+                        array(
+                            'value' => 'contain',
+                            'name' => 'Contain'
+                        )
+                    )
+                )); ?>
+            </div>
+        </div>
+        
+        <hr>
+        
+        <div class="pweb-clearfix">
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'toggler_bg',
                     'header' => 'Toggler Button and Tab',
@@ -103,23 +486,6 @@ function_exists('add_action') or die;
                     'label' => 'Color of Toggler text',
                     'tooltip' => 'Select text color of Toggler Tab',
                     'parent' => array('handler_tab', 'handler_button')
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'text',
-                    'name' => 'toggler_font_size',
-                    'label' => 'Toggler font size',
-                    'tooltip' => 'Size of Toggler font, e.g. 12px, 10pt, 100%',
-                    'class' => 'pweb-filter-unit pweb-input-mini',
-                    'parent' => array('handler_tab', 'handler_button')
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'text',
-                    'name' => 'toggler_font_family',
-                    'label' => 'Toggler font family',
-                    'tooltip' => 'Name of font used for Toggler. Separate multiple names with coma and wrap name which contains space with single quote.',
-                    'parent' => array('toggler_vertical_0')
                 )); ?>
                 
                 <?php echo $this->_get_field(array(
@@ -178,7 +544,26 @@ function_exists('add_action') or die;
                     'parent' => array('toggler_icon_custom'),
                     'class' => 'pweb-input-xlarge'
                 )); ?>
+            </div>
+            
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'type' => 'text',
+                    'name' => 'toggler_font_size',
+                    'header' => '&nbsp;',
+                    'label' => 'Toggler font size',
+                    'tooltip' => 'Size of Toggler font, e.g. 12px, 10pt, 100%',
+                    'class' => 'pweb-filter-unit pweb-input-mini',
+                    'parent' => array('handler_tab', 'handler_button')
+                )); ?>
 
+                <?php echo $this->_get_field(array(
+                    'type' => 'text',
+                    'name' => 'toggler_font_family',
+                    'label' => 'Toggler font family',
+                    'tooltip' => 'Name of font used for Toggler. Separate multiple names with coma and wrap name which contains space with single quote.',
+                    'parent' => array('toggler_vertical_0')
+                )); ?>
                 <?php echo $this->_get_field(array(
                     'type' => 'text',
                     'name' => 'toggler_width',
@@ -201,269 +586,9 @@ function_exists('add_action') or die;
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
-                    'name' => 'buttons_fields_color',
-                    'header' => 'Buttons and Links',
-                    'label' => 'Color of buttons and links',
-                    'tooltip' => 'Select color of buttons background, links text color and upload progress bar.'
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'color',
-                    'name' => 'buttons_text_color',
-                    'label' => 'Color of buttons text',
-                    'tooltip' => 'Select color of buttons text'
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'color',
-                    'name' => 'fields_color',
-                    'header' => 'Fields',
-                    'label' => 'Color of fields',
-                    'tooltip' => 'Select background color of fields'
-                )); ?>
-                
-                <?php echo $this->_get_field(array(
-                    'type' => 'color',
-                    'name' => 'fields_border_color',
-                    'label' => 'Color of fields border',
-                    'tooltip' => 'Select border color of fields. Active field will have 10% darker color.'
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'color',
-                    'name' => 'fields_text_color',
-                    'label' => 'Color of fields text',
-                    'tooltip' => 'Select text color of fields'
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'text',
-                    'name' => 'form_font_size',
-                    'label' => 'Form font size',
-                    'header' => 'Form font',
-                    'tooltip' => 'Size of form font, e.g. 12px, 10pt, 100%',
-                    'class' => 'pweb-filter-unit pweb-input-mini'
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'text',
-                    'name' => 'form_font_family',
-                    'label' => 'Form font family',
-                    'tooltip' => 'Name of font used for form. Separate multiple names with coma and wrap name which contains space with single quote.'
-                )); ?>
-            </div>
-            <div class="pweb-width-33">
-                <?php echo $this->_get_field(array(
-                    'type' => 'color',
-                    'name' => 'bg_color',
-                    'header' => 'Background',
-                    'label' => 'Color of form background and opacity',
-                )); ?>
-
-                <?php echo $this->_get_field_control(array(
-                    'type' => 'select',
-                    'name' => 'bg_opacity',
-                    'default' => 0.9,
-                    'options' => array(
-                        array('value' => 0.1),
-                        array('value' => 0.2),
-                        array('value' => 0.3),
-                        array('value' => 0.4),
-                        array('value' => 0.5),
-                        array('value' => 0.6),
-                        array('value' => 0.7),
-                        array('value' => 0.8),
-                        array('value' => 0.9),
-                        array('value' => 1.0)
-                    )
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'color',
-                    'name' => 'text_color',
-                    'label' => 'Color of form text',
-                    'tooltip' => 'Select color of text'
-                )); ?>
-                
-                <?php echo $this->_get_field(array(
-                    'type' => 'image',
-                    'name' => 'bg_image',
-                    'label' => 'Background image',
-                    'header' => 'Background image',
-                    'tooltip' => 'Enter URL of image which will be shown in background of contact form. Image will not be repeated.',
-                    'class' => 'pweb-filter-url pweb-input-xlarge'
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'select',
-                    'name' => 'bg_position',
-                    'label' => 'Background image alignment',
-                    'tooltip' => 'Select position of background image: horizontal vertical.',
-                    'options' => array(
-                        array('value' => '', 'name' => '- Use default -'),
-                        array('value' => 'left top'),
-                        array('value' => 'left center'),
-                        array('value' => 'left bottom'),
-                        array('value' => 'right top'),
-                        array('value' => 'right center'),
-                        array('value' => 'right bottom'),
-                        array('value' => 'center top'),
-                        array('value' => 'center center'),
-                        array('value' => 'center bottom')
-                    )
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'select',
-                    'name' => 'bg_padding_position',
-                    'label' => 'Form padding',
-                    'tooltip' => 'Select where you want to create space for background image.',
-                    'options' => array(
-                        array(
-                            'value' => '',
-                            'name' => '- Disabled -'
-                        ),
-                        array(
-                            'value' => 'left',
-                            'name' => 'Left'
-                        ),
-                        array(
-                            'value' => 'right',
-                            'name' => 'Right'
-                        ),
-                        array(
-                            'value' => 'top',
-                            'name' => 'Top'
-                        ),
-                        array(
-                            'value' => 'bottom',
-                            'name' => 'Bottom'
-                        )
-                    )
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'text',
-                    'name' => 'bg_padding',
-                    'label' => 'Padding value [px, %]',
-                    'tooltip' => 'Size of space for background image.',
-                    'class' => 'pweb-filter-unit pweb-input-mini'
-                )); ?>
-            </div>
-        </div>
-
-        <hr>
-        
-        <div class="pweb-clearfix">
-            <div class="pweb-width-33">
-                <?php echo $this->_get_field(array(
-                    'type' => 'radio',
-                    'name' => 'rounded',
-                    'label' => 'Display rounded corners',
-                    'header' => 'Shape',
-                    'default' => 0,
-                    'class' => 'pweb-radio-group',
-                    'options' => array(
-                        array(
-                            'value' => 0,
-                            'name' => 'No'
-                        ),
-                        array(
-                            'value' => 1,
-                            'name' => 'Yes'
-                        )
-                    )
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'radio',
-                    'name' => 'shadow',
-                    'label' => 'Display shadow',
-                    'default' => 0,
-                    'class' => 'pweb-radio-group',
-                    'options' => array(
-                        array(
-                            'value' => 0,
-                            'name' => 'No'
-                        ),
-                        array(
-                            'value' => 1,
-                            'name' => 'Yes'
-                        )
-                    )
-                )); ?>
-                
-                <?php echo $this->_get_field(array(
-                    'type' => 'radio',
-                    'name' => 'gradient',
-                    'label' => 'Choose desing',
-                    'default' => 1,
-                    'class' => 'pweb-radio-group',
-                    'options' => array(
-                        array(
-                            'value' => 1,
-                            'name' => 'Gradients'
-                        ),
-                        array(
-                            'value' => 2,
-                            'name' => 'Flat'
-                        )
-                    )
-                )); ?>
-            </div>
-
-
-            <div class="pweb-width-33">
-                <?php echo $this->_get_field(array(
-                    'type' => 'radio',
-                    'name' => 'labels_position',
-                    'label' => 'Labels position',
-                    'header' => 'Labels and From size',
-                    'tooltip' => 'Select placement of fields labels. For mobile devices (phones) labels inline are displayed above fields.',
-                    'default' => 'above',
-                    'class' => 'pweb-radio-group-vertical',
-                    'options' => array(
-                        array(
-                            'value' => 'inline',
-                            'name' => 'Inline with field',
-                            'is_parent' => true
-                        ),
-                        array(
-                            'value' => 'above',
-                            'name' => 'Above field'
-                        ),
-                        array(
-                            'value' => 'over',
-                            'name' => 'Inside field as placeholder'
-                        )
-                    )
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'text',
-                    'name' => 'labels_width',
-                    'label' => 'Labels width [%]',
-                    'tooltip' => 'Set labels width in percents.',
-                    'class' => 'pweb-filter-int pweb-input-mini',
-                    'parent' => 'labels_position_inline'
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'text',
-                    'name' => 'form_width',
-                    'label' => 'Form width [px, %]',
-                    'tooltip' => 'Width of form is also a width of Lightbox window. If you want to maximize the window then set 100%.',
-                    'class' => 'pweb-filter-unit pweb-input-mini'
-                )); ?>
-            </div>
-
-
-            <div class="pweb-width-33">
-                <?php echo $this->_get_field(array(
-                    'type' => 'color',
                     'name' => 'modal_bg',
-                    'label' => 'Lightbox backdrop color',
                     'header' => 'Lightbox backdrop',
+                    'label' => 'Lightbox backdrop color',
                     'tooltip' => 'Color of background layer under Lightbox window.',
                     'parent' => array('layout_type_modal')
                 )); ?>
@@ -493,7 +618,6 @@ function_exists('add_action') or die;
             </div>
         </div>
         
-        <hr>
         
         <?php /* @deprecated since 2.0 */
         $media_css_dir = dirname(dirname(__FILE__)) .'/media/css/'; 
