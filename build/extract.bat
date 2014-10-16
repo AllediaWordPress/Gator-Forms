@@ -6,12 +6,12 @@ set CURRENTPATH=%~dp0
 echo Perfect Contact Form for WordPress
 echo Author^: Piotr Mocko
 echo.
-echo Extractor v1.0.0
+echo Extractor v2.0.0
 echo.
 echo Extract ZIP archive with FREE version...
-"C:\Program Files\7-Zip\7z.exe" x %CURRENTPATH%free\wp_pwebcontact_1.0.10_free.zip -y -oC:\www\wordpress-dev1\wp-content\plugins
+"C:\Program Files\7-Zip\7z.exe" x %CURRENTPATH%free\wp_pwebcontact_2.0.0_free.zip -y -oC:\www\wordpress-dev1\wp-content\plugins
 echo.
 echo Extract ZIP archive with PRO version...
-"C:\Program Files\7-Zip\7z.exe" x %CURRENTPATH%pro\wp_pwebcontact_1.0.10_pro.zip -y -oC:\www\wordpress-dev2\wp-content\plugins
+"C:\Program Files\7-Zip\7z.exe" x %CURRENTPATH%pro\wp_pwebcontact_2.0.0_pro.zip -y -oC:\www\wordpress-dev2\wp-content\plugins
 echo.
 
