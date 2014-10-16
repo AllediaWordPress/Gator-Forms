@@ -49,7 +49,10 @@ $message =
 	<?php if ($layout == 'modal') : ?><div id="pwebcontact<?php echo $form_id; ?>_modal" class="pwebcontact-modal modal fade<?php if ((int)$params->get('bootstrap_version', 2) === 2) echo ' hide'; ?>" style="display:none"><?php endif; ?>
     
     <div id="pwebcontact<?php echo $form_id; ?>_box" class="pwebcontact-box <?php echo $params->get('moduleClass').' '.$params->get('boxClass'); ?>" dir="<?php echo $params->get('rtl', 0) ? 'rtl' : 'ltr'; ?>">
-	<div id="pwebcontact<?php echo $form_id; ?>_container" class="pwebcontact-container<?php if ($layout == 'modal' AND (int)$params->get('bootstrap_version', 2) === 3) echo ' modal-dialog'; ?>">
+    
+    <div class="pwebcontact-container-outset">
+    <div id="pwebcontact<?php echo $form_id; ?>_container" class="pwebcontact-container<?php if ($layout == 'modal' AND (int)$params->get('bootstrap_version', 2) === 3) echo ' modal-dialog'; ?>">
+    <div class="pwebcontact-container-inset">
 	
 		<?php if ($layout == 'slidebox' AND $params->get('handler') == 'tab' AND $params->get('toggler_slide')) echo $toggler; ?>
 		
@@ -595,8 +598,11 @@ $message =
 		<div class="pweb-dropzone" aria-hidden="true"><div><?php _e('Drop files here to upload', 'pwebcontact'); ?></div></div>
 		<?php endif; ?>
         <!-- PRO END -->
-        
+       
+    </div>
 	</div>
+	</div>
+    
 	</div>
 	<?php if ($layout == 'modal') : ?></div><?php endif; ?>
 </div>
