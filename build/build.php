@@ -26,7 +26,10 @@ class PWebCompiler {
         'build'
     );
     protected $include_pro = array();
-    protected $exclude_pro = array();
+    protected $exclude_pro = array(
+        'media/css/themes/free.css',
+        'media/themes/free'
+    );
     
     protected $include_free = array(
         'media/css/themes/index.html',
@@ -41,6 +44,7 @@ class PWebCompiler {
         'media/jquery-ui', // jQuery UI Datapicker
         'media/js/jquery.fileupload',
         'media/js/jquery.iframe-transport.js', // fileupload
+        'media/themes/dev',
         'media/tickets',
         'update-checker',
         'uploader.php',
