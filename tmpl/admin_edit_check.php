@@ -47,7 +47,7 @@ function_exists('add_action') or die;
     
     <div class="pweb-alert pweb-alert-danger" id="pweb-email-to-warning" style="display:none">
         <i class="glyphicon glyphicon-warning-sign"></i>
-        <?php _e('Enter one or more emails to which message should be sent to in Email settings tab.', 'pwebcontact'); ?>
+        <?php _e('Enter one or more emails to which message should be sent to in `Email` tab.', 'pwebcontact'); ?>
     </div>
 
     <?php if (($result = $this->_check_mailer()) !== true) : ?>

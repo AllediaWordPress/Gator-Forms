@@ -241,7 +241,7 @@ function_exists('add_action') or die;
                 )); ?>
                 
                 <div class="pweb-alert pweb-alert-info">
-                    <?php _e('You can choose color of success and error message by changing Advanced option in `Email settings` tab', 'pwebcontact'); ?>
+                    <?php _e('You can choose color of success and error message by changing Advanced option in `Email` tab', 'pwebcontact'); ?>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.5
+ * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -57,10 +57,9 @@ function_exists('add_action') or die;
             </a>
             <a href="#pweb-tab-email" id="pweb-tab-email" class="nav-tab">
                 <i class="glyphicon glyphicon-envelope"></i>
-                <?php esc_html_e( 'Email settings', 'pwebcontact' ); ?>
+                <?php esc_html_e( 'Email', 'pwebcontact' ); ?>
             </a>
             <a href="#pweb-tab-check" id="pweb-tab-check" class="nav-tab">
-                <i class="glyphicon glyphicon-ok"></i>
                 <?php esc_html_e( 'Configuration check', 'pwebcontact' ); ?>
             </a>
             <a href="#pweb-tab-tips" id="pweb-tab-tips" class="nav-tab">
