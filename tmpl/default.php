@@ -158,19 +158,21 @@ $message =
 							</label>
 						</div>
 						<div class="pweb-field">
-							<select name="mailto" id="<?php echo $field['id']; ?>" class="required" data-role="none">
-								<option value=""><?php _e('-- Select --', 'pwebcontact'); ?></option>
-							<?php foreach ($optValues as $value) : 
-								// Skip empty rows
-								if (empty($value)) continue;
-								// Get recipient
-								$recipient = explode('|', $value);
-								// Skip incorrect rows
-								if (!array_key_exists(1, $recipient)) continue;
-							?>
-								<option value="<?php echo $i++; ?>"><?php esc_html_e($recipient[1], 'pwebcontact'); ?></option>
-							<?php endforeach; ?>
-							</select>
+                            <div class="pweb-field-shadow">
+                                <select name="mailto" id="<?php echo $field['id']; ?>" class="required" data-role="none">
+                                    <option value=""><?php _e('-- Select --', 'pwebcontact'); ?></option>
+                                <?php foreach ($optValues as $value) : 
+                                    // Skip empty rows
+                                    if (empty($value)) continue;
+                                    // Get recipient
+                                    $recipient = explode('|', $value);
+                                    // Skip incorrect rows
+                                    if (!array_key_exists(1, $recipient)) continue;
+                                ?>
+                                    <option value="<?php echo $i++; ?>"><?php esc_html_e($recipient[1], 'pwebcontact'); ?></option>
+                                <?php endforeach; ?>
+                                </select>
+                            </div>
 						</div>
 					</div>
 					<?php
@@ -350,7 +352,9 @@ $message =
 										$type = 'text';
 								}
 							?>
-							<input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>"<?php echo $field['attributes']; ?> value="<?php esc_attr_e($field['value'], 'pwebcontact'); ?>" data-role="none">
+							<div class="pweb-field-shadow">
+                                <input type="<?php echo $type; ?>" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>"<?php echo $field['attributes']; ?> value="<?php esc_attr_e($field['value'], 'pwebcontact'); ?>" data-role="none">
+                            </div>
 							<?php 
                             /*** PRO START ***/
                             if ($field['type'] == 'date') : ?>
@@ -379,7 +383,9 @@ $message =
 								if (count($field['classes']))
 									$field['attributes'] .= ' class="'.implode(' ', $field['classes']).'"';
 							?>
-							<textarea name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" cols="50"<?php echo $field['attributes']; ?> data-role="none"><?php esc_html_e($field['value'], 'pwebcontact'); ?></textarea>
+							<div class="pweb-field-shadow">
+                                <textarea name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" cols="50"<?php echo $field['attributes']; ?> data-role="none"><?php esc_html_e($field['value'], 'pwebcontact'); ?></textarea>
+                            </div>
 							<?php if ($field['maxlength']) : ?>
 							<div class="pweb-chars-counter"><?php echo sprintf(__('%s characters left', 'pwebcontact'), '<span id="'.$field['id'].'-limit">'.$field['maxlength'].'</span>'); ?></div>
 							<?php endif; ?>	
@@ -420,15 +426,17 @@ $message =
 								if (count($field['classes']))
 									$field['attributes'] .= ' class="'.implode(' ', $field['classes']).'"';
 							?>
-							<select name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>"<?php echo $field['attributes']; ?> data-role="none">
-							<?php if ($field['type'] == 'select' AND $field['default']) : ?>
-								<option value=""><?php esc_html_e($field['default'], 'pwebcontact'); ?></option>
-							<?php endif; ?>
-							<?php foreach ($optValues as $value) : ?>
-                                <?php if (empty($value)) continue; ?>
-                                <option value="<?php echo esc_attr( preg_replace('/[\r\n]+/', '', $value) ); ?>"><?php esc_html_e($value, 'pwebcontact'); ?></option>
-							<?php endforeach; ?>
-							</select>
+							<div class="pweb-field-shadow">
+                                <select name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>"<?php echo $field['attributes']; ?> data-role="none">
+                                <?php if ($field['type'] == 'select' AND $field['default']) : ?>
+                                    <option value=""><?php esc_html_e($field['default'], 'pwebcontact'); ?></option>
+                                <?php endif; ?>
+                                <?php foreach ($optValues as $value) : ?>
+                                    <?php if (empty($value)) continue; ?>
+                                    <option value="<?php echo esc_attr( preg_replace('/[\r\n]+/', '', $value) ); ?>"><?php esc_html_e($value, 'pwebcontact'); ?></option>
+                                <?php endforeach; ?>
+                                </select>
+                            </div>
 							<?php 
                                 unset($optValues);
 							
