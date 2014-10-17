@@ -860,8 +860,11 @@ pwebcontact_admin.is_pro = true;
     <hr>
     
     <p class="pweb-copyrights">
-		Copyright &copy; 2014 Perfect Web sp. z o.o., All rights reserved.
-		Distributed under <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank"><strong>GNU/GPL</strong></a>.<br>
+		Copyright &copy; 2014
+        <a href="http://www.perfect-web.co/wordpress/contact-form" target="_blank"><strong>Perfect Web sp. z o.o.</strong></a>, 
+        All rights reserved.
+		Distributed under 
+        <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank"><strong>GNU/GPL</strong></a>.<br>
 		All other trademarks and copyrights are property of their respective owners.
 	</p>
 </div>
