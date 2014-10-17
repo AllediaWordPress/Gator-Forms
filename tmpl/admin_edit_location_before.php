@@ -103,6 +103,14 @@ function_exists('add_action') or die;
             )
         )); ?>
         
+        <div class="pweb_params_toggler_position_left pweb_params_toggler_position_right" style="display:none">
+
+            <div class="pweb-alert pweb-alert-info">
+                <?php _e('You can flip Toggler Tab to vertical position by changing Advanced option in `Theme` tab', 'pwebcontact'); ?>
+            </div>
+
+        </div>
+        
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'offset',
@@ -119,64 +127,6 @@ function_exists('add_action') or die;
             'tooltip' => 'Default level is 1030. If contact form appears under menu or other layers then enlarge default value.',
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('layout_type_slidebox', 'layout_type_modal')
-        )); ?>
-
-
-
-        <?php echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'toggler_vertical',
-            'label' => 'Vertical Toggler Tab',
-            'header' => 'Vertical Toggler Tab',
-            'tooltip' => 'Flip toggler tab to vertical orientation.',
-            'desc' => 'Default vertical text color is white, change it in `Theme` tab.<br>Reload browser cache on front-end to see changes.<br>If you see rectangles instead of letters then you have to use other `TTF font`.<br>If text is cut then enlarge height of toggler in `Theme` tab. Width leave blank.',
-            'default' => 0,
-            'parent' => array('toggler_position_left', 'toggler_position_right'),
-            'class' => 'pweb-radio-group',
-            'options' => array(
-                array(
-                    'value' => 0,
-                    'name' => 'No',
-                    'is_parent' => true
-                ),
-                array(
-                    'value' => 1,
-                    'name' => 'Yes',
-                    'is_parent' => true,
-                    'disabled' => $this->_check_image_text_creation() !== true
-                )
-            )
-        )); ?>
-
-        <?php echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'toggler_rotate',
-            'label' => 'Rotate Vertical Toggler Tab text',
-            'tooltip' => 'Rotate text by 90&deg; to the left or right.',
-            'default' => 1,
-            'parent' => array('toggler_vertical_1'),
-            'options' => array(
-                array(
-                    'value' => -1,
-                    'name' => '-90&deg; (counter-clockwise)' //TODO add utf8 rotate arrow
-                ),
-                array(
-                    'value' => 1,
-                    'name' => ' 90&deg; (clockwise)' //TODO add utf8 rotate arrow
-                )
-            )
-        )); ?>
-
-        <?php echo $this->_get_field(array(
-            'type' => 'filelist',
-            'name' => 'toggler_font',
-            'label' => 'TTF font for Vertical Toggler Tab text',
-            'tooltip' => 'Select font from directory: `wp-content/plugins/pwebcontact/media/fonts`. If it does not support your language then upload there other font file.',
-            'default' => 'NotoSans-Regular',
-            'filter' => '\.ttf$',
-            'directory' => 'media/fonts',
-            'strip_ext' => true,
-            'parent' => array('toggler_vertical_1')
         )); ?>
 
 

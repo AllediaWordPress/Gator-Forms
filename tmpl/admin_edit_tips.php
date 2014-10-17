@@ -25,7 +25,7 @@ function_exists('add_action') or die;
         <?php _e( 'To open contact form with menu item, create menu item type of Links and as URL set', 'pwebcontact' ); ?><br>
         <code>#pwebcontact<?php echo $this->id; ?>_toggler</code> <a href="<?php echo admin_url('nav-menus.php'); ?>" target="_blank"><?php _e( 'Go to Menus', 'pwebcontact' ); ?></a><br>
         <span class="pweb-text-danger"><?php _e( 'Remember that menu item would open contact form only if it has been loaded.', 'pwebcontact' ); ?></span><br>
-        <?php _e( 'If you do not want to display Toggler Tab or Button then select in Location & Effects - Form before opening - hidden', 'pwebcontact' ); ?>
+        <?php esc_html_e( 'If you do not want to display Toggler Tab or Button then select `Location & Effects` > `Form before opening` > `Hidden before opening`.', 'pwebcontact' ); ?>
     </p>
 </div>
 

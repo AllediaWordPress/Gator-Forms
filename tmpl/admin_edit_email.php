@@ -385,7 +385,7 @@ function_exists('add_action') or die;
                     'type' => 'text',
                     'name' => 'email_replyto',
                     'label' => 'Reply to email',
-                    'tooltip' => 'Leave blank if you want User to reply to sender',
+                    'tooltip' => 'Enter only one email. Leave blank if you want User to reply to sender',
                     'class' => 'pweb-filter-email'
                 )); ?>
 
@@ -617,6 +617,9 @@ function_exists('add_action') or die;
                             <?php _e('Event', 'pwebcontact'); ?>: <code>ga('send', 'event', 'Contact', 'E-mail sent', document.location.href);</code><br>
                             <?php _e('Event with ticket', 'pwebcontact'); ?>: <code>ga('send', 'event', 'Contact', 'E-mail sent', data.ticket);</code>
                         </p>
+                        <div class="pweb-alert pweb-alert-warning">
+                            <?php _e('You might need to change in above code function name `ga` to custom, if your Universal Analytics code does not use default function.', 'pwebcontact'); ?>
+                        </div>
                     </div>
                 </div>
             </div>

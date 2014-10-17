@@ -237,6 +237,10 @@ function_exists('add_action') or die;
                     'label' => 'Form font family',
                     'tooltip' => 'Name of font used for form. Separate multiple names with coma and wrap name which contains space with single quote.'
                 )); ?>
+                
+                <div class="pweb-alert pweb-alert-info">
+                    <?php _e('You can choose color of success and error message by changing Advanced option in `Email settings` tab', 'pwebcontact'); ?>
+                </div>
             </div>
         </div>
 
@@ -539,7 +543,14 @@ function_exists('add_action') or die;
                     'type' => 'glyphicon',
                     'name' => 'toggler_glyphicon',
                     'label' => 'Glyphicons',
-                    'parent' => array('toggler_icon_glyphicon')
+                    'default' => '2709',
+                    'parent' => array('toggler_icon_glyphicon'),
+                    'options' => array(
+                        array(
+                            'value' => '',
+                            'name' => '- Do not use -'
+                        )
+                    )
                 )); ?>
 
                 <?php echo $this->_get_field(array(
@@ -560,13 +571,10 @@ function_exists('add_action') or die;
                     'parent' => array('toggler_icon_custom'),
                     'class' => 'pweb-input-xlarge'
                 )); ?>
-            </div>
-            
-            <div class="pweb-width-33">
+                
                 <?php echo $this->_get_field(array(
                     'type' => 'text',
                     'name' => 'toggler_font_size',
-                    'header' => '&nbsp;',
                     'label' => 'Toggler font size',
                     'tooltip' => 'Size of Toggler font, e.g. 12px, 10pt, 100%',
                     'class' => 'pweb-filter-unit pweb-input-mini',
@@ -580,9 +588,81 @@ function_exists('add_action') or die;
                     'tooltip' => 'Name of font used for Toggler. Separate multiple names with coma and wrap name which contains space with single quote.',
                     'parent' => array('toggler_vertical_0')
                 )); ?>
+            </div>
+            
+            <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'toggler_vertical',
+                    'label' => 'Vertical Toggler Tab',
+                    'header' => 'Vertical Toggler Tab',
+                    'tooltip' => 'Flip toggler tab to vertical orientation. Default vertical text color is white.',
+                    'default' => 0,
+                    'parent' => array('toggler_position_left', 'toggler_position_right'),
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'No',
+                            'is_parent' => true
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Yes',
+                            'is_parent' => true,
+                            'disabled' => $this->_check_image_text_creation() !== true
+                        )
+                    )
+                )); ?>
+                
+                <div class="pweb_params_toggler_vertical_1" style="display:none">
+                    
+                    <div class="pweb-alert pweb-alert-warning">
+                        <?php _e('If you see rectangles instead of letters then you have to use other `TTF font`.', 'pwebcontact'); ?><br>
+                        <?php _e('If text is cut then enlarge height of toggler. Width leave blank.', 'pwebcontact'); ?>
+                    </div>
+
+                    <div class="pweb-alert pweb-alert-info pweb_params_layout_type_slidebox" style="display:none">
+                        <?php esc_html_e('You can slide Toggler Tab with form container or keep fixed at page edge by changing Advanced option of `Form after opening` section in `Loaction & Effects` tab.', 'pwebcontact'); ?>
+                    </div>
+                    
+                </div>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'toggler_rotate',
+                    'label' => 'Rotate Vertical Toggler Tab text',
+                    'tooltip' => 'Rotate text by 90&deg; to the left or right.',
+                    'default' => 1,
+                    'parent' => array('toggler_vertical_1'),
+                    'options' => array(
+                        array(
+                            'value' => -1,
+                            'name' => '-90&deg; (counter-clockwise)' //TODO add utf8 rotate arrow
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => ' 90&deg; (clockwise)' //TODO add utf8 rotate arrow
+                        )
+                    )
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'filelist',
+                    'name' => 'toggler_font',
+                    'label' => 'TTF font for Vertical Toggler Tab text',
+                    'tooltip' => 'Select font from directory: `wp-content/plugins/pwebcontact/media/fonts`. If it does not support your language then upload there other font file.',
+                    'default' => 'NotoSans-Regular',
+                    'filter' => '\.ttf$',
+                    'directory' => 'media/fonts',
+                    'strip_ext' => true,
+                    'parent' => array('toggler_vertical_1')
+                )); ?>
+                
                 <?php echo $this->_get_field(array(
                     'type' => 'text',
                     'name' => 'toggler_width',
+                    'header' => 'Toggler size',
                     'label' => 'Toggler width [px]',
                     'tooltip' => 'Toggler Tab width in pixels (without unit), e.g. 100. Leave blank for enabled vertical toggler.',
                     'class' => 'pweb-filter-int pweb-input-mini',
