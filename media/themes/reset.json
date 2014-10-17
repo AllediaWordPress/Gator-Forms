@@ -37,6 +37,8 @@
 		"toggler_icon_custom_image": "",
 		"toggler_font_size": "",
 		"toggler_font_family": "",
+        "toggler_vertical": 0,
+        "toggler_slide": 0,
 		"msg_success_color": "#009e0a",
 		"msg_error_color": "#aa0000"
     }
