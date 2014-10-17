@@ -110,9 +110,9 @@ $message =
                      ?>
 					<div class="pweb-field-container pweb-field-buttons">
 						<div class="pweb-field">
-							<button id="pwebcontact<?php echo $form_id; ?>_send" type="button" class="btn" data-role="none"><?php _e($field['label'] ? $field['label'] : 'Send', 'pwebcontact') ?></button>
+							<button id="pwebcontact<?php echo $form_id; ?>_send" type="button" class="btn pweb-button-send" data-role="none"><?php _e($field['label'] ? $field['label'] : 'Send', 'pwebcontact') ?></button>
 							<?php if ($params->get('reset_form', 1) == 3) : ?>
-							<button id="pwebcontact<?php echo $form_id; ?>_reset" type="reset" class="btn" style="display:none" data-role="none"><i class="glyphicon glyphicon-remove-sign"></i> <?php _e($params->get('button_reset', 'Reset'), 'pwebcontact') ?></button>
+							<button id="pwebcontact<?php echo $form_id; ?>_reset" type="reset" class="btn pweb-button-reset" style="display:none" data-role="none"><i class="glyphicon glyphicon-remove-sign"></i> <?php _e($params->get('button_reset', 'Reset'), 'pwebcontact') ?></button>
 							<?php endif; ?>
 							<?php if ($params->get('msg_position', 'after') == 'button' OR $params->get('msg_position', 'after') == 'popup') echo $message; ?>
                         </div>
