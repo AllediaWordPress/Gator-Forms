@@ -248,18 +248,24 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 #pweb-themes-coverflow {
     text-align: center;
 }
-#pweb-themes-coverflow .pweb-theme {
-	overflow: hidden;
+#pweb-themes-coverflow .pweb-theme-image {
+    overflow: hidden;
     position: relative;
-}
-#pweb-themes-coverflow .pweb-theme img {
     margin: 0 auto;
-    border: 10px solid #FFFFFF;
+    background: #fff;
     -webkit-box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
+}
+#pweb-themes-coverflow .pweb-theme-image img {
+    margin: 0 auto;
+    border: 10px solid #FFFFFF;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+#pweb-themes-coverflow .pweb-theme-image .glyphicon {
+    margin: 50px auto;
+    font-size: 100px;
 }
 #pweb-themes-coverflow .pweb-theme .pweb-theme-badge,
 #pweb-themes-coverflow .pweb-theme .pweb-theme-badge-free{

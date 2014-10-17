@@ -843,7 +843,7 @@ pwebcontact_admin.is_pro = true;
     <?php 
     if ($this->view == 'list') : 
         
-        if (count($this->data)) : 
+        if (count($this->data->forms)) : 
             $this->_display_forms_list();
         else : 
             $this->_display_create_form();
@@ -856,6 +856,8 @@ pwebcontact_admin.is_pro = true;
         $this->_display_settings();
     
     endif; ?>
+    
+    <hr>
     
     <p class="pweb-copyrights">
 		Copyright &copy; 2014 Perfect Web sp. z o.o., All rights reserved.
@@ -950,15 +952,20 @@ pwebcontact_admin.is_pro = true;
             if ($item->isFile() AND preg_match('/\.json$/i', $item->getFilename())) {
                 
                 $basename = $item->getBasename('.json');
-                $settings = null;
+                
+                /*** PRO START ***/
+                if ($basename === 'free' OR ($basename === 'dev' AND WP_DEBUG !== true)) {
+                    continue;
+                }
+                /*** PRO END ***/
                 
                 if (WP_Filesystem()) {
                     global $wp_filesystem;
-                    if ($wp_filesystem->is_file( $item->getPath() . '/' . $basename . '.jpg' )) {
-                        $settings = $wp_filesystem->get_contents($item->getPathname());
-                    }
+                    $has_image = $wp_filesystem->is_file( $item->getPath() . '/' . $basename . '.jpg' );
+                    $settings = $wp_filesystem->get_contents($item->getPathname());
                 }
-                elseif (is_file( $item->getPath() . '/' . $basename . '.jpg' )) {
+                else {
+                    $has_image = is_file( $item->getPath() . '/' . $basename . '.jpg' );
                     $settings = file_get_contents($item->getPathname());
                 }
                 
@@ -967,14 +974,13 @@ pwebcontact_admin.is_pro = true;
                     $settings = json_decode($settings);
                     
                     $theme = new stdClass();
-                    $theme->name = $basename;
                     $theme->title = isset($settings->title) ? $settings->title : ucfirst( str_replace('_', ' ', $basename) );
                     $theme->description = isset($settings->description) ? $settings->description : '';
-                    $theme->image = $themes_url . $basename . '.jpg';
+                    $theme->image = $has_image ? $themes_url . $basename . '.jpg' : null;
                     $theme->settings = isset($settings->params) ? json_encode($settings->params) : '{}';
-                    $theme->is_active = ($active_theme === $theme->name);
+                    $theme->is_active = ($active_theme === $basename);
                     
-                    $themes[] = $theme;
+                    $themes[$basename] = $theme;
                 }
             }
         }

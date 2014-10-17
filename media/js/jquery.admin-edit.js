@@ -624,6 +624,26 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         $flipster.flipster("jump", "right");
     });
     
+    // Reset theme settings
+    $("#pweb-themes-coverflow-control-reset").click(function(e){
+        e.preventDefault();
+        
+        $("#pweb_params_theme").val("");
+        
+        $.each( $(this).data("settings"), function(option, value) {
+            var $option = $("#pweb_params_"+option);
+            if ($option.prop("tagName").toLowerCase() === "fieldset") {
+                if (!value) {
+                    value = "0";
+                }
+                $option.find("#pweb_params_"+option+"_"+value.toString()).prop("checked", true).trigger("change");
+            }
+            else {
+                $option.val(value).trigger("change");
+            }
+        });
+    });
+    
     // Load theme settings
     $("#pweb-themes-coverflow-control-load").click(function(e){
         e.preventDefault();
@@ -643,25 +663,23 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 class : "button-primary",
                 click: function(e) {
                     $(this).dialog("close");
-                    // Find current theme
-                    var $theme = $flipster.find(".flip-current .pweb-theme");
-                    // Store theme name
-                    $("#pweb_params_theme").val( $theme.data("name") );
-                    // Load theme settings
+                    
                     if (pwebcontact_admin.is_pro) {
+                        // Find current theme
+                        var $theme = $flipster.find(".flip-current .pweb-theme");
+                        // Store theme name
+                        $("#pweb_params_theme").val( $theme.data("name") );
+                        // Load theme settings
                         $.each( $theme.data("settings"), function(option, value) {
                             var $option = $("#pweb_params_"+option);
                             if ($option.prop("tagName").toLowerCase() === "fieldset") {
                                 if (!value) {
                                     value = "0";
                                 }
-                                $option.find("#pweb_params_"+option+"_"+value.toString()).prop("checked", true);
+                                $option.find("#pweb_params_"+option+"_"+value.toString()).prop("checked", true).trigger("change");
                             }
                             else {
-                                $option.val(value);
-                                if ($option.hasClass("wp-color-picker")) {
-                                    $option.trigger("change");
-                                }
+                                $option.val(value).trigger("change");
                             }
                         });
                     }

@@ -25,13 +25,21 @@ function_exists('add_action') or die;
 <?php $themes = $this->_get_themes(); ?>
 <div class="flipster" id="pweb-themes-coverflow">
     <ul>
-        <?php foreach ($themes as $theme) : ?>
+        <?php foreach ($themes as $theme_name => $theme) : 
+            if ($theme_name === 'reset') continue; ?>
         <li<?php if ($theme->is_active === true) echo ' class="pweb-active-theme"'; ?>>
-            <div class="pweb-theme" data-name="<?php echo $theme->name; ?>" data-settings='<?php echo $theme->settings; ?>'>
-                <!-- FREE START -->
-                <div class="pweb-theme-badge<?php echo $theme->name === 'free' ? '-free' : ''; ?>"><?php echo $theme->name === 'free' ? 'Free' : 'Pro'; ?></div>
-                <!-- FREE END -->
-                <img src="<?php echo $theme->image; ?>" alt="<?php echo $theme->title; ?>">
+            <div class="pweb-theme" data-name="<?php echo $theme_name; ?>" data-settings='<?php echo $theme->settings; ?>'>
+                
+                <div class="pweb-theme-image">
+                    <!-- FREE START -->
+                    <div class="pweb-theme-badge<?php echo $theme_name === 'free' ? '-free' : ''; ?>"><?php echo $theme_name === 'free' ? 'Free' : 'Pro'; ?></div>
+                    <!-- FREE END -->
+                    <?php if ($theme->image) : ?>
+                    <img src="<?php echo $theme->image; ?>" alt="<?php echo $theme->title; ?>">
+                    <?php else : ?>
+                    <i class="glyphicon glyphicon-picture"></i>
+                    <?php endif; ?>
+                </div>
                 <div class="pweb-theme-caption">
                     <h3><?php echo $theme->title; ?></h3>
                     <p><?php echo $theme->description; ?></p>
@@ -46,11 +54,13 @@ function_exists('add_action') or die;
         <i class="glyphicon glyphicon-chevron-left"></i> <?php _e( 'Previous', 'pwebcontact' ); ?>
     </button>
     <button id="pweb-themes-coverflow-control-load" class="button button-primary pweb-has-tooltip" type="button" title="<?php esc_attr_e( 'Theme settings would only change colors of your form. It would have no influence on layout and fields.', 'pwebcontact' ); ?>">
-        <?php _e( 'Load theme settings', 'pwebcontact' ); ?>
+        <i class="glyphicon glyphicon-open"></i> <?php _e( 'Load theme settings', 'pwebcontact' ); ?>
     </button>
-    <button id="pweb-themes-coverflow-control-reset" class="button button-primary pweb-has-tooltip" type="button" title="<?php esc_attr_e( 'Theme settings would only change colors of your form. It would have no influence on layout and fields.', 'pwebcontact' ); ?>">
-        <?php _e( 'TODO Reset theme settings', 'pwebcontact' ); ?>
+    <?php if (isset($themes['reset'])) : ?>
+    <button id="pweb-themes-coverflow-control-reset" class="button button-primary pweb-has-tooltip" data-settings='<?php echo $themes['reset']->settings; ?>' type="button" title="<?php esc_attr_e( 'Reset all theme settings to defaults.', 'pwebcontact' ); ?>">
+        <i class="glyphicon glyphicon-remove"></i> <?php _e( 'Reset', 'pwebcontact' ); ?>
     </button>
+    <?php endif; ?>
     <button id="pweb-themes-coverflow-control-next" class="button button-primary" type="button">
         <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
@@ -62,20 +72,27 @@ function_exists('add_action') or die;
 </div>
 
 <div id="pweb-dialog-theme" title="<?php esc_attr_e( 'Load theme settings', 'pwebcontact' ); ?>" style="display:none">
-    <p><?php _e( 'Are you sure you want to load settings for selected theme? It would change your current theme settings.', 'pwebcontact' ); ?></p>
+    <p>
+        <!-- FREE START -->
+        <?php _e('Using our themes requires PRO version.', 'pwebcontact'); ?>
+        <!-- FREE END -->
+        <!-- PRO START -->
+        <?php _e( 'Are you sure you want to load settings for selected theme? It would change your current theme settings.', 'pwebcontact' ); ?>
+        <!-- PRO END -->
+    </p>
 </div>
 
 
 <!-- FREE START -->
 <div id="pweb_theme_warning" class="pweb-alert pweb-alert-info">
     <?php _e('Using our themes requires PRO version.', 'pwebcontact'); ?>
-    <button class="button button-primary pweb-buy">
-        <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
-    </button>
     <?php _e('You can create your own theme for FREE just by editing CSS files.', 'pwebcontact'); ?>
     <a class="button" target="_blank" href="<?php echo admin_url('plugin-editor.php?file='.urlencode('pwebcontact/media/css/themes/free.css').'&amp;plugin='.urlencode('pwebcontact/pwebcontact.php')); ?>">
         <i class="glyphicon glyphicon-edit"></i> <?php _e( 'Edit CSS', 'pwebcontact' ); ?>
     </a>
+    <button class="button button-primary pweb-buy">
+        <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
+    </button>
 </div>
 <!-- FREE END -->
 
@@ -395,8 +412,8 @@ function_exists('add_action') or die;
                     'name' => 'bg_image',
                     'header' => 'Background image',
                     'label' => 'Background image',
-                    'tooltip' => 'Enter URL of image which will be shown in background of contact form. Image will not be repeated.',
-                    'class' => 'pweb-filter-url pweb-input-xlarge'
+                    'tooltip' => 'Enter URL of image which will be shown in background of contact form. URL should be relative to WordPress root.',
+                    'class' => 'pweb-input-xlarge'
                 )); ?>
 
                 <?php echo $this->_get_field(array(
@@ -423,10 +440,9 @@ function_exists('add_action') or die;
                     'name' => 'bg_repeat',
                     'label' => 'Background repeat',
                     'tooltip' => '',
-                    'default' => 'no-repeat',
                     'options' => array(
                         array(
-                            'value' => 'no-repeat',
+                            'value' => '',
                             'name' => 'No repeat'
                         ),
                         array(
@@ -634,12 +650,12 @@ function_exists('add_action') or die;
                 </button>
                 <!-- PRO END -->
                 <!-- FREE START -->
-                <?php _e( 'In Contact Form Free and Pro version 2.0 predefined styles were removed. To change colors edit Free theme CSS file or buy Pro version to use colors options.', 'pwebcontact' ); ?>
+                <?php _e( 'In Contact Form FREE and PRO version 2.0 predefined styles were removed. To change colors edit Free theme CSS file or buy PRO version to use colors options.', 'pwebcontact' ); ?>
                 <a class="button" target="_blank" href="<?php echo admin_url('plugin-editor.php?file='.urlencode('pwebcontact/media/css/themes/free.css').'&amp;plugin='.urlencode('pwebcontact/pwebcontact.php')); ?>">
                     <i class="glyphicon glyphicon-edit"></i> <?php _e( 'Edit CSS', 'pwebcontact' ); ?>
                 </a>
                 <button class="button button-primary pweb-buy">
-                    <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy Pro', 'pwebcontact' ); ?>
+                    <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
                 </button>
                 <!-- FREE END -->
             </div>
