@@ -611,27 +611,34 @@ class PWebContact
 			// Toggler vertical text
 			if ($params->get('toggler_vertical'))
 			{
-				$lang_code = get_bloginfo('language'); //WP
-				$toggler_dir  = $params->get('media_path').'cache/'; //WP
-				$toggler_file = 'toggler-'.$form_id.'-'.$lang_code.'-'
-					.md5(
-						 (int)$params->get('toggler_width', 30)
-						.(int)$params->get('toggler_height', 120)
-						.(int)$params->get('toggler_font_size', 12)
-						.(int)$params->get('toggler_rotate', 1)
-						.$params->get('toggler_font', 'NotoSans-Regular')
-						.$params->get('toggler_color')
-						.$params->get('toggler_name')
-					)
-					.'.png';
-				
-				if (!file_exists($toggler_dir.$toggler_file)) //WP
-					self::createToggleImage($form_id, $toggler_dir, $toggler_file); //WP
-				
-				//$css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url("'.$params->get('media_url').'toggler/'.$toggler_file.'")}';
-				$css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url(data:image/png;base64,'
-						.base64_encode(file_get_contents($toggler_dir.$toggler_file)) //WP @todo use WP file driver
-						.')}';
+                require_once ABSPATH . 'wp-admin/includes/file.php';
+
+                if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
+                    global $wp_filesystem;
+                    
+                    $lang_code = get_bloginfo('language');
+                    $path  = $params->get('media_path').'cache/';
+                    $file = 'toggler-'.$form_id.'-'.$lang_code.'-'.md5(
+                             (int)$params->get('toggler_width', 30)
+                            .(int)$params->get('toggler_height', 120)
+                            .(int)$params->get('toggler_font_size', 12)
+                            .(int)$params->get('toggler_rotate', 1)
+                            .$params->get('toggler_font', 'NotoSans-Regular')
+                            .$params->get('toggler_color')
+                            .$params->get('toggler_name')
+                    ).'.png';
+                    
+                    if (!$wp_filesystem->exists( $path . $file )) {
+                        self::createToggleImage($form_id, $path, $file, $lang_code);
+                    }
+
+                    //$css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url("'.$params->get('media_url').'cache/'.$file.'")}';
+                    $css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url(data:image/png;base64,'
+                            .base64_encode($wp_filesystem->get_contents( $path. $file )) 
+                            .')}';
+                    
+                    unset($lang_code, $path, $file);
+                }
 			}
             /*** PRO END ***/
 		}
@@ -1186,8 +1193,15 @@ class PWebContact
                         wp_add_inline_style('pwebcontact', $css);
                         $file = false;
                     }
-                    
-                    // @todo delete old cache files
+                    else {
+                        // delete old cached files
+                        $dir = $wp_filesystem->dirlist($path);
+                        foreach ($dir as $item) {
+                            if ($item['name'] !== $file AND preg_match('/^[a-f0-9]{32}\-'.$form_id.'\.css$/i', $item['name']) === 1) {
+                                $wp_filesystem->delete( $path . $item['name'] );
+                            }
+                        }
+                    }
                 }
             }
             else $file = false;
@@ -1492,7 +1506,7 @@ class PWebContact
 
 
     /*** PRO START ***/
-	protected static function createToggleImage($form_id = 0, $path = null, $file = null)
+	protected static function createToggleImage($form_id = 0, $path = null, $file = null, $lang_code = 'en-US')
 	{
 		$params 		= self::getParams($form_id);
 		
@@ -1594,13 +1608,23 @@ class PWebContact
 			
 		// save image
 		//TODO consider output image and catch it with ob_get_contents() and then write with JFile
-		imagepng($im, $path . $file);
+		$result = imagepng($im, $path . $file);
 		imagedestroy($im);
+        
+        // delete old cached files
+        if ($result === true AND function_exists('WP_Filesystem') AND WP_Filesystem()) {
+            global $wp_filesystem;
+            
+            $dir = $wp_filesystem->dirlist($path);
+            foreach ($dir as $item) {
+                if ($item['name'] !== $file AND preg_match('/^toggler\-'.$form_id.'\-'.$lang_code.'\-[a-f0-9]{32}\.png$/i', $item['name']) === 1) {
+                    $wp_filesystem->delete( $path . $item['name'] );
+                }
+            }
+        }
 	}
-    /*** PRO END ***/
 
 
-    /*** PRO START ***/
 	protected static function utf8_strconvert($str)
 	{
 		if (function_exists('mb_detect_encoding') AND is_callable('mb_detect_encoding') AND
@@ -1616,10 +1640,8 @@ class PWebContact
 		
 		return $str;
 	}
-    /*** PRO END ***/
 
 
-    /*** PRO START ***/
     protected static function utf8_strrev($str)
 	{
 		if (empty($str)) return null;
@@ -1627,10 +1649,8 @@ class PWebContact
 		preg_match_all('/./us', $str, $ar);
 		return join('', array_reverse($ar[0]));
 	}
-    /*** PRO END ***/
 
 
-    /*** PRO START ***/
 	protected static function parseToRgbColor($color = null)
 	{
 		$color = trim($color);
