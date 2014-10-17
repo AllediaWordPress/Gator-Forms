@@ -322,7 +322,7 @@ class PWebContact
         $form_id = (int)$form_id;
 		if (!isset(self::$params[$form_id]))
 		{
-            $sql =  $wpdb->prepare('SELECT `params`, `fields`, `publish`, `position`, `layout` '.
+            $sql =  $wpdb->prepare('SELECT `params`, `fields`, `publish`, `position`, `layout`, `modify_date` '.
                     'FROM `'.$wpdb->prefix.'pwebcontact_forms` '.
                     'WHERE `id` = %d', $form_id);
             
@@ -336,6 +336,7 @@ class PWebContact
             $params->def('publish', $data->publish);
             $params->def('position', $data->position);
             $params->def('layout_type', $data->layout);
+            $params->def('cache_key', md5($data->modify_date));
 				
 			self::$params[$form_id] = $params;
             
@@ -399,6 +400,7 @@ class PWebContact
         /*** PRO START ***/
         $moduleClasses[] = 'pweb-labels-'.$params->get('labels_position', 'inline');
         
+        if ((int)$params->get('gradient', 1) === 1) $moduleClasses[] = $togglerClasses[] = 'pweb-gradient';
         if ($params->get('rounded')) $moduleClasses[] = $togglerClasses[] = 'pweb-radius';
 		if ($params->get('shadow')) $moduleClasses[] = $togglerClasses[] = 'pweb-shadow';
         
@@ -438,12 +440,12 @@ class PWebContact
 				if (!$params->get('debug')) $boxClasses[] = 'pweb-init';
 			}
 			
+            if (($class = $params->get('theme'))) $togglerClasses[] = 'pweb-theme-'.$class;
             /*** PRO START ***/
+            if ($icon = $params->get('toggler_icon')) $togglerClasses[] = 'pweb-icon pweb-icon-'.$icon;
+            
             /* @deprecated since 2.1 */
 			if (($class = $params->get('style_toggler', -1)) != -1) $togglerClasses[] = 'pweb-toggler-'.$class;
-            
-            if (($class = $params->get('theme'))) $togglerClasses[] = 'pweb-theme-'.$class;
-			if ($icon = $params->get('toggler_icon')) $togglerClasses[] = 'pweb-icon pweb-icon-'.$icon;
             /*** PRO END ***/
         }
         
@@ -470,7 +472,7 @@ class PWebContact
 	}
 
 
-	public static function getCssDeclaration($form_id = 0)
+	public static function compileCustomCSS($form_id = 0)
 	{
 		$params 		= self::getParams($form_id);
 		$form_id 		= (int)$params->get('id');
@@ -511,22 +513,75 @@ class PWebContact
 		{
 			// Toggler
             /*** PRO START ***/
+            if ($value = $params->get('toggler_bg')) {
+
+                // Toggler background color
+                $declarations[] = 'background-color:'.$value;
+
+                // Toggler gradient and border
+                if ((int)$params->get('gradient') === 1) {
+
+                    $secondary_color = self::changeRgbColorBrightness( self::parseToRgbColor($value), 30 );
+                    $gradient_color = 'rgb('.$secondary_color['r'].','.$secondary_color['g'].','.$secondary_color['b'].')';
+
+                    // Rotate gradient
+                    switch ($params->get('toggler_position')) {
+                        
+                        case 'left':
+                            $direction = $params->get('toggler_vertical') ? 'left' : 'top';
+                            break;
+                        
+                        case 'right':
+                            $direction = $params->get('toggler_vertical') ? 'right' : 'top';
+                            break;
+                        
+                        case 'bottom:left':
+                        case 'bottom:right':
+                            $direction = 'bottom';
+                            break;
+                        
+                        case 'top:left':
+                        case 'top:right':
+                        default:
+                            $direction = 'top';
+                    }
+                    
+                    self::getCSS3Gradient($direction, $value, $gradient_color, $declarations);
+                    unset($gradient_color);
+
+                    $declarations[] = 'border-color:'.$value;
+                }
+                else {
+
+                    $secondary_color = self::changeRgbColorBrightness( self::parseToRgbColor($value), -30 );
+
+                    $declarations[] = 'background-image:none';
+                    $declarations[] = 'border-color:rgb('.$secondary_color['r'].','.$secondary_color['g'].','.$secondary_color['b'].')';
+                }
+
+                // Toggler text shadow
+                if ($secondary_color['r'] + $secondary_color['g'] + $secondary_color['b'] > 384) {
+                    $declarations[] = 'text-shadow:0 1px 1px rgba(0,0,0,0.5)';
+                }
+                else {
+                    $declarations[] = 'text-shadow:0 1px 1px rgba(255,255,255,0.5)';
+                }
+
+                unset($secondary_color);
+            }
 			if ($value = $params->get('toggler_color'))
 				$declarations[] = 'color:'.$value;
-			if ($value = $params->get('toggler_bg')) {
-				$declarations[] = 'background-image:none';
-				$declarations[] = 'background-color:'.$value;
-				$declarations[] = 'border-color:'.$value;
-			}
 			if ($value = $params->get('toggler_font_size'))
 				$declarations[] = 'font-size:'.$value;
 			if ($value = $params->get('toggler_font_family'))
 				$declarations[] = 'font-family:'.$value;
             /*** PRO END ***/
+            
 			if ($value = $params->get('toggler_width'))
 				$declarations[] = 'width:'.(int)$value.'px';
 			if ($value = $params->get('toggler_height'))
 				$declarations[] = 'height:'.(int)$value.'px';
+            
 			if (count($declarations)) {
 				$css .= '#pwebcontact'.$form_id.'_toggler{'.implode(';', $declarations).'}';
 				$declarations = array();
@@ -535,13 +590,18 @@ class PWebContact
             /*** PRO START ***/
 			// Toggler icon
 			if ($params->get('toggler_icon') == 'gallery') {
-				if ($value = $params->get('toggler_icon_gallery_image'))
-					$css .= '#pwebcontact'.$form_id.'_toggler .pweb-icon{background-image:url('.$media_url.'images/icons/'.urlencode($value).')}';
+				if ($value = $params->get('toggler_icon_gallery_image')) {
+					$css .=  '#pwebcontact'.$form_id.'_toggler .pweb-icon'
+                            .'{background-image:url("'.$media_url.'images/icons/'.urlencode($value).'")}';
+                }
 			}
 			elseif ($params->get('toggler_icon') == 'custom') {
-				if ($value = $params->get('toggler_icon_custom_image'))
+				if ($value = $params->get('toggler_icon_custom_image')) {
                         //TODO parse and encode URL with JS
-					$css .= '#pwebcontact'.$form_id.'_toggler .pweb-icon{background-image:url('.$value.')}'; //WP
+                    $pos = strpos($value, '//');
+					$css .=  '#pwebcontact'.$form_id.'_toggler .pweb-icon'
+                            .'{background-image:url("'.( ($pos !== false AND $pos <= 6) ? $value : home_url().'/'.ltrim($value, '/') ).'")}';
+                }
 			}
 			elseif ($params->get('toggler_icon') == 'glyphicon') {
 				if ($value = $params->get('toggler_glyphicon'))
@@ -562,23 +622,22 @@ class PWebContact
 						.$params->get('toggler_font', 'NotoSans-Regular')
 						.$params->get('toggler_color')
 						.$params->get('toggler_name')
-						.$params->get('style_toggler', 'blue')
 					)
 					.'.png';
 				
 				if (!file_exists($toggler_dir.$toggler_file)) //WP
 					self::createToggleImage($form_id, $toggler_dir, $toggler_file); //WP
 				
-				//$css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url('.$params->get('media_url').'toggler/'.$toggler_file.')}';
+				//$css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url("'.$params->get('media_url').'toggler/'.$toggler_file.'")}';
 				$css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url(data:image/png;base64,'
-						.base64_encode(file_get_contents($toggler_dir.$toggler_file)) //WP
+						.base64_encode(file_get_contents($toggler_dir.$toggler_file)) //WP @todo use WP file driver
 						.')}';
 			}
             /*** PRO END ***/
 		}
 		
 		/*** PRO START ***/
-		// Form container
+		// Form container font
 		if ($value = $params->get('form_font_size'))
 			$declarations[] = 'font-size:'.$value;
 		if ($value = $params->get('form_font_family'))
@@ -594,10 +653,12 @@ class PWebContact
 					.'{'.implode(';', $declarations).'}';
 			$declarations = array();
 		}
-		
+        
+		// Form container text
 		if ($value = $params->get('text_color')) {
 			$css .=  '#pwebcontact'.$form_id.'_form label,'
-					.'#pwebcontact'.$form_id.'_form .pweb-separator-text,'
+					.'#pwebcontact'.$form_id.'_form .pweb-field-custom-text,'
+					.'#pwebcontact'.$form_id.'_form .pweb-field-header,'
 					.'#pwebcontact'.$form_id.'_form .pweb-msg,'
 					.'#pwebcontact'.$form_id.'_form .pweb-chars-counter,'
 					.'#pwebcontact'.$form_id.'_form .pweb-uploader,'
@@ -605,6 +666,7 @@ class PWebContact
 					.'{color:'.$value.'}';
 		}
 		
+        // Background color
 		if ($value = $params->get('bg_color')) {
 			if (($opacity = (float)$params->get('bg_opacity')) < 1) {
 				$bg_color = self::parseToRgbColor($value);
@@ -612,6 +674,8 @@ class PWebContact
 			}
 			$container_bg = 'background-color:'.$value;
 			$css .= '#pwebcontact'.$form_id.'_container{'.$container_bg.'}';
+            
+            unset($opacity);
 		}
 		
 		// Labels width
@@ -621,27 +685,72 @@ class PWebContact
 			$css .= '#pwebcontact'.$form_id.'_box .pweb-label{width:'.$value.'%}';
 			$css .= '#pwebcontact'.$form_id.'_box .pweb-field{width:'.(99.9-floatval($value)).'%}';	
 		}
+        
+        // Labels invalid color
+		if (($value = strtolower($params->get('labels_invalid_color', '#aa0000'))) !== '#aa0000' AND $value) 
+		{
+			$css .=  '#pwebcontact'.$form_id.'_box label.invalid,'
+                    .'#pwebcontact'.$form_id.'_box label.invalid a'
+                    .'{color:'.$value.' !important}';
+		}
 		
 		// Message success and error
-		if ($value = $params->get('msg_success_color'))
+		if (($value = strtolower($params->get('msg_success_color'))) !== '#009e0a' AND $value)
 			$css .= '#pwebcontact'.$form_id.'_form .pweb-msg .pweb-success{color:'.$value.'}';
-		if ($value = $params->get('msg_error_color'))
+		if (($value = strtolower($params->get('msg_error_color'))) !== '#aa0000' AND $value)
 			$css .= '#pwebcontact'.$form_id.'_form .pweb-msg .pweb-error{color:'.$value.'}';
 		
 		
 		// Buttons, links
 		if ($value = $params->get('buttons_fields_color')) {
-			$declarations[] = 'background-image:none';
-			$declarations[] = 'background-color:'.$value;
-			$declarations[] = 'border-color:'.$value;
-			
+            
+            $declarations_upload = array();
+            
+            // Buttons background color
+            $declarations[] = $declarations_upload[] = 'background-color:'.$value;
+            
+            // Buttons gradient and border
+            if ((int)$params->get('gradient') === 1) {
+                
+                $secondary_color = self::changeRgbColorBrightness( self::parseToRgbColor($value), 30 );
+                $gradient_color = 'rgb('.$secondary_color['r'].','.$secondary_color['g'].','.$secondary_color['b'].')';
+                
+                self::getCSS3Gradient('bottom', $value, $gradient_color, $declarations);
+                unset($gradient_color);
+                
+                $declarations[] = $declarations_upload[] = 'border-color:'.$value;
+            }
+            else {
+                
+                $secondary_color = self::changeRgbColorBrightness( self::parseToRgbColor($value), -30 );
+                
+                $declarations[] = 'background-image:none';
+                $declarations[] = $declarations_upload[] = 'border-color:rgb('.$secondary_color['r'].','.$secondary_color['g'].','.$secondary_color['b'].')';
+            }
+            
+            // Buttons text shadow
+            if ($secondary_color['r'] + $secondary_color['g'] + $secondary_color['b'] > 384) {
+                $declarations[] = 'text-shadow:0 1px 1px rgba(0,0,0,0.5)';
+            }
+            else {
+                $declarations[] = 'text-shadow:0 1px 1px rgba(255,255,255,0.5)';
+            }
+            
+            // Links
 			$css .=  '#pwebcontact'.$form_id.'_container a,'
 					.'#pwebcontact'.$form_id.'_container a:hover,'
 					.'#pwebcontact'.$form_id.'_container .pweb-button-close'
 					.'{color:'.$value.' !important}';
+            
+            // Upload progress
+			$css .=  '#pwebcontact'.$form_id.'_uploader_container .progress.progress-striped .bar.progress-bar'
+					.'{'.implode(';', $declarations_upload).'}';
+            
+            unset($secondary_color, $declarations_upload);
 		}
+        // Buttons text color
 		if ($value = $params->get('buttons_text_color'))
-			$declarations[] = 'color:'.$value.' !important';
+			$declarations[] = 'color:'.$value.'!important';
 		if (count($declarations)) {
 			$css .=  '#pwebcontact'.$form_id.'_form button,'
 					.'#pwebcontact'.$form_id.'_form .btn'
@@ -649,29 +758,93 @@ class PWebContact
 			$declarations = array();
 		}
         
-        // Fields
-		if ($value = $params->get('fields_color')) {
-            $border_color = self::parseToRgbColor($value);
-			foreach ($border_color as &$color) {
-				$color -= 25; // 10% from 255
-				if ($color < 0) $color = 0;
-			}
-			$declarations[] = 'background-image:none';
-			$declarations[] = 'background-color:'.$value;
-            $declarations[] = 'border-color:rgb('.$border_color['r'].','.$border_color['g'].','.$border_color['b'].') !important';
-		}
-		if ($value = $params->get('fields_text_color'))
-			$declarations[] = 'color:'.$value.' !important';
+        
+        // Fields background color
+        if ($value = $params->get('fields_color'))
+            $declarations[] = 'background-color:'.$value;
+        // Fields border color
+		if ($value = $params->get('fields_border_color'))
+			$declarations[] = 'border-color:'.$value;
+        // Fields text color
+		if ($value = $params->get('fields_text_color')) {
+			$declarations[] = 'color:'.$value;
+            
+            // Calendar button
+            $css .=  '#pwebcontact'.$form_id.'_form .pweb-calendar-btn'
+                    .'{color:'.$value.'}';
+            
+            // Label over field
+            if ($params->get('labels_position', 'inline') == 'over') {
+                
+                $color = self::parseToRgbColor($value);
+                
+                $css .=  '#pwebcontact'.$form_id.'_form .pweb-label-over label'
+                        .'{color:rgba('.$color['r'].','.$color['g'].','.$color['b'].',0.5)}';
+                
+                unset($color);
+            }
+        }
 		if (count($declarations)) {
 			$css .=  '#pwebcontact'.$form_id.'_form input.pweb-input,'
 			 		.'#pwebcontact'.$form_id.'_form select,'
-			 		.'#pwebcontact'.$form_id.'_form textarea,'
-                    .'#pwebcontact'.$form_id.'_form input.pweb-input:focus,'
+			 		.'#pwebcontact'.$form_id.'_form textarea'
+					.'{'.implode(';', $declarations).'}';
+			$declarations = array();
+		}
+        
+        // Fields active background color
+        if ($value = $params->get('fields_active_color'))
+            $declarations[] = 'background-color:'.$value;
+        // Fields active border color
+		if ($value = $params->get('fields_active_border_color')) {
+			$declarations[] = 'border-color:'.$value;
+            
+            $box_shadow = 'box-shadow: 0 0 3px '.$value.' inset';
+            $declarations[] = '-webkit-'.$box_shadow;
+            $declarations[] = '-moz-'.$box_shadow;
+            $declarations[] = $box_shadow;
+            
+            unset($box_shadow);
+        }
+        // Fields active text color
+		if ($value = $params->get('fields_active_text_color')) {
+			$declarations[] = 'color:'.$value;
+            $css .=  '#pwebcontact'.$form_id.'_form .pweb-calendar-btn:hover'
+                    .'{color:'.$value.'}';
+        }
+		if (count($declarations)) {
+			$css .=  '#pwebcontact'.$form_id.'_form input.pweb-input:focus,'
 			 		.'#pwebcontact'.$form_id.'_form select:focus,'
 			 		.'#pwebcontact'.$form_id.'_form textarea:focus'
 					.'{'.implode(';', $declarations).'}';
 			$declarations = array();
 		}
+        
+        // Fields invalid background color
+        if ($value = $params->get('fields_invalid_color'))
+            $declarations[] = 'background-color:'.$value;
+        // Fields invalid border color
+		if ($value = $params->get('fields_invalid_border_color')) {
+			$declarations[] = 'border-color:'.$value;
+            
+            $box_shadow = 'box-shadow: 0 0 3px '.$value.' inset';
+            $declarations[] = '-webkit-'.$box_shadow;
+            $declarations[] = '-moz-'.$box_shadow;
+            $declarations[] = $box_shadow;
+            
+            unset($box_shadow);
+        }
+		// Fields invalid text color
+		if ($value = $params->get('fields_invalid_text_color'))
+			$declarations[] = 'color:'.$value;
+        if (count($declarations)) {
+			$css .=  '#pwebcontact'.$form_id.'_form input.pweb-input.invalid,'
+			 		.'#pwebcontact'.$form_id.'_form select.invalid,'
+			 		.'#pwebcontact'.$form_id.'_form textarea.invalid'
+					.'{'.implode(';', $declarations).'}';
+			$declarations = array();
+		}
+        
 		
         if ($layout == 'modal' OR $params->get('load_modal_backdrop')) {
             
@@ -689,7 +862,8 @@ class PWebContact
 		// Background image
 		$declarations_mobile = array();
 		if ($value = $params->get('bg_image')) {
-			$declarations[] = 'background-image:url('.$value.')'; //WP
+            $pos = strpos($value, '//');
+			$declarations[] = 'background-image:url("'.( ($pos !== false AND $pos <= 6) ? $value : home_url().'/'.ltrim($value, '/') ).'")';
 		}
 		if ($value = $params->get('bg_position')) {
 			if ($params->get('rtl') == 2) {
@@ -700,6 +874,12 @@ class PWebContact
 			}
 			$declarations[] = 'background-position:'.$value;
 		}
+        if ($value = $params->get('bg_repeat')) {
+			$declarations[] = 'background-repeat:'.$value;
+		}
+        if ($value = $params->get('bg_size')) {
+			$declarations[] = 'background-size:'.$value;
+		}
 		if (($padding_position = $params->get('bg_padding_position')) AND ($padding = $params->get('bg_padding'))) {
 			if ($params->get('rtl') == 2) {
 				if ($padding_position == 'left')
@@ -709,17 +889,19 @@ class PWebContact
 			}
 			$declarations[] = 'padding-'.$padding_position.':'.$padding;
 			
+            // Padding on mobile
 			if (($padding_position == 'left' OR $padding_position == 'right')) {
-				$padding_mobile = 10;
+				$padding = 10;
 				if ($layout == 'slidebox' 
 					AND ($params->get('toggler_position') == 'left' OR $params->get('toggler_position') == 'right') 
 					AND $params->get('toggler_vertical') AND !$params->get('toggler_slide')) {
-						$padding_mobile = 50;
+						$padding = 50;
 				}
-				if ($params->get('bg_image')) {
+                // Disable single background image on mobile
+				if ($params->get('bg_image') AND !$params->get('bg_repeat') AND !$params->get('bg_size')) {
 					$declarations_mobile[] = 'background-image:none';
 				}
-				$declarations_mobile[] = 'padding-'.$padding_position.':'.$padding_mobile.'px';
+				$declarations_mobile[] = 'padding-'.$padding_position.':'.$padding.'px';
 			}
 		}
 		if (count($declarations)) {
@@ -729,6 +911,7 @@ class PWebContact
 			}
 			$declarations = array();
 		}
+        unset($padding, $padding_position, $declarations_mobile);
 
 
 		// Accordion boxed with arrow
@@ -744,9 +927,13 @@ class PWebContact
 			$declarations[] = '-moz-'.$declarations[0];
 			$declarations[] = '-webkit-'.$declarations[0];
 			$declarations[] = 'border-color:rgb('.$border_color['r'].','.$border_color['g'].','.$border_color['b'].')';
+            
 			$css .= '#pwebcontact'.$form_id.'_container{'.implode(';', $declarations).'}';
 			$css .= '#pwebcontact'.$form_id.'_box .pweb-arrow{border-bottom-color:rgb('.$border_color['r'].','.$border_color['g'].','.$border_color['b'].')}';
-			$declarations = array();
+			
+            $declarations = array();
+            
+            unset($border_color);
 		}
         /*** PRO END ***/
 
@@ -763,8 +950,8 @@ class PWebContact
 			if (isset($container_bg))
 				$declarations[] = $container_bg;
 			if (count($declarations)) {
-				if (($class = $params->get('style_bg', 'white')) != -1) 
-					$css .= '.pweb-bg-'.$class;
+                if (($class = $params->get('theme'))) 
+					$css .= '.pweb-theme-'.$class;
 				$css .= '.ui-effects-transfer.pweb-genie.pwebcontact'.$form_id.'-genie{'.implode(';', $declarations).'}';
 				$declarations = array();
 			}
@@ -774,6 +961,7 @@ class PWebContact
 		if (!$params->get('boostrap2_glyphicons', 0))
 			$css .= '[class^="icon-"],[class*=" icon-"]{background-image:none !important}';
 
+        unset($declarations);
 
 		return $css;
 	}
@@ -944,13 +1132,12 @@ class PWebContact
 		wp_enqueue_script('pwebcontact');
 
 
-        /*** PRO START ***/
 		// CSS styles
-        if (($theme = $params->get('theme')) !== null) {
+        if (($theme = $params->get('theme')) !== null AND file_exists($media_path.'css/themes/'.$theme.'.css')) {
             wp_register_style('pwebcontact-theme-'.$theme, $media_url.'css/themes/'.$theme.'.css');
 			wp_enqueue_style('pwebcontact-theme-'.$theme);
         }
-        
+        /*** PRO START ***/
         /* @deprecated since 2.1 */
 		if (($file = $params->get('style_bg', 'white')) != -1) {
             wp_register_style('pwebcontact-background-'.$file, $media_url.'css/background/'.$file.'.css');
@@ -973,48 +1160,47 @@ class PWebContact
             wp_enqueue_style('pwebcontact-custom');
         }
         
-        
-		// Set custom styles
-		if ($css = self::getCssDeclaration($form_id)) 
-		{
-			$path = $params->get('media_path').'cache/';
-			$file = md5($css).'.css';
-			if ($params->get('cache_css', 1) AND !file_exists($path.$file)) 
-			{
-				require_once ABSPATH . 'wp-admin/includes/file.php';
+		// Set theme custom styles
+        if ($params->get('cache_css', 1))
+        {
+            $path = $params->get('media_path').'cache/';
+            $file = $params->get('cache_key').'-'.$form_id.'.css';
+            
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+
+            if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
+            
+                global $wp_filesystem;
                 
-                // set write permissions to cache folder
-				if (!is_writable($path)) {
-                    if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
-                        global $wp_filesystem;
+                if (!$wp_filesystem->is_file($path . $file)) {
+
+                    $css = self::compileCustomCSS($form_id);
+
+                    // set write permissions to cache folder
+                    if (!$wp_filesystem->is_writable($path)) {
                         $wp_filesystem->chmod($path, 0777);
                     }
-                    else {
-                        chmod($path, 0777);
+
+                    // write cache file
+                    if (!$wp_filesystem->put_contents($path.$file, $css)) {
+                        wp_add_inline_style('pwebcontact', $css);
+                        $file = false;
                     }
-				}
-				
-				// write cache file
-                if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
-                    global $wp_filesystem;
-                    if (!$wp_filesystem->put_contents($path.$file, $css))
-                        $params->set('cache_css', 0);
+                    
+                    // @todo delete old cache files
                 }
-                else {
-                    if (!file_put_contents($path.$file, $css))
-                        $params->set('cache_css', 0);
-                }
-				
-			}
-			
-			if ($params->get('cache_css', 1)) {
-				wp_register_style('pwebcontact-'.$file, $media_url.'cache/'.$file);
+            }
+            else $file = false;
+            
+            if ($file !== false) {
+                wp_register_style('pwebcontact-'.$file, $media_url.'cache/'.$file);
                 wp_enqueue_style('pwebcontact-'.$file);
             }
-			else {
-                wp_add_inline_style('pwebcontact-custom', $css);
-            }
-		}
+        }
+        else {
+            $css = self::compileCustomCSS($form_id);
+            wp_add_inline_style('pwebcontact', $css);
+        }
         
         // CSS IE
 		wp_enqueue_style('pwebcontact-ie8');
@@ -1397,18 +1583,14 @@ class PWebContact
 		}
 		
 		// set write permissions to cache folder
-		if (!is_writable($path)) {
-            
-            require_once ABSPATH . 'wp-admin/includes/file.php';
-            
-            if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
-                global $wp_filesystem;
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+
+        if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
+            global $wp_filesystem;
+            if (!$wp_filesystem->is_writable($path)) {
                 $wp_filesystem->chmod($path, 0777);
             }
-            else {
-                chmod($path, 0777);
-            }
-		}
+        }
 			
 		// save image
 		//TODO consider output image and catch it with ob_get_contents() and then write with JFile
@@ -1484,6 +1666,35 @@ class PWebContact
 		
 		return $color;
 	}
+    
+    
+    protected static function changeRgbColorBrightness($color = array(), $hue_diff = 0)
+	{
+        foreach ($color as &$hue) {
+            
+            $hue += $hue_diff;
+            if ($hue > 255) {
+                $hue = 255;
+            }
+            elseif ($hue < 0) {
+                $hue = 0;
+            }
+        }
+		
+		return $color;
+	}
+    
+    
+    protected static function getCSS3Gradient($direction = 'top', $color_from, $color_to, &$declarations) 
+    {
+        $linear_gradient = 'linear-gradient('.$direction.','.$color_from.','.$color_to.')';
+        
+        $declarations[] = 'background-image:-webkit-linear-gradient('.$direction.','.$color_to.','.$color_from.')';
+        $declarations[] = 'background-image:-moz-'.$linear_gradient;
+        $declarations[] = 'background-image:-ms-'.$linear_gradient;
+        $declarations[] = 'background-image:-o-'.$linear_gradient;
+        $declarations[] = 'background-image:'.$linear_gradient;
+    }
     /*** PRO END ***/
 
 

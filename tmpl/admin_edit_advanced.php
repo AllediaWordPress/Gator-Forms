@@ -75,6 +75,25 @@ function_exists('add_action') or die;
                 
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
+                    'name' => 'cache_css',
+                    'label' => 'Cache theme CSS in a file',
+                    'tooltip' => 'Disable this option only if there are problems with server write permissions.',
+                    'default' => 1,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'No'
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Yes'
+                        )
+                    )
+                )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
                     'name' => 'demo',
                     'label' => 'Demo mode',
                     'tooltip' => 'Sends email message to User only.',

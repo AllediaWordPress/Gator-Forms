@@ -1,11 +1,11 @@
 <?php
 /**
-* @version 3.2.2
-* @package PWebContact
-* @copyright © 2013 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
-* @license GNU General Public License http://www.gnu.org/licenses/gpl-3.0.html
-* @author Piotr Moćko
-*/
+ * @version 2.0.0
+ * @package Perfect Easy & Powerful Contact Form
+ * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @author Piotr Moćko
+ */
 
 // no direct access
 function_exists('add_action') or die;
@@ -32,7 +32,7 @@ class PWebContact_Uploader extends UploadHandler
         
         require_once ABSPATH . 'wp-admin/includes/file.php';
         
-        if (WP_Filesystem()) {
+        if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
             global $wp_filesystem;
             
             if (!$wp_filesystem->is_dir($path)) {
@@ -106,7 +106,7 @@ class PWebContact_Uploader extends UploadHandler
             
             require_once ABSPATH . 'wp-admin/includes/file.php';
             
-            if (WP_Filesystem()) {
+            if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                 global $wp_filesystem;
                 
                 foreach ($attachments as $file)

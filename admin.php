@@ -483,7 +483,7 @@ class PWebContact_Admin {
             if (isset($_GET['ajax']) AND isset($_POST['format']) AND $_POST['format'] AND isset($_POST['tmpl']) AND $_POST['tmpl']) {
                 
                 $path = dirname(__FILE__) .'/media/email_tmpl/'. basename($_POST['tmpl']) . ((int)$_POST['format'] === 2 ? '.html' : '.txt');
-                if (WP_Filesystem()) {
+                if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                     global $wp_filesystem;
                     if ($wp_filesystem->is_file($path)) {
                         $content = $wp_filesystem->get_contents($path);
@@ -506,7 +506,7 @@ class PWebContact_Admin {
             if (isset($_GET['ajax']) AND isset($_POST['fields']) AND $_POST['fields']) {
                 
                 $path = dirname(__FILE__) .'/media/fields_settings/'. basename($_POST['fields']) . '.txt';
-                if (WP_Filesystem()) {
+                if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                     global $wp_filesystem;
                     if ($wp_filesystem->is_file($path)) {
                         $content = $wp_filesystem->get_contents($path);
@@ -959,7 +959,7 @@ pwebcontact_admin.is_pro = true;
                 }
                 /*** PRO END ***/
                 
-                if (WP_Filesystem()) {
+                if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                     global $wp_filesystem;
                     $has_image = $wp_filesystem->is_file( $item->getPath() . '/' . $basename . '.jpg' );
                     $settings = $wp_filesystem->get_contents($item->getPathname());
@@ -1558,7 +1558,7 @@ pwebcontact_admin.is_pro = true;
             
             $path = dirname(__FILE__).'/media/cache/';
             
-            if (WP_Filesystem()) {
+            if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                 global $wp_filesystem;
 
                 if (!$wp_filesystem->is_writable($path)) {
@@ -1598,7 +1598,7 @@ pwebcontact_admin.is_pro = true;
             $upload_dir = wp_upload_dir();
             $path = $upload_dir['basedir'].'/pwebcontact/'.$this->id.'/';
             
-            if (WP_Filesystem()) {
+            if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                 global $wp_filesystem;
 
                 // create wirtable upload path
