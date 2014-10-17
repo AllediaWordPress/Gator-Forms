@@ -203,7 +203,7 @@ function_exists('add_action') or die;
                     ),
                     'default' => '{fields}
 
-{lang:Tiket}: {ticket}
+{lang:Ticket}: {ticket}
 {lang:Page title}: {title}
 {lang:Page URL}: {url}
 {lang:IP}: {ip_address}
@@ -454,14 +454,16 @@ function_exists('add_action') or die;
                     'type' => 'color',
                     'name' => 'msg_success_color',
                     'label' => 'Success message color',
-                    'tooltip' => 'Select custom color of success message'
+                    'tooltip' => 'Select custom color of success message',
+                    'default' => '#009e0a'
                 )); ?>
 
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'msg_error_color',
                     'label' => 'Error message color',
-                    'tooltip' => 'Select custom color of error message'
+                    'tooltip' => 'Select custom color of error message',
+                    'default' => '#aa0000'
                 )); ?>
             </div>
         </div>
