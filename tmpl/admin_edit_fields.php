@@ -158,9 +158,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -262,9 +262,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -379,9 +379,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -474,9 +474,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -626,9 +626,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -731,9 +731,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -836,9 +836,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -940,9 +940,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -1055,9 +1055,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -1159,9 +1159,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -1265,9 +1265,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -1370,9 +1370,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -1464,9 +1464,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -1559,9 +1559,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -1877,9 +1877,9 @@ $this->_set_pro_options('field_types', array(
                     )); ?>
                     
                     <div class="pweb-advanced-options">
-                        <a href="#" class="pweb-advanced-options-toggler">
+                        <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="pweb-advanced-options-content">
                             
                             <?php echo $this->_get_field(array(
@@ -1901,9 +1901,9 @@ $this->_set_pro_options('field_types', array(
         
         
         <div class="pweb-advanced-options pweb-clear">
-            <a href="#" class="pweb-advanced-options-toggler">
+            <button type="button" class="button pweb-advanced-options-toggler">
                 <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-            </a>
+            </button>
             <div class="pweb-advanced-options-content">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
@@ -2008,9 +2008,9 @@ $this->_set_pro_options('field_types', array(
             )); ?>
 
             <div class="pweb-advanced-options">
-                <a href="#" class="pweb-advanced-options-toggler">
+                <button type="button" class="button pweb-advanced-options-toggler">
                     <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                </a>
+                </button>
                 <div class="pweb-advanced-options-content">
 
                     <?php echo $this->_get_field(array(

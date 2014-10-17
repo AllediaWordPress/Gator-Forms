@@ -15,7 +15,7 @@ function_exists('add_action') or die;
 <h3 class="pweb-steps">
     <?php printf(__('Step %d of %d', 'pwebcontact'), 3, 4); ?>
     -
-    <?php _e('Choose predefined theme or create own in advanced options', 'pwebcontact'); ?>
+    <?php _e('Choose predefined theme or create own in customizer', 'pwebcontact'); ?>
     
     <button class="button button-primary pweb-next-tab-button" type="button">
         <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
@@ -90,7 +90,7 @@ function_exists('add_action') or die;
     <a class="button" target="_blank" href="<?php echo admin_url('plugin-editor.php?file='.urlencode('pwebcontact/media/css/themes/free.css').'&amp;plugin='.urlencode('pwebcontact/pwebcontact.php')); ?>">
         <i class="glyphicon glyphicon-edit"></i> <?php _e( 'Edit CSS', 'pwebcontact' ); ?>
     </a>
-    <button class="button button-primary pweb-buy">
+    <button type="button" class="button button-primary pweb-buy">
         <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
     </button>
 </div>
@@ -98,11 +98,13 @@ function_exists('add_action') or die;
 
 
 <div class="pweb-advanced-options">
-    <a href="#" class="pweb-advanced-options-toggler">
-        <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-    </a>
+    <button type="button" class="button button-primary pweb-advanced-options-toggler">
+        <i class="glyphicon glyphicon-tint"></i> <span><?php _e( 'Theme customizer', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
+    </button>
     <div class="pweb-advanced-options-content">
 
+        <hr>
+        
         <div class="pweb-clearfix">
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
@@ -617,13 +619,14 @@ function_exists('add_action') or die;
                 
                 <div class="pweb_params_toggler_vertical_1" style="display:none">
                     
-                    <div class="pweb-alert pweb-alert-warning">
-                        <?php _e('If you see rectangles instead of letters then you have to use other `TTF font`.', 'pwebcontact'); ?><br>
-                        <?php _e('If text is cut then enlarge height of toggler. Width leave blank.', 'pwebcontact'); ?>
-                    </div>
-
                     <div class="pweb-alert pweb-alert-info pweb_params_layout_type_slidebox" style="display:none">
                         <?php esc_html_e('You can slide Toggler Tab with form container or keep fixed at page edge by changing Advanced option of `Form after opening` section in `Loaction & Effects` tab.', 'pwebcontact'); ?>
+                    </div>
+                    
+                    <div class="pweb-alert pweb-alert-warning">
+                        <strong><?php _e('Front-end troubleshooting', 'pwebcontact'); ?></strong><br>
+                        <?php _e('If you see rectangles instead of letters then you have to use other `TTF font`.', 'pwebcontact'); ?><br>
+                        <?php _e('If text is cut then enlarge height of toggler. Width leave blank.', 'pwebcontact'); ?>
                     </div>
                     
                 </div>
@@ -734,7 +737,7 @@ function_exists('add_action') or die;
                 <a class="button" target="_blank" href="<?php echo admin_url('plugin-editor.php?file='.urlencode('pwebcontact/media/css/themes/free.css').'&amp;plugin='.urlencode('pwebcontact/pwebcontact.php')); ?>">
                     <i class="glyphicon glyphicon-edit"></i> <?php _e( 'Edit CSS', 'pwebcontact' ); ?>
                 </a>
-                <button class="button button-primary pweb-buy">
+                <button type="button" class="button button-primary pweb-buy">
                     <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
                 </button>
                 <!-- FREE END -->

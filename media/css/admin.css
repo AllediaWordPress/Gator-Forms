@@ -519,25 +519,36 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 .pweb-advanced-options.pweb-advanced-options-active {
     margin-bottom: 10px;
 }
-.pweb-advanced-options-toggler {
-    display: block;
-    margin-bottom: 10px;
+.pweb-advanced-options .pweb-advanced-options-toggler {
+    display: inline-block;
+    margin-bottom: 10px !important;
     font-weight: bold;
     font-size: 15px;
     text-decoration: none;
 }
-.pweb-advanced-options-toggler span {
+.pweb-advanced-options .pweb-advanced-options-toggler span {
+    margin: 0 10px;
+}
+.pweb-advanced-options a.pweb-advanced-options-toggler span {
     text-decoration: underline;
 }
-.pweb-advanced-options-toggler .glyphicon,
-.pweb-advanced-options-toggler .glyphicon:before {
+.pweb-advanced-options .pweb-advanced-options-toggler .glyphicon,
+.pweb-advanced-options .pweb-advanced-options-toggler .glyphicon:before {
     text-decoration: none;
 }
-.pweb-advanced-options-content {
+.pweb-advanced-options .pweb-advanced-options-content {
     display: none;
 }
 #pweb_fields_types .pweb-advanced-options {
     padding-top: 20px;
+}
+#pweb-tab-theme-content .pweb-advanced-options-toggler {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    font-size: 20px;
+    height: 38px;
+    line-height: 36px;
 }
 
 
