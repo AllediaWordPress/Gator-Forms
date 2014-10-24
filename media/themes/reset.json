@@ -32,13 +32,15 @@
 		"toggler_bg": "",
 		"toggler_color": "",
 		"toggler_icon": 0,
-		"toggler_glyphicon": "2709",
 		"toggler_icon_gallery_image": "",
 		"toggler_icon_custom_image": "",
+		"toggler_glyphicon": "2709",
 		"toggler_font_size": "",
 		"toggler_font_family": "",
+        "toggler_font": "NotoSans-Regular",
         "toggler_vertical": 0,
         "toggler_slide": 0,
+        "accordion_boxed": 1,
 		"msg_success_color": "#009e0a",
 		"msg_error_color": "#aa0000"
     }
