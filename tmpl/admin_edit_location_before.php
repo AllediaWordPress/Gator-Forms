@@ -100,16 +100,14 @@ function_exists('add_action') or die;
                     'name' => 'Bottom right',
                     'after' => '<br><span class="pwebposition-bottom-right"><span></span><span>&harr;</span></span>'
                 )
-            )
+            ),
+            'html_after' => 
+                  '<div class="pweb_params_toggler_position_left pweb_params_toggler_position_right" style="display:none">'
+                    . '<div class="pweb-alert pweb-alert-info">'
+                        . __('You can flip Toggler Tab to vertical position by changing Advanced option in `Theme` tab', 'pwebcontact')
+                    . '</div>'
+                . '</div>'
         )); ?>
-        
-        <div class="pweb_params_toggler_position_left pweb_params_toggler_position_right" style="display:none">
-
-            <div class="pweb-alert pweb-alert-info">
-                <?php _e('You can flip Toggler Tab to vertical position by changing Advanced option in `Theme` tab', 'pwebcontact'); ?>
-            </div>
-
-        </div>
         
         <?php echo $this->_get_field(array(
             'type' => 'text',

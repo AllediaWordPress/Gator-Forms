@@ -113,46 +113,6 @@ function_exists('add_action') or die;
     </button>
     <div class="pweb-advanced-options-content">
         <?php echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'accordion_boxed',
-            'label' => 'Show accordion box with arrow',
-            'tooltip' => 'Surround contact form with box and show arrow at top of this box.',
-            'default' => 1,
-            'parent' => array('layout_type_accordion'),
-            'class' => 'pweb-radio-group',
-            'options' => array(
-                array(
-                    'value' => 0,
-                    'name' => 'No'
-                ),
-                array(
-                    'value' => 1,
-                    'name' => 'Yes'
-                )
-            )
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'toggler_slide',
-            'label' => 'Slide Toggler Tab with box',
-            'tooltip' => 'Slide `Toggler Tab` with contact form. Works only with `Slide in Box` layout except on left and right side with horizontal `Toggler Tab`.',
-            'default' => 0,
-            'parent' => array('layout_type_slidebox'),
-            'class' => 'pweb-radio-group',
-            'options' => array(
-                array(
-                    'value' => 0,
-                    'name' => 'No'
-                ),
-                array(
-                    'value' => 1,
-                    'name' => 'Yes'
-                )
-            )
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
             'type' => 'select',
             'name' => 'effect_transition',
             'label' => 'Effect transition',

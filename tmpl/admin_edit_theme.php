@@ -50,18 +50,13 @@ function_exists('add_action') or die;
     </ul>
 </div>
 <div id="pweb-themes-coverflow-controls">
-    <button id="pweb-themes-coverflow-control-prev" class="button button-primary" type="button">
+    <button id="pweb-themes-coverflow-control-prev" class="button" type="button">
         <i class="glyphicon glyphicon-chevron-left"></i> <?php _e( 'Previous', 'pwebcontact' ); ?>
     </button>
     <button id="pweb-themes-coverflow-control-load" class="button button-primary pweb-has-tooltip" type="button" title="<?php esc_attr_e( 'Theme settings would only change colors of your form. It would have no influence on layout and fields.', 'pwebcontact' ); ?>">
-        <i class="glyphicon glyphicon-open"></i> <?php _e( 'Load theme settings', 'pwebcontact' ); ?>
+        <i class="glyphicon glyphicon-open"></i> <?php esc_html_e( 'Load theme & Save form', 'pwebcontact' ); ?>
     </button>
-    <?php if (isset($themes['reset'])) : ?>
-    <button id="pweb-themes-coverflow-control-reset" class="button button-primary pweb-has-tooltip" data-settings='<?php echo $themes['reset']->settings; ?>' type="button" title="<?php esc_attr_e( 'Reset all theme settings to defaults.', 'pwebcontact' ); ?>">
-        <i class="glyphicon glyphicon-remove"></i> <?php _e( 'Reset', 'pwebcontact' ); ?>
-    </button>
-    <?php endif; ?>
-    <button id="pweb-themes-coverflow-control-next" class="button button-primary" type="button">
+    <button id="pweb-themes-coverflow-control-next" class="button" type="button">
         <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
     
@@ -77,7 +72,7 @@ function_exists('add_action') or die;
         <?php _e('Using our themes requires PRO version.', 'pwebcontact'); ?>
         <!-- FREE END -->
         <!-- PRO START -->
-        <?php _e( 'Are you sure you want to load settings for selected theme? It would change your current theme settings.', 'pwebcontact' ); ?>
+        <?php _e( 'Are you sure you want to load settings for selected theme? It would change your current theme settings and save your form.', 'pwebcontact' ); ?>
         <!-- PRO END -->
     </p>
 </div>
@@ -103,6 +98,12 @@ function_exists('add_action') or die;
     </button>
     <div class="pweb-advanced-options-content">
 
+        <?php if (isset($themes['reset'])) : ?>
+        <button id="pweb-themes-coverflow-control-reset" class="button pweb-has-tooltip" data-settings='<?php echo $themes['reset']->settings; ?>' type="button" title="<?php esc_attr_e( 'Reset all theme settings to defaults and unload saved theme.', 'pwebcontact' ); ?>">
+            <i class="glyphicon glyphicon-remove"></i> <?php _e( 'Clear theme settings', 'pwebcontact' ); ?>
+        </button>
+        <?php endif; ?>
+        
         <hr>
         
         <div class="pweb-clearfix">
@@ -550,7 +551,7 @@ function_exists('add_action') or die;
                     'options' => array(
                         array(
                             'value' => '',
-                            'name' => '- Do not use -'
+                            'name' => ''
                         )
                     )
                 )); ?>
@@ -590,6 +591,26 @@ function_exists('add_action') or die;
                     'tooltip' => 'Name of font used for Toggler. Separate multiple names with coma and wrap name which contains space with single quote.',
                     'parent' => array('toggler_vertical_0')
                 )); ?>
+                
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'toggler_slide',
+                    'label' => 'Slide Toggler Tab with box',
+                    'tooltip' => 'Slide `Toggler Tab` with contact form. Works only with `Slide in Box` layout except on left and right side with horizontal `Toggler Tab`.',
+                    'default' => 0,
+                    'parent' => array('layout_type_slidebox'),
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'No'
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Yes'
+                        )
+                    )
+                )); ?>
             </div>
             
             <div class="pweb-width-33">
@@ -614,22 +635,16 @@ function_exists('add_action') or die;
                             'is_parent' => true,
                             'disabled' => $this->_check_image_text_creation() !== true
                         )
-                    )
+                    ),
+                    'html_after' => 
+                          '<div class="pweb_params_toggler_vertical_1" style="display:none">'
+                            . '<div class="pweb-alert pweb-alert-warning">'
+                                . '<strong>' . __('Front-end troubleshooting', 'pwebcontact') . '</strong><br>'
+                                . __('If you see rectangles instead of letters then you have to use other `TTF font`.', 'pwebcontact') . '<br>'
+                                . __('If text is cut then enlarge height of toggler. Width leave blank.', 'pwebcontact')
+                            . '</div>'
+                        . '</div>'
                 )); ?>
-                
-                <div class="pweb_params_toggler_vertical_1" style="display:none">
-                    
-                    <div class="pweb-alert pweb-alert-info pweb_params_layout_type_slidebox" style="display:none">
-                        <?php esc_html_e('You can slide Toggler Tab with form container or keep fixed at page edge by changing Advanced option of `Form after opening` section in `Loaction & Effects` tab.', 'pwebcontact'); ?>
-                    </div>
-                    
-                    <div class="pweb-alert pweb-alert-warning">
-                        <strong><?php _e('Front-end troubleshooting', 'pwebcontact'); ?></strong><br>
-                        <?php _e('If you see rectangles instead of letters then you have to use other `TTF font`.', 'pwebcontact'); ?><br>
-                        <?php _e('If text is cut then enlarge height of toggler. Width leave blank.', 'pwebcontact'); ?>
-                    </div>
-                    
-                </div>
 
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
@@ -683,6 +698,27 @@ function_exists('add_action') or die;
             </div>
             
             <div class="pweb-width-33">
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'accordion_boxed',
+                    'header' => 'Accordion',
+                    'label' => 'Show accordion box with arrow',
+                    'tooltip' => 'Surround contact form with box and show arrow at top of this box.',
+                    'default' => 1,
+                    'parent' => array('layout_type_accordion'),
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'No'
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Yes'
+                        )
+                    )
+                )); ?>
+
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'modal_bg',

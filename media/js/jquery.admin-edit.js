@@ -608,7 +608,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         style: "coverflow",
         start: start > -1 ? start : "center",
         enableKeyboard: true,
-        enableMousewheel: true,
+        enableMousewheel: false,
         enableTouch: true,
         enableNav: false,
         enableNavButtons: false
@@ -682,6 +682,8 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                                 $option.val(value).trigger("change");
                             }
                         });
+                        
+                        $("#pweb-save-button").click();
                     }
                 }
             },

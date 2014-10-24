@@ -957,7 +957,7 @@ pwebcontact_admin.is_pro = true;
                 $basename = $item->getBasename('.json');
                 
                 /*** PRO START ***/
-                if ($basename === 'free' OR ($basename === 'dev' AND WP_DEBUG !== true)) {
+                if ($basename === 'dev' AND WP_DEBUG !== true) {
                     continue;
                 }
                 /*** PRO END ***/
@@ -1118,12 +1118,13 @@ pwebcontact_admin.is_pro = true;
             'attributes' => array(),
             'options' => array(),
             'is_parent' => false,
-            'is_pro' => null
+            'is_pro' => null,
+            'html_after' => null
         ), $opt);
         
         extract( $opt );
         
-        $html = $html_after = '';
+        $html = '';
         
         
         if (empty($id)) {
