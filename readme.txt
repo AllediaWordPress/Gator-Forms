@@ -49,6 +49,13 @@ Try it, it’s easy!
 * Multiple lightbox appear effects
 * Accordion
 
+= Beautiful ready-made Themes =
+
+* *Inspired by the newest Internet trends*
+* *Installed in one-click*
+* *Fully adjustable*
+* *Regularly updated*
+
 *Functions written in italic may be limited in a free version*
 
 **Visit our [demo page](http://www.perfect-web.co/wordpress/contact-form#page-demo) to see how cool they actually are ;)**
@@ -63,7 +70,7 @@ Try it, it’s easy!
 * Supports all modern browsers, IE9+, partly IE7-8
 * Mobile ready
 * Responsive, RWD
-* Requires 3rd-part plugin for [browser detection](http://wordpress.org/plugins/php-browser-detection/)
+* Requires 3rd-party plugin for [browser detection](http://wordpress.org/plugins/php-browser-detection/)
 
 = All features =
 
