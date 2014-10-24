@@ -105,7 +105,7 @@ form.pwebcontact-form .btn {
   */
 .pwebcontact_toggler.pweb-gradient:hover,
 .pwebcontact_toggler.pweb-gradient.pweb-opened {
-	background-image: none !important;
+	background-image: none;
 }
 
  /* Toggler Rounded
@@ -850,7 +850,9 @@ form.pwebcontact-form .btn:hover {
 form.pwebcontact-form input.invalid.pweb-input, 
 form.pwebcontact-form select.invalid, 
 form.pwebcontact-form textarea.invalid {
-	border-color: #a00 !important;
+    color: #a00;
+	border-color: #a00;
+    outline-color: #a00;
 	font-weight: normal;
     -webkit-box-shadow: 0 0 3px #f00 inset;
 	-moz-box-shadow: 0 0 3px #f00 inset;
@@ -883,9 +885,9 @@ form.pwebcontact-form textarea:focus {
 /* Labels invalid 
  * ---------------------------------------------------------------------
  */
-form.pwebcontact-form .invalid,
-form.pwebcontact-form .invalid a {
-	color: #a00 !important;
+form.pwebcontact-form label.invalid,
+form.pwebcontact-form label.invalid a {
+	color: #a00;
 	font-weight: normal;
 }
 
