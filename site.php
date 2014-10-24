@@ -518,56 +518,57 @@ class PWebContact
                 // Toggler background color
                 $declarations[] = 'background-color:'.$value;
 
-                // Toggler gradient and border
-                if ((int)$params->get('gradient') === 1) {
-
-                    $secondary_color = self::changeRgbColorBrightness( self::parseToRgbColor($value), 30 );
-                    $gradient_color = 'rgb('.$secondary_color['r'].','.$secondary_color['g'].','.$secondary_color['b'].')';
-
-                    // Rotate gradient
-                    switch ($params->get('toggler_position')) {
-                        
-                        case 'left':
-                            $direction = $params->get('toggler_vertical') ? 'left' : 'top';
-                            break;
-                        
-                        case 'right':
-                            $direction = $params->get('toggler_vertical') ? 'right' : 'top';
-                            break;
-                        
-                        case 'bottom:left':
-                        case 'bottom:right':
-                            $direction = 'bottom';
-                            break;
-                        
-                        case 'top:left':
-                        case 'top:right':
-                        default:
-                            $direction = 'top';
-                    }
+                if ($value !== 'transparent') {
                     
-                    self::getCSS3Gradient($direction, $value, $gradient_color, $declarations);
-                    unset($gradient_color);
+                    // Toggler gradient and border
+                    if ((int)$params->get('gradient') === 1) {
 
-                    $declarations[] = 'border-color:'.$value;
+                        $secondary_color = self::changeRgbColorBrightness( self::parseToRgbColor($value), 30 );
+
+                        // Rotate gradient
+                        switch ($params->get('toggler_position')) {
+
+                            case 'left':
+                                $direction = $params->get('toggler_vertical') ? 'left' : 'top';
+                                break;
+
+                            case 'right':
+                                $direction = $params->get('toggler_vertical') ? 'right' : 'top';
+                                break;
+
+                            case 'bottom:left':
+                            case 'bottom:right':
+                                $direction = 'bottom';
+                                break;
+
+                            case 'top:left':
+                            case 'top:right':
+                            default:
+                                $direction = 'top';
+                        }
+
+                        self::getCSS3Gradient($direction, $value, self::getCSSColor($secondary_color), $declarations);
+
+                        $declarations[] = 'border-color:'.$value;
+                    }
+                    else {
+
+                        $secondary_color = self::changeRgbColorBrightness( self::parseToRgbColor($value), -30 );
+
+                        $declarations[] = 'background-image:none';
+                        $declarations[] = 'border-color:'.self::getCSSColor($secondary_color);
+                    }
+
+                    // Toggler text shadow
+                    if ($secondary_color['r'] + $secondary_color['g'] + $secondary_color['b'] > 384) {
+                        $declarations[] = 'text-shadow:0 1px 1px rgba(0,0,0,0.5)';
+                    }
+                    else {
+                        $declarations[] = 'text-shadow:0 1px 1px rgba(255,255,255,0.5)';
+                    }
+
+                    unset($secondary_color);
                 }
-                else {
-
-                    $secondary_color = self::changeRgbColorBrightness( self::parseToRgbColor($value), -30 );
-
-                    $declarations[] = 'background-image:none';
-                    $declarations[] = 'border-color:rgb('.$secondary_color['r'].','.$secondary_color['g'].','.$secondary_color['b'].')';
-                }
-
-                // Toggler text shadow
-                if ($secondary_color['r'] + $secondary_color['g'] + $secondary_color['b'] > 384) {
-                    $declarations[] = 'text-shadow:0 1px 1px rgba(0,0,0,0.5)';
-                }
-                else {
-                    $declarations[] = 'text-shadow:0 1px 1px rgba(255,255,255,0.5)';
-                }
-
-                unset($secondary_color);
             }
 			if ($value = $params->get('toggler_color'))
 				$declarations[] = 'color:'.$value;
@@ -675,9 +676,9 @@ class PWebContact
 		
         // Background color
 		if ($value = $params->get('bg_color')) {
-			if (($opacity = (float)$params->get('bg_opacity')) < 1) {
+			if (($opacity = (float)$params->get('bg_opacity')) < 1 AND $value !== 'transparent') {
 				$bg_color = self::parseToRgbColor($value);
-				$value .= ';background-color:rgba('.$bg_color['r'].','.$bg_color['g'].','.$bg_color['b'].','.$opacity.')';
+				$value .= ';background-color:'.self::getCSSColor($bg_color, $opacity);
 			}
 			$container_bg = 'background-color:'.$value;
 			$css .= '#pwebcontact'.$form_id.'_container{'.$container_bg.'}';
@@ -694,7 +695,7 @@ class PWebContact
 		}
         
         // Labels invalid color
-		if (($value = strtolower($params->get('labels_invalid_color', '#aa0000'))) !== '#aa0000' AND $value) 
+		if ($value = $params->get('labels_invalid_color')) 
 		{
 			$css .=  '#pwebcontact'.$form_id.'_box label.invalid,'
                     .'#pwebcontact'.$form_id.'_box label.invalid a'
@@ -702,9 +703,9 @@ class PWebContact
 		}
 		
 		// Message success and error
-		if (($value = strtolower($params->get('msg_success_color'))) !== '#009e0a' AND $value)
+		if ($value = $params->get('msg_success_color'))
 			$css .= '#pwebcontact'.$form_id.'_form .pweb-msg .pweb-success{color:'.$value.'}';
-		if (($value = strtolower($params->get('msg_error_color'))) !== '#aa0000' AND $value)
+		if ($value = $params->get('msg_error_color'))
 			$css .= '#pwebcontact'.$form_id.'_form .pweb-msg .pweb-error{color:'.$value.'}';
 		
 		
@@ -720,10 +721,7 @@ class PWebContact
             if ((int)$params->get('gradient') === 1) {
                 
                 $secondary_color = self::changeRgbColorBrightness( self::parseToRgbColor($value), 30 );
-                $gradient_color = 'rgb('.$secondary_color['r'].','.$secondary_color['g'].','.$secondary_color['b'].')';
-                
-                self::getCSS3Gradient('bottom', $value, $gradient_color, $declarations);
-                unset($gradient_color);
+                self::getCSS3Gradient('bottom', $value, self::getCSSColor($secondary_color), $declarations);
                 
                 $declarations[] = $declarations_upload[] = 'border-color:'.$value;
             }
@@ -732,7 +730,7 @@ class PWebContact
                 $secondary_color = self::changeRgbColorBrightness( self::parseToRgbColor($value), -30 );
                 
                 $declarations[] = 'background-image:none';
-                $declarations[] = $declarations_upload[] = 'border-color:rgb('.$secondary_color['r'].','.$secondary_color['g'].','.$secondary_color['b'].')';
+                $declarations[] = $declarations_upload[] = 'border-color:'.self::getCSSColor($secondary_color);
             }
             
             // Buttons text shadow
@@ -770,8 +768,10 @@ class PWebContact
         if ($value = $params->get('fields_color'))
             $declarations[] = 'background-color:'.$value;
         // Fields border color
-		if ($value = $params->get('fields_border_color'))
+		if ($value = $params->get('fields_border_color')) {
 			$declarations[] = 'border-color:'.$value;
+			$declarations[] = 'outline-color:'.$value;
+        }
         // Fields text color
 		if ($value = $params->get('fields_text_color')) {
 			$declarations[] = 'color:'.$value;
@@ -783,12 +783,8 @@ class PWebContact
             // Label over field
             if ($params->get('labels_position', 'inline') == 'over') {
                 
-                $color = self::parseToRgbColor($value);
-                
                 $css .=  '#pwebcontact'.$form_id.'_form .pweb-label-over label'
-                        .'{color:rgba('.$color['r'].','.$color['g'].','.$color['b'].',0.5)}';
-                
-                unset($color);
+                        .'{color:'.self::getCSSColor( self::parseToRgbColor($value), 0.5 ).'}';
             }
         }
 		if (count($declarations)) {
@@ -805,6 +801,7 @@ class PWebContact
         // Fields active border color
 		if ($value = $params->get('fields_active_border_color')) {
 			$declarations[] = 'border-color:'.$value;
+            $declarations[] = 'outline-color:'.$value;
             
             $box_shadow = 'box-shadow: 0 0 3px '.$value.' inset';
             $declarations[] = '-webkit-'.$box_shadow;
@@ -833,6 +830,7 @@ class PWebContact
         // Fields invalid border color
 		if ($value = $params->get('fields_invalid_border_color')) {
 			$declarations[] = 'border-color:'.$value;
+            $declarations[] = 'outline-color:'.$value;
             
             $box_shadow = 'box-shadow: 0 0 3px '.$value.' inset';
             $declarations[] = '-webkit-'.$box_shadow;
@@ -894,7 +892,7 @@ class PWebContact
 				elseif ($padding_position == 'right')
 					$padding_position = 'left';
 			}
-			$declarations[] = 'padding-'.$padding_position.':'.$padding;
+			$declarations[] = 'padding'.($padding_position !== 'all' ? '-'.$padding_position : '').':'.$padding;
 			
             // Padding on mobile
 			if (($padding_position == 'left' OR $padding_position == 'right')) {
@@ -923,20 +921,18 @@ class PWebContact
 
 		// Accordion boxed with arrow
 		if ($layout == 'accordion' AND $params->get('accordion_boxed', 1) AND $params->get('bg_color')) {
-			$border_color = isset($bg_color) ? $bg_color : self::parseToRgbColor($params->get('bg_color'));
-			foreach ($border_color as &$color) {
-				$color -= 25; // 10% from 255
-				if ($color < 0) $color = 0;
-			}
+			
+            $border_color = self::getCSSColor( self::changeRgbColorBrightness( 
+                    isset($bg_color) ? $bg_color : self::parseToRgbColor($params->get('bg_color')), -25 ));
 			
 			$declarations[0] = 'box-shadow:'.($params->get('shadow', 1) ? '0 0 4px rgba(0,0,0,0.5),' : '')
-				.'inset 0 0 8px rgb('.$border_color['r'].','.$border_color['g'].','.$border_color['b'].')';
+                    .'inset 0 0 8px '.$border_color;
 			$declarations[] = '-moz-'.$declarations[0];
 			$declarations[] = '-webkit-'.$declarations[0];
-			$declarations[] = 'border-color:rgb('.$border_color['r'].','.$border_color['g'].','.$border_color['b'].')';
+			$declarations[] = 'border-color:'.$border_color;
             
 			$css .= '#pwebcontact'.$form_id.'_container{'.implode(';', $declarations).'}';
-			$css .= '#pwebcontact'.$form_id.'_box .pweb-arrow{border-bottom-color:rgb('.$border_color['r'].','.$border_color['g'].','.$border_color['b'].')}';
+			$css .= '#pwebcontact'.$form_id.'_box .pweb-arrow{border-bottom-color:'.$border_color.'}';
 			
             $declarations = array();
             
@@ -1146,17 +1142,17 @@ class PWebContact
         }
         /*** PRO START ***/
         /* @deprecated since 2.1 */
-		if (($file = $params->get('style_bg', 'white')) != -1) {
+		if (($file = $params->get('style_bg', 'white')) != -1 AND file_exists($media_path.'css/background/'.$file.'.css')) {
             wp_register_style('pwebcontact-background-'.$file, $media_url.'css/background/'.$file.'.css');
 			wp_enqueue_style('pwebcontact-background-'.$file);
         }
         /* @deprecated since 2.1 */
-		if (($file = $params->get('style_form', 'blue')) != -1) {
+		if (($file = $params->get('style_form', 'blue')) != -1 AND file_exists($media_path.'css/form/'.$file.'.css')) {
 			wp_register_style('pwebcontact-form-'.$file, $media_url.'css/form/'.$file.'.css');
             wp_enqueue_style('pwebcontact-form-'.$file);
         }
         /* @deprecated since 2.1 */
-		if (($layout == 'slidebox' OR in_array($params->get('handler', 'tab'), array('button', 'tab'))) AND ($file = $params->get('style_toggler', 'blue')) != -1) {
+		if (($layout == 'slidebox' OR in_array($params->get('handler', 'tab'), array('button', 'tab'))) AND ($file = $params->get('style_toggler', 'blue')) != -1 AND file_exists($media_path.'css/toggler/'.$file.'.css')) {
 			wp_register_style('pwebcontact-toggler-'.$file, $media_url.'css/toggler/'.$file.'.css');
             wp_enqueue_style('pwebcontact-toggler-'.$file);
         }
@@ -1539,16 +1535,7 @@ class PWebContact
 		$rotate 		= (int)$params->get('toggler_rotate', 1);
 		
 		// Parse font color
-		if ($color = $params->get('toggler_color'))
-		{
-			$color = self::parseToRgbColor($color);
-		}
-		if (!is_array($color)) {
-			if (in_array($params->get('style_toggler', 'blue'), array('white', 'gray')))
-				$color = array('r' => 51, 'g' => 51, 'b' => 51); // gray
-			else
-				$color = array('r' => 255, 'g' => 255, 'b' => 255); // white
-		}
+		$color = self::parseToRgbColor( $params->get('toggler_color') );
 		
 		// create image
 		$im = imagecreatetruecolor($text_close ? $width * 2 : $width, $height);
@@ -1653,9 +1640,18 @@ class PWebContact
 
 	protected static function parseToRgbColor($color = null)
 	{
-		$color = trim($color);
+		$color = trim(strtolower($color));
+        
+        if (empty($color) OR $color === 'transparent') {
+            $color = array(
+				'r' => 255,
+				'g' => 255,
+				'b' => 255,
+                'opacity' => 0
+			);
+        }
 		// parse hex color
-		if (preg_match('/^\#([0-9abcdef]{1,2})([0-9abcdef]{1,2})([0-9abcdef]{1,2})$/i', $color, $match)) 
+		elseif (preg_match('/^\#([0-9abcdef]{1,2})([0-9abcdef]{1,2})([0-9abcdef]{1,2})$/i', $color, $match)) 
 		{
 			if (strlen($match[1]) == 2)
 			{
@@ -1675,13 +1671,16 @@ class PWebContact
 			}
 		}
 		// parse rgb color
-		elseif (preg_match('/\((\d+),(\d+),(\d+)/i', $color, $match))
+		elseif (preg_match('/\((\d+),(\d+),(\d+)(,(\d?\.?\d+))?/i', $color, $match))
 		{
 			$color = array(
 				'r' => $match[1],
 				'g' => $match[2],
 				'b' => $match[3]
 			);
+            if (array_key_exists(5, $match)) {
+                $color['opacity'] = $match[5];
+            }
 		}
 		
 		return $color;
@@ -1690,15 +1689,20 @@ class PWebContact
     
     protected static function changeRgbColorBrightness($color = array(), $hue_diff = 0)
 	{
-        foreach ($color as &$hue) {
+        foreach ($color as $hue => $value) {
             
-            $hue += $hue_diff;
-            if ($hue > 255) {
-                $hue = 255;
+            if ($hue === 'opacity') {
+                continue;
             }
-            elseif ($hue < 0) {
-                $hue = 0;
+            
+            $value += $hue_diff;
+            if ($value > 255) {
+                $value = 255;
             }
+            elseif ($value < 0) {
+                $value = 0;
+            }
+            $color[$hue] = $value;
         }
 		
 		return $color;
@@ -1714,6 +1718,19 @@ class PWebContact
         $declarations[] = 'background-image:-ms-'.$linear_gradient;
         $declarations[] = 'background-image:-o-'.$linear_gradient;
         $declarations[] = 'background-image:'.$linear_gradient;
+    }
+    
+    
+    protected static function getCSSColor($color, $opacity = null) 
+    {
+        if (is_numeric($opacity) AND !isset($color['opacity'])) {
+            $color['opacity'] = $opacity;
+        }
+        
+        return (isset($color['opacity']) ? 'rgba' : 'rgb')
+                . '('. $color['r'] .','. $color['g'] .','. $color['b']
+                . (isset($color['opacity']) ? ','.$color['opacity'] : '')
+                . ')';
     }
     /*** PRO END ***/
 
