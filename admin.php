@@ -24,8 +24,8 @@ class PWebContact_Admin {
     protected $errors = array();
     protected $requirements = array();
     
-    protected $documentation_url = 'http://www.perfect-web.co/wordpress/contact-form/documentation';
-    protected $buy_url = 'http://www.perfect-web.co/wordpress/contact-form/subscriptions?tmpl=component';
+    protected $documentation_url = '';
+    protected $buy_url = '';
 
 
     protected static $pro = array(
@@ -98,6 +98,11 @@ class PWebContact_Admin {
     
     
     function __construct() {
+        
+        $source = (file_exists(dirname(__FILE__).'/perfect-web.co') ? 'perfect-web.co' : 'wordpress.org');
+        
+        $this->documentation_url = 'http://www.perfect-web.co/wordpress/contact-form/documentation?utm_source=backend&utm_medium=button&utm_campaign=documentation&utm_content='.$source;
+        $this->buy_url = 'http://www.perfect-web.co/wordpress/contact-form/subscriptions?tmpl=component&utm_source=backend&utm_medium=button&utm_campaign=upgrade_to_pro&utm_content='.$source;
         
         // initialize admin view
         add_action( 'admin_init', array($this, 'init') );
