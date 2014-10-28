@@ -148,7 +148,7 @@ function_exists('add_action') or die;
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
                     'name' => 'gradient',
-                    'label' => 'Choose desing',
+                    'label' => 'Choose design',
                     'default' => 1,
                     'class' => 'pweb-radio-group',
                     'options' => array(
