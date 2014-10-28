@@ -109,24 +109,28 @@ function_exists('add_action') or die;
                 . '</div>'
         )); ?>
         
-        <?php echo $this->_get_field(array(
-            'type' => 'text',
-            'name' => 'offset',
-            'label' => 'Position offset [px, %]',
-            'tooltip' => 'Set length of red arrow in above `Toggler Tab position` with unit, e.g. 150px, 25%',
-            'class' => 'pweb-filter-unit pweb-input-mini',
-            'parent' => array('layout_type_slidebox', 'handler_tab')
-        )); ?>
-
-        <?php echo $this->_get_field(array(
-            'type' => 'text',
-            'name' => 'zindex',
-            'label' => 'Layer level (CSS z-index)',
-            'tooltip' => 'Default level is 1030. If contact form appears under menu or other layers then enlarge default value.',
-            'class' => 'pweb-filter-int pweb-input-mini',
-            'parent' => array('layout_type_slidebox', 'layout_type_modal')
-        )); ?>
-
+        <div class="pweb-clearfix">
+            <div class="pweb-width-50">
+            <?php echo $this->_get_field(array(
+                'type' => 'text',
+                'name' => 'offset',
+                'label' => 'Position offset [px, %]',
+                'tooltip' => 'Set length of red arrow in above `Toggler Tab position` with unit, e.g. 150px, 25%',
+                'class' => 'pweb-filter-unit pweb-input-mini',
+                'parent' => array('layout_type_slidebox', 'handler_tab')
+            )); ?>
+            </div>
+            <div class="pweb-width-50">
+            <?php echo $this->_get_field(array(
+                'type' => 'text',
+                'name' => 'zindex',
+                'label' => 'Layer level (CSS z-index)',
+                'tooltip' => 'Default level is 1030. If contact form appears under menu or other layers then enlarge default value.',
+                'class' => 'pweb-filter-int pweb-input-mini',
+                'parent' => array('layout_type_slidebox', 'layout_type_modal')
+            )); ?>
+            </div>
+        </div>
 
 
         <?php echo $this->_get_field(array(
