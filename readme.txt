@@ -173,35 +173,35 @@ Yes it will, however you only get access to new versions and support for as long
 == Screenshots ==
 
 01. Slide contact form from any page edge
-02. Select predefined colors of contact form fields and buttons, background and opening tab
+02. Change any colors of contact form fields, buttons, background and opening tab or edit CSS file for free.
 03. Create contact form with unlimited fields, display labels above fields, inline with them or inside as placeholder
 04. Display contact form in modal window (lightbox)
 05. Display opening tab horizontal or vertical
-06. Display static contact form in widget or insite with shortcode. You can also display form in accordion.
-07. Step 1 - you can decide here where and with what effects you want your form displayed
-08. Step 1 - you can decide here where and with what effects you want your form displayed
-09. Step 1 - you can decide here where and with what effects you want your form displayed
+06. Display static contact form in widget or insite with shortcode. You can also display contact form in accordion.
+07. Step 1 - select starting position of your contact form
+08. Step 1 - select effect which you want to use for displayoing your contact form
+09. Step 1 - you can decide here where your contact form should be visible: on all pages, on selected with shortcode or in widget.
 10. Step 2 - use our easy drag & drop form builder to create your own form
-11. Step 2 - use our easy drag & drop form builder to create your own form
-12. Step 3 - you can choose one of predefined theme or create your own
+11. Step 2 - each field has advanced options with label, tooltip and many others
+12. Step 3 - you can choose one of predefined themes or create your own for free by editing CSS file
 13. Step 4 - choose predefined anwser scheme or create your own
 14. Step 5 - you can check here if you you did everything needed to publish your contact form
 15. Create unlimited number of contact forms
 16. Step 1 - advanced options of layout
-17. Step 1 - advanced options of display effects
-18. Step 3 - advanced options of theme
-19. Step 4 - advanced options of email
-20. Very advanced options for web developers
-21. Tips for opening contact form with menu item or custom HTML/JavaScript code
+17. Step 3 - theme customizer
+18. Step 4 - advanced options of email
+19. Step 4 - email template variables
+20. Tips for opening contact form with menu item or custom HTML/JavaScript code
+21. Very advanced options for web developers
 
 == Changelog ==
 
-= 2.0.0 PRO / 24-10-2014 =
+= 2.0.0 PRO / 27-10-2014 =
 * Pretty themes with customizer
 * Improved caching CSS and Toggler images with text
 * Added WordPress PHP action before email send, e.g. to store data
 
-= 2.0.0 / 24-10-2014 =
+= 2.0.0 / 27-10-2014 =
 * Unlocked most of PRO options
 * Unlocked layouts: slidebox, lightbox, accordion, static
 * Unlocked email subject, BCC and Reply-To
