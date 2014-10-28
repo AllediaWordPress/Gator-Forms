@@ -87,17 +87,6 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         if (pwebcontact_admin.running_related === true || !$(this).is(":checked")) return;
         
         pwebcontact_admin.running_related = true;
-        
-        var $warning = $("#pweb_layout_type_warning");
-        if ($warning.length) {
-            if ($(this).hasClass("pweb-pro")) {
-                $warning.fadeIn("slow");
-            }
-            else if ($(this).hasClass("pweb-free")) {
-                $warning.fadeOut("slow");
-            }
-        }
-        
                 
         var current_relations = $(this).data("relations"),
             relations = {
@@ -202,14 +191,14 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 // Skip id if it has parent id from beginning of function
                 if (parent_id !== id) { //TODO maybe not required statement
                     var $field = $("#"+id);
-                    if ($field.length && $field.is(":checked") && $field.closest(".pweb-field").css("dsiaply") !== "none") {
+                    if ($field.length && $field.is(":checked") && $field.closest(".pweb-field").css("display") !== "none") {
                         // Do not hide field if parent is checked and visible
                         show = true;
                         break;
                     }
                 }
             }
-            if (show === false && $(this).css("dsiaply") !== "none") {
+            if (show === false && $(this).css("display") !== "none") {
                 // hide element if it is not already hidden
                 $(this).hide(pwebcontact_admin.duration);
                 // propagate hiding of options that were shown by this element
