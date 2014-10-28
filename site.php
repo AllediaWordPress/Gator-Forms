@@ -7,6 +7,9 @@
  * @author Piotr Moćko
  */
 
+// TODO rotate toggler with CSS
+// TODO store submitted emails in database
+
 // No direct access
 function_exists('add_action') or die;
 
