@@ -175,7 +175,12 @@ class PWebContact
             return null;
         }
         
-        $params = self::getParams($form_id); //WP
+        if (!is_object( $params = self::getParams($form_id) )) {
+            
+            // disable form, it does not exists in database
+            self::$forms[$form_id] = false;
+            return false;
+        }
         $params->def('debug', PWEBCONTACT_DEBUG);
         
         if ($params->get('position', 'footer') !== $position) {
@@ -327,6 +332,8 @@ class PWebContact
                     'WHERE `id` = %d', $form_id);
             
             $data = $wpdb->get_row($sql);
+            
+            if ($data === null) return false;
 			
             $data->params = $data->params ? json_decode( $data->params, true ) : array();
             self::recursive_stripslashes($data->params);
