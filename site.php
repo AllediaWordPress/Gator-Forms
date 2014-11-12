@@ -47,33 +47,33 @@ class PWebContact
             define('PWEBCONTACT_DEBUG', $debug);
             
             // Register scripts
-            wp_register_script('pwebcontact-bootstrap', $media_url.'bootstrap/js/bootstrap'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
-            wp_register_script('pwebcontact-bootstrap-2', $media_url.'bootstrap-2.3.2/js/bootstrap'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
+            wp_register_script('pwebcontact-bootstrap', $media_url.'bootstrap/js/bootstrap'.($debug ? '' : '.min').'.js', array('jquery'), '3.3.0', true);
+            wp_register_script('pwebcontact-bootstrap-2', $media_url.'bootstrap-2.3.2/js/bootstrap'.($debug ? '' : '.min').'.js', array('jquery'), '2.3.2', true);
             
             /*** PRO START ***/
-            wp_register_script('pwebcontact-jquery-iframe-transport', $media_url.'js/jquery.iframe-transport.js', array('jquery'), null, true);
-            wp_register_script('pwebcontact-jquery-fileupload-process', $media_url.'js/jquery.fileupload-process.js', array('jquery'), null, true);
-            wp_register_script('pwebcontact-jquery-fileupload-validate', $media_url.'js/jquery.fileupload-validate.js', array('jquery'), null, true);
-            wp_register_script('pwebcontact-jquery-fileupload-ui', $media_url.'js/jquery.fileupload-ui.js', array('jquery'), null, true);
-            wp_register_script('pwebcontact-jquery-fileupload', $media_url.'js/jquery.fileupload'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
+            wp_register_script('pwebcontact-jquery-iframe-transport', $media_url.'js/jquery.iframe-transport.js', array('jquery'), '1.8.2', true);
+            wp_register_script('pwebcontact-jquery-fileupload-process', $media_url.'js/jquery.fileupload-process.js', array('jquery'), '1.3.0', true);
+            wp_register_script('pwebcontact-jquery-fileupload-validate', $media_url.'js/jquery.fileupload-validate.js', array('jquery'), '1.1.2', true);
+            wp_register_script('pwebcontact-jquery-fileupload-ui', $media_url.'js/jquery.fileupload-ui.js', array('jquery'), '9.6.0', true);
+            wp_register_script('pwebcontact-jquery-fileupload', $media_url.'js/jquery.fileupload'.($debug ? '' : '.min').'.js', array('jquery'), '5.42.0', true);
             /*** PRO END ***/
             
-            wp_register_script('pwebcontact-jquery-cookie', $media_url.'js/jquery.cookie'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
+            wp_register_script('pwebcontact-jquery-cookie', $media_url.'js/jquery.cookie'.($debug ? '' : '.min').'.js', array('jquery'), '1.4.1', true);
             
-            wp_register_script('pwebcontact-jquery-validate', $media_url.'js/jquery.validate'.($debug ? '' : '.min').'.js', array('jquery'), null, true);
+            wp_register_script('pwebcontact-jquery-validate', $media_url.'js/jquery.validate'.($debug ? '' : '.min').'.js', array('jquery'), '1.13.1', true);
             
             wp_register_script('pwebcontact', $media_url.'js/jquery.pwebcontact'.(file_exists($media_path.'js/jquery.pwebcontact.js') ? '' : '.min').'.js', array('jquery'), null, true);
             
             
             // Register styles
-            wp_register_style('pwebcontact-bootstrap', $media_url.'bootstrap/css/bootstrap'.($debug ? '' : '.min').'.css');
-            wp_register_style('pwebcontact-bootstrap-theme', $media_url.'bootstrap/css/bootstrap-theme'.($debug ? '' : '.min').'.css');
-            wp_register_style('pwebcontact-bootstrap-2', $media_url.'bootstrap-2.3.2/css/bootstrap'.($debug ? '' : '.min').'.css');
-            wp_register_style('pwebcontact-bootstrap-2-responsive', $media_url.'bootstrap-2.3.2/css/bootstrap-responsive'.($debug ? '' : '.min').'.css');
+            wp_register_style('pwebcontact-bootstrap', $media_url.'bootstrap/css/bootstrap'.($debug ? '' : '.min').'.css', array(), '3.3.0');
+            wp_register_style('pwebcontact-bootstrap-theme', $media_url.'bootstrap/css/bootstrap-theme'.($debug ? '' : '.min').'.css', array(), '3.3.0');
+            wp_register_style('pwebcontact-bootstrap-2', $media_url.'bootstrap-2.3.2/css/bootstrap'.($debug ? '' : '.min').'.css', array(), '2.3.2');
+            wp_register_style('pwebcontact-bootstrap-2-responsive', $media_url.'bootstrap-2.3.2/css/bootstrap-responsive'.($debug ? '' : '.min').'.css', array(), '2.3.2');
             wp_register_style('pwebcontact-bootstrap-custom', $media_url.'css/bootstrap-custom.css');
             wp_register_style('pwebcontact-bootstrap-custom-rtl', $media_url.'css/bootstrap-custom-rtl.css');
 
-            wp_register_style('pwebcontact-glyphicon', $media_url.'css/glyphicon.css');
+            wp_register_style('pwebcontact-glyphicon', $media_url.'css/glyphicon.css', array(), '3.3.0');
 
             wp_register_style('pwebcontact-layout', $media_url.'css/layout.css');
             wp_register_style('pwebcontact-layout-rtl', $media_url.'css/layout-rtl.css');
@@ -84,7 +84,7 @@ class PWebContact
             wp_register_style('pwebcontact-uploader', $media_url.'css/uploader.css');
             wp_register_style('pwebcontact-uploader-rtl', $media_url.'css/uploader-rtl.css');
             
-            wp_register_style('pwebcontact-jquery-ui-datepicker', $media_url.'jquery-ui/smoothness/jquery-ui.datapicker'.($debug ? '' : '.min').'.css');
+            wp_register_style('pwebcontact-jquery-ui-datepicker', $media_url.'jquery-ui/smoothness/jquery-ui.datapicker'.($debug ? '' : '.min').'.css', array(), '1.10.4');
             /*** PRO END ***/
             
             wp_register_style('pwebcontact-custom', $media_url.'css/custom.css');
