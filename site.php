@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.0.3
+ * @version 2.0.4
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -47,7 +47,7 @@ class PWebContact
             define('PWEBCONTACT_DEBUG', $debug);
             
             // Register scripts
-            wp_register_script('pwebcontact-bootstrap', $media_url.'bootstrap/js/bootstrap'.($debug ? '' : '.min').'.js', array('jquery'), '3.3.0', true);
+            wp_register_script('pwebcontact-bootstrap', $media_url.'bootstrap/js/bootstrap'.($debug ? '' : '.min').'.js', array('jquery'), '3.3.1', true);
             wp_register_script('pwebcontact-bootstrap-2', $media_url.'bootstrap-2.3.2/js/bootstrap'.($debug ? '' : '.min').'.js', array('jquery'), '2.3.2', true);
             
             /*** PRO START ***/
@@ -66,8 +66,8 @@ class PWebContact
             
             
             // Register styles
-            wp_register_style('pwebcontact-bootstrap', $media_url.'bootstrap/css/bootstrap'.($debug ? '' : '.min').'.css', array(), '3.3.0');
-            wp_register_style('pwebcontact-bootstrap-theme', $media_url.'bootstrap/css/bootstrap-theme'.($debug ? '' : '.min').'.css', array(), '3.3.0');
+            wp_register_style('pwebcontact-bootstrap', $media_url.'bootstrap/css/bootstrap'.($debug ? '' : '.min').'.css', array(), '3.3.1');
+            wp_register_style('pwebcontact-bootstrap-theme', $media_url.'bootstrap/css/bootstrap-theme'.($debug ? '' : '.min').'.css', array(), '3.3.1');
             wp_register_style('pwebcontact-bootstrap-2', $media_url.'bootstrap-2.3.2/css/bootstrap'.($debug ? '' : '.min').'.css', array(), '2.3.2');
             wp_register_style('pwebcontact-bootstrap-2-responsive', $media_url.'bootstrap-2.3.2/css/bootstrap-responsive'.($debug ? '' : '.min').'.css', array(), '2.3.2');
             wp_register_style('pwebcontact-bootstrap-custom', $media_url.'css/bootstrap-custom.css');
@@ -622,34 +622,43 @@ class PWebContact
 			// Toggler vertical text
 			if ($params->get('toggler_vertical'))
 			{
+                $lang_code = get_bloginfo('language');
+                $path  = $params->get('media_path').'cache/';
+                $file = 'toggler-'.$form_id.'-'.$lang_code.'-'.md5(
+                         (int)$params->get('toggler_width', 30)
+                        .(int)$params->get('toggler_height', 120)
+                        .(int)$params->get('toggler_font_size', 12)
+                        .(int)$params->get('toggler_rotate', 1)
+                        .$params->get('toggler_font', 'NotoSans-Regular')
+                        .$params->get('toggler_color')
+                        .$params->get('toggler_name')
+                ).'.png';
+                    
                 require_once ABSPATH . 'wp-admin/includes/file.php';
 
                 if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                     global $wp_filesystem;
                     
-                    $lang_code = get_bloginfo('language');
-                    $path  = $params->get('media_path').'cache/';
-                    $file = 'toggler-'.$form_id.'-'.$lang_code.'-'.md5(
-                             (int)$params->get('toggler_width', 30)
-                            .(int)$params->get('toggler_height', 120)
-                            .(int)$params->get('toggler_font_size', 12)
-                            .(int)$params->get('toggler_rotate', 1)
-                            .$params->get('toggler_font', 'NotoSans-Regular')
-                            .$params->get('toggler_color')
-                            .$params->get('toggler_name')
-                    ).'.png';
-                    
                     if (!$wp_filesystem->exists( $path . $file )) {
                         self::createToggleImage($form_id, $path, $file, $lang_code);
                     }
 
-                    //$css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url("'.$params->get('media_url').'cache/'.$file.'")}';
-                    $css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url(data:image/png;base64,'
-                            .base64_encode($wp_filesystem->get_contents( $path. $file )) 
-                            .')}';
-                    
-                    unset($lang_code, $path, $file);
+                    $image_contents = $wp_filesystem->get_contents( $path. $file );
                 }
+                else {
+                    if (!file_exists( $path . $file )) {
+                        self::createToggleImage($form_id, $path, $file, $lang_code);
+                    }
+
+                    $image_contents = file_get_contents( $path. $file );
+                }
+                
+                //$css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url("'.$params->get('media_url').'cache/'.$file.'")}';
+                $css .= '#pwebcontact'.$form_id.'_toggler .pweb-text{background-image:url(data:image/png;base64,'
+                        .base64_encode($image_contents) 
+                        .')}';
+                
+                unset($lang_code, $path, $file, $image_contents);
 			}
             /*** PRO END ***/
 		}
@@ -1210,7 +1219,35 @@ class PWebContact
                     }
                 }
             }
-            else $file = false;
+            else {
+                
+                if (!is_file($path . $file)) {
+
+                    $css = self::compileCustomCSS($form_id);
+
+                    // set write permissions to cache folder
+                    if (!is_writable($path)) {
+                        chmod($path, 0777);
+                    }
+
+                    // write cache file
+                    if (!file_put_contents($path.$file, $css)) {
+                        wp_add_inline_style('pwebcontact', $css);
+                        $file = false;
+                    }
+                    else {
+                        // delete old cached files
+                        if (is_dir($path)) {
+                            $dir = new DirectoryIterator($path);
+                            foreach ($dir as $fileinfo) {
+                                if ($fileinfo->isFile() AND $fileinfo->getFilename() !== $file AND preg_match('/^[a-f0-9]{32}\-'.$form_id.'\.css$/i', $fileinfo->getFilename()) === 1) {
+                                    unlink( $fileinfo->getPathname() );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             
             if ($file !== false) {
                 wp_register_style('pwebcontact-'.$file, $media_url.'cache/'.$file);
@@ -1601,6 +1638,11 @@ class PWebContact
                 $wp_filesystem->chmod($path, 0777);
             }
         }
+        else {
+            if (!is_writable($path)) {
+                chmod($path, 0777);
+            }
+        }
 			
 		// save image
 		//TODO consider output image and catch it with ob_get_contents() and then write with JFile
@@ -1608,13 +1650,25 @@ class PWebContact
 		imagedestroy($im);
         
         // delete old cached files
-        if ($result === true AND function_exists('WP_Filesystem') AND WP_Filesystem()) {
-            global $wp_filesystem;
-            
-            $dir = $wp_filesystem->dirlist($path);
-            foreach ($dir as $item) {
-                if ($item['name'] !== $file AND preg_match('/^toggler\-'.$form_id.'\-'.$lang_code.'\-[a-f0-9]{32}\.png$/i', $item['name']) === 1) {
-                    $wp_filesystem->delete( $path . $item['name'] );
+        if ($result === true) {
+            if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
+                global $wp_filesystem;
+
+                $dir = $wp_filesystem->dirlist($path);
+                foreach ($dir as $item) {
+                    if ($item['name'] !== $file AND preg_match('/^toggler\-'.$form_id.'\-'.$lang_code.'\-[a-f0-9]{32}\.png$/i', $item['name']) === 1) {
+                        $wp_filesystem->delete( $path . $item['name'] );
+                    }
+                }
+            }
+            else {
+                if (is_dir($path)) {
+                    $dir = new DirectoryIterator($path);
+                    foreach ($dir as $fileinfo) {
+                        if ($fileinfo->isFile() AND $fileinfo->getFilename() !== $file AND preg_match('/^toggler\-'.$form_id.'\-'.$lang_code.'\-[a-f0-9]{32}\.png$/i', $fileinfo->getFilename()) === 1) {
+                            unlink( $fileinfo->getPathname() );
+                        }
+                    }
                 }
             }
         }
