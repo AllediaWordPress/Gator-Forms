@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.0.0
+ * @version 2.0.5
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -261,7 +261,7 @@ $message =
 							<div class="fileupload-buttonbar">
 								<span class="fileinput-button btn<?php echo $field['class']; ?>"<?php echo $field['attributes']; ?>>
 				                    <i class="glyphicon glyphicon-plus-sign"></i>
-				                    <span><?php _e('Add files', 'pwebcontact'); ?></span>
+                                    <span><?php _e((isset($field['button']) AND $field['button']) ? $field['button'] : 'Add files', 'pwebcontact'); ?></span>
 				                    <input type="file" name="files[]" multiple="multiple" id="<?php echo $field['id']; ?>"<?php if (isset($field['required']) AND $field['required']) echo ' class="pweb-validate-uploader"'; ?> data-role="none">
 				                </span>
 							</div>
