@@ -199,6 +199,7 @@ Yes it will, however you only get access to new versions and support for as long
 = 2.0.5 / 10-12-2014 =
 * Added option to change upload button label
 * Fixed sending emails in HTML format
+* Fixed Lightbox effects
 
 = 2.0.4 / 02-12-2014 =
 * Use PHP native filesystem when WP_Filesystem is not working

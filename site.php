@@ -278,6 +278,7 @@ class PWebContact
         $params->set('theme', 'free');
         /*** FREE END ***/
         /*** PRO START ***/
+        // @deprecated since 2.1 $params->get('style_form')
         $params->set('theme', $params->get('theme', $params->get('style_form', -1) === -1 ? 'clean' : null));
         /*** PRO END ***/
         
@@ -1136,6 +1137,7 @@ class PWebContact
 		{
 			if ($params->get('load_jquery_ui_effects', 1)) {
 				wp_enqueue_script('jquery-effects-core');
+                wp_enqueue_script('jquery-effects-transfer');
 			}
 			if ($layout == 'modal') {
 				wp_enqueue_style('pwebcontact-animations');
@@ -1340,6 +1342,9 @@ class PWebContact
 		
 		$options[] = 'ajaxUrl:"'.admin_url( 'admin-ajax.php?action=pwebcontact_', is_ssl() ? 'https' : 'http' ).'"';
 		
+        if ($value = $params->get('theme'))
+			$options[] = 'theme:"'.$value.'"';
+        
 		$options[] = 'layout:"'.$layout.'"';
 		$options[] = 'position:"'.$position.'"';
 		$options[] = 'offsetPosition:"'.$params->get('toggler_offset_position').'"';
@@ -1471,7 +1476,8 @@ class PWebContact
             /*** PRO START ***/
 			if ($params->get('modal_opacity', -1) == 0) 
 				$options[] = 'modalBackdrop:0';
-			if (($value = $params->get('style_bg', 'white')) != -1)
+            // @deprecated since 2.1
+			if (($value = $params->get('style_bg', 'white')) != -1) 
 				$options[] = 'modalStyle:"'.$value.'"';
             /*** PRO END ***/
 			if ($params->get('modal_disable_close'))
