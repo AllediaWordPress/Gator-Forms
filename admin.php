@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.0.8
+ * @version 2.0.9
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -1493,6 +1493,7 @@ pwebcontact_admin.is_pro = true;
         return $val > 10 ? intval($val) : round($val, 2);
     }
     
+	/*** PRO START ***/
     private function _check_updates()
     {
         require_once dirname(__FILE__). '/update-checker/plugin-update-checker.php';
@@ -1601,6 +1602,7 @@ pwebcontact_admin.is_pro = true;
         
         return $query;
     }
+	/*** PRO END ***/
     
     private function _check_image_text_creation()
 	{
