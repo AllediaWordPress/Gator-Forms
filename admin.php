@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.0.9
+ * @version 2.0.13
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -35,7 +35,11 @@ class PWebContact_Admin {
         'load' => array(),
         'fields' => array(),
         'field_types' => array(),
-        'settings' => array(),
+        'settings' => array(
+            /*** FREE START ***/
+            'dlid'
+            /*** FREE END ***/
+        ),
         'params' => array(
             /*** FREE START ***/
             'attachment_delete',
@@ -876,7 +880,7 @@ pwebcontact_admin.is_pro = true;
     <hr>
     
     <p class="pweb-copyrights">
-		Copyright &copy; 2014
+		Copyright &copy; 2015
         <a href="http://www.perfect-web.co/wordpress/contact-form" target="_blank"><strong>Perfect Web sp. z o.o.</strong></a>, 
         All rights reserved.
 		Distributed under 
@@ -1499,7 +1503,7 @@ pwebcontact_admin.is_pro = true;
         require_once dirname(__FILE__). '/update-checker/plugin-update-checker.php';
         
         $UpdateChecker = PucFactory::buildUpdateChecker(
-            'https://www.perfect-web.co/index.php?option=com_pwebshop&view=updates&format=json',
+            'https://www.perfect-web.co/index.php?option=com_ars&view=update&task=stream&format=json&id=8',
             dirname(__FILE__).'/pwebcontact.php'
         );
         $UpdateChecker->addQueryArgFilter( array($this, 'get_updates_query') );
@@ -1572,27 +1576,27 @@ pwebcontact_admin.is_pro = true;
     {
         global $wp_version;
         
-        // download ID
-        require_once ABSPATH . 'wp-admin/includes/file.php';
-        $files = list_files( dirname(__FILE__), 1 );
-        foreach ($files as $file) {
-            $file = basename($file);
-            if (preg_match('/^[a-f0-9]{32}$/', $file)) {
-                $query['download_id'] = $file;
-                break;
+        $this->_load_settings();
+        
+        // Get download ID from settings
+        $query['dlid'] = $this->_get_param('dlid', null, 'settings');
+        if (empty($query['dlid']))
+        {
+            // Get download ID from a file
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+            $files = list_files( dirname(__FILE__), 1 );
+            foreach ($files as $file) {
+                $file = basename($file);
+                if (preg_match('/^[a-f0-9]{32}$/', $file)) {
+                    $query['dlid'] = $file;
+                    break;
+                }
             }
         }
         
-        if (!isset($query['download_id'])) {
-            return $query;
-        }
-        
-        // plugin slug
-        $query['extension'] = 'pwebcontact';
-        
         // plugin version
         // installed_version = x.x.x
-        //$query['version'] = $this->_get_version();
+        $query['version'] = $this->_get_version();
 			
 		// WP version
 		$query['wpversion'] = $wp_version;

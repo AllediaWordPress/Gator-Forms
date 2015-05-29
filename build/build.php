@@ -26,11 +26,7 @@ class PWebCompiler {
         'build'
     );
     protected $include_pro = array();
-    protected $exclude_pro = array(
-        'media/css/themes/android5.css',
-        'media/themes/android5.jpg',
-        'media/themes/android5.json'
-    );
+    protected $exclude_pro = array();
     
     protected $include_free = array(
         'media/css/themes/index.html',

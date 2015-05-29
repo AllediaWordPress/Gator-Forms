@@ -9,10 +9,10 @@ echo.
 echo Extractor v2.0.0
 echo.
 echo Extract ZIP archive with FREE version...
-"C:\Program Files\7-Zip\7z.exe" x %CURRENTPATH%free\wp_pwebcontact_2.0.10_free.zip -y -oC:\www\wordpress-dev1\wp-content\plugins
+"C:\Program Files\7-Zip\7z.exe" x %CURRENTPATH%free\wp_pwebcontact_2.0.13_free.zip -y -oD:\www\wordpress-dev1\wp-content\plugins
 echo.
 echo Extract ZIP archive with PRO version...
-"C:\Program Files\7-Zip\7z.exe" x %CURRENTPATH%pro\wp_pwebcontact_2.0.10_pro.zip -y -oC:\www\wordpress-dev2\wp-content\plugins
+"C:\Program Files\7-Zip\7z.exe" x %CURRENTPATH%pro\wp_pwebcontact_2.0.13_pro.zip -y -oD:\www\wordpress-dev2\wp-content\plugins
 echo.
 pause
 
