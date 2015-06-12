@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.0.13
+ * @version 2.0.14
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -106,10 +106,15 @@ class PWebContact_Admin {
     
     function __construct() {
         
-        $source = (file_exists(dirname(__FILE__).'/perfect-web.co') ? 'perfect-web.co' : 'wordpress.org');
+        /*** PRO START ***/
+        $source = 'perfect-web.co';
+        /*** PRO END ***/
+        /*** FREE START ***/
+        $source = 'wordpress.org';
+        /*** FREE END ***/
         
-        $this->documentation_url = 'http://www.perfect-web.co/wordpress/contact-form/documentation?utm_source=backend&utm_medium=button&utm_campaign=documentation&utm_content='.$source;
-        $this->buy_url = 'http://www.perfect-web.co/wordpress/contact-form/subscriptions?tmpl=component&utm_source=backend&utm_medium=button&utm_campaign=upgrade_to_pro&utm_content='.$source;
+        $this->documentation_url = 'https://www.perfect-web.co/wordpress-plugins/contact-form/documentation?utm_source=backend&utm_medium=button&utm_campaign=documentation&utm_content='.$source;
+        $this->buy_url = 'https://www.perfect-web.co/wordpress-plugins/contact-form/subscriptions?tmpl=component&utm_source=backend&utm_medium=button&utm_campaign=upgrade_to_pro&utm_content='.$source;
         
         // initialize admin view
         add_action( 'admin_init', array($this, 'init') );
@@ -119,10 +124,10 @@ class PWebContact_Admin {
 		
 		/*** PRO START ***/
 		// Add action for message
-        add_action( 'admin_notices', array($this, 'displayUpdateMessage') );
+        add_action( 'admin_notices', array($this, 'display_update_message') );
 		
 		// Add filter for requesting our server, checking for updates!
-        add_filter( 'puc_request_info_result-pwebcontact', array($this, 'prepereUpdateMessage') );
+        add_filter( 'puc_request_info_result-pwebcontact', array($this, 'prepere_update_message') );
         /*** PRO END ***/
         
 		// Configuration link on plugins list
@@ -657,8 +662,10 @@ pwebcontact_admin.is_pro = true;
         if (!is_object($this->data)) {
             $this->data = new stdClass();
         }
-        $this->data->settings = get_option('pwebcontact_settings', array());
-        $this->_recursive_stripslashes($this->data->settings);
+        if (!isset($this->data->settings) OR !is_array($this->data->settings)) {
+            $this->data->settings = get_option('pwebcontact_settings', array());
+            $this->_recursive_stripslashes($this->data->settings);
+        }
     }
     
     
@@ -881,7 +888,7 @@ pwebcontact_admin.is_pro = true;
     
     <p class="pweb-copyrights">
 		Copyright &copy; 2015
-        <a href="http://www.perfect-web.co/wordpress/contact-form" target="_blank"><strong>Perfect Web sp. z o.o.</strong></a>, 
+        <a href="https://www.perfect-web.co/wordpress-plugins/contact-form" target="_blank"><strong>Perfect Web sp. z o.o.</strong></a>, 
         All rights reserved.
 		Distributed under 
         <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank"><strong>GNU/GPL</strong></a>.<br>
@@ -1012,6 +1019,13 @@ pwebcontact_admin.is_pro = true;
     }
 
 
+    protected function _get_plugin_name() {
+        
+        $data = get_plugin_data(dirname(__FILE__).'/pwebcontact.php', false, false);
+        return $data['Name'];
+    }
+
+
     protected function _get_version() {
         
         $data = get_plugin_data(dirname(__FILE__).'/pwebcontact.php', false, false);
@@ -1026,7 +1040,7 @@ pwebcontact_admin.is_pro = true;
         return 
 			  '(function(){'
 			. 'var pw=document.createElement("script");pw.type="text/javascript";pw.async=true;'
-			. 'pw.src="https://www.perfect-web.co/index.php?option=com_pwebshop&view=updates&format=raw&extension=wp_pwebcontact&version='.$this->_get_version().'&wpversion='.$wp_version.'&uid='.md5(home_url()).'";'
+			. 'pw.src="https://www.perfect-web.co/index.php?option=com_ars&view=update&task=stream&format=raw&id=8&version='.$this->_get_version().'&wpversion='.$wp_version.'&uid='.md5(home_url()).'";'
 			. 'var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(pw,s);'
 			. '})();';
     }
@@ -1509,7 +1523,7 @@ pwebcontact_admin.is_pro = true;
         $UpdateChecker->addQueryArgFilter( array($this, 'get_updates_query') );
     }
 	
-	public function prepereUpdateMessage($pluginInfo) 
+	public function prepere_update_message($pluginInfo) 
 	{
         // create object for update info
         $update = new stdClass();
@@ -1540,7 +1554,7 @@ pwebcontact_admin.is_pro = true;
         return $pluginInfo;
     }
 
-    public function displayUpdateMessage() 
+    public function display_update_message() 
 	{
         global $pagenow;
         $option = get_site_option('pwebcontact_update');
@@ -1564,12 +1578,36 @@ pwebcontact_admin.is_pro = true;
 			) {
 				echo '<div class="updated position-relative display-block" style="' . $option->style . '">'
 					. '<p>'
-					. __($option->message ? $option->message : 'There is a new update of Perfect Contact Form!', 'pwebcontact')
+					. ($option->message ? __($option->message, 'pwebcontact') : sprintf(__('There is a new update of %s!', 'pwebcontact')
+                            , '<strong>' . $this->_get_plugin_name() . '</strong>'))
 					. ' <a href="' . admin_url('update-core.php') . '">' . __('Click here', 'pwebcontact') . '</a>'
 					. '</p>'
 					. '</div>';
+
+                $this->_display_dlid_message();
 			}
 		}
+    }
+    
+    protected function _display_dlid_message()
+    {
+        if (!isset($this->_dlid_message_displayed))
+        {
+            $this->_dlid_message_displayed = true;
+            $this->_load_settings();
+            if (!$this->_get_param('dlid', null, 'settings'))
+            {
+                echo '<div class="error display-block">'
+                    . '<p>'
+                    . sprintf(__('To update %s directly from WordPress enter %s in plugin %s. Get your Download ID at %s', 'pwebcontact')
+                            , '<strong>' . $this->_get_plugin_name() . '</strong>'
+                            , '<strong>' . __('Download ID', 'pwebcontact') . '</strong>'
+                            , '<a href="' . admin_url( 'admin.php?page=pwebcontact&task=settings#pweb_settings_dlid' ) . '">' . __('settings', 'pwebcontact') . '</a>'
+                            , '<a href="https://www.perfect-web.co/login" target="_blank">Perfect-Web.co</a>')
+                    . '</p>'
+                    . '</div>';
+            }
+        }
     }
     
     public function get_updates_query($query)
@@ -1589,6 +1627,10 @@ pwebcontact_admin.is_pro = true;
                 $file = basename($file);
                 if (preg_match('/^[a-f0-9]{32}$/', $file)) {
                     $query['dlid'] = $file;
+                    
+                    // Save old download ID in settings
+                    $this->data->settings['dlid'] = $file;
+                    update_option('pwebcontact_settings', $this->data->settings);
                     break;
                 }
             }
