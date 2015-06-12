@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.0.13
+ * @version 2.0.15
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -2360,8 +2360,9 @@ class PWebContact
 			}
 			
             // TODO option to include or not attachments in email to user
-            // set attachments as files
             $attachments = array();
+            /*** PRO START ***/
+            // set attachments as files
             if ($params->get('attachment_type', 1) == 1 AND count($data['attachments']))
             {
                 $path = $params->get('upload_path');
@@ -2369,6 +2370,7 @@ class PWebContact
                     $attachments[] = $path . $file;
                 if (PWEBCONTACT_DEBUG) self::$logs[] = 'User email attachments: '.implode(', ', $data['attachments']);
             }
+            /*** PRO END ***/
 
             // set email format
             $is_html = ((int)$params->get('email_user_tmpl_format', 1) == 2);
@@ -2446,10 +2448,10 @@ class PWebContact
 			if (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin BCC recipients: '.$params->get('email_bcc');
 		}
 		
-        /*** PRO START ***/
-		// set attachments as files
         $attachments = array();
-		if ($params->get('attachment_type', 1) == 1 AND count($data['attachments']))
+		/*** PRO START ***/
+		// set attachments as files
+        if ($params->get('attachment_type', 1) == 1 AND count($data['attachments']))
 		{
 			$path = $params->get('upload_path');
 			foreach ($data['attachments'] as $file)
