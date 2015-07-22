@@ -6,7 +6,7 @@
  * @author Emil Lament
  */
 
-@import url(http://fonts.googleapis.com/css?family=Kotta+One);
+@import url(//fonts.googleapis.com/css?family=Kotta+One);
 
 .pweb-theme-transparency .pwebcontact-container {
 	-webkit-animation: pweb-transparency 50s linear .50s infinite alternate;

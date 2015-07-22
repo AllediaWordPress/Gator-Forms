@@ -6,7 +6,7 @@
  * @author Jan Krzywanek
  */
 
-@import url(http://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext);
+@import url(//fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext);
 
 /* Container outset */
 .pweb-theme-ribbon .pwebcontact-container-outset:before,
