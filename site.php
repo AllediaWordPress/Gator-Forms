@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.0.16
+ * @version 2.1.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -38,6 +38,12 @@ class PWebContact
 		{
 			self::$loaded['init'] = true;
             
+            /*** PRO START ***/
+            if (!session_id()) {
+                session_start();
+            }
+            /*** PRO END ***/
+            
             load_plugin_textdomain( 'pwebcontact', false, basename(dirname(__FILE__)).'/languages' );
             
             $media_path = dirname(__FILE__) . '/media/';
@@ -56,6 +62,14 @@ class PWebContact
             wp_register_script('pwebcontact-jquery-fileupload-validate', $media_url.'js/jquery.fileupload-validate.js', array('jquery'), '1.1.2', true);
             wp_register_script('pwebcontact-jquery-fileupload-ui', $media_url.'js/jquery.fileupload-ui.js', array('jquery'), '9.6.0', true);
             wp_register_script('pwebcontact-jquery-fileupload', $media_url.'js/jquery.fileupload'.($debug ? '' : '.min').'.js', array('jquery'), '5.42.0', true);
+            
+            $hl = get_bloginfo('language');
+            $hl_parts = explode('-', $hl);
+            if (isset($hl_parts[1]) && strtolower($hl_parts[0]) == strtolower($hl_parts[1]))
+            {
+                $hl = strtolower($hl_parts[0]);
+            }
+            wp_register_script('grecaptcha', 'https://www.google.com/recaptcha/api.js?hl=' . $hl . '&render=explicit', array(), '', true);
             /*** PRO END ***/
             
             wp_register_script('pwebcontact-jquery-cookie', $media_url.'js/jquery.cookie'.($debug ? '' : '.min').'.js', array('jquery'), '1.4.1', true);
@@ -1110,6 +1124,11 @@ class PWebContact
 			}
 		}
         
+        if ($params->get('captcha'))
+        {
+            wp_enqueue_script('grecaptcha');
+        }
+        
         // Load jQuery Datapicker for calendar field
         if ($datapicker AND $params->get('load_jquery_ui', 1)) {
             wp_enqueue_script('jquery-ui-datepicker');
@@ -1493,6 +1512,14 @@ class PWebContact
 			if (($value = $params->get('effect_duration', 400)) != 500)
 				$options[] = 'accordionDuration:'.(int)$value;
 		}
+        
+        /*** PRO START ***/
+		// Captcha plugin name
+		if ($value = $params->get('captcha')) 
+		{
+			$options[] = 'captcha:"'.strtolower($value).'"';
+		}
+        /*** PRO END ***/
         
 		// Custom validation rules and calendar fields
 		$fields = self::getFields($form_id);
@@ -1957,8 +1984,10 @@ class PWebContact
 		$response = array('status' => 101, 'msg' => '');
 		
 		try {
-			// TODO veriffy captcha code
-			if (false) 
+			// veriffy captcha code
+            require_once (dirname(__FILE__).'/captcha.php');
+            $captcha = new PWebContact_Captcha(array('form_id' => $params->get('id')));
+			if (!$captcha->checkAnswer()) 
 			{
 				if (PWEBCONTACT_DEBUG) self::$logs[] = 'Invalid captcha code';
 				$response = array('status' => 201, 'msg' => __('Invalid captcha code', 'pwebcontact'));
@@ -2058,8 +2087,8 @@ class PWebContact
             $phpmailer->isMail();
         }
     }
-	
-
+    
+    
 	public static function sendEmail() 
 	{		
 		add_action('phpmailer_init', array('PWebContact', 'setupMailer'));
@@ -2677,7 +2706,7 @@ class PWebContact
 	}
 
 
-	protected static function detectIP()
+	public static function detectIP()
 	{
 		$ip = null;
         

@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 2.0.5
+ * @version 2.1.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -182,17 +182,28 @@ $message =
 					/* ----- Captcha ---------------------------------------------------------------------------- */
 					elseif ($field['type'] == 'captcha') :
 						
+                        $params->def('captcha', 'grecaptcha');
+                        
+                        require_once (dirname(__FILE__).'/../captcha.php');
+                        
+                        $captcha_options = array('form_id' => $form_id);
+                        if (isset($field['theme']) AND $field['theme'])
+                            $captcha_options['theme'] = $field['theme'];
+                        $captcha = new PWebContact_Captcha($captcha_options);
+                        
 						$field['id'] = 'pwebcontact'.$form_id.'_captcha';
 					?>
-					<div class="pweb-field-container pweb-field-captcha">
-						<div class="pweb-label">
+					<div class="pweb-field-container pweb-field-captcha <?php if (!$field['label']) echo 'pweb-field-buttons'; ?>">
+						<?php if ($field['label']) : ?>
+                        <div class="pweb-label">
 							<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl">
-								<?php _e($field['label'] ? $field['label'] : 'Captcha code', 'pwebcontact'); ?>
+								<?php _e($field['label'], 'pwebcontact'); ?>
 								<span class="pweb-asterisk">*</span>
 							</label>
 						</div>
+                        <?php endif; ?>
 						<div class="pweb-field pweb-captcha">
-							<?php //TODO captcha ?>
+							<?php echo $captcha->display($field['id'], 'required'); ?>
 						</div>
 					</div>
 					<?php 

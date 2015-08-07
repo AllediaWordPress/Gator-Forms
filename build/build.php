@@ -2,7 +2,7 @@
 /**
  * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -33,6 +33,7 @@ class PWebCompiler {
         'media/css/themes/free.css'
     );
     protected $exclude_free = array(
+        'captcha.php',
         'media/css/themes/',
         'media/css/uploader',
         'media/fonts', // Toggler font
