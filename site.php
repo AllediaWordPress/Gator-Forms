@@ -992,6 +992,10 @@ class PWebContact
 				$css .= '.ui-effects-transfer.pweb-genie.pwebcontact'.$form_id.'-genie{'.implode(';', $declarations).'}';
 				$declarations = array();
 			}
+
+            // Allow to scroll reCAPTCHA v2 images
+            if ($params->get('captcha') == 'grecaptcha')
+                $css .= '#pwebcontact'.$form_id.'_box{margin-bottom:600px !important}';
 		}
 		
 		// Disable Boostrap 2 Glyphicons

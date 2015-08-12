@@ -32,16 +32,23 @@ class PWebContact_Captcha
             'site_secret' => $this->private_key));
         $secureToken = $recaptchaToken->secureToken(session_id());
 
-        return '<div id="' . $id . '" class="' . $class . '"></div>'
-                . '<script>'
-                . 'jQuery(document).ready(function($){$(window).load(function(){'
+        return '<div id="' . $id . '" class="' . $class . '" style="min-height:78px;min-width:304px"></div>'
+                . '<script type="text/javascript">'
+                . 'jQuery(document).ready(function($){'
+                . '$(window).load(function(){'
+                // Get captcha widget ID
+                . 'var grecaptchaId='
+                // Render captcha
                 . 'grecaptcha.render("' . $id . '",{'
                 . 'sitekey:"' . $this->public_key . '"'
                 . (strpos($_SERVER['HTTP_HOST'], '127.0.') === 0 || $_SERVER['HTTP_HOST'] == 'localhost' ? '' : ',stoken:"' . $secureToken . '"')
                 . ',theme:"' . $this->options['theme'] . '"'
-                //. ($this->options['form_id'] ? ',"expired-callback":pwebContact' . $this->options['form_id'] . '.captchaExpired' : '')
+                . ($this->options['form_id'] ? ',"expired-callback":function(){pwebContact' . $this->options['form_id'] . '.captchaExpired()}' : '')
+                . '});'
+                // Store captcha widget ID
+                . '$("#pwebcontact' . $this->options['form_id'] . '_captcha").data("grecaptchaId",grecaptchaId)'
                 . '})'
-                . '})});'
+                . '});'
                 . '</script>';
     }
 
@@ -99,7 +106,7 @@ class PWebContact_ReCaptchaSecureToken
     protected $site_key;
     protected $site_secret;
 
-    public function __construct(array $config = [])
+    public function __construct($config = array())
     {
         if (isset($config['site_key']))
             $this->site_key = $config['site_key'];
@@ -146,7 +153,7 @@ class PWebContact_ReCaptchaSecureToken
         if (is_null($timestamp))
             $timestamp = $this->currentTimestamp();
 
-        $params = ['session_id' => $session_id, 'ts_ms' => $timestamp];
+        $params = array('session_id' => $session_id, 'ts_ms' => $timestamp);
         $plaintext = json_encode($params);
 
         $encrypted = $this->encryptData($plaintext);
