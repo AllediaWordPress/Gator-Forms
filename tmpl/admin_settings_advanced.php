@@ -46,3 +46,25 @@ function_exists('add_action') or die;
     /*** PRO END ***/
     'label' => 'Download ID'
 )); ?>
+
+
+<?php echo $this->_get_field(array(
+    'type' => 'radio',
+    'name' => 'force_init',
+    'group' => 'settings',
+	'header' => 'Advanced settings',
+    'label' => 'Force to load CSS and JS at all pages',
+    'tooltip' => 'Enable this option only if you are displaying contact form inside content by some AJAX plugin',
+    'default' => 0,
+    'class' => 'pweb-radio-group',
+    'options' => array(
+        array(
+            'value' => 0,
+            'name' => 'No'
+        ),
+        array(
+            'value' => 1,
+            'name' => 'Yes'
+        )
+    )
+)); ?>

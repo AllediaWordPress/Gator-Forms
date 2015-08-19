@@ -1,7 +1,7 @@
 /**
- * @version 2.0.0
+ * @version 2.1.1
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Jan Krzywanek
  */
@@ -95,7 +95,8 @@
 	-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset;
 	box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset;
 }
-form.pwebcontact-form input.pweb-checkbox, form.pwebcontact-form input.pweb-radio {
+.pweb-theme-note form.pwebcontact-form input.pweb-checkbox,
+.pweb-theme-note form.pwebcontact-form input.pweb-radio {
 	margin: 7px 3px 0 0;
 }
 

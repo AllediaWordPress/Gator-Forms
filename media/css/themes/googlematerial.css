@@ -1,7 +1,7 @@
 /**
  * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -93,10 +93,6 @@
 
 .pweb-theme-googlematerial.pweb-modal .pwebcontact-container-inset {
     margin-top: 20px;
-}
-/* Lightbox Window overlay */
-body.pweb-modal-free .modal-backdrop.fade.in {
-	
 }
 
 /* Labels invalid */
