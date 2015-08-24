@@ -38,7 +38,7 @@ $this->_set_pro_options('field_types', array(
     'upload',
     'mailto_list',
     'url',
-    'states',
+    'state',
     'country'
 ));
 /*** FREE END ***/
@@ -1064,13 +1064,19 @@ $this->_set_pro_options('field_types', array(
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
-                                'name' => 'validation',
+                                'name' => 'alias',
                                 'index' => 'X',
                                 'group' => 'fields',
-                                'label' => 'Client Validation regular expression',
-                                'tooltip' => 'JavaScript regular expression for validation of field value (server uses FILTER_VAR)',
-                                'default' => '/[\d\-\+() ]+/',
-                                'class' => 'pweb-input-large'
+                                'class' => 'pweb-custom-field-alias',
+                                'label' => 'Alias for email template'
+                            )); ?>
+                            <?php echo $this->_get_field(array(
+                                'disabled' => true,
+                                'type' => 'text',
+                                'name' => 'default',
+                                'index' => 'X',
+                                'group' => 'fields',
+                                'label' => 'Default option'
                             )); ?>
 
                         </div>
@@ -1287,7 +1293,190 @@ $this->_set_pro_options('field_types', array(
                 </div>
             </div>
         </div>
-        
+
+        <?php $field_type = 'state'; ?>
+        <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?>" id="pweb_field_type_<?php echo $field_type; ?>">
+            <?php _e('US States select list', 'pwebcontact'); ?>
+            <?php echo $this->_display_badge($field_type); ?>
+
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                <div class="pweb-custom-field-type">
+                    <span><?php _e('US States select list field', 'pwebcontact'); ?></span>
+                    <?php echo $this->_display_badge($field_type); ?>
+                </div>
+                <div class="pweb-custom-field-label">
+                    <?php _e('Label', 'pwebcontact'); ?> <span></span>
+                </div>
+
+                <div class="pweb-custom-field-options">
+                    <h3><?php _e('Select US states list field options', 'pwebcontact'); ?></h3>
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'hidden',
+                        'name' => 'type',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'value' => $field_type
+                    )); ?>
+
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'text',
+                        'name' => 'label',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Label',
+                        'class' => 'pweb-custom-field-label-input'
+                    )); ?>
+
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'text',
+                        'name' => 'tooltip',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
+                    )); ?>
+
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'radio',
+                        'name' => 'required',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Required',
+                        'class' => 'pweb-radio-group',
+                        'default' => 0,
+                        'options' => array(
+                            array('value' => 0, 'name' => 'No'),
+                            array('value' => 1, 'name' => 'Yes')
+                        )
+                    )); ?>
+
+                    <div class="pweb-advanced-options">
+                        <button type="button" class="button pweb-advanced-options-toggler">
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
+                        </button>
+                        <div class="pweb-advanced-options-content">
+
+                            <?php echo $this->_get_field(array(
+                                'disabled' => true,
+                                'type' => 'text',
+                                'name' => 'alias',
+                                'index' => 'X',
+                                'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
+                                'label' => 'Alias for email template'
+                            )); ?>
+
+                            <?php echo $this->_get_field(array(
+                                'disabled' => true,
+                                'type' => 'text',
+                                'name' => 'default',
+                                'index' => 'X',
+                                'group' => 'fields',
+                                'label' => 'Default option'
+                            )); ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php $field_type = 'country'; ?>
+        <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?>" id="pweb_field_type_<?php echo $field_type; ?>">
+            <?php _e('Countries select list', 'pwebcontact'); ?>
+            <?php echo $this->_display_badge($field_type); ?>
+
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
+                <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                <div class="pweb-custom-field-type">
+                    <span><?php _e('Countries select list field', 'pwebcontact'); ?></span>
+                    <?php echo $this->_display_badge($field_type); ?>
+                </div>
+                <div class="pweb-custom-field-label">
+                    <?php _e('Label', 'pwebcontact'); ?> <span></span>
+                </div>
+
+                <div class="pweb-custom-field-options">
+                    <h3><?php _e('Select Countries list field options', 'pwebcontact'); ?></h3>
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'hidden',
+                        'name' => 'type',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'value' => $field_type
+                    )); ?>
+
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'text',
+                        'name' => 'label',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Label',
+                        'class' => 'pweb-custom-field-label-input'
+                    )); ?>
+
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'text',
+                        'name' => 'tooltip',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Tooltip',
+                        'class' => 'pweb-input-large'
+                    )); ?>
+
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'radio',
+                        'name' => 'required',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Required',
+                        'class' => 'pweb-radio-group',
+                        'default' => 0,
+                        'options' => array(
+                            array('value' => 0, 'name' => 'No'),
+                            array('value' => 1, 'name' => 'Yes')
+                        )
+                    )); ?>
+
+                    <div class="pweb-advanced-options">
+                        <button type="button" class="button pweb-advanced-options-toggler">
+                            <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
+                        </button>
+                        <div class="pweb-advanced-options-content">
+
+                            <?php echo $this->_get_field(array(
+                                'disabled' => true,
+                                'type' => 'text',
+                                'name' => 'alias',
+                                'index' => 'X',
+                                'group' => 'fields',
+                                'class' => 'pweb-custom-field-alias',
+                                'label' => 'Alias for email template'
+                            )); ?>
+
+                            <?php echo $this->_get_field(array(
+                                'disabled' => true,
+                                'type' => 'text',
+                                'name' => 'default',
+                                'index' => 'X',
+                                'group' => 'fields',
+                                'label' => 'Default option'
+                            )); ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <?php $field_type = 'radio'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?>" id="pweb_field_type_<?php echo $field_type; ?>">
