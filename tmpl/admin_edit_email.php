@@ -307,12 +307,12 @@ function_exists('add_action') or die;
                 )); ?>
             </div>
         </div>
-        
-        
+
+
 
         <div class="pweb-clearfix">
             <h3><?php _e('Tickets', 'pwebcontact'); ?></h3>
-            
+
             <div class="pweb-width-50">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
@@ -346,6 +346,49 @@ function_exists('add_action') or die;
                     'label' => 'Ticket format',
                     'tooltip' => 'Type pattern of your ticket, e.g. [#%s].<br>Use string %s for date-time ticket or %06d for number counter.',
                     'parent' => array('ticket_enable_1', 'ticket_enable_2')
+                )); ?>
+            </div>
+        </div>
+
+        <hr>
+        <div class="pweb-clearfix">
+            <h3><?php _e('Google Docs Integration', 'pwebcontact'); ?></h3>
+
+            <div class="pweb-width-50">
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'googledocs_enable',
+                    'label' => 'Enable Google Docs Integration',
+                    'tooltip' => 'Enable saving of form data into a Google Spreadsheet.',
+                    'default' => 0,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'No'
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Yes',
+                            'is_parent' => true
+                        )
+                    )
+                )); ?>
+            </div>
+            <div class="pweb-width-50">
+                <?php echo $this->_get_field(array(
+                    'type' => 'text',
+                    'name' => 'googledocs_sheetname',
+                    'label' => 'Sheet name',
+                    'tooltip' => 'Name of the Google Sheet you wish to save data in.',
+                    'parent' => array('googledocs_enable_1')
+                ));
+                echo $this->_get_field(array(
+                    'type' => 'text',
+                    'name' => 'googledocs_worksheetname',
+                    'label' => 'Worksheet name',
+                    'tooltip' => 'Name of a worksheet that resides in the spreadsheet you selected in the field above.',
+                    'parent' => array('googledocs_enable_1')
                 )); ?>
             </div>
         </div>
