@@ -68,3 +68,11 @@ function_exists('add_action') or die;
         )
     )
 )); ?>
+
+<?php echo $this->_get_field(array(
+    'type' => 'text',
+    'name' => 'googledocs_accesscode',
+    'group' => 'settings',
+    'desc' => sprintf(__('Click <a href="%s" target="_blank">here</a> to get your access code and allow us to save form data into a spreadsheet,', 'pwebcontact'), 'https://accounts.google.com/o/oauth2/auth?access_type=offline&approval_prompt=force&client_id=300313169789-tjp5sq43n8shqra9okb1j06ovlsrh0b6.apps.googleusercontent.com&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=https%3A%2F%2Fspreadsheets.google.com%2Ffeeds%2F'),
+    'label' => 'Google Access Code'
+)); ?>
