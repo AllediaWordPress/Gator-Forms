@@ -66,6 +66,7 @@ if (version_compare($GLOBALS['wp_version'], '3.5', '>=') AND version_compare(PHP
     }
 
     require_once dirname( __FILE__ ) . '/widget.php';
+    require_once dirname( __FILE__ ) . '/googledocs.php';
 }
 else {
 
