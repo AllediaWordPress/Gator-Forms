@@ -2368,6 +2368,13 @@ class PWebContact
         $email_copy = ($params->get('email_copy', 2) == 2);
         /*** FREE END ***/
 		/*** PRO START ***/
+        //Google Docs Integration
+        if($params->get('googledocs_enable', 0) === '1'){
+            $data['googledocs_enable'] = true;
+            $data['googledocs_accesscode'] = $settings->get('googledocs_accesscode', '');
+            $data['googledocs_sheetname'] = $params->get('googledocs_sheetname', 'Contact Form');
+            $data['googledocs_worksheetname'] = $params->get('googledocs_worksheetname', 'contact-form');
+        }
         // process form input data and email template variables
         do_action('pwebcontact_data', array('data' => $data, 'email_vars' => $email_vars));
         
