@@ -28,7 +28,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         $adminBar = $("#pweb-adminbar");
     
     $(window).resize(function(){
-        $tabs.css("padding-top", $(this).width() < 768 ? 0 : $adminBar.height());
+        //$tabs.css("padding-top", $(this).width() < 768 ? 0 : $adminBar.height()); //causes unnecessary padding in Chrome
     });
     
     // Initialize tooltips
