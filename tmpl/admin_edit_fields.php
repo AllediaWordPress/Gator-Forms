@@ -66,9 +66,9 @@ $this->_set_pro_options('field_types', array(
             )
         )
     )); ?>
-    
+
     <?php _e('or drag and drop fields', 'pwebcontact'); ?>
-        
+
     <button class="button button-primary pweb-next-tab-button" type="button">
         <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
@@ -85,35 +85,35 @@ $this->_set_pro_options('field_types', array(
 <!-- FREE END -->
 
 <div id="pweb_fields" class="pweb-clearfix">
-	
+
 	<?php echo $this->_get_field_control(array(
         'type' => 'hidden',
         'name' => 'fields',
         'value' => json_encode( $this->_get_param(null, array(), 'fields') )
     )); ?>
-    
+
     <div class="pweb-fields-container">
-        
+
         <div class="pweb-fields-add-row pweb-clearfix" id="pweb_fields_add_row_before">
             <i class="glyphicon glyphicon-plus"></i> <?php _e('Add row', 'pwebcontact'); ?>
         </div>
         <div class="pweb-fields-rows pweb-clearfix" id="pweb_fields_rows">
-            
+
         </div>
         <div class="pweb-fields-add-row pweb-clearfix" id="pweb_fields_add_row_after">
             <i class="glyphicon glyphicon-plus"></i> <?php _e('Add row', 'pwebcontact'); ?>
         </div>
     </div>
-    
-    
-    
+
+
+
     <div class="pweb-fields-types" id="pweb_fields_types">
-        
+
         <?php $field_type = 'text'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?>" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Text input', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
-            
+
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
@@ -123,7 +123,7 @@ $this->_set_pro_options('field_types', array(
                 <div class="pweb-custom-field-label">
                     <?php _e('Label', 'pwebcontact'); ?> <span></span>
                 </div>
-                
+
                 <div class="pweb-custom-field-options">
                     <h3><?php _e('Text input field options', 'pwebcontact'); ?></h3>
                     <?php echo $this->_get_field(array(
@@ -134,7 +134,7 @@ $this->_set_pro_options('field_types', array(
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -144,7 +144,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Label',
                         'class' => 'pweb-custom-field-label-input'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -154,7 +154,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Tooltip',
                         'class' => 'pweb-input-large'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'radio',
@@ -169,13 +169,13 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 1, 'name' => 'Yes')
                         )
                     )); ?>
-                    
+
                     <div class="pweb-advanced-options">
                         <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </button>
                         <div class="pweb-advanced-options-content">
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -185,7 +185,7 @@ $this->_set_pro_options('field_types', array(
                                 'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -194,7 +194,7 @@ $this->_set_pro_options('field_types', array(
                                 'group' => 'fields',
                                 'label' => 'Default value'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -205,19 +205,19 @@ $this->_set_pro_options('field_types', array(
                                 'tooltip' => 'JavaScript regular expression for validation of field value',
                                 'class' => 'pweb-input-large'
                             )); ?>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        
+
+
         <?php $field_type = 'textarea'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?>" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Multi-line textarea input', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
-            
+
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
@@ -227,7 +227,7 @@ $this->_set_pro_options('field_types', array(
                 <div class="pweb-custom-field-label">
                     <?php _e('Label', 'pwebcontact'); ?> <span></span>
                 </div>
-                
+
                 <div class="pweb-custom-field-options">
                     <h3><?php _e('Multi-line textarea input field options', 'pwebcontact'); ?></h3>
                     <?php echo $this->_get_field(array(
@@ -238,7 +238,7 @@ $this->_set_pro_options('field_types', array(
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -248,7 +248,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Label',
                         'class' => 'pweb-custom-field-label-input'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -258,7 +258,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Tooltip',
                         'class' => 'pweb-input-large'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'radio',
@@ -273,13 +273,13 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 1, 'name' => 'Yes')
                         )
                     )); ?>
-                    
+
                     <div class="pweb-advanced-options">
                         <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </button>
                         <div class="pweb-advanced-options-content">
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -289,7 +289,7 @@ $this->_set_pro_options('field_types', array(
                                 'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -298,7 +298,7 @@ $this->_set_pro_options('field_types', array(
                                 'group' => 'fields',
                                 'label' => 'Default value'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -310,7 +310,7 @@ $this->_set_pro_options('field_types', array(
                                 'default' => 5,
                                 'class' => 'pweb-input-mini'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -321,19 +321,19 @@ $this->_set_pro_options('field_types', array(
                                 'tooltip' => 'Set 0 for no limit',
                                 'class' => 'pweb-input-mini'
                             )); ?>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        
+
+
         <?php $field_type = 'email'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?> pweb-custom-fields-single" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Email', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
-            
+
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
@@ -343,7 +343,7 @@ $this->_set_pro_options('field_types', array(
                 <div class="pweb-custom-field-label">
                     <?php _e('Label', 'pwebcontact'); ?> <span><?php _e('Email', 'pwebcontact'); ?></span>
                 </div>
-                
+
                 <div class="pweb-custom-field-options">
                     <h3><?php _e('Email field options', 'pwebcontact'); ?></h3>
                     <?php echo $this->_get_field(array(
@@ -354,7 +354,7 @@ $this->_set_pro_options('field_types', array(
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -365,7 +365,7 @@ $this->_set_pro_options('field_types', array(
                         'default' => 'Email',
                         'class' => 'pweb-custom-field-label-input'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -375,7 +375,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Tooltip',
                         'class' => 'pweb-input-large'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'radio',
@@ -390,13 +390,13 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 1, 'name' => 'Yes')
                         )
                     )); ?>
-                    
+
                     <div class="pweb-advanced-options">
                         <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </button>
                         <div class="pweb-advanced-options-content">
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -407,7 +407,7 @@ $this->_set_pro_options('field_types', array(
                                 'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -416,19 +416,19 @@ $this->_set_pro_options('field_types', array(
                                 'group' => 'fields',
                                 'label' => 'Default value'
                             )); ?>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        
+
+
         <?php $field_type = 'name'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?> pweb-custom-fields-single" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Name', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
-            
+
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
@@ -438,7 +438,7 @@ $this->_set_pro_options('field_types', array(
                 <div class="pweb-custom-field-label">
                     <?php _e('Label', 'pwebcontact'); ?> <span><?php _e('Name', 'pwebcontact'); ?></span>
                 </div>
-                
+
                 <div class="pweb-custom-field-options">
                     <h3><?php _e('Name field options', 'pwebcontact'); ?></h3>
                     <?php echo $this->_get_field(array(
@@ -449,7 +449,7 @@ $this->_set_pro_options('field_types', array(
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -460,7 +460,7 @@ $this->_set_pro_options('field_types', array(
                         'default' => 'Name',
                         'class' => 'pweb-custom-field-label-input'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -470,7 +470,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Tooltip',
                         'class' => 'pweb-input-large'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'radio',
@@ -485,13 +485,13 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 1, 'name' => 'Yes')
                         )
                     )); ?>
-                    
+
                     <div class="pweb-advanced-options">
                         <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </button>
                         <div class="pweb-advanced-options-content">
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -502,7 +502,7 @@ $this->_set_pro_options('field_types', array(
                                 'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -511,7 +511,7 @@ $this->_set_pro_options('field_types', array(
                                 'group' => 'fields',
                                 'label' => 'Default value'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -522,18 +522,18 @@ $this->_set_pro_options('field_types', array(
                                 'tooltip' => 'JavaScript regular expression for validation of field value',
                                 'class' => 'pweb-input-large'
                             )); ?>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        
+
+
         <?php $field_type = 'button_send'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?> pweb-custom-fields-single" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Send button', 'pwebcontact'); ?>
-            
+
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
@@ -542,7 +542,7 @@ $this->_set_pro_options('field_types', array(
                 <div class="pweb-custom-field-label">
                     <?php _e('Label', 'pwebcontact'); ?> <span><?php _e('Send', 'pwebcontact'); ?></span>
                 </div>
-                
+
                 <div class="pweb-custom-field-options">
                     <h3><?php _e('Send button options', 'pwebcontact'); ?></h3>
                     <?php echo $this->_get_field(array(
@@ -553,7 +553,7 @@ $this->_set_pro_options('field_types', array(
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -567,20 +567,20 @@ $this->_set_pro_options('field_types', array(
                 </div>
             </div>
         </div>
-        
-        
-        
+
+
+
         <!-- FREE START -->
         <div class="pweb-custom-fields-separator"><hr></div>
         <!-- FREE END -->
-        
-        
-        
+
+
+
         <?php $field_type = 'phone'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?>" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Phone', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
-            
+
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
@@ -590,7 +590,7 @@ $this->_set_pro_options('field_types', array(
                 <div class="pweb-custom-field-label">
                     <?php _e('Label', 'pwebcontact'); ?> <span><?php _e('Phone', 'pwebcontact'); ?></span>
                 </div>
-                
+
                 <div class="pweb-custom-field-options">
                     <h3><?php _e('Phone field options', 'pwebcontact'); ?></h3>
                     <?php echo $this->_get_field(array(
@@ -601,7 +601,7 @@ $this->_set_pro_options('field_types', array(
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -612,7 +612,7 @@ $this->_set_pro_options('field_types', array(
                         'default' => 'Phone',
                         'class' => 'pweb-custom-field-label-input'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -622,7 +622,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Tooltip',
                         'class' => 'pweb-input-large'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'radio',
@@ -637,13 +637,13 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 1, 'name' => 'Yes')
                         )
                     )); ?>
-                    
+
                     <div class="pweb-advanced-options">
                         <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </button>
                         <div class="pweb-advanced-options-content">
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -653,7 +653,7 @@ $this->_set_pro_options('field_types', array(
                                 'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -662,7 +662,7 @@ $this->_set_pro_options('field_types', array(
                                 'group' => 'fields',
                                 'label' => 'Default value'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -674,19 +674,19 @@ $this->_set_pro_options('field_types', array(
                                 'default' => '/[\d\-\+() ]+/',
                                 'class' => 'pweb-input-large'
                             )); ?>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        
+
+
         <?php $field_type = 'subject'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?> pweb-custom-fields-single" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Subject', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
-            
+
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
@@ -696,7 +696,7 @@ $this->_set_pro_options('field_types', array(
                 <div class="pweb-custom-field-label">
                     <?php _e('Label', 'pwebcontact'); ?> <span><?php _e('Subject', 'pwebcontact'); ?></span>
                 </div>
-                
+
                 <div class="pweb-custom-field-options">
                     <h3><?php _e('Subject field options', 'pwebcontact'); ?></h3>
                     <?php echo $this->_get_field(array(
@@ -707,7 +707,7 @@ $this->_set_pro_options('field_types', array(
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -717,7 +717,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Label',
                         'class' => 'pweb-custom-field-label-input'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -727,7 +727,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Tooltip',
                         'class' => 'pweb-input-large'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'radio',
@@ -742,13 +742,13 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 1, 'name' => 'Yes')
                         )
                     )); ?>
-                    
+
                     <div class="pweb-advanced-options">
                         <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </button>
                         <div class="pweb-advanced-options-content">
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -759,7 +759,7 @@ $this->_set_pro_options('field_types', array(
                                 'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -768,7 +768,7 @@ $this->_set_pro_options('field_types', array(
                                 'group' => 'fields',
                                 'label' => 'Default value'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -779,19 +779,19 @@ $this->_set_pro_options('field_types', array(
                                 'tooltip' => 'JavaScript regular expression for validation of field value',
                                 'class' => 'pweb-input-large'
                             )); ?>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        
+
+
         <?php $field_type = 'date'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?>" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Calendar', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
-            
+
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
@@ -801,7 +801,7 @@ $this->_set_pro_options('field_types', array(
                 <div class="pweb-custom-field-label">
                     <?php _e('Label', 'pwebcontact'); ?> <span></span>
                 </div>
-                
+
                 <div class="pweb-custom-field-options">
                     <h3><?php _e('Calendar field options', 'pwebcontact'); ?></h3>
                     <?php echo $this->_get_field(array(
@@ -812,7 +812,7 @@ $this->_set_pro_options('field_types', array(
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -822,7 +822,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Label',
                         'class' => 'pweb-custom-field-label-input'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -832,7 +832,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Tooltip',
                         'class' => 'pweb-input-large'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'radio',
@@ -847,13 +847,13 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 1, 'name' => 'Yes')
                         )
                     )); ?>
-                    
+
                     <div class="pweb-advanced-options">
                         <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </button>
                         <div class="pweb-advanced-options-content">
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -863,7 +863,7 @@ $this->_set_pro_options('field_types', array(
                                 'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -872,7 +872,7 @@ $this->_set_pro_options('field_types', array(
                                 'group' => 'fields',
                                 'label' => 'Default value'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -883,19 +883,19 @@ $this->_set_pro_options('field_types', array(
                                 'default' => 'dd-mm-yy',
                                 'desc' => '<a href="http://api.jqueryui.com/datepicker/#utility-formatDate" target="_blank">'.__('Click to see a full list of the possible formats of date', 'pwebcontact').'</a>'
                             )); ?>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        
+
+
         <?php $field_type = 'password'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?>" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('Password', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
-            
+
             <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
@@ -905,7 +905,7 @@ $this->_set_pro_options('field_types', array(
                 <div class="pweb-custom-field-label">
                     <?php _e('Label', 'pwebcontact'); ?> <span></span>
                 </div>
-                
+
                 <div class="pweb-custom-field-options">
                     <h3><?php _e('Password field options', 'pwebcontact'); ?></h3>
                     <?php echo $this->_get_field(array(
@@ -916,7 +916,7 @@ $this->_set_pro_options('field_types', array(
                         'group' => 'fields',
                         'value' => $field_type
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -926,7 +926,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Label',
                         'class' => 'pweb-custom-field-label-input'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'text',
@@ -936,7 +936,7 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Tooltip',
                         'class' => 'pweb-input-large'
                     )); ?>
-                    
+
                     <?php echo $this->_get_field(array(
                         'disabled' => true,
                         'type' => 'radio',
@@ -951,13 +951,13 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 1, 'name' => 'Yes')
                         )
                     )); ?>
-                    
+
                     <div class="pweb-advanced-options">
                         <button type="button" class="button pweb-advanced-options-toggler">
                             <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
                         </button>
                         <div class="pweb-advanced-options-content">
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -967,7 +967,7 @@ $this->_set_pro_options('field_types', array(
                                 'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -976,7 +976,7 @@ $this->_set_pro_options('field_types', array(
                                 'group' => 'fields',
                                 'label' => 'Default value'
                             )); ?>
-                            
+
                             <?php echo $this->_get_field(array(
                                 'disabled' => true,
                                 'type' => 'text',
@@ -987,7 +987,7 @@ $this->_set_pro_options('field_types', array(
                                 'tooltip' => 'JavaScript regular expression for validation of field value',
                                 'class' => 'pweb-input-large'
                             )); ?>
-                            
+
                         </div>
                     </div>
                 </div>

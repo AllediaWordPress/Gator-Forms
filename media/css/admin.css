@@ -853,7 +853,7 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 .pweb-custom-field-type-textarea,
 .pweb-custom-field-type-date,
 .pweb-custom-field-type-password,
-.pweb-custom-field-type-url,
+.pweb-custom-field-type-url
 {
     background-color: #2EA2CC;
 }
