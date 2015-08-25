@@ -405,7 +405,7 @@ $message =
 
 
                             /*** PRO START ***/
-							/* ----- Select and Multiple select ------------------------------------------------------- */
+							/* ----- Select, Multiple select, State, and Country------------------------------------- */
 							elseif (in_array($field['type'],array('select', 'multiple','state', 'country'))) :
 								$optValues = isset($field['values']) ? explode("\n", $field['values']) : array();
 								$field['attributes'] = null;

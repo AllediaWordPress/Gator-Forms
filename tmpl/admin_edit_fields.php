@@ -10,8 +10,6 @@
 // TODO map field
 // TODO mail to list - allow multiple emails for one option
 // TODO subject - input or select
-// TODO URL field
-// TODO country select field
 // TODO custom text - WYSIWYG
 // 
 // TODO remove fields button
