@@ -34,6 +34,7 @@ class PWebCompiler {
     );
     protected $exclude_free = array(
         'captcha.php',
+        'media/countries_en-GB.json',
         'media/css/themes/',
         'media/css/uploader',
         'media/fonts', // Toggler font
@@ -42,6 +43,7 @@ class PWebCompiler {
         'media/jquery-ui', // jQuery UI Datapicker
         'media/js/jquery.fileupload',
         'media/js/jquery.iframe-transport.js', // fileupload
+        'media/states_en-GB.json',
         'media/themes/dev',
         'media/tickets',
         'update-checker',
@@ -173,7 +175,7 @@ class PWebCompiler {
         $this->is_pro = isset($options['pro']);
         
         $zip_path = $this->path . 'build/' . ($this->is_pro ? 'pro' : 'free') . '/wp_pwebcontact_'.$version.'_'.($this->is_pro ? 'pro' : 'free').'.zip';
-		
+		echo $zip_path;
         if (is_file($zip_path)) {
             unlink($zip_path);
         }

@@ -185,12 +185,13 @@ class PWebContact
 
         $layout = $params->get('layout_type', 'slidebox');
 
+        /*** PRO START ***/
         //Load JSON files now, so we don't do that in a loop
         $countries_json = file_get_contents(dirname(__FILE__) . '/media/countries_en-GB.json');
         $countries = json_decode($countries_json, true);
         $states_json = file_get_contents(dirname(__FILE__).'/media/states_en-GB.json');
         $states = json_decode($states_json, true);
-
+        /*** PRO END ***/
         // Display HTML code
         require (dirname(__FILE__) .'/tmpl/'. $params->get('layout', 'default') .'.php'); //WP
 
