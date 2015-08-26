@@ -142,7 +142,6 @@ class DefaultServiceRequest implements ServiceRequestInterface
      */
     public function post($url, $postData)
     {
-        error_log(var_export($postData, true));
         $ch = $this->initRequest($url, array('Content-Type: application/atom+xml'));
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
