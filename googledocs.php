@@ -194,10 +194,18 @@ class PWebGoogleDocsPlg
 		{
 			return;
 		}
+		//Prepare data
+		$email_vars = $args['email_vars'];
+		$email_vars = array(
+			'os' => $email_vars['os'],
+			'url' => $email_vars['url'],
+		);
+		$data = array_merge($args['data']['fields'], $email_vars);
 
+		//Connect to the spreadsheet and insert our data in a new row
 		$bridge = new PWebGoogleConnector($args['data']['googledocs_sheetname'], $args['data']['googledocs_worksheetname']);
 		$bridge->auth();
-		$bridge->add_row($args['data']['fields']);
+		$bridge->add_row($data);
 	}
 
 	public static function onSettingsChangeEvent($args)
