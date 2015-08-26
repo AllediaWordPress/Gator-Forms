@@ -358,6 +358,9 @@ function_exists('add_action') or die;
 			</div>
 		</div>
 
+		<?php
+		/*** PRO START ***/
+		?>
 		<hr>
 		<div class="pweb-clearfix">
 			<h3><?php _e('Google Docs Integration', 'pwebcontact'); ?></h3>
@@ -406,7 +409,9 @@ function_exists('add_action') or die;
 				)); ?>
 			</div>
 		</div>
-
+		<?php
+		/*** PRO END ***/
+		?>
 		<hr>
 
 		<div class="pweb-clearfix">

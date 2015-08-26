@@ -34,6 +34,9 @@ class PWebCompiler {
     );
     protected $exclude_free = array(
         'captcha.php',
+	    'googledocs.php',
+	    'lib/asimlqt',
+	    'lib/php-google-oauth',
         'media/css/themes/',
         'media/css/uploader',
         'media/fonts', // Toggler font
@@ -52,6 +55,7 @@ class PWebCompiler {
     protected $filter = array(
         'site.php',
         'admin.php',
+	    'pwebcontact.php',
         'tmpl/admin_edit.php',
         'tmpl/admin_edit_check.php',
         'tmpl/admin_edit_email.php',
@@ -166,15 +170,15 @@ class PWebCompiler {
     public function build() {
         
         $options = getopt('', array('pro'));
-        
-        $this->path = dirname(__DIR__).'/';
-        
-        $version = $this->getVersion();
-        $this->is_pro = isset($options['pro']);
-        
-        $zip_path = $this->path . 'build/' . ($this->is_pro ? 'pro' : 'free') . '/wp_pwebcontact_'.$version.'_'.($this->is_pro ? 'pro' : 'free').'.zip';
-		
-        if (is_file($zip_path)) {
+
+	    $this->path = dirname(__DIR__).'/';
+
+	    $version = $this->getVersion();
+	    $this->is_pro = isset($options['pro']);
+
+	    $zip_path = $this->path . 'build/' . ($this->is_pro ? 'pro' : 'free') . '/wp_pwebcontact_'.$version.'_'.($this->is_pro ? 'pro' : 'free').'.zip';
+
+	    if (is_file($zip_path)) {
             unlink($zip_path);
         }
         
