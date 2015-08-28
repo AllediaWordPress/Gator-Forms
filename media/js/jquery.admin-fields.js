@@ -435,7 +435,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         //TODO add unique class to all options of this field - will be used for saving
         // Change options IDs and names
         var $field = source.find(".pweb-custom-field-container").clone(true);
-        $field.find("input,textarea").each(function(){
+        $field.find("input,textarea,select").each(function(){
             this.disabled = false;
             $(this)
                 .data("index", index) //TODO remove index

@@ -202,7 +202,9 @@ $this->_set_pro_options('field_types', array(
                                 'tooltip' => 'JavaScript regular expression for validation of field value',
                                 'class' => 'pweb-input-large'
                             )); ?>
-                            
+                            <?php
+                                $this->_render_reliant_options();
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -318,6 +320,9 @@ $this->_set_pro_options('field_types', array(
                                 'tooltip' => 'Set 0 for no limit',
                                 'class' => 'pweb-input-mini'
                             )); ?>
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                             
                         </div>
                     </div>
@@ -413,6 +418,9 @@ $this->_set_pro_options('field_types', array(
                                 'group' => 'fields',
                                 'label' => 'Default value'
                             )); ?>
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                             
                         </div>
                     </div>
@@ -519,6 +527,9 @@ $this->_set_pro_options('field_types', array(
                                 'tooltip' => 'JavaScript regular expression for validation of field value',
                                 'class' => 'pweb-input-large'
                             )); ?>
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                             
                         </div>
                     </div>
@@ -561,6 +572,9 @@ $this->_set_pro_options('field_types', array(
                         'class' => 'pweb-custom-field-label-input',
                         'default' => __('Send', 'pwebcontact')
                     )); ?>
+	                <?php
+	                $this->_render_reliant_options();
+	                ?>
                 </div>
             </div>
         </div>
@@ -671,6 +685,9 @@ $this->_set_pro_options('field_types', array(
                                 'default' => '/[\d\-\+() ]+/',
                                 'class' => 'pweb-input-large'
                             )); ?>
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                             
                         </div>
                     </div>
@@ -776,6 +793,9 @@ $this->_set_pro_options('field_types', array(
                                 'tooltip' => 'JavaScript regular expression for validation of field value',
                                 'class' => 'pweb-input-large'
                             )); ?>
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                             
                         </div>
                     </div>
@@ -880,7 +900,9 @@ $this->_set_pro_options('field_types', array(
                                 'default' => 'dd-mm-yy',
                                 'desc' => '<a href="http://api.jqueryui.com/datepicker/#utility-formatDate" target="_blank">'.__('Click to see a full list of the possible formats of date', 'pwebcontact').'</a>'
                             )); ?>
-                            
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -984,6 +1006,9 @@ $this->_set_pro_options('field_types', array(
                                 'tooltip' => 'JavaScript regular expression for validation of field value',
                                 'class' => 'pweb-input-large'
                             )); ?>
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                             
                         </div>
                     </div>
@@ -1088,7 +1113,9 @@ $this->_set_pro_options('field_types', array(
                                 'group' => 'fields',
                                 'label' => 'Default option'
                             )); ?>
-                            
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -1194,7 +1221,9 @@ $this->_set_pro_options('field_types', array(
                                 'default' => '4',
                                 'class' => 'pweb-input-mini'
                             )); ?>
-                            
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -1299,7 +1328,9 @@ $this->_set_pro_options('field_types', array(
                                 'label' => 'Display options in columns',
                                 'class' => 'pweb-input-mini'
                             )); ?>
-                            
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -1404,6 +1435,9 @@ $this->_set_pro_options('field_types', array(
                                 'label' => 'Display options in columns',
                                 'class' => 'pweb-input-mini'
                             )); ?>
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                             
                         </div>
                     </div>
@@ -1488,6 +1522,9 @@ $this->_set_pro_options('field_types', array(
                                 'class' => 'pweb-custom-field-alias',
                                 'label' => 'Alias for email template'
                             )); ?>
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                             
                         </div>
                     </div>
@@ -1598,6 +1635,9 @@ $this->_set_pro_options('field_types', array(
                                     array('value' => 1, 'name' => 'Lightbox window')
                                 )
                             )); ?>
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                             
                         </div>
                     </div>
@@ -1645,6 +1685,9 @@ $this->_set_pro_options('field_types', array(
                         'class' => 'pweb-custom-field-label-input',
                         'default' => __('Send copy to yourself', 'pwebcontact')
                     )); ?>
+	                <?php
+	                $this->_render_reliant_options();
+	                ?>
                 </div>
             </div>
         </div>
@@ -1700,6 +1743,9 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 1, 'name' => 'Yes')
                         )
                     )); ?>
+	                <?php
+	                $this->_render_reliant_options();
+	                ?>
                 </div>
             </div>
         </div>
@@ -1740,6 +1786,9 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Header title',
                         'class' => 'pweb-custom-field-label-input',
                     )); ?>
+	                <?php
+	                $this->_render_reliant_options();
+	                ?>
                 </div>
             </div>
         </div>
@@ -1824,6 +1873,9 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 1, 'name' => 'Yes')
                         )
                     )); ?>
+	                <?php
+	                $this->_render_reliant_options();
+	                ?>
                 </div>
             </div>
         </div>
@@ -1893,6 +1945,9 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 'dark', 'name' => 'Dark')
                         )
                     )); ?>
+	                <?php
+	                $this->_render_reliant_options();
+	                ?>
                 </div>
             </div>
         </div>
@@ -1981,6 +2036,9 @@ $this->_set_pro_options('field_types', array(
                                 'value' => 'mailto',
                                 'readonly' => true
                             )); ?>
+                            <?php
+                            $this->_render_reliant_options();
+                            ?>
                             
                         </div>
                     </div>
@@ -2103,6 +2161,9 @@ $this->_set_pro_options('field_types', array(
                             . ($this->_check_upload_path() === true ? __('writable', 'pwebcontact') : __('unwritable', 'pwebcontact')) 
                             . '</span>'
                     )); ?>
+                    <?php
+                    $this->_render_reliant_options();
+                    ?>
 
                 </div>
             </div>
