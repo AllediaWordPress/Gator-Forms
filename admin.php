@@ -16,17 +16,17 @@ function_exists('add_action') or die;
 $pwebcontact_admin = new PWebContact_Admin;
 
 class PWebContact_Admin {
-    
+
     protected $id = null;
     protected $view = null;
     protected $can_edit = false;
     protected $data = null;
-    
+
     protected $notifications = array();
     protected $warnings = array();
     protected $errors = array();
     protected $requirements = array();
-    
+
     protected $documentation_url = '';
     protected $buy_url = '';
 
@@ -102,80 +102,80 @@ class PWebContact_Admin {
             /*** FREE END ***/
         )
     );
-    
-    
+
+
     function __construct() {
-        
+
         /*** PRO START ***/
         $source = 'perfect-web.co';
         /*** PRO END ***/
         /*** FREE START ***/
         $source = 'wordpress.org';
         /*** FREE END ***/
-        
+
         $this->documentation_url = 'https://www.perfect-web.co/wordpress-plugins/contact-form/documentation?utm_source=backend&utm_medium=button&utm_campaign=documentation&utm_content='.$source;
         $this->buy_url = 'https://www.perfect-web.co/wordpress-plugins/contact-form/subscriptions?tmpl=component&utm_source=backend&utm_medium=button&utm_campaign=upgrade_to_pro&utm_content='.$source;
-        
+
         // initialize admin view
         add_action( 'admin_init', array($this, 'init') );
-        
+
         // Configuration link in menu
         add_action( 'admin_menu', array($this, 'menu') );
-		
+
 		/*** PRO START ***/
 		// Add action for message
         add_action( 'admin_notices', array($this, 'display_update_message') );
-		
+
 		// Add filter for requesting our server, checking for updates!
         add_filter( 'puc_request_info_result-pwebcontact', array($this, 'prepere_update_message') );
         /*** PRO END ***/
-        
+
 		// Configuration link on plugins list
         add_filter( 'plugin_action_links', array($this, 'action_links'), 10, 2 );
     }
-    
-    
+
+
     function init() {
-        
+
         /*** PRO START ***/
         $this->_check_updates();
         /*** PRO END ***/
-        
+
         if (!isset($_GET['page']) OR $_GET['page'] !== 'pwebcontact') {
             return;
         }
-        
+
         load_plugin_textdomain( 'pwebcontact', false, basename(dirname(__FILE__)).'/languages' );
-        
+
         $this->can_edit = current_user_can('manage_options');
-        
+
         $task = isset($_GET['task']) ? $_GET['task'] : 'list';
-        
+
         if ( $task == 'new' ) {
-            
+
             if (!$this->can_edit) {
                 // redirect to list view
                 $this->_redirect('admin.php?page=pwebcontact&error='.
                         urlencode(__('You do not have sufficient permissions to create form!', 'pwebcontact')));
             }
-            
+
             check_admin_referer( 'new-form' );
-            
+
             // create new instance of form
             if ($this->_create_form()) {
                 // redirect to edit view
                 $this->_redirect('admin.php?page=pwebcontact&task=edit&id='.(int)$this->id);
-            } 
+            }
             else {
                 $this->_redirect('admin.php?page=pwebcontact&error='.
                         urlencode(__('Failed creating a new form!', 'pwebcontact')));
             }
         }
         elseif ( $task == 'copy' AND isset($_GET['id'])) {
-            
+
             $this->id = (int)$_GET['id'];
             $this->view = 'edit';
-            
+
             if (!$this->can_edit OR !$this->id) {
                 // redirect to list view
                 $this->_redirect('admin.php?page=pwebcontact&error='.
@@ -183,10 +183,10 @@ class PWebContact_Admin {
             }
             else {
                 check_admin_referer( 'copy-form_'.$this->id );
-                
+
                 $result = $this->_copy_form();
                 $message = __($result ? 'Contact form has been successfully copied.' : 'Failed copying contact form!', 'pwebcontact');
-                
+
                 if ($result) {
                     $this->_redirect('admin.php?page=pwebcontact&task=edit&id='.$this->id.'&notification='.urlencode($message));
                 }
@@ -196,10 +196,10 @@ class PWebContact_Admin {
             }
         }
         elseif ( $task == 'edit' AND isset($_GET['id'])) {
-            
+
             $this->id = (int)$_GET['id'];
             $this->view = 'edit';
-            
+
             if (!$this->can_edit OR !$this->id) {
                 // redirect to list view
                 $this->_redirect('admin.php?page=pwebcontact&error='.
@@ -207,19 +207,19 @@ class PWebContact_Admin {
             }
             else {
                 $this->_load_form();
-                
+
                 // load JS files
-                wp_enqueue_script('pwebcontact_flipster_script', plugins_url('media/js/jquery.flipster.js', __FILE__), 
+                wp_enqueue_script('pwebcontact_flipster_script', plugins_url('media/js/jquery.flipster.js', __FILE__),
                         array(
                             'jquery'
                         ));
-                
-                wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-edit.js', __FILE__), 
+
+                wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-edit.js', __FILE__),
                         array(
                             'jquery',
                             'jquery-ui-tooltip'
                         ));
-                
+
                 wp_enqueue_script('pwebcontact_admin_fields_script', plugins_url('media/js/jquery.admin-fields.js', __FILE__),
                         array(
                             'jquery',
@@ -232,9 +232,9 @@ class PWebContact_Admin {
                             'jquery-ui-draggable',
                             'jquery-ui-droppable'
                         ));
-                
+
                 add_thickbox();
-                
+
                 // load JavaScript translations
                 wp_localize_script('pwebcontact_admin_script', 'pwebcontact_l10n', array(
                     'delete' => __('Delete'),
@@ -254,25 +254,39 @@ class PWebContact_Admin {
                     'email_vars' => __('Variables for email message', 'pwebcontact'),
                     'buy_subscription' => esc_html__('Buy PRO & Get support', 'pwebcontact')
                 ));
-                
+
                 // load CSS
                 wp_enqueue_style('wp-jquery-ui-dialog');
-                
+
                 wp_enqueue_style('pwebcontact_flipster_style', plugins_url('media/css/jquery.flipster.css', __FILE__));
             }
         }
+        /*** PRO START ***/
+        elseif ( $task == 'newsletter' ) {
+
+            check_ajax_referer( 'newsletter' );
+
+            if( isset($_GET['ajax']) )
+            {
+
+                $lists = $this->_getLists($_POST);
+
+                die(json_encode($lists));
+            }
+        }
+        /*** PRO END ***/
         elseif ( $task == 'save' AND isset($_POST['id'])) {
-            
+
             $this->id = (int)$_POST['id'];
             $this->view = 'edit';
-            
+
             if (!$this->can_edit OR !$this->id) {
                 // redirect to list view
                 $this->_redirect('admin.php?page=pwebcontact&error='.
                         urlencode(__('You do not have sufficient permissions to edit form!', 'pwebcontact')));
             }
             else {
-                
+
                 if (isset($_GET['ajax'])) {
                     check_ajax_referer( 'save-form_'.$this->id );
                     //wp_verify_nonce( $_POST['_wp_nonce'], 'save-form_'.$this->id );
@@ -280,10 +294,10 @@ class PWebContact_Admin {
                 else {
                     check_admin_referer( 'save-form_'.$this->id );
                 }
-                
+
                 $result = $this->_save_form();
                 $message = __($result ? 'Contact form has been successfully saved.' : 'Failed saving contact form!', 'pwebcontact');
-                
+
                 if (isset($_GET['ajax'])) {
                     header('Content-type: application/json');
                     die(json_encode(array(
@@ -298,17 +312,17 @@ class PWebContact_Admin {
             }
         }
         elseif ( $task == 'delete' AND isset($_GET['id'])) {
-            
+
             $this->id = (int)$_GET['id'];
             $this->view = 'list';
-            
+
             if (!$this->can_edit OR !$this->id) {
                 // redirect to list view
                 $this->_redirect('admin.php?page=pwebcontact&error='.
                         urlencode(__('You do not have sufficient permissions to delete form!', 'pwebcontact')));
             }
             else {
-                
+
                 if (isset($_GET['ajax'])) {
                     check_ajax_referer( 'delete-form_'.$this->id );
                     //wp_verify_nonce( $_POST['_wp_nonce'], 'delete-form_'.$this->id );
@@ -316,10 +330,10 @@ class PWebContact_Admin {
                 else {
                     check_admin_referer( 'delete-form_'.$this->id );
                 }
-                
+
                 $result = $this->_delete_form();
                 $message = __($result ? 'Contact form has been successfully deleted.' : 'Failed deleting contact form!', 'pwebcontact');
-                
+
                 if (isset($_GET['ajax'])) {
                     header('Content-type: application/json');
                     die(json_encode(array(
@@ -334,18 +348,18 @@ class PWebContact_Admin {
             }
         }
         elseif ( $task == 'edit_state' AND isset($_GET['id']) AND isset($_GET['state'])) {
-            
+
             $this->id = (int)$_GET['id'];
             $this->view = 'list';
             $state = (int)$_GET['state'];
-            
+
             if (!$this->can_edit OR !$this->id) {
                 // redirect to list view
                 $this->_redirect('admin.php?page=pwebcontact&error='.
                         urlencode(__('You do not have sufficient permissions to edit form state!', 'pwebcontact')));
             }
             else {
-                
+
                 if (isset($_GET['ajax'])) {
                     check_ajax_referer( 'edit-form-state_'.$this->id );
                     //wp_verify_nonce( $_POST['_wp_nonce'], 'edit-form-state_'.$this->id );
@@ -353,10 +367,10 @@ class PWebContact_Admin {
                 else {
                     check_admin_referer( 'edit-form-state_'.$this->id );
                 }
-                
+
                 $result = $this->_save_form_state($state);
                 $message = __($result ? 'Contact form has been successfully '.($state ? 'published' : 'unpublished').'.' : 'Failed changing contact form state!', 'pwebcontact');
-                
+
                 if (isset($_GET['ajax'])) {
                     header('Content-type: application/json');
                     die(json_encode(array(
@@ -372,17 +386,17 @@ class PWebContact_Admin {
             }
         }
         elseif ( $task == 'debug' AND isset($_GET['state'])) {
-            
+
             $this->view = 'list';
             $state = (int)$_GET['state'];
-            
+
             if (!$this->can_edit) {
                 // redirect to list view
                 $this->_redirect('admin.php?page=pwebcontact&error='.
                         urlencode(__('You do not have sufficient permissions to change debug mode state!', 'pwebcontact')));
             }
             else {
-                
+
                 if (isset($_GET['ajax'])) {
                     check_ajax_referer( 'edit-debug-state' );
                     //wp_verify_nonce( $_POST['_wp_nonce'], 'edit-debug-state' );
@@ -390,10 +404,10 @@ class PWebContact_Admin {
                 else {
                     check_admin_referer( 'edit-debug-state' );
                 }
-                
+
                 $result = update_option('pwebcontact_debug', $state);
                 $message = __($result ? 'Debug has been successfully '.($state ? 'enabled' : 'disabled').'.' : 'Failed changing debug mode state!', 'pwebcontact');
-                
+
                 if (isset($_GET['ajax'])) {
                     header('Content-type: application/json');
                     die(json_encode(array(
@@ -409,9 +423,9 @@ class PWebContact_Admin {
             }
         }
         elseif ( $task == 'settings') {
-            
+
             $this->view = 'settings';
-            
+
             if (!$this->can_edit) {
                 // redirect to list view
                 $this->_redirect('admin.php?page=pwebcontact&error='.
@@ -419,14 +433,14 @@ class PWebContact_Admin {
             }
             else {
                 $this->_load_settings();
-                
+
                 // load JS files
-                wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-settings.js', __FILE__), 
+                wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-settings.js', __FILE__),
                         array(
                             'jquery',
                             'jquery-ui-tooltip'
                         ));
-                
+
                 // load JavaScript translations
                 wp_localize_script('pwebcontact_admin_script', 'pwebcontact_l10n', array(
                     'saving' => __('Saving...', 'pwebcontact'),
@@ -437,16 +451,16 @@ class PWebContact_Admin {
             }
         }
         elseif ( $task == 'save_settings') {
-            
+
             $this->view = 'settings';
-            
+
             if (!$this->can_edit) {
                 // redirect to list view
                 $this->_redirect('admin.php?page=pwebcontact&error='.
                         urlencode(__('You do not have sufficient permissions to edit settings!', 'pwebcontact')));
             }
             else {
-                
+
                 if (isset($_GET['ajax'])) {
                     check_ajax_referer( 'save-settings' );
                     //wp_verify_nonce( $_POST['_wp_nonce'], 'save-settings' );
@@ -454,10 +468,10 @@ class PWebContact_Admin {
                 else {
                     check_admin_referer( 'save-settings' );
                 }
-                
+
                 $result = $this->_save_settings();
                 $message = __($result ? 'Settings have been successfully saved.' : 'Failed saving settings!', 'pwebcontact');
-                
+
                 if (isset($_GET['ajax'])) {
                     header('Content-type: application/json');
                     die(json_encode(array(
@@ -472,41 +486,41 @@ class PWebContact_Admin {
             }
         }
         elseif ( $task == 'list' OR $task == '' ) {
-            
+
             $this->view = 'list';
-            
+
             if (!$this->can_edit AND !isset($_GET['error'])) {
                 $this->errors[] = __( 'You do not have sufficient permissions to create form!', 'pwebcontact' );
             }
-            
+
             $this->_check_requirements();
             $this->_load_forms();
 			$this->_load_settings();
-            
+
             // load JS files
-            wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-list.js', __FILE__), 
+            wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-list.js', __FILE__),
                     array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-dialog', 'jquery-ui-tooltip'));
-            
+
             add_thickbox();
-            
+
             wp_localize_script('pwebcontact_admin_script', 'pwebcontact_l10n', array(
                 'delete' => __( 'Delete' ),
                 'cancel' => __( 'Cancel' ),
                 'request_error' => __('Request error', 'pwebcontact'),
                 'buy_subscription' => esc_html__('Buy PRO & Get support', 'pwebcontact')
             ));
-            
+
             // load CSS
             wp_enqueue_style('wp-jquery-ui-dialog');
         }
         elseif ( $task == 'load_email' ) {
-            
+
             check_ajax_referer( 'load-email' );
             //wp_verify_nonce( $_POST['_wp_nonce'], 'load-email' );
-            
+
             $content = '';
             if (isset($_GET['ajax']) AND isset($_POST['format']) AND $_POST['format'] AND isset($_POST['tmpl']) AND $_POST['tmpl']) {
-                
+
                 $path = dirname(__FILE__) .'/media/email_tmpl/'. basename($_POST['tmpl']) . ((int)$_POST['format'] === 2 ? '.html' : '.txt');
                 if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                     global $wp_filesystem;
@@ -518,18 +532,18 @@ class PWebContact_Admin {
                     $content = file_get_contents($path);
                 }
             }
-            
+
             header('Content-type: text/plain');
             die( $content );
         }
         elseif ( $task == 'load_fields' ) {
-            
+
             check_ajax_referer( 'load-fields' );
             //wp_verify_nonce( $_POST['_wp_nonce'], 'load-fields' );
-            
+
             $content = '';
             if (isset($_GET['ajax']) AND isset($_POST['fields']) AND $_POST['fields']) {
-                
+
                 $path = dirname(__FILE__) .'/media/fields_settings/'. basename($_POST['fields']) . '.txt';
                 if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                     global $wp_filesystem;
@@ -541,34 +555,34 @@ class PWebContact_Admin {
                     $content = file_get_contents($path);
                 }
             }
-            
+
             header('Content-type: application/json');
             die( $content );
         }
-        
+
         // load CSS
         //wp_enqueue_style('pwebcontact_jquery_ui_style', plugins_url('media/css/ui/jquery-ui-1.10.4.custom.css', __FILE__));
         wp_enqueue_style('pwebcontact_admin_style', plugins_url('media/css/admin.css', __FILE__));
         wp_enqueue_style('pwebcontact_glyphicon_style', plugins_url('media/css/glyphicon.css', __FILE__));
-        
+
         add_action('admin_head', array($this, 'admin_head'));
     }
-    
-    
+
+
     function menu() {
 
         $title = __('Perfect Easy & Powerful Contact Form', 'pwebcontact');
-        
+
         if (isset($_GET['task']) AND $_GET['task'] == 'edit') {
             $title = __('Edit') .' &lsaquo; '. $title;
         }
-        
-        add_menu_page($title, __('Perfect Contact Forms', 'pwebcontact'), 
+
+        add_menu_page($title, __('Perfect Contact Forms', 'pwebcontact'),
                 'manage_options', 'pwebcontact', array($this, 'configuration'),
                 plugins_url('media/images/admin/menu-icon.png', dirname(__FILE__).'/pwebcontact.php'));
     }
-    
-    
+
+
     function action_links( $links, $file ) {
 
         if ( $file == plugin_basename(dirname(__FILE__).'/pwebcontact.php') ) {
@@ -577,8 +591,8 @@ class PWebContact_Admin {
 
         return $links;
     }
-    
-    
+
+
     function admin_head() {
 
 ?>
@@ -592,10 +606,10 @@ pwebcontact_admin.is_pro = true;
 </script>
 <?php
     }
-    
-    
+
+
     protected function _recursive_stripslashes(&$input) {
-        
+
         if (is_array($input)) {
             foreach ($input as &$item) {
                 $this->_recursive_stripslashes($item);
@@ -605,40 +619,40 @@ pwebcontact_admin.is_pro = true;
             $input = stripslashes($input);
         }
     }
-    
-    
+
+
     protected function _load_forms() {
-        
+
         global $wpdb;
-        
+
         if (!is_object($this->data)) {
             $this->data = new stdClass();
         }
-        
+
         if (!isset($this->data->forms)) {
-        
+
             $sql =  'SELECT `id`, `title`, `publish`, `position`, `modify_date`, `layout` '.
                     'FROM `'.$wpdb->prefix.'pwebcontact_forms` ';
             $this->data->forms = $wpdb->get_results($sql);
-            
+
             if ($this->data->forms === null) {
                 $this->data->forms = array();
             }
         }
     }
-    
-    
+
+
     protected function _load_form() {
-        
+
         global $wpdb;
-        
+
         if ($this->data === null AND $this->id) {
-        
+
             $sql =  $wpdb->prepare('SELECT `title`, `publish`, `position`, `layout`, `modify_date`, `params`, `fields` '.
                     'FROM `'.$wpdb->prefix.'pwebcontact_forms` '.
                     'WHERE `id` = %d', $this->id);
             $this->data = $wpdb->get_row($sql);
-            
+
             if ($this->data === null) {
                 $this->data = false;
             }
@@ -647,18 +661,18 @@ pwebcontact_admin.is_pro = true;
                 $this->data->params['position'] = $this->data->position;
                 $this->data->params['layout_type'] = $this->data->layout;
                 $this->_recursive_stripslashes($this->data->params);
-                
+
                 $this->data->fields = $this->data->fields ? json_decode( $this->data->fields, true ) : array();
                 $this->_recursive_stripslashes($this->data->fields);
-                
+
                 $this->_load_settings();
             }
         }
     }
-    
-    
+
+
     protected function _load_settings() {
-        
+
         if (!is_object($this->data)) {
             $this->data = new stdClass();
         }
@@ -667,42 +681,42 @@ pwebcontact_admin.is_pro = true;
             $this->_recursive_stripslashes($this->data->settings);
         }
     }
-    
-    
+
+
     protected function _set_param($key = null, $value = null, $group = 'params') {
-        
+
         if (!is_object($this->data)) {
             $this->data = new stdClass();
         }
         $this->data->{$group}[$key] = $value;
     }
-    
-    
+
+
     protected function _get_param($key = null, $default = null, $group = 'params') {
-        
+
         if (isset($this->data->{$group})) {
             if ($key === null) {
                 return $this->data->{$group};
             }
-            elseif (isset($this->data->{$group}[$key]) AND 
-                $this->data->{$group}[$key] !== null AND 
+            elseif (isset($this->data->{$group}[$key]) AND
+                $this->data->{$group}[$key] !== null AND
                 $this->data->{$group}[$key] !== '') {
                 return $this->data->{$group}[$key];
             }
         }
         return $default;
     }
-    
-    
+
+
     protected function _get_post($key = null, $default = null) {
-        
+
         if (isset($_POST[$key]) AND $_POST[$key] !== null AND $_POST[$key] !== '') {
             return $_POST[$key];
         }
         return $default;
     }
-    
-    
+
+
     protected function _redirect($url = null)
     {
         $url = admin_url($url);
@@ -713,24 +727,24 @@ pwebcontact_admin.is_pro = true;
             die('<script>document.location.href="'.$url.'";</script>');
         }
     }
-    
-    
+
+
     protected function _check_requirements() {
-        
+
         if (($result = $this->_check_php_version()) !== true) {
             $this->errors[] = $result;
         }
-        
+
         if (($result = $this->_check_wp_version()) !== true) {
             $this->errors[] = $result;
         }
     }
-    
-    
+
+
     protected function _create_form() {
-        
+
         global $wpdb;
-        
+
         $data = array(
             'title' => 'Contact form',
             'publish' => 1,
@@ -740,54 +754,54 @@ pwebcontact_admin.is_pro = true;
             'params' => '{}',
             'fields' => '{}'
         );
-        
+
         if ($wpdb->insert($wpdb->prefix.'pwebcontact_forms', $data)) {
             $this->id = (int)$wpdb->insert_id;
             return true;
         }
         return false;
     }
-    
-    
+
+
     protected function _copy_form() {
-        
+
         global $wpdb;
-        
+
         $sql =  $wpdb->prepare('SELECT `title`, `position`, `layout`, `params`, `fields` '.
                     'FROM `'.$wpdb->prefix.'pwebcontact_forms` '.
                     'WHERE `id` = %d', $this->id);
         $data = $wpdb->get_row($sql, ARRAY_A);
-        
+
         if (!$data) return false;
-        
+
         $data['title'] .= __( ' (Copy)', 'pwebcontact' );
         $data['publish'] = 0;
         $data['modify_date'] = gmdate('Y-m-d H:i:s');
-        
+
         if ($wpdb->insert($wpdb->prefix.'pwebcontact_forms', $data)) {
             $this->id = (int)$wpdb->insert_id;
             return true;
         }
         return false;
     }
-    
-    
+
+
     protected function _save_settings() {
-        
+
         return update_option('pwebcontact_settings', $this->_get_post('settings'));
     }
-    
-    
+
+
     protected function _save_form() {
-        
+
         global $wpdb;
-        
+
         // Get params from request
         $this->data = new stdClass();
         $this->data->params = $this->_get_post('params', array());
-        
+
         $params =& $this->data->params;
-        
+
         // TODO Validate params
         // Int
         /*
@@ -802,36 +816,36 @@ pwebcontact_admin.is_pro = true;
         cookie_lifetime
         close_delay
         effect_duration*/
-        
+
         // Unit
         /*
         offset
         bg_padding
         form_width*/
-        
+
         // URL
         /*
         redirect_url*/
-        
+
         // Single email
         /*
         email_from
         email_replyto*/
-        
+
         // Emails
         /*
         email_to
         email_bcc*/
-        
+
         $this->data->fields = $this->_get_post('fields', array());
         $fields =& $this->data->fields;
         ksort($fields);
-        
+
         $position = $this->_get_param('position');
         $layout = $this->_get_param('layout_type');
-        
+
         unset($params['position'], $params['layout_type'], $params['fields']);
-        
+
         // Update data
         return false !== $wpdb->update($wpdb->prefix.'pwebcontact_forms', array(
                     'title' => $this->_get_post('title'),
@@ -843,90 +857,90 @@ pwebcontact_admin.is_pro = true;
                     'fields' => json_encode($fields)
                 ), array('id' => $this->id), array('%s', /*'%d',*/ '%s', '%s', '%s', '%s'));
     }
-    
-    
+
+
     protected function _save_form_state($state = 1) {
-        
+
         global $wpdb;
-        
+
         // Update data
         return false !== $wpdb->update($wpdb->prefix.'pwebcontact_forms', array('publish' => (int)$state), array('id' => $this->id));
     }
-    
-    
+
+
     protected function _delete_form() {
-        
+
         global $wpdb;
-        
+
         return false !== $wpdb->delete($wpdb->prefix.'pwebcontact_forms', array('id' => $this->id), array('%d'));
     }
-    
-    
+
+
     function configuration() {
 
 ?>
 <div class="wrap pweb-wrap pweb-view-<?php echo $this->view; ?>">
-    
-    <?php 
-    if ($this->view == 'list') : 
-        
-        if (count($this->data->forms)) : 
+
+    <?php
+    if ($this->view == 'list') :
+
+        if (count($this->data->forms)) :
             $this->_display_forms_list();
-        else : 
+        else :
             $this->_display_create_form();
         endif;
-        
-    elseif ($this->view == 'edit') : 
+
+    elseif ($this->view == 'edit') :
         $this->_display_edit_form();
-    
-    elseif ($this->view == 'settings') : 
+
+    elseif ($this->view == 'settings') :
         $this->_display_settings();
-    
+
     endif; ?>
-    
+
     <hr>
-    
+
     <p class="pweb-copyrights">
 		Copyright &copy; 2015
-        <a href="https://www.perfect-web.co/wordpress-plugins/contact-form" target="_blank"><strong>Perfect Web sp. z o.o.</strong></a>, 
+        <a href="https://www.perfect-web.co/wordpress-plugins/contact-form" target="_blank"><strong>Perfect Web sp. z o.o.</strong></a>,
         All rights reserved.
-		Distributed under 
+		Distributed under
         <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank"><strong>GNU/GPL</strong></a>.<br>
 		All other trademarks and copyrights are property of their respective owners.
 	</p>
 </div>
-<?php 
+<?php
 
     }
-    
-    
+
+
     protected function _load_tmpl($name = '', $preffix = __FILE__) {
-        
+
         $path = plugin_dir_path(__FILE__).'tmpl/'.basename($preffix, '.php').'_'.$name.'.php';
         if (is_file($path)) {
             include $path;
         }
     }
-    
-    
+
+
     protected function _display_messages() {
-        
+
         if (isset($_GET['error']) AND $_GET['error']) {
             $this->errors[] = urldecode($_GET['error']);
         }
-        
+
         if (count($this->errors)) {
 ?>
 <div class="error pweb-clearfix"><p><strong><?php echo implode('<br>', $this->errors); ?></strong></p></div>
 <?php
 		}
-        
+
         if (count($this->warnings)) {
 ?>
 <div class="error pweb-clearfix"><p><strong><?php echo implode('<br>', $this->warnings); ?></strong></p></div>
 <?php
 		}
-        
+
         if (isset($_GET['notification']) AND $_GET['notification']) {
             $this->notifications[] = urldecode($_GET['notification']);
         }
@@ -936,59 +950,59 @@ pwebcontact_admin.is_pro = true;
 <?php
 		}
     }
-    
-    
+
+
     protected function _display_settings() {
-        
+
         $this->_load_tmpl('settings');
     }
 
 
     protected function _display_create_form() {
-        
-        $this->_load_tmpl('new'); 
+
+        $this->_load_tmpl('new');
     }
 
 
     protected function _display_forms_list() {
-        
+
         $this->_load_tmpl('list');
     }
 
 
     protected function _display_edit_form() {
-        
+
         $this->_load_tmpl('edit');
     }
-    
-    
+
+
     protected function _get_themes() {
-        
+
         $themes = array();
-        
+
         /*** FREE START ***/
         $active_theme = $this->_get_param('theme', 'free');
         /*** FREE END ***/
         /*** PRO START ***/
         $active_theme = $this->_get_param('theme', $this->_get_param('style_form', -1) === -1 ? 'clean' : null);
         /*** PRO END ***/
-        
+
         $themes_url = plugins_url('/media/themes/', dirname(__FILE__) .'/pwebcontact.php');
         $media_dir = dirname(__FILE__) .'/media/';
-        
+
         $dir = new DirectoryIterator( $media_dir . 'themes' );
         foreach( $dir as $item ) {
-            
+
             if ($item->isFile() AND preg_match('/\.json$/i', $item->getFilename())) {
-                
+
                 $basename = $item->getBasename('.json');
-                
+
                 /*** PRO START ***/
                 if ($basename === 'dev' AND WP_DEBUG !== true) {
                     continue;
                 }
                 /*** PRO END ***/
-                
+
                 if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                     global $wp_filesystem;
                     $has_image = $wp_filesystem->is_file( $item->getPath() . '/' . $basename . '.jpg' );
@@ -998,63 +1012,63 @@ pwebcontact_admin.is_pro = true;
                     $has_image = is_file( $item->getPath() . '/' . $basename . '.jpg' );
                     $settings = file_get_contents($item->getPathname());
                 }
-                
+
                 if ($settings) {
-                
+
                     $settings = json_decode($settings);
-                    
+
                     $theme = new stdClass();
                     $theme->title = isset($settings->title) ? $settings->title : ucfirst( str_replace('_', ' ', $basename) );
                     $theme->description = isset($settings->description) ? $settings->description : '';
                     $theme->image = $has_image ? $themes_url . $basename . '.jpg' : null;
                     $theme->settings = isset($settings->params) ? json_encode($settings->params) : '{}';
                     $theme->is_active = ($active_theme === $basename);
-                    
+
                     $themes[$basename] = $theme;
                 }
             }
         }
-        
+
         return $themes;
     }
 
 
     protected function _get_plugin_name() {
-        
+
         $data = get_plugin_data(dirname(__FILE__).'/pwebcontact.php', false, false);
         return $data['Name'];
     }
 
 
     protected function _get_version() {
-        
+
         $data = get_plugin_data(dirname(__FILE__).'/pwebcontact.php', false, false);
         return $data['Version'];
     }
-	
-	
+
+
 	protected function _get_feeds_script() {
-        
+
 		global $wp_version;
-		
-        return 
+
+        return
 			  '(function(){'
 			. 'var pw=document.createElement("script");pw.type="text/javascript";pw.async=true;'
 			. 'pw.src="https://www.perfect-web.co/index.php?option=com_ars&view=update&task=stream&format=raw&id=8&version='.$this->_get_version().'&wpversion='.$wp_version.'&uid='.md5(home_url()).'";'
 			. 'var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(pw,s);'
 			. '})();';
     }
-    
-    
+
+
     protected function _get_name() {
-        
+
         $data = get_plugin_data(dirname(__FILE__).'/pwebcontact.php', false, true);
         return $data['Name'];
     }
 
 
     protected function _get_field( $opt = array() ) {
-        
+
         $opt = array_merge(array(
             'id' => null,
             'name' => null,
@@ -1066,15 +1080,15 @@ pwebcontact_admin.is_pro = true;
             'disabled' => false,
             'is_pro' => null
         ), $opt);
-        
+
         extract( $opt );
-        
+
         /*** FREE START ***/
         if ($is_pro === null) {
             $opt['is_pro'] = $is_pro = in_array($name, self::$pro[$group]);
         }
         /*** FREE END ***/
-        
+
         if ($parent !== null) {
             $names = array();
             foreach((array)$parent as $parent_name) {
@@ -1082,8 +1096,8 @@ pwebcontact_admin.is_pro = true;
             }
             $parent = ' pweb-child '.implode(' ', $names);
         }
-        
-        return 
+
+        return
                 '<div class="pweb-field pweb-field-'.$type
                 .($parent ? $parent : '')
                 .($is_pro === true ? ' pweb-pro' : '')
@@ -1097,10 +1111,10 @@ pwebcontact_admin.is_pro = true;
                     '</div>'.
                 '</div>';
     }
-    
-    
+
+
     protected function _get_label( $opt = array() ) {
-        
+
         $opt = array_merge(array(
             'id' => null,
             'name' => null,
@@ -1111,9 +1125,9 @@ pwebcontact_admin.is_pro = true;
             'required' => false,
             'is_pro' => null
         ), $opt);
-        
+
         extract( $opt );
-        
+
         if (empty($id)) {
             $id = 'pweb_'. $group .'_'. ($index !== null ? $index.'_' : '') . $name;
         }
@@ -1122,21 +1136,21 @@ pwebcontact_admin.is_pro = true;
             $is_pro = in_array($name, self::$pro[$group]);
         }
         /*** FREE END ***/
-        
+
         return '<label for="'.esc_attr($id).'" id="'.esc_attr($id).'-lbl"' .
                 ' class="' . ($tooltip ? 'pweb-has-tooltip' : '') . ($required ? ' required' : '') . '"' .
                 ($tooltip ? ' title="'. esc_attr__($tooltip, 'pwebcontact') .'"' : '') .
-                '>' . 
-                __($label, 'pwebcontact') . 
+                '>' .
+                __($label, 'pwebcontact') .
                 ($required ? ' <span class="pweb-star">*</span>' : '') .
-                
+
                 '</label>' .
                 ($is_pro === true ? $this->_display_badge_pro() : '');
     }
-    
-    
+
+
     protected function _get_field_control( $opt = array() ) {
-        
+
         $opt = array_merge(array(
             'type' => 'text',
             'id' => null,
@@ -1155,25 +1169,25 @@ pwebcontact_admin.is_pro = true;
             'is_pro' => null,
             'html_after' => null
         ), $opt);
-        
+
         extract( $opt );
-        
+
         $html = '';
-        
-        
+
+
         if (empty($id)) {
             $id = 'pweb_'. $group .'_'. ($index !== null ? $index.'_' : '') . $name;
         }
         $attributes['id'] = $id;
-        
+
         $field_name = esc_attr($group. ($index !== null ? '['.$index.']' : '') . '['.$name.']');
-        
+
         /*** FREE START ***/
         if ($is_pro === null) {
             $is_pro = in_array($name, self::$pro[$group]);
         }
         /*** FREE END ***/
-        
+
         if (!isset($attributes['class'])) {
             $attributes['class'] = '';
         }
@@ -1191,7 +1205,7 @@ pwebcontact_admin.is_pro = true;
         if ($readonly) {
             $attributes['readonly'] = 'readonly';
         }
-        
+
         if ($is_parent === true) {
             $attributes['class'] .= ' pweb-parent';
         }
@@ -1203,28 +1217,28 @@ pwebcontact_admin.is_pro = true;
                 }
             }
         }
-        
+
         if ($value === null) {
             $value = $this->_get_param($name, $default, $group);
         }
         if ($value === null OR $value === '') {
             $value = $default;
         }
-        
+
         // extend HTML fields with custom types
         switch ($type) {
-            
+
             case 'filelist' AND isset($directory):
-                
+
                 $type = 'select';
-                
+
                 if (!count($options)) {
                     $options = array(array(
                         'value' => '',
                         'name' => '- Select option -'
                     ));
                 }
-                
+
                 if (is_dir( dirname(__FILE__) .'/'. trim($directory, '/\\') )) {
                     $directory = dirname(__FILE__) .'/'. trim($directory, '/\\');
                 }
@@ -1234,12 +1248,12 @@ pwebcontact_admin.is_pro = true;
                 else {
                     $directory = null;
                 }
-                
+
                 if ($directory) {
                     $dir = new DirectoryIterator($directory);
                     foreach( $dir as $item )
                     {
-                        if ($item->isFile()) 
+                        if ($item->isFile())
                         {
                             if (strpos($item->getFilename(), 'index.') === false AND preg_match('/'.$filter.'/i', $item->getFilename())) {
                                 if (isset($strip_ext) AND $strip_ext) {
@@ -1258,17 +1272,17 @@ pwebcontact_admin.is_pro = true;
                     }
                 }
                 break;
-            
-            
+
+
             case 'glyphicon':
 
                 $type = 'select';
-                
+
                 $css = file_get_contents( dirname(__FILE__).'/media/css/glyphicon.css' );
                 if (preg_match_all('/\.(glyphicon-[^:]+):before\s*\{\s*content:\s*"\\\([^"]+)";\s*\}/i', $css, $matches, PREG_SET_ORDER))
                 {
                     $attributes['class'] .= ' pweb-glyphicon-list';
-                    
+
                     foreach ($matches as $icon) {
                         $options[] = array(
                             'value' => $icon[2],
@@ -1277,26 +1291,26 @@ pwebcontact_admin.is_pro = true;
                     }
                 }
                 break;
-            
-            
+
+
             case 'image':
 
                 $type = 'text';
                 break;
-            
-            
+
+
             case 'wp_user':
 
                 $type = 'select';
                 $blog_id = get_current_blog_id();
-                
+
                 if (!count($options)) {
                     $options = array(array(
                         'value' => '',
                         'name' => '- Select Administrator -'
                     ));
                 }
-                
+
                 $users = get_users('blog_id='.$blog_id.'&orderby=display_name&role=administrator');
                 if ($users) {
                     foreach ($users as $user) {
@@ -1307,15 +1321,15 @@ pwebcontact_admin.is_pro = true;
                     }
                 }
                 break;
-            
-            
+
+
             case 'text_button':
 
                 $type = 'text';
                 $html_after .= '<button type="button" class="button" id="'.$id.'_btn">'. esc_html__($button, 'pwebcontact') .'</button>';
                 break;
-            
-            
+
+
             case 'color':
 
                 $type = 'text';
@@ -1334,37 +1348,37 @@ pwebcontact_admin.is_pro = true;
                         . '})'
                     . '</script>';
                 break;
-            
+
             case 'custom':
 
                 $html .= '<div '. $this->_attr_to_str($attributes) .'>'. $content .'</div>';
                 break;
         }
-        
-        
+
+
         // default HTML field types
         switch ($type) {
-            
+
             case 'text':
             case 'password':
             case 'email':
             case 'hidden':
-                
+
                 $html .= '<input type="'.$type.'" name="'.$field_name.'" value="'. esc_attr($value) .'"'. $this->_attr_to_str($attributes) .'>';
                 break;
-                
-                
+
+
             case 'textarea':
-                
+
                 $attributes['cols'] = isset($attributes['cols']) ? $attributes['cols'] : 30;
                 $attributes['rows'] = isset($attributes['rows']) ? $attributes['rows'] : 5;
-                
+
                 $html .= '<textarea name="'.$field_name.'"'. $this->_attr_to_str($attributes) .'>'. esc_html($value) .'</textarea>';
                 break;
-                
-                
+
+
             case 'select':
-                
+
                 if (isset($attributes['multiple'])) {
                     $field_name .= '[]';
                     $attributes['multiple'] = 'multiple';
@@ -1374,33 +1388,33 @@ pwebcontact_admin.is_pro = true;
                 }
                 $html .= '<select name="'.$field_name.'"'. $this->_attr_to_str($attributes) .'>';
                 foreach ($options as $option) {
-                    
+
                     /*if ($is_pro === false AND !(isset($option['disabled']) AND $option['disabled']) AND in_array($name.':'.$option['value'], self::$pro[$group]) ) {
                         /option['disabled'] = true;
                     }*/
                     if (!isset($option['name'])) {
                         $option['name'] = (string)$option['value'];
                     }
-                    
-                    $html .= '<option value="'.esc_attr($option['value']).'"'. selected($value, $option['value'], false) 
-                            . (isset($attributes['disabled']) OR (isset($option['disabled']) AND $option['disabled']) ? ' disabled="disabled"' : '') 
+
+                    $html .= '<option value="'.esc_attr($option['value']).'"'. selected($value, $option['value'], false)
+                            . (isset($attributes['disabled']) OR (isset($option['disabled']) AND $option['disabled']) ? ' disabled="disabled"' : '')
                             . '>'. esc_html__($option['name'], 'pwebcontact') .'</option>';
                 }
                 $html .= '</select>';
                 break;
-                
-                
+
+
             case 'radio':
             case 'checkbox':
-                
+
                 $html .= '<fieldset'. $this->_attr_to_str($attributes) .'>';
-                
+
                 if ($type == 'checkbox' AND count($options) > 1) {
                     $field_name .= '[]';
                 }
-                
+
                 foreach ($options as $option) {
-                    
+
                     /*if ($is_pro === false AND !(isset($option['disabled']) AND $option['disabled']) AND in_array($name.':'.$option['value'], self::$pro[$group]) ) {
                         $option['disabled'] = true;
                     }*/
@@ -1421,52 +1435,52 @@ pwebcontact_admin.is_pro = true;
                             $value = null;
                         }
                     }
-                    
+
                     /*** FREE START ***/
                     $option['is_pro'] = ($is_pro !== true AND in_array($name.'::'.$option['value'], self::$pro[$group]));
                     /*** FREE END ***/
                     /*** PRO START ***/
                     $option['is_pro'] = false;
                     /*** PRO END ***/
-                    
+
                     $option_id = $id .'_'. preg_replace('/[^a-z0-9-_]/i', '', str_replace(':', '_', $option['value']));
-                    
+
                     $html .= '<div class="pweb-field-option'
                             . (isset($option['class']) ? ' '.esc_attr($option['class']) : '').'"'
                             . (isset($option['tooltip']) ? ' title="'. esc_attr__($option['tooltip'], 'pwebcontact') .'"' : '')
                             . '>';
-                    
+
                     $html .= '<input type="'.$type.'" name="'.$field_name.'" id="'.$option_id.'"'
-                            . ' value="'.esc_attr($option['value']).'"'. checked($value, $option['value'], false) 
+                            . ' value="'.esc_attr($option['value']).'"'. checked($value, $option['value'], false)
                             . ((isset($attributes['disabled']) OR (isset($option['disabled']) AND $option['disabled'])) ? ' disabled="disabled"' : '')
                             . ' class="'
                             . (($is_parent === true OR (isset($option['is_parent']) AND $option['is_parent'] === true)) ? 'pweb-parent' : '')
                             . ($option['is_pro'] ? ' pweb-pro' : '')
                             . '">';
-                    
+
                     $html .= '<label for="'.$option_id.'" id="'.$option_id.'-lbl"'
                             . '>'. __($option['name'], 'pwebcontact') . (isset($option['after']) ? $option['after'] : '')
                             . ($option['is_pro'] ? $this->_display_badge_pro() : '')
                             . '</label>';
-                    
+
                     $html .= '</div>';
                 }
                 $html .= '</fieldset>';
                 break;
         }
-        
+
         return $html . $html_after;
     }
-    
+
     protected function _attr_to_str($attributes = array()) {
-        
+
         $attr = '';
         foreach ($attributes as $name => $value) {
             $attr .= ' '.$name.'="'.esc_attr($value).'"';
         }
         return $attr;
     }
-    
+
     protected function _display_badge($field_type = null)
     {
         /*** FREE START ***/
@@ -1475,12 +1489,12 @@ pwebcontact_admin.is_pro = true;
         }
         /*** FREE END ***/
     }
-    
+
     protected function _display_badge_pro()
     {
         return ' <span class="pweb-pro pweb-has-tooltip" title="'.__('You need to get PRO version to use this feature', 'pwebcontact').'">'.__('PRO', 'pwebcontact').'</span>';
     }
-    
+
     protected function _is_pro_field($field_type = null)
     {
         /*** FREE START ***/
@@ -1490,40 +1504,40 @@ pwebcontact_admin.is_pro = true;
         return false;
         /*** PRO END ***/
     }
-    
+
     protected function _set_pro_options($group = null, $options = array())
     {
         self::$pro[$group] = $options;
     }
-    
+
     private function _convert_size($str)
     {
         $val = trim($str);
         $last = strtolower($str[strlen($str)-1]);
-        switch($last) 
+        switch($last)
 		{
             case 'g': $val *= 1024;
             case 'm': $val *= 1024;
             case 'k': $val *= 1024;
         }
 		$val = $val / 1024 / 1024;
-		
+
         return $val > 10 ? intval($val) : round($val, 2);
     }
-    
+
 	/*** PRO START ***/
     private function _check_updates()
     {
         require_once dirname(__FILE__). '/update-checker/plugin-update-checker.php';
-        
+
         $UpdateChecker = PucFactory::buildUpdateChecker(
             'https://www.perfect-web.co/index.php?option=com_ars&view=update&task=stream&format=json&id=8',
             dirname(__FILE__).'/pwebcontact.php'
         );
         $UpdateChecker->addQueryArgFilter( array($this, 'get_updates_query') );
     }
-	
-	public function prepere_update_message($pluginInfo) 
+
+	public function prepere_update_message($pluginInfo)
 	{
         // create object for update info
         $update = new stdClass();
@@ -1531,13 +1545,13 @@ pwebcontact_admin.is_pro = true;
 		if (isset($pluginInfo->updateImage) AND !empty($pluginInfo->updateImage))
 		{
 			$path = 'media/cache/' . basename($pluginInfo->updateImage);
-			
+
 			// Always override file!
 			if ($contents = file_get_contents($pluginInfo->updateImage))
 			{
 				file_put_contents(plugin_dir_path(__FILE__) . $path, $contents);
 			}
-			
+
 			if (isset($pluginInfo->updateStyle))
 			{
 				$pluginInfo->updateStyle = str_replace('__IMAGE__', plugin_dir_url(__FILE__) . $path, $pluginInfo->updateStyle);
@@ -1554,7 +1568,7 @@ pwebcontact_admin.is_pro = true;
         return $pluginInfo;
     }
 
-    public function display_update_message() 
+    public function display_update_message()
 	{
         global $pagenow;
         $option = get_site_option('pwebcontact_update');
@@ -1567,7 +1581,7 @@ pwebcontact_admin.is_pro = true;
 
 		if (isset($option->version))
 		{
-			if ( $option->version <= $this->_get_version() ) 
+			if ( $option->version <= $this->_get_version() )
 			{
 				$option->version = NULL;
 				update_site_option('pwebcontact_update', $option);
@@ -1588,7 +1602,7 @@ pwebcontact_admin.is_pro = true;
 			}
 		}
     }
-    
+
     protected function _display_dlid_message()
     {
         if (!isset($this->_dlid_message_displayed))
@@ -1609,13 +1623,13 @@ pwebcontact_admin.is_pro = true;
             }
         }
     }
-    
+
     public function get_updates_query($query)
     {
         global $wp_version;
-        
+
         $this->_load_settings();
-        
+
         // Get download ID from settings
         $query['dlid'] = $this->_get_param('dlid', null, 'settings');
         if (empty($query['dlid']))
@@ -1627,7 +1641,7 @@ pwebcontact_admin.is_pro = true;
                 $file = basename($file);
                 if (preg_match('/^[a-f0-9]{32}$/', $file)) {
                     $query['dlid'] = $file;
-                    
+
                     // Save old download ID in settings
                     $this->data->settings['dlid'] = $file;
                     update_option('pwebcontact_settings', $this->data->settings);
@@ -1635,24 +1649,24 @@ pwebcontact_admin.is_pro = true;
                 }
             }
         }
-        
+
         // plugin version
         // installed_version = x.x.x
         $query['version'] = $this->_get_version();
-			
+
 		// WP version
 		$query['wpversion'] = $wp_version;
-		
+
 		// host name
 		$query['host'] = urlencode(home_url());
-        
+
         return $query;
     }
 	/*** PRO END ***/
-    
+
     private function _check_image_text_creation()
 	{
-		if (!isset($this->requirements['image_text'])) 
+		if (!isset($this->requirements['image_text']))
         {
             $this->requirements['image_text'] = true;
 
@@ -1672,23 +1686,23 @@ pwebcontact_admin.is_pro = true;
             {
                 if (!(function_exists($function) && is_callable($function))) $disabled_functions[] = $function;
             }
-            if (count($disabled_functions)) 
+            if (count($disabled_functions))
             {
                 $this->requirements['image_text'] = sprintf( __('You can not use vertical Toggler Tab, because on this server following PHP functions are disabled or missing: %s. Contact with server administrator to fix it.', 'pwebcontact'), implode(', ', $disabled_functions) );
             }
         }
-        
+
 		return $this->requirements['image_text'];
 	}
-    
-    private function _check_cache_path() 
+
+    private function _check_cache_path()
 	{
-        if (!isset($this->requirements['cache_path'])) 
+        if (!isset($this->requirements['cache_path']))
         {
             $this->requirements['cache_path'] = true;
-            
+
             $path = dirname(__FILE__).'/media/cache/';
-            
+
             if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                 global $wp_filesystem;
 
@@ -1698,7 +1712,7 @@ pwebcontact_admin.is_pro = true;
                 else {
                     return $this->requirements['cache_path'];
                 }
-                
+
                 if (!$wp_filesystem->is_writable($path)) {
                     $this->requirements['cache_path'] = sprintf(__('Cache directory: %s is not writable.', 'pwebcontact'), $path);
                 }
@@ -1710,25 +1724,25 @@ pwebcontact_admin.is_pro = true;
                 else {
                     return $this->requirements['cache_path'];
                 }
-                
+
                 if (!is_writable($path)) {
                     $this->requirements['cache_path'] = sprintf(__('Cache directory: %s is not writable.', 'pwebcontact'), $path);
                 }
             }
         }
-        
+
         return $this->requirements['cache_path'];
 	}
-    
-    private function _check_upload_path() 
+
+    private function _check_upload_path()
 	{
-        if (!isset($this->requirements['upload_path'])) 
+        if (!isset($this->requirements['upload_path']))
         {
             $this->requirements['upload_path'] = true;
-            
+
             $upload_dir = wp_upload_dir();
             $path = $upload_dir['basedir'].'/pwebcontact/'.$this->id.'/';
-            
+
             if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                 global $wp_filesystem;
 
@@ -1768,62 +1782,189 @@ pwebcontact_admin.is_pro = true;
                 }
             }
         }
-        
+
         return $this->requirements['upload_path'];
 	}
-    
-    private function _check_mailer() 
+
+    private function _check_mailer()
 	{
-        if (!isset($this->requirements['mailer'])) 
+        if (!isset($this->requirements['mailer']))
         {
             $this->requirements['mailer'] = true;
-            
+
             $this->_load_settings();
             $mailer = $this->_get_param('mailer', 'inherit', 'settings');
-            
+
             if ($mailer === 'mail' AND !(function_exists('mail') AND is_callable('mail'))) {
                 $this->requirements['mailer'] = sprintf(__('PHP mail function is disabled. Change mailer type to SMTP in %s or ask your server Administrator to enable it.', 'pwebcontact'), '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>');
             }
             elseif ($mailer === 'smtp' AND (
-                    !$this->_get_param('smtp_username', null, 'settings') OR 
-                    !$this->_get_param('smtp_password', null, 'settings') OR 
-                    !$this->_get_param('smtp_host', null, 'settings') OR 
+                    !$this->_get_param('smtp_username', null, 'settings') OR
+                    !$this->_get_param('smtp_password', null, 'settings') OR
+                    !$this->_get_param('smtp_host', null, 'settings') OR
                     !$this->_get_param('smtp_port', null, 'settings')
                     )) {
                 $this->requirements['mailer'] = sprintf(__('Setup SMTP Authentication in %s. Ask your server Administrator if you do not know the SMTP connection details.', 'pwebcontact'), '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>');
             }
         }
-        
+
         return $this->requirements['mailer'];
     }
-    
-    private function _check_php_version() 
+
+    private function _check_php_version()
 	{
-        if (!isset($this->requirements['php_version'])) 
+        if (!isset($this->requirements['php_version']))
         {
             $this->requirements['php_version'] = true;
-            
+
             if (version_compare( PHP_VERSION, '5.3', '<' )) {
                 $this->requirements['php_version'] = sprintf(__('This plugin requires PHP %s or higher.', 'pwebcontact' ), '5.3');
             }
         }
-        
+
         return $this->requirements['php_version'];
     }
-    
-    private function _check_wp_version() 
+
+    private function _check_wp_version()
 	{
         global $wp_version;
-        
-        if (!isset($this->requirements['wp_version'])) 
+
+        if (!isset($this->requirements['wp_version']))
         {
             $this->requirements['wp_version'] = true;
-            
+
             if (version_compare( $wp_version, '3.5', '<' )) {
                 $this->requirements['wp_version'] = sprintf(__('This plugin is compatible with WordPress %s or higher.', 'pwebcontact' ), '3.5');
             }
         }
-        
+
         return $this->requirements['wp_version'];
     }
+
+    /*** PRO START ***/
+    private function _getLists($data)
+    {
+
+        if( isset($data['fields']) )
+        {
+
+            $fields = end($data['fields']);
+            $options = array();
+
+            foreach( $fields as $key => $value )
+            {
+
+                $options[substr(strstr($key, '_', false), 1)] = $value;
+            }
+
+            $type = isset($data['newsletter_type']) ? strtolower($data['newsletter_type']) : false;
+
+            if( $type AND $type == 'mailchimp' )
+                $lists = $this->getListsFromMailchimp($options);
+            else if( $type AND $type == 'freshmail' )
+                $lists = $this->getListsFromFreshmail($options);
+            else
+                return array('error'=>sprintf(__('Oops! Where is %s integration?'), $type));
+
+            return $lists;
+        }
+
+        return array('error'=>__('Oops! Somthing goes wrong!', 'pwebcontact'));
+    }
+
+    private function getListsFromFreshmail($options)
+    {
+
+        $response = $this->communicateWithFreshMail('subscribers_list/lists', null, $options);
+
+        return $response;
+    }
+
+    private function communicateWithFreshMail($uri, $postData, $options)
+    {
+
+        $postData = $postData !== null ? json_encode($postData) : null;
+        $headers = array();
+
+        $headers['X-Rest-ApiKey'] = $options['apikey'];
+
+        if ($postData === null)
+            $headers['X-Rest-ApiSign'] = sha1($options['apikey'] . '/rest/' . $uri . $options['secret']);
+        else
+            $headers['X-Rest-ApiSign'] = sha1($options['apikey'] . '/rest/' . $uri . $postData . $options['secret']);
+
+        $headers['Content-Type'] = 'application/json';
+
+        if ($postData === null)
+        {
+
+            $response = wp_remote_get('https://api.freshmail.com/rest/' . $uri, array(
+                    'method' => 'POST',
+                    'timeout' => 45,
+                    'redirection' => 5,
+                    'httpversion' => '1.0',
+                    'blocking' => true,
+                    'headers' => $headers,
+                    'body' => array(),
+                    'cookies' => array()
+                )
+            );
+
+            if ( is_wp_error( $response ) ) {
+                $error_message = $response->get_error_message();
+                return array('error'=>'Something went wrong: ' . $error_message);
+            }
+
+            $tmp = json_decode(wp_remote_retrieve_body($response));
+
+            $lists = array();
+
+            foreach ($tmp->lists as $list) {
+
+                $lists[$list->subscriberListHash] = $list->name;
+            }
+
+            return $lists;
+        }
+    }
+
+    private function getListsFromMailchimp($options)
+    {
+
+        if( false === strstr($options['apikey'], '-') ) {
+
+            return false;
+        }
+
+        $explode    = explode('-', $options['apikey']);
+
+        $response = wp_remote_post( 'https://'. $explode[1] .'.api.mailchimp.com/2.0/lists/list.php', array(
+                'method' => 'POST',
+                'timeout' => 45,
+                'redirection' => 5,
+                'httpversion' => '1.0',
+                'blocking' => true,
+                'headers' => array(),
+                'body' => $options,
+                'cookies' => array()
+            )
+        );
+
+        if ( is_wp_error( $response ) ) {
+            $error_message = $response->get_error_message();
+            return array('error'=>'Something went wrong: ' . $error_message);
+        }
+
+        $tmp = unserialize(wp_remote_retrieve_body($response));
+
+        $lists = array();
+
+        foreach($tmp['data'] as $list) {
+
+            $lists[$list['id']] = $list['name'];
+        }
+
+        return $lists;
+    }
+    /*** PRO END ***/
 }
