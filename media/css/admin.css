@@ -872,6 +872,7 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 }
 .pweb-custom-field-type-upload,
 .pweb-custom-field-type-captcha,
+.pweb-custom-field-type-newsletter,
 .pweb-custom-field-type-mailto_list {
     background-color: #8066A8;
 }
