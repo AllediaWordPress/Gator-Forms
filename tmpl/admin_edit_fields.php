@@ -1903,7 +1903,7 @@ $this->_set_pro_options('field_types', array(
             <?php _e('Newsletter', 'pwebcontact'); ?>
             <?php echo $this->_display_badge($field_type); ?>
 
-            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container<?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
+            <div data-type="<?php echo $field_type; ?>" class="pweb-custom-field-container pweb-custom-fields-single <?php echo $this->_is_pro_field($field_type) ? ' pweb-pro' : ''; ?>">
                 <a href="#" class="pweb-custom-field-show-options pweb-has-tooltip" title="<?php _e('Edit'); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 <div class="pweb-custom-field-type">
                     <span><?php _e('Newsletter field', 'pwebcontact'); ?></span>
@@ -2062,14 +2062,14 @@ $this->_set_pro_options('field_types', array(
                         'index' => 'X',
                         'group' => 'fields',
                         'class' => 'pweb-custom-field-alias',
-                        'label' => 'Alias for email template',
+                        'label' => '',
                         'value' => 'newsletter'
                     )); ?>
 
                 </div>
             </div>
         </div>
-        
+
         <?php $field_type = 'mailto_list'; ?>
         <div class="pweb-custom-fields-type pweb-custom-field-type-<?php echo $field_type; ?> pweb-custom-fields-single" id="pweb_field_type_<?php echo $field_type; ?>">
             <?php _e('List of recipients', 'pwebcontact'); ?>

@@ -1376,10 +1376,13 @@ pwebcontact_admin.is_pro = true;
                 $html .= '<textarea name="'.$field_name.'"'. $this->_attr_to_str($attributes) .'>'. esc_html($value) .'</textarea>';
                 break;
 
+            case 'button':
+                $html .= '<button '. $this->_attr_to_str($attributes) .'>'. esc_attr($value) .'</button>';
+                break;
 
             case 'select':
 
-                if (isset($attributes['multiple'])) {
+                if (isset($multiple)) {
                     $field_name .= '[]';
                     $attributes['multiple'] = 'multiple';
                     if (!isset($attributes['size']) OR empty($attributes['size'])) {
