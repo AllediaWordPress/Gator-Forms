@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.1
+ * @version 2.1.2
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -2749,6 +2749,7 @@ class PWebContact
         /*** PRO START ***/
 		$os = array(
 			// Mircrosoft Windows Operating Systems
+			'Windows 10' => 'Windows NT 10.0',
 			'Windows 8.1' => 'Windows NT 6.3',
 			'Windows 8' => 'Windows NT 6.2',
 			'Windows 7' => 'Windows NT 6.1',
@@ -2771,6 +2772,8 @@ class PWebContact
 			'iPhone' => 'iPhone',
 			// Apple Mac Operating Systems
 			'Mac OS X Cheetah' => 'Mac OS X 10.0',
+			'Mac OS X Yosemite' => 'Mac OS X 10.10',
+			'Mac OS X El Capitan' => 'Mac OS X 10.11',
 			'Mac OS X Puma' => 'Mac OS X 10.1',
 			'Mac OS X Jaguar' => 'Mac OS X 10.2',
 			'Mac OS X Panther' => 'Mac OS X 10.3',

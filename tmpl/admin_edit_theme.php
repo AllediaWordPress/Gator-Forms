@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 2.0.0
+ * @version 2.1.2
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -752,104 +752,6 @@ function_exists('add_action') or die;
                 )); ?>
             </div>
         </div>
-        
-        
-        <?php /* @deprecated since 2.0 */
-        $media_css_dir = dirname(dirname(__FILE__)) .'/media/css/'; 
-        if (is_dir($media_css_dir .'background') OR is_dir($media_css_dir .'form') OR is_dir($media_css_dir .'toggler')) : ?>
-        <div class="pweb-clearfix">
-            
-            <div class="pweb-alert pweb-alert-warning">
-                
-                <strong><?php _e( 'Predefined styles', 'pwebcontact' ); ?></strong><br>
-                <!-- PRO START -->
-                <?php _e( 'In Contact Form version 2.1 predefined styles will be removed. You should disable those options and select desire colors in above options to be ready for next upgrade.', 'pwebcontact' ); ?>
-                <button type="button" class="button" id="pweb-themes-disable-predefined">
-                    <?php _e( 'Disable predefined styles', 'pwebcontact' ); ?>
-                </button>
-                <!-- PRO END -->
-                <!-- FREE START -->
-                <?php _e( 'In Contact Form FREE and PRO version 2.0 predefined styles were removed. To change colors edit Free theme CSS file or buy PRO version to use colors options.', 'pwebcontact' ); ?>
-                <a class="button" target="_blank" href="<?php echo admin_url('plugin-editor.php?file='.urlencode('pwebcontact/media/css/themes/free.css').'&amp;plugin='.urlencode('pwebcontact/pwebcontact.php')); ?>">
-                    <i class="glyphicon glyphicon-edit"></i> <?php _e( 'Edit CSS', 'pwebcontact' ); ?>
-                </a>
-                <button type="button" class="button button-primary pweb-buy">
-                    <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
-                </button>
-                <!-- FREE END -->
-            </div>
-            
-            <?php if (is_dir($media_css_dir .'toggler')) : ?>
-            <div class="pweb-width-33">
-                <?php echo $this->_get_field(array(
-                    'name' => 'style_toggler',
-                    'label' => 'Toggler style',
-                    'type' => 'filelist',
-                    'default' => -1,
-                    'filter' => '\.css$',
-                    'directory' => 'media/css/toggler',
-                    'strip_ext' => true,
-                    /*** FREE START ***/
-                    'disabled' => true,
-                    /*** FREE END ***/
-                    'parent' => array('handler_tab', 'handler_button'),
-                    'options' => array(
-                        array(
-                            'value' => -1,
-                            'name' => '- Do not use -'
-                        )
-                    )
-                )); ?>
-            </div>
-            <?php endif; ?>
-            
-            <?php if (is_dir($media_css_dir .'form')) : ?>
-            <div class="pweb-width-33">
-                <?php echo $this->_get_field(array(
-                    'name' => 'style_form',
-                    'label' => 'Fields, buttons and links style',
-                    'type' => 'filelist',
-                    'default' => -1,
-                    'filter' => '\.css$',
-                    'directory' => 'media/css/form',
-                    'strip_ext' => true,
-                    /*** FREE START ***/
-                    'disabled' => true,
-                    /*** FREE END ***/
-                    'options' => array(
-                        array(
-                            'value' => -1,
-                            'name' => '- Do not use -'
-                        )
-                    )
-                )); ?>
-            </div>
-            <?php endif; ?>
-            
-            <?php if (is_dir($media_css_dir .'background')) : ?>
-            <div class="pweb-width-33">
-                <?php echo $this->_get_field(array(
-                    'name' => 'style_bg',
-                    'label' => 'Background style',
-                    'type' => 'filelist',
-                    'default' => -1,
-                    'filter' => '\.css$',
-                    'directory' => 'media/css/background',
-                    'strip_ext' => true,
-                    /*** FREE START ***/
-                    'disabled' => true,
-                    /*** FREE END ***/
-                    'options' => array(
-                        array(
-                            'value' => -1,
-                            'name' => '- Do not use -'
-                        )
-                    )
-                )); ?>
-            </div>
-            <?php endif; ?>
-        </div>
-        <?php endif; ?>
         
     </div>
 </div>
