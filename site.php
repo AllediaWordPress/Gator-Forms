@@ -2105,7 +2105,105 @@ class PWebContact
         }
     }
     
-    
+    /*** PRO START ***/
+    public static function communicateWithFreshMail($uri, $postData, $options)
+    {
+
+        $postData = $postData !== null ? json_encode($postData) : null;
+        $headers = array();
+
+        $headers['X-Rest-ApiKey'] = $options['apikey'];
+
+        if ($postData === null)
+            $headers['X-Rest-ApiSign'] = sha1($options['apikey'] . '/rest/' . $uri . $options['secret']);
+        else
+            $headers['X-Rest-ApiSign'] = sha1($options['apikey'] . '/rest/' . $uri . $postData . $options['secret']);
+
+        $headers['Content-Type'] = 'application/json';
+
+        if ($postData === null)
+        {
+
+            $response = wp_remote_get('https://api.freshmail.com/rest/' . $uri, array(
+                    'method' => 'POST',
+                    'timeout' => 45,
+                    'redirection' => 5,
+                    'httpversion' => '1.0',
+                    'blocking' => true,
+                    'headers' => $headers,
+                    'body' => array(),
+                    'cookies' => array()
+                )
+            );
+
+            if ( is_wp_error( $response ) ) {
+                $error_message = $response->get_error_message();
+                return array('error'=>'Something went wrong: ' . $error_message);
+            }
+
+            $tmp = json_decode(wp_remote_retrieve_body($response));
+
+            $lists = array();
+
+            foreach ($tmp->lists as $list) {
+
+                $lists[$list->subscriberListHash] = $list->name;
+            }
+
+            return $lists;
+        }
+        else
+        {
+
+            $response = wp_remote_post('https://api.freshmail.com/rest/' . $uri, array(
+                    'method' => 'POST',
+                    'timeout' => 45,
+                    'redirection' => 5,
+                    'httpversion' => '1.0',
+                    'blocking' => true,
+                    'headers' => $headers,
+                    'body' => $postData,
+                    'cookies' => array()
+                )
+            );
+        }
+    }
+
+    public static function subscribeToMailchimp($list_id, $email, $options)
+    {
+        $explode    = explode('-', $options['apikey']);
+
+        $response = wp_remote_post('https://'. $explode[1] .'.api.mailchimp.com/2.0/lists/subscribe.json', array(
+                'method' => 'POST',
+                'timeout' => 45,
+                'redirection' => 5,
+                'httpversion' => '1.0',
+                'blocking' => true,
+                'headers' => array('Content-type: multipart/form-data'),
+                'body' => array(
+                    'apikey'    => $options['apikey'],
+                    'id'        => $list_id,
+                    'email'     => array(
+                        'email' => $email
+                    )
+                ),
+                'cookies' => array()
+            )
+        );
+
+        return $response;
+    }
+
+    public static function subscribeToFreshmail($list_id, $email, $options)
+    {
+
+        return self::communicateWithFreshMail('subscriber/add', array(
+            'email' => $email,
+            'list'  => $list_id
+        ), $options);
+    }
+    /*** PRO END ***/
+
 	public static function sendEmail() 
 	{		
 		add_action('phpmailer_init', array('PWebContact', 'setupMailer'));
@@ -2185,7 +2283,77 @@ class PWebContact
 			if (in_array($field['type'], array('page', 'row', 'column', 'button_send', 'email_copy', 'captcha', 'custom_text', 'header'))) continue;
 			
             /*** PRO START ***/
-            if ($field['type'] == 'mailto_list') 
+            if( $field['type'] == 'newsletter' )
+            {
+
+                $type = isset($field['newsletter_type']) ? ucfirst($field['newsletter_type']) : false;
+
+                if( $type )
+                {
+
+                    $method = 'subscribeTo' . $type;
+                    $options = array(
+                        'apikey' => $field[strtolower($type) . '_apikey']
+                    );
+                    if( $type == 'Freshmail' )
+                        $options['secret'] = $field[strtolower($type) . '_secret'];
+
+                    if( $field['newsletter_visibility'] > 0 )
+                        $lists = $data['newsletter_lists'];
+                    else
+                    {
+
+                        $lists = $field['newsletter_lists'];
+
+                        foreach( $lists as &$_list )
+                        {
+
+                            $_list = key(json_decode($_list));
+                        }
+                    }
+
+                }
+
+                $newsletter_email = null;
+
+                if( $user_email )
+                    $newsletter_email = $user_email;
+                else
+                {
+
+                    foreach( $fields as $field )
+                    {
+
+                        if( $field['type'] == 'email' )
+                        {
+
+                            $_email = null;
+
+                            if (isset($data['fields'][$field['alias']])) {
+                                $_email = $data['fields'][$field['alias']];
+                                if (is_string($_email)) {
+                                    $_email = stripslashes( $_email );
+                                }
+                                elseif (is_array($_email)) {
+                                    foreach ($_email as &$val) {
+                                        $val = stripslashes($val);
+                                    }
+                                }
+                            }
+
+                            $newsletter_email = $_email;
+                            break;
+                        }
+                    }
+                }
+
+                foreach( $lists as $list )
+                {
+
+                    self::$method($list, $newsletter_email, $options);
+                }
+            }
+            elseif ($field['type'] == 'mailto_list')
 			{
                 if ($data['mailto'] > 0) {
                     $rows = explode("\n", $field['values']);
