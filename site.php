@@ -2231,7 +2231,10 @@ class PWebContact
 			'title' 			=> isset($_POST['title'])               ? (string)$_POST['title'] : null,
 			'url' 				=> isset($_POST['url'])                 ? (string)$_POST['url'] : null,
             'screen_resolution' => isset($_POST['screen_resolution'])   ? (string)$_POST['screen_resolution'] : null,
-			'attachments' 		=> isset($_POST['attachments'])         ? (array)$_POST['attachments'] : array()
+			'attachments' 		=> isset($_POST['attachments'])         ? (array)$_POST['attachments'] : array(),
+            /*** PRO START ***/
+            'newsletter_lists'  => isset($_POST['newsletter_lists'])    ? (array)$_POST['newsletter_lists'] : array()
+            /*** PRO END ***/
 		);
 
 		$data['ip_address'] 	= self::detectIP();
