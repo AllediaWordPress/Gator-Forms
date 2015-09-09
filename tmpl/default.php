@@ -206,9 +206,48 @@ $message =
 							<?php echo $captcha->display($field['id'], 'required'); ?>
 						</div>
 					</div>
-					<?php 
-                    
-                    
+					<?php
+
+					/*** PRO START ***/
+					/* ----- Newsletter ---------------------------------------------------------------------------- */
+					elseif ($field['type'] == 'newsletter') :
+
+						if( $field['newsletter_visibility'] > 0 ) : ?>
+
+							<div class="pweb-label">
+								<label>
+									<?php _e($field['label'] ? $field['label'] : 'Subscribe to newsletter', 'pwebcontact'); ?>
+									<?php if (isset($field['required']) AND $field['required']) : ?><span class="pweb-asterisk">*</span><?php endif; ?>
+								</label>
+							</div>
+
+							<div class="pweb-field">
+								<fieldset id="<?php echo $field['id']; ?>" class="pweb-fields-group<?php if (isset($field['tooltip']) AND $field['tooltip']) echo ' pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact'); ?>">
+
+									<?php
+
+									$i = 0;
+
+									foreach( $field['newsletter_lists'] as $list ) :
+
+										$l 		= json_decode($list);
+										$value 	= key($l);
+										?>
+										<input type="checkbox" name="newsletter_lists[]" id="newsletter_<?php echo $value; ?>" value="<?php echo esc_attr( preg_replace('/[\r\n]+/', '', $value) ); ?>" class="pweb-checkbox pweb-fieldset<?php if ($i == 0 AND isset($field['required']) AND $field['required']) echo ' required'; ?>" <?php if( $field['newsletter_visibility'] == 1 ) echo 'checked'; ?>  data-role="none">
+										<label for="newsletter_<?php echo $value; ?>">
+											<?php esc_html_e($l->$value, 'pwebcontact'); ?>
+										</label>
+										<?php
+										$i++;
+									endforeach; ?>
+
+								</fieldset>
+							</div>
+
+							<?php
+						endif;
+                    /*** PRO END ***/
+
                     /* ----- Email copy --------------------------------------------------------------------------- */
                     elseif ($field['type'] == 'email_copy' AND $params->get('email_copy', 2) == 1) :
                             $field['id'] = 'pwebcontact'.$form_id.'_copy';
