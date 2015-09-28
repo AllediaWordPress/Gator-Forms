@@ -196,7 +196,7 @@ Yes it will, however you only get access to new versions and support for as long
 
 == Changelog ==
 
-= 2.1.2 / 08-09-2015 =
+= 2.1.2 / 28-09-2015 =
 * Updated list of Operating Systems
 * Removed predefined styles with were deprecated
 * MailChimp integration
