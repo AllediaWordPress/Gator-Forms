@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.2
+ * @version 2.1.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -2179,7 +2179,7 @@ class PWebContact
                 'redirection' => 5,
                 'httpversion' => '1.0',
                 'blocking' => true,
-                'headers' => array('Content-type: multipart/form-data'),
+                'headers' => array('Content-Type: multipart/form-data'),
                 'body' => array(
                     'apikey'    => $options['apikey'],
                     'id'        => $list_id,
@@ -2296,7 +2296,8 @@ class PWebContact
 
                     $method = 'subscribeTo' . $type;
                     $options = array(
-                        'apikey' => $field[strtolower($type) . '_apikey']
+                        'apikey' => $field[strtolower($type) . '_apikey'],
+                        'opt' => isset($field['newsletter_opt_in']) ? $field['newsletter_opt_in'] : 0
                     );
                     if( $type == 'Freshmail' )
                         $options['secret'] = $field[strtolower($type) . '_secret'];

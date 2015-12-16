@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.2
+ * @version 2.1.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -110,7 +110,7 @@ $message =
                      ?>
 					<div class="pweb-field-container pweb-field-buttons">
 						<div class="pweb-field">
-							<button id="pwebcontact<?php echo $form_id; ?>_send" type="button" class="btn pweb-button-send" data-role="none"><?php _e($field['label'] ? $field['label'] : 'Send', 'pwebcontact') ?></button>
+							<button id="pwebcontact<?php echo $form_id; ?>_send" type="<?php echo ($params->get('autocomplete_inputs', 1) == 1 ? 'submit' : 'button'); ?>" class="btn pweb-button-send" data-role="none"><?php _e($field['label'] ? $field['label'] : 'Send', 'pwebcontact') ?></button>
 							<?php if ($params->get('reset_form', 1) == 3) : ?>
 							<button id="pwebcontact<?php echo $form_id; ?>_reset" type="reset" class="btn pweb-button-reset" style="display:none" data-role="none"><i class="glyphicon glyphicon-remove-sign"></i> <?php _e($params->get('button_reset', 'Reset'), 'pwebcontact') ?></button>
 							<?php endif; ?>
@@ -366,7 +366,7 @@ $message =
 								
 								if ($user->ID AND ($field['type'] == 'name' OR $field['type'] == 'email') AND $params->get('user_data', 1) > 0) {
 									$field['value'] = $field['type'] == 'email' ? $user->user_email : $user->display_name;
-                                    //TODO addHiddenField(); ob_clean(); continue; remove some CSS
+                                    //TODO addHiddenField(); ob_get_clean(); continue; remove some CSS
 								}
 								
 								$field['attributes'] = null;
@@ -381,7 +381,9 @@ $message =
 									$field['classes'][] = 'pweb-tooltip';
 									$field['attributes'] .= ' title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"';
 								}
-	
+                                                                if ($params->get('autocomplete_inputs', 1) == 1)
+                                                                        $field['attributes'] .= ' autocomplete="on"';
+
 								if (count($field['classes']))
 									$field['attributes'] .= ' class="'.implode(' ', $field['classes']).'"';
 								
@@ -583,7 +585,7 @@ $message =
 					</div>
 					<?php 
                     else :
-                        ob_clean();
+                        ob_get_clean();
                         continue;
                     endif;
 				

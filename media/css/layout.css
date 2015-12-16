@@ -1,5 +1,5 @@
 /**
- * @version 2.1.1
+ * @version 2.1.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -729,7 +729,8 @@ form.pwebcontact-form input.pweb-input,
 form.pwebcontact-form select {
 	max-width: 100%;
 	line-height: 22px;
-	height: 26px;
+	height: auto;
+	min-height: 26px;
 }
 form.pwebcontact-form select.pweb-multiple {
 	height: auto;

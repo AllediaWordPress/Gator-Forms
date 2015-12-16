@@ -1,5 +1,5 @@
 /**
- * @version 2.1.2
+ * @version 2.1.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -694,6 +694,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         var parent      = that.parents('.pweb-custom-field-options');
         var actual      = $('.newsletter_depends_on_' + value, parent);
         var canWeDoAjax = true;
+
+        $(this).closest('.pweb-custom-field-options')
+                .find("[for$='newsletter_opt_in']").parent()[value != 'mailchimp' ? 'hide' : 'show']();
 
         $('[class*="newsletter_depends_on_"]', parent).parents('.pweb-field').slideUp();
         actual.parents('.pweb-field').slideDown();

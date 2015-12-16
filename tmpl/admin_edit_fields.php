@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.2
+ * @version 2.1.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -2017,6 +2017,21 @@ $this->_set_pro_options('field_types', array(
                             array('value' => 0, 'name' => 'Hidden on front'),
                             array('value' => 1, 'name' => 'Visible on front and checked'),
                             array('value' => 2, 'name' => 'Visible on front and unchecked')
+                        )
+                    )); ?>
+
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'radio',
+                        'name' => 'newsletter_opt_in',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Double opt-in',
+                        'class' => 'pweb-radio-group',
+                        'default' => 0,
+                        'options' => array(
+                            array('value' => 0, 'name' => 'No'),
+                            array('value' => 1, 'name' => 'Yes')
                         )
                     )); ?>
 

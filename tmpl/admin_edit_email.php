@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.0.4
+ * @version 2.1.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -42,9 +42,9 @@ function_exists('add_action') or die;
             )
         )
     )); ?>
-    
+
     <?php _e('or define your own', 'pwebcontact'); ?>
-    
+
     <button class="button button-primary pweb-next-tab-button" type="button">
         <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
@@ -69,13 +69,13 @@ function_exists('add_action') or die;
             'name' => 'email_to',
             'class' => 'pweb-filter-emails pweb-input-large'
         )); ?>
-        
+
         <?php echo __('or/and', 'pwebcontact') .' '. $this->_get_field_control(array(
-            'type' => 'wp_user',
-            'name' => 'email_cms_user',
-            'label' => 'or choose WordPress Administrator to whom message will be sent to',
-            'tooltip' => 'Enable this option to send email to selected WordPress Administrator. Do not use this option if Administrator has the same email address as in above field!'
-        )); ?>
+                'type' => 'wp_user',
+                'name' => 'email_cms_user',
+                'label' => 'or choose WordPress Administrator to whom message will be sent to',
+                'tooltip' => 'Enable this option to send email to selected WordPress Administrator. Do not use this option if Administrator has the same email address as in above field!'
+            )); ?>
     </div>
 </div>
 
@@ -90,7 +90,7 @@ function_exists('add_action') or die;
 
 <div class="pweb-field pweb-field-textarea">
     <h3><?php _e( 'Email message to User', 'pwebcontact' ); ?></h3>
-    
+
     <?php echo $this->_get_field(array(
         'type' => 'radio',
         'name' => 'email_copy',
@@ -112,7 +112,7 @@ function_exists('add_action') or die;
             )
         )
     )); ?>
-    
+
     <?php echo $this->_get_label(array(
         'name' => 'email_user_tmpl',
         'label' => 'Enter message which will be sent to User as copy'
@@ -136,7 +136,7 @@ function_exists('add_action') or die;
             'name' => 'email_user_tmpl_format',
             'label' => 'Select format'
         )); ?>
-        
+
         <?php echo $this->_get_field_control(array(
             'type' => 'radio',
             'name' => 'email_user_tmpl_format',
@@ -153,12 +153,12 @@ function_exists('add_action') or die;
                 )
             )
         )); ?>
-        
+
         <?php echo $this->_get_label(array(
             'name' => 'email_user_tmpl_list',
             'label' => 'Load template'
         )); ?>
-        
+
         <?php echo $this->_get_field_control(array(
             'type' => 'filelist',
             'name' => 'email_user_tmpl_list',
@@ -176,7 +176,7 @@ function_exists('add_action') or die;
                 )
             )
         )); ?>
-        
+
         <span class="pweb-field-desc"><?php _e( 'If you have changed format of email then load template again', 'pwebcontact' ); ?></span>
     </div>
 </div>
@@ -186,8 +186,8 @@ function_exists('add_action') or die;
         <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
     </button>
     <div class="pweb-advanced-options-content">
-        
-        
+
+
         <div class="pweb-field pweb-field-textarea">
             <h3><?php _e( 'Email message to Administrator', 'pwebcontact' ); ?></h3>
             <?php echo $this->_get_label(array(
@@ -262,16 +262,16 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
-                
+
                 <span class="pweb-field-desc"><?php _e( 'If you have changed format of email then load template again', 'pwebcontact' ); ?></span>
             </div>
         </div>
-        
+
         <hr>
 
         <div class="pweb-clearfix">
             <h3><?php _e('Email subject', 'pwebcontact'); ?></h3>
-            
+
             <div class="pweb-width-50">
                 <?php echo $this->_get_field(array(
                     'type' => 'text',
@@ -307,12 +307,12 @@ function_exists('add_action') or die;
                 )); ?>
             </div>
         </div>
-        
-        
+
+
 
         <div class="pweb-clearfix">
             <h3><?php _e('Tickets', 'pwebcontact'); ?></h3>
-            
+
             <div class="pweb-width-50">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
@@ -354,9 +354,9 @@ function_exists('add_action') or die;
 
         <div class="pweb-clearfix">
             <h3><?php _e('Email settings', 'pwebcontact'); ?></h3>
-            
+
             <div class="pweb-width-50">
-                <?php 
+                <?php
                 $host = $_SERVER['SERVER_NAME'];
                 $isLocalhsot = ($host == 'localhost' OR $host == '127.0.0.1');
                 $domain = str_replace('www.', '', $host);
@@ -368,9 +368,9 @@ function_exists('add_action') or die;
                     'type' => 'text',
                     'name' => 'email_from',
                     'label' => 'Sender email',
-                    'desc' => sprintf(__('Leave blank to use email: &bdquo;%s&rdquo; set in %s.', 'pwebcontact'), $this->_get_param('email_from', get_bloginfo('admin_email'), 'settings'), 
-                                        '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>')
-                                . ($isLocalhsot ? '' : sprintf(__('Sender email should be in the same domain as your website, example: %s'), 'info@'.$domain)),
+                    'desc' => sprintf(__('Leave blank to use email: &bdquo;%s&rdquo; set in %s.', 'pwebcontact'), $this->_get_param('email_from', get_bloginfo('admin_email'), 'settings'),
+                            '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>')
+                        . ($isLocalhsot ? '' : sprintf(__('Sender email should be in the same domain as your website, example: %s'), 'info@'.$domain)),
                     'class' => 'pweb-filter-email'
                 )); ?>
 
@@ -378,8 +378,8 @@ function_exists('add_action') or die;
                     'type' => 'text',
                     'name' => 'email_from_name',
                     'label' => 'Sender name',
-                    'desc' => sprintf(__('Leave blank to use name: &bdquo;%s&rdquo; set in %s.', 'pwebcontact'), $this->_get_param('email_from_name', get_bloginfo('name'), 'settings'), 
-                                        '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>')
+                    'desc' => sprintf(__('Leave blank to use name: &bdquo;%s&rdquo; set in %s.', 'pwebcontact'), $this->_get_param('email_from_name', get_bloginfo('name'), 'settings'),
+                        '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>')
                 )); ?>
             </div>
             <div class="pweb-width-50">
@@ -412,7 +412,7 @@ function_exists('add_action') or die;
 
         <div class="pweb-clearfix">
             <h3><?php _e('System message', 'pwebcontact'); ?></h3>
-            
+
             <div class="pweb-width-50">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
@@ -440,7 +440,7 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'text',
                     'name' => 'msg_close_delay',
@@ -474,7 +474,7 @@ function_exists('add_action') or die;
 
         <div class="pweb-clearfix">
             <h3><?php _e('Others', 'pwebcontact'); ?></h3>
-            
+
             <div class="pweb-width-50">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
@@ -514,6 +514,26 @@ function_exists('add_action') or die;
             <div class="pweb-width-50">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
+                    'name' => 'autocomplete_inputs',
+                    'label' => 'Browsers autocomplete',
+                    'default' => 1,
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'No',
+                            'is_parent' => true
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => 'Yes',
+                            'is_parent' => true
+                        )
+                    )
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
                     'name' => 'tooltips_validation',
                     'label' => 'Show tooltips on validation error',
                     'default' => 1,
@@ -531,7 +551,7 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
                     'name' => 'tooltips_focus',
@@ -551,7 +571,7 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
                     'name' => 'user_data',
@@ -619,7 +639,7 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'text',
                     'name' => 'redirect_url',
@@ -646,10 +666,10 @@ function_exists('add_action') or die;
         <div class="pweb-field pweb-desc">
             <h3><?php _e('Google Analytics Tracking', 'pwebcontact'); ?></h3>
             <p>
-                <?php _e('Copy one of following codes to below field', 'pwebcontact'); ?> 
+                <?php _e('Copy one of following codes to below field', 'pwebcontact'); ?>
                 <strong><?php _e('JavaScript on mail success event', 'pwebcontact'); ?></strong>
             </p>
-            
+
             <div class="pweb-advanced-options">
                 <a href="#" class="pweb-advanced-options-toggler pweb-advanced-options-open">
                     <span><?php _e( 'Universal', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
@@ -667,7 +687,7 @@ function_exists('add_action') or die;
                     </div>
                 </div>
             </div>
-            
+
             <div class="pweb-advanced-options">
                 <a href="#" class="pweb-advanced-options-toggler">
                     <span><?php _e( 'Asynchronous', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
@@ -682,7 +702,7 @@ function_exists('add_action') or die;
                     </div>
                 </div>
             </div>
-            
+
             <div class="pweb-advanced-options">
                 <a href="#" class="pweb-advanced-options-toggler">
                     <span><?php _e( 'Traditional', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
@@ -694,12 +714,12 @@ function_exists('add_action') or die;
                             <?php _e('Event', 'pwebcontact'); ?>: <code>pageTracker._trackEvent('Contact', 'E-mail sent', document.location.href);</code><br>
                             <?php _e('Event with ticket', 'pwebcontact'); ?>: <code>pageTracker._trackEvent('Contact', 'E-mail sent', data.ticket);</code>
                         </p>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
-        
-        
+
+
         <?php echo $this->_get_field(array(
             'type' => 'textarea',
             'name' => 'oncomplete',
@@ -712,7 +732,7 @@ function_exists('add_action') or die;
                 'cols' => 50
             )
         )); ?>
-        
+
         <?php echo $this->_get_field(array(
             'type' => 'textarea',
             'name' => 'onerror',
@@ -724,8 +744,8 @@ function_exists('add_action') or die;
                 'cols' => 50
             )
         )); ?>
-        
-        
+
+
     </div>
 </div>
 
@@ -754,12 +774,12 @@ function_exists('add_action') or die;
             <?php echo $this->_display_badge_pro(); ?>
             <!-- FREE END -->
         </li>
-        <li><code>{browser}</code> - <?php esc_html_e('User browser name', 'pwebcontact'); ?>. 
-            <?php _e('Requires 3rd-part plugin', 'pwebcontact'); ?> 
-            - <a href="http://wordpress.org/plugins/<?php 
-                $plugin = 'php-browser-detection';
-                $plugin_file = $plugin.'/'.$plugin.'.php';
-                echo $plugin; ?>" target="_blank"><?php _e('Details'); ?></a> 
+        <li><code>{browser}</code> - <?php esc_html_e('User browser name', 'pwebcontact'); ?>.
+            <?php _e('Requires 3rd-part plugin', 'pwebcontact'); ?>
+            - <a href="http://wordpress.org/plugins/<?php
+            $plugin = 'php-browser-detection';
+            $plugin_file = $plugin.'/'.$plugin.'.php';
+            echo $plugin; ?>" target="_blank"><?php _e('Details'); ?></a>
             -
             <?php if (!is_file(WP_PLUGIN_DIR.'/'.$plugin_file)) : ?>
                 <a href="<?php echo wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin='.$plugin), 'install-plugin_'.$plugin); ?>" target="_blank"><?php _e('Install Now'); ?></a>
