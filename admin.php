@@ -261,20 +261,17 @@ class PWebContact_Admin {
                 wp_enqueue_style('pwebcontact_flipster_style', plugins_url('media/css/jquery.flipster.css', __FILE__));
             }
         }
-        /*** PRO START ***/
-        elseif ( $task == 'newsletter' ) {
+        elseif ($task == 'newsletter') {
 
-            check_ajax_referer( 'newsletter' );
+            if (isset($_GET['ajax'])) {
+                check_ajax_referer( 'newsletter' );
+                
+                $result = $this->_get_newsletter_lists();
 
-            if( isset($_GET['ajax']) )
-            {
-
-                $lists = $this->_getLists($_POST);
-
-                die(json_encode($lists));
+                header('Content-type: application/json');
+                die(json_encode($result));
             }
         }
-        /*** PRO END ***/
         elseif ( $task == 'save' AND isset($_POST['id'])) {
 
             $this->id = (int)$_POST['id'];
@@ -1844,130 +1841,31 @@ pwebcontact_admin.is_pro = true;
         return $this->requirements['wp_version'];
     }
 
-    /*** PRO START ***/
-    private function _getLists($data)
+    private function _get_newsletter_lists()
     {
-
-        if( isset($data['fields']) )
+        if (isset($_POST['fields']))
         {
-
-            $fields = end($data['fields']);
+            $fields = end($_POST['fields']);
             $options = array();
 
             foreach( $fields as $key => $value )
             {
-
                 $options[substr(strstr($key, '_', false), 1)] = $value;
             }
 
-            $type = isset($data['newsletter_type']) ? strtolower($data['newsletter_type']) : false;
-
-            if( $type AND $type == 'mailchimp' )
-                $lists = $this->getListsFromMailchimp($options);
-            else if( $type AND $type == 'freshmail' )
-                $lists = $this->getListsFromFreshmail($options);
-            else
-                return array('error'=>sprintf(__('Oops! Where is %s integration?'), $type));
-
-            return $lists;
-        }
-
-        return array('error'=>__('Oops! Somthing goes wrong!', 'pwebcontact'));
-    }
-
-    private function getListsFromFreshmail($options)
-    {
-
-        $response = $this->communicateWithFreshMail('subscribers_list/lists', null, $options);
-
-        return $response;
-    }
-
-    private function communicateWithFreshMail($uri, $postData, $options)
-    {
-
-        $postData = $postData !== null ? json_encode($postData) : null;
-        $headers = array();
-
-        $headers['X-Rest-ApiKey'] = $options['apikey'];
-
-        if ($postData === null)
-            $headers['X-Rest-ApiSign'] = sha1($options['apikey'] . '/rest/' . $uri . $options['secret']);
-        else
-            $headers['X-Rest-ApiSign'] = sha1($options['apikey'] . '/rest/' . $uri . $postData . $options['secret']);
-
-        $headers['Content-Type'] = 'application/json';
-
-        if ($postData === null)
-        {
-
-            $response = wp_remote_get('https://api.freshmail.com/rest/' . $uri, array(
-                    'method' => 'POST',
-                    'timeout' => 45,
-                    'redirection' => 5,
-                    'httpversion' => '1.0',
-                    'blocking' => true,
-                    'headers' => $headers,
-                    'body' => array(),
-                    'cookies' => array()
-                )
-            );
-
-            if ( is_wp_error( $response ) ) {
-                $error_message = $response->get_error_message();
-                return array('error'=>'Something went wrong: ' . $error_message);
+            /*** PRO START ***/
+            if (!empty($_POST['newsletter_type']))
+            {
+                require_once dirname(__FILE__).'/newsletter.php';
+                $class = 'PWebContact_'.  ucfirst(preg_replace('/[^a-z]+/', '', strtolower($_POST['newsletter_type'])));
+                if (class_exists($class)) {
+                    return call_user_func(array($class, 'getLists'), $options);
+                }
             }
-
-            $tmp = json_decode(wp_remote_retrieve_body($response));
-
-            $lists = array();
-
-            foreach ($tmp->lists as $list) {
-
-                $lists[$list->subscriberListHash] = $list->name;
-            }
-
-            return $lists;
+            /*** PRO END ***/
         }
+
+        return array('error'=>__('Somthing went wrong or newsletter integration does not exist', 'pwebcontact'));
     }
 
-    private function getListsFromMailchimp($options)
-    {
-
-        if( false === strstr($options['apikey'], '-') ) {
-
-            return false;
-        }
-
-        $explode    = explode('-', $options['apikey']);
-
-        $response = wp_remote_post( 'https://'. $explode[1] .'.api.mailchimp.com/2.0/lists/list.php', array(
-                'method' => 'POST',
-                'timeout' => 45,
-                'redirection' => 5,
-                'httpversion' => '1.0',
-                'blocking' => true,
-                'headers' => array(),
-                'body' => $options,
-                'cookies' => array()
-            )
-        );
-
-        if ( is_wp_error( $response ) ) {
-            $error_message = $response->get_error_message();
-            return array('error'=>'Something went wrong: ' . $error_message);
-        }
-
-        $tmp = unserialize(wp_remote_retrieve_body($response));
-
-        $lists = array();
-
-        foreach($tmp['data'] as $list) {
-
-            $lists[$list['id']] = $list['name'];
-        }
-
-        return $lists;
-    }
-    /*** PRO END ***/
 }
