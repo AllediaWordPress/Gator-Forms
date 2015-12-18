@@ -516,6 +516,7 @@ function_exists('add_action') or die;
                     'type' => 'radio',
                     'name' => 'autocomplete_inputs',
                     'label' => 'Browsers autocomplete',
+                    'tooltip' => 'Toggle browser\'s autocomplete fields when saving form',
                     'default' => 1,
                     'class' => 'pweb-radio-group',
                     'options' => array(
