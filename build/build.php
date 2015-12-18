@@ -44,6 +44,7 @@ class PWebCompiler {
         'media/js/jquery.iframe-transport.js', // fileupload
         'media/themes/dev',
         'media/tickets',
+        'newsletter.php',
         'update-checker',
         'uploader.php',
         'UploadHandler.php'
