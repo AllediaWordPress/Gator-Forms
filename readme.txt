@@ -196,11 +196,12 @@ Yes it will, however you only get access to new versions and support for as long
 
 == Changelog ==
 
-= 2.1.3 / 16-12-2015 =
+= 2.1.3 / 18-12-2015 =
 * Fixed error when displaying form by shortcode on some themes
 * Fixed input field height for big font size
 * Added option to autocomplete fields by Browser
 * Added MailChimp double opt-in
+* Bootstrap 3.3.6
 
 = 2.1.2 / 28-09-2015 =
 * Updated list of Operating Systems
