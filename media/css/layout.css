@@ -729,8 +729,7 @@ form.pwebcontact-form input.pweb-input,
 form.pwebcontact-form select {
 	max-width: 100%;
 	line-height: 22px;
-	height: auto;
-	min-height: 26px;
+	height: 26px;
 }
 form.pwebcontact-form select.pweb-multiple {
 	height: auto;
