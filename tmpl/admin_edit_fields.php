@@ -2027,6 +2027,7 @@ $this->_set_pro_options('field_types', array(
                         'index' => 'X',
                         'group' => 'fields',
                         'label' => 'Double opt-in',
+                        'tooltip' => 'Toggle confirmation emails while signing users to a newsletter list. WARNING! Abusing this option may result in blocking your MailChimp account.',
                         'class' => 'pweb-radio-group',
                         'default' => 0,
                         'options' => array(

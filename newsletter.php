@@ -75,7 +75,7 @@ class PWebContact_Freshmail
                     PWebContact::setLog('Freshmail request error: ' . $response->get_error_message());
                 return false;
             }
-            $result = json_decode($response->body);
+            $result = json_decode($response['body']);
         }
         catch (Exception $e)
         {
@@ -86,7 +86,7 @@ class PWebContact_Freshmail
 
         if (PWEBCONTACT_DEBUG && isset($result->errors) && isset($result->errors[0]) && isset($result->errors[0]->message))
         {
-            PWebContact::setLog('Freshmail REST response: ' . $result->errors[0]->message . ', REST code: ' . $result->errors[0]->code . ', HTTP code: ' . $response->code);
+            PWebContact::setLog('Freshmail REST response: ' . $result->errors[0]->message . ', REST code: ' . $result->errors[0]->code . ', HTTP code: ' . $response['response']['code']);
         }
 
         return $result;
