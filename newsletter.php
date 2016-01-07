@@ -61,12 +61,14 @@ class PWebContact_Freshmail
         {
             if (empty($data))
                 $response = wp_remote_get($url . $rest_path, array(
-                    'headers' => $headers
+                    'headers' => $headers,
+                    'sslverify' => false
                 ));
             else
                 $response = wp_remote_post($url . $rest_path, array(
                     'headers' => $headers,
-                    'body' => $data
+                    'body' => $data,
+                    'sslverify' => false
                 ));
 
             if (is_wp_error($response))
@@ -143,7 +145,8 @@ class PWebContact_Mailchimp
         {
             $response = wp_remote_post($url . $rest_path, array(
                 'headers' => $headers,
-                'body' => $data
+                'body' => $data,
+                'sslverify' => false
             ));
 
             if (is_wp_error($response))
