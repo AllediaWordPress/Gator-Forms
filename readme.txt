@@ -4,7 +4,7 @@ Donate link:
 Tags: contact form, file upload, AJAX, responsive contact form, multiple contact forms plugin, shortcode contact form, widget contact form, contact form plugin, contact form maker, drag and drop contact form, form builder, file upload form
 Requires at least: 3.5.0
 Tested up to: 4.3.0
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 License: GNU/GPL
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -195,6 +195,9 @@ Yes it will, however you only get access to new versions and support for as long
 21. Very advanced options for web developers
 
 == Changelog ==
+
+= 2.1.4 / 01-02-2016
+* Fixed reCaptcha stoken expired on some servers
 
 = 2.1.3 / 18-12-2015 =
 * Fixed error when displaying form by shortcode on some themes
