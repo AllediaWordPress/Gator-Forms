@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 2.1.2
+ * @version 2.1.5
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -632,8 +632,29 @@ function_exists('add_action') or die;
                         array(
                             'value' => 1,
                             'name' => 'Yes',
+                            'is_parent' => true
+                        )
+                    )
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'radio',
+                    'name' => 'toggler_vertical_type',
+                    'label' => 'Vertical Toggler Type',
+                    'tooltip' => 'Set how to render vertical toggler. Default is CSS, PHP should be used for legacy browsers like the older versions of Internet Explorer. PHP mode may not look good on higher resolutions.',
+                    'default' => 1,
+                    'parent' => array('toggler_vertical_1'),
+                    'class' => 'pweb-radio-group',
+                    'options' => array(
+                        array(
+                            'value' => 0,
+                            'name' => 'PHP',
                             'is_parent' => true,
                             'disabled' => $this->_check_image_text_creation() !== true
+                        ),
+                        array(
+                            'value' => 1,
+                            'name' => ' CSS'
                         )
                     ),
                     'html_after' => 

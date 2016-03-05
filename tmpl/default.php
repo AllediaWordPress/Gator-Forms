@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 2.1.3
+ * @version 2.1.5
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -19,7 +19,7 @@ $pages 		= array();
 
 $toggler = 
 	 '<div id="pwebcontact'.$form_id.'_toggler" class="pwebcontact'.$form_id.'_toggler pwebcontact_toggler pweb-closed '.$params->get('togglerClass').'">'
-	.'<span class="pweb-text">'.(!$params->get('toggler_vertical', 0) ? $params->get('toggler_name_open') : ' ').'</span>'
+    .'<span class="pweb-text">'.(($params->get('toggler_vertical', 0) AND !$params->get('toggler_vertical_type', 1)) ? ' ' : $params->get('toggler_name_open')).'</span>'
 	.'<span class="pweb-icon"></span>'
 	.'</div>';
 	
@@ -127,6 +127,7 @@ $message =
 					?>
 					<div class="pweb-field-container pweb-field-custom-text" id="<?php echo $field['id']; ?>">
 						<?php $text = __($field['value'], 'pwebcontact');
+                        if ($field['parse_shortcodes']) $text = do_shortcode($text);
                         echo $field['line_breaks'] ? nl2br($text) : $text; ?>
 					</div>
 					<?php 

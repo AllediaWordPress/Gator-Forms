@@ -1,7 +1,7 @@
 /**
- * @version 2.1.3
+ * @version 2.1.5
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -153,6 +153,7 @@ div.pweb-modal *,
 	height: 100%;
 	background-repeat: no-repeat;
 	background-position: left top;
+	text-align: center;
 }
 .pweb-vertical.pweb-left .pwebcontact_toggler.pweb-opened .pweb-text,
 .pweb-vertical.pweb-right .pwebcontact_toggler.pweb-opened .pweb-text {
@@ -167,6 +168,20 @@ div.pweb-modal *,
 	background-position: right bottom;
 }
 
+/* Vertical Toggler CSS type
+ * ---------------------------------------------------------------------
+ */
+.pweb-vertical-css .pweb-text {
+	display: inline-block;
+	writing-mode: vertical-lr;
+	-webkit-writing-mode: vertical-lr;
+	-ms-writing-mode: tb-rl;
+	*writing-mode: tb-rl;
+}
+.pweb-vertical-css.pweb-rotate .pweb-text {
+	transform-origin: 50%;
+	transform: rotate(180deg);
+}
 
  /* Toggler Icon
   * --------------------------------------------------------------------- 

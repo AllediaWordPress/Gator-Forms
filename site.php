@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 2.1.3
+ * @version 2.1.5
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -57,11 +57,11 @@ class PWebContact
             wp_register_script('pwebcontact-bootstrap-2', $media_url.'bootstrap-2.3.2/js/bootstrap'.($debug ? '' : '.min').'.js', array('jquery'), '2.3.2', true);
             
             /*** PRO START ***/
-            wp_register_script('pwebcontact-jquery-iframe-transport', $media_url.'js/jquery.iframe-transport.js', array('jquery'), '1.8.2', true);
-            wp_register_script('pwebcontact-jquery-fileupload-process', $media_url.'js/jquery.fileupload-process.js', array('jquery'), '1.3.0', true);
-            wp_register_script('pwebcontact-jquery-fileupload-validate', $media_url.'js/jquery.fileupload-validate.js', array('jquery'), '1.1.2', true);
-            wp_register_script('pwebcontact-jquery-fileupload-ui', $media_url.'js/jquery.fileupload-ui.js', array('jquery'), '9.6.0', true);
-            wp_register_script('pwebcontact-jquery-fileupload', $media_url.'js/jquery.fileupload'.($debug ? '' : '.min').'.js', array('jquery'), '5.42.0', true);
+            wp_register_script('pwebcontact-jquery-iframe-transport', $media_url.'js/jquery.iframe-transport.js', array('jquery'), '1.8.3', true);
+            wp_register_script('pwebcontact-jquery-fileupload-process', $media_url.'js/jquery.fileupload-process.js', array('jquery'), '1.3.1', true);
+            wp_register_script('pwebcontact-jquery-fileupload-validate', $media_url.'js/jquery.fileupload-validate.js', array('jquery'), '1.1.3', true);
+            wp_register_script('pwebcontact-jquery-fileupload-ui', $media_url.'js/jquery.fileupload-ui.js', array('jquery'), '9.6.1', true);
+            wp_register_script('pwebcontact-jquery-fileupload', $media_url.'js/jquery.fileupload'.($debug ? '' : '.min').'.js', array('jquery'), '5.42.4', true);
             
             $hl = get_bloginfo('language');
             $hl_parts = explode('-', $hl);
@@ -74,7 +74,7 @@ class PWebContact
             
             wp_register_script('pwebcontact-jquery-cookie', $media_url.'js/jquery.cookie'.($debug ? '' : '.min').'.js', array('jquery'), '1.4.1', true);
             
-            wp_register_script('pwebcontact-jquery-validate', $media_url.'js/jquery.validate'.($debug ? '' : '.min').'.js', array('jquery'), '1.13.1', true);
+            wp_register_script('pwebcontact-jquery-validate', $media_url.'js/jquery.validate'.($debug ? '' : '.min').'.js', array('jquery'), '1.15.0', true);
             
             wp_register_script('pwebcontact', $media_url.'js/jquery.pwebcontact'.(file_exists($media_path.'js/jquery.pwebcontact.js') ? '' : '.min').'.js', array('jquery'), null, true);
             
@@ -98,7 +98,7 @@ class PWebContact
             wp_register_style('pwebcontact-uploader', $media_url.'css/uploader.css');
             wp_register_style('pwebcontact-uploader-rtl', $media_url.'css/uploader-rtl.css');
             
-            wp_register_style('pwebcontact-jquery-ui-datepicker', $media_url.'jquery-ui/smoothness/jquery-ui.datapicker'.($debug ? '' : '.min').'.css', array(), '1.10.4');
+            wp_register_style('pwebcontact-jquery-ui-datepicker', $media_url.'jquery-ui/smoothness/jquery-ui.datepicker'.($debug ? '' : '.min').'.css', array(), '1.11.4');
             /*** PRO END ***/
             
             wp_register_style('pwebcontact-custom', $media_url.'css/custom.css');
@@ -457,6 +457,7 @@ class PWebContact
                 /*** PRO START ***/
 				if ($params->get('toggler_vertical')) {
 					$moduleClasses[] = 'pweb-vertical';
+                    if ($params->get('toggler_vertical_type',1) == 1) $togglerClasses[] = 'pweb-vertical-css';
 					if ($params->get('toggler_rotate', 1) == -1) $togglerClasses[] = 'pweb-rotate';
 				} else {
                 /*** PRO END ***/
@@ -648,7 +649,7 @@ class PWebContact
 			}
 				
 			// Toggler vertical text
-			if ($params->get('toggler_vertical'))
+			if ($params->get('toggler_vertical') && !$params->get('toggler_vertical_type', 1))
 			{
                 $lang_code = get_bloginfo('language');
                 $path  = $params->get('media_path').'cache/';
@@ -1076,13 +1077,13 @@ class PWebContact
 
         /*** PRO START ***/
         // Check if calendar field or modal rules will be used
-        $datapicker = false;
+        $datepicker = false;
 		$fields = self::getFields($form_id);
 		foreach ($fields as $field)
 		{
             if ($field['type'] == 'date')
 			{
-				$datapicker = true;
+				$datepicker = true;
 			}
             elseif ($field['type'] == 'checkbox_modal' AND $field['target'])
 			{
@@ -1092,7 +1093,7 @@ class PWebContact
 
         // Toggler and calendar field glyphicon
 		if ($bootstrap !== 3 AND $params->get('load_glyphicon', 1) AND (
-                $datapicker OR (
+                $datepicker OR (
                     in_array($params->get('handler', 'tab'), array('button', 'tab')) AND $params->get('toggler_icon') == 'glyphicon' AND $params->get('toggler_glyphicon')
             ))) {
 			wp_enqueue_style('pwebcontact-glyphicon');
@@ -1146,17 +1147,17 @@ class PWebContact
             wp_enqueue_script('grecaptcha');
         }
         
-        // Load jQuery Datapicker for calendar field
-        if ($datapicker AND $params->get('load_jquery_ui', 1)) {
+        // Load jQuery Datepicker for calendar field
+        if ($datepicker AND $params->get('load_jquery_ui', 1)) {
             wp_enqueue_script('jquery-ui-datepicker');
             wp_enqueue_style('pwebcontact-jquery-ui-datepicker');
             
-            //TODO load datapicker translations
-            /*if (!isset(self::$loaded['datapicker_text'])) 
+            //TODO load datepicker translations
+            /*if (!isset(self::$loaded['datepicker_text'])) 
 			{
-				self::$loaded['datapicker_text'] = true;
+				self::$loaded['datepicker_text'] = true;
 				
-                wp_localize_script('jquery-ui-datapicker', 'pwebcontact_l10n = pwebcontact_l10n || {}; pwebcontact_l10n.datapicker', array(
+                wp_localize_script('jquery-ui-datepicker', 'pwebcontact_l10n = pwebcontact_l10n || {}; pwebcontact_l10n.datepicker', array(
                     '' => __('', 'pwebcontact'),
                 ));
 			}*/

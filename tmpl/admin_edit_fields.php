@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 2.1.3
+ * @version 2.1.5
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -1696,6 +1696,22 @@ $this->_set_pro_options('field_types', array(
                         'label' => 'Change line breaks to &lt;br&gt;',
                         'class' => 'pweb-radio-group',
                         'default' => 1,
+                        'options' => array(
+                            array('value' => 0, 'name' => 'No'),
+                            array('value' => 1, 'name' => 'Yes')
+                        )
+                    )); ?>
+
+                    <?php echo $this->_get_field(array(
+                        'disabled' => true,
+                        'type' => 'radio',
+                        'name' => 'parse_shortcodes',
+                        'index' => 'X',
+                        'group' => 'fields',
+                        'label' => 'Parse shortcodes',
+                        'tooltip' => 'Parse other plugins shortcodes to display their content. Warning! It may not always work, depending on how and when the plugin author chose to execute their shortcode.',
+                        'class' => 'pweb-radio-group',
+                        'default' => 0,
                         'options' => array(
                             array('value' => 0, 'name' => 'No'),
                             array('value' => 1, 'name' => 'Yes')
