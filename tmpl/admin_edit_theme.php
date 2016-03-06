@@ -648,20 +648,32 @@ function_exists('add_action') or die;
                     'options' => array(
                         array(
                             'value' => 0,
-                            'name' => 'PHP',
+                            'name' => 'PHP image',
                             'is_parent' => true,
                             'disabled' => $this->_check_image_text_creation() !== true
                         ),
                         array(
                             'value' => 1,
-                            'name' => ' CSS'
+                            'name' => ' CSS (recomended)'
                         )
-                    ),
+                    )
+                )); ?>
+
+                <?php echo $this->_get_field(array(
+                    'type' => 'filelist',
+                    'name' => 'toggler_font',
+                    'label' => 'TTF font for Vertical Toggler Tab text',
+                    'tooltip' => 'Select font from directory: `wp-content/plugins/pwebcontact/media/fonts`. If it does not support your language then upload there other font file.',
+                    'default' => 'NotoSans-Regular',
+                    'filter' => '\.ttf$',
+                    'directory' => 'media/fonts',
+                    'strip_ext' => true,
+                    'parent' => array('toggler_vertical_type_0'),
                     'html_after' => 
                           '<div class="pweb_params_toggler_vertical_1" style="display:none">'
                             . '<div class="pweb-alert pweb-alert-warning">'
                                 . '<strong>' . __('Front-end troubleshooting', 'pwebcontact') . '</strong><br>'
-                                . __('If you see rectangles instead of letters then you have to use other `TTF font`.', 'pwebcontact') . '<br>'
+                                . __('If you see rectangles instead of letters then you have to use other `TTF font`.', 'pwebcontact') . ' '
                                 . __('If text is cut then enlarge height of toggler. Width leave blank.', 'pwebcontact')
                             . '</div>'
                         . '</div>'
@@ -684,18 +696,6 @@ function_exists('add_action') or die;
                             'name' => ' 90&deg; (clockwise)' //TODO add utf8 rotate arrow
                         )
                     )
-                )); ?>
-
-                <?php echo $this->_get_field(array(
-                    'type' => 'filelist',
-                    'name' => 'toggler_font',
-                    'label' => 'TTF font for Vertical Toggler Tab text',
-                    'tooltip' => 'Select font from directory: `wp-content/plugins/pwebcontact/media/fonts`. If it does not support your language then upload there other font file.',
-                    'default' => 'NotoSans-Regular',
-                    'filter' => '\.ttf$',
-                    'directory' => 'media/fonts',
-                    'strip_ext' => true,
-                    'parent' => array('toggler_vertical_1')
                 )); ?>
                 
                 <?php echo $this->_get_field(array(
