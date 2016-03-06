@@ -1239,7 +1239,7 @@ class PWebContact
 
                     // set write permissions to cache folder
                     if (!$wp_filesystem->is_writable($path)) {
-                        $wp_filesystem->chmod($path, 0777);
+                        $wp_filesystem->chmod($path, 0755);
                     }
 
                     // write cache file
@@ -1266,7 +1266,7 @@ class PWebContact
 
                     // set write permissions to cache folder
                     if (!is_writable($path)) {
-                        chmod($path, 0777);
+                        chmod($path, 0755);
                     }
 
                     // write cache file
@@ -1686,12 +1686,12 @@ class PWebContact
         if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
             global $wp_filesystem;
             if (!$wp_filesystem->is_writable($path)) {
-                $wp_filesystem->chmod($path, 0777);
+                $wp_filesystem->chmod($path, 0755);
             }
         }
         else {
             if (!is_writable($path)) {
-                chmod($path, 0777);
+                chmod($path, 0755);
             }
         }
 			

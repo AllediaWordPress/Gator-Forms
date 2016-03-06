@@ -36,10 +36,10 @@ class PWebContact_Uploader extends UploadHandler
             global $wp_filesystem;
             
             if (!$wp_filesystem->is_dir($path)) {
-                $wp_filesystem->mkdir($path, 0777);
+                $wp_filesystem->mkdir($path, 0755);
             }
             if (!$wp_filesystem->is_writable($path)) {
-                $wp_filesystem->chmod($path, 0777);
+                $wp_filesystem->chmod($path, 0755);
             }
             if (!$wp_filesystem->is_writable($path)) {
                 if (PWEBCONTACT_DEBUG) PWebContact::setLog('Upload dir is not writable');
@@ -48,10 +48,10 @@ class PWebContact_Uploader extends UploadHandler
         }
         else {
             if (!is_dir($path)) {
-                mkdir($path, 0777);
+                mkdir($path, 0755);
             }
             if (!is_writable($path)) {
-                chmod($path, '0777');
+                chmod($path, '0755');
             }
             if (!is_writable($path)) {
                 if (PWEBCONTACT_DEBUG) PWebContact::setLog('Upload dir is not writable');

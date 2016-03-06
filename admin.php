@@ -1707,7 +1707,7 @@ pwebcontact_admin.is_pro = true;
                 global $wp_filesystem;
 
                 if (!$wp_filesystem->is_writable($path)) {
-                    $wp_filesystem->chmod($path, 0777);
+                    $wp_filesystem->chmod($path, 0755);
                 }
                 else {
                     return $this->requirements['cache_path'];
@@ -1719,7 +1719,7 @@ pwebcontact_admin.is_pro = true;
             }
             else {
                 if (!is_writable($path)) {
-                    chmod($path, 0777);
+                    chmod($path, 0755);
                 }
                 else {
                     return $this->requirements['cache_path'];
@@ -1748,7 +1748,7 @@ pwebcontact_admin.is_pro = true;
 
                 // create wirtable upload path
                 if (!$wp_filesystem->is_dir($path)) {
-                    $wp_filesystem->mkdir($path, 0777);
+                    $wp_filesystem->mkdir($path, 0755);
                 }
                 else {
                     return $this->requirements['upload_path'];
@@ -1766,7 +1766,7 @@ pwebcontact_admin.is_pro = true;
             else {
                 // create wirtable upload path
                 if (!is_dir($path)) {
-                    mkdir($path, 0777, true);
+                    mkdir($path, 0755, true);
                 }
                 else {
                     return $this->requirements['upload_path'];

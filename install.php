@@ -87,13 +87,13 @@ function pwebcontact_install_upload_dir() {
 
         // create wirtable upload path
         if (!$wp_filesystem->is_dir($path)) {
-            $wp_filesystem->mkdir($path, 0777);
+            $wp_filesystem->mkdir($path, 0755);
         }
     }
     else {
         // create wirtable upload path
         if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+            mkdir($path, 0755, true);
         }
     }
 }
