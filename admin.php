@@ -2,7 +2,7 @@
 /**
  * @version 2.1.2
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -898,7 +898,7 @@ pwebcontact_admin.is_pro = true;
     <hr>
 
     <p class="pweb-copyrights">
-		Copyright &copy; 2015
+		Copyright &copy; 2016
         <a href="https://www.perfect-web.co/wordpress-plugins/contact-form" target="_blank"><strong>Perfect Web sp. z o.o.</strong></a>,
         All rights reserved.
 		Distributed under
