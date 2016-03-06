@@ -1190,13 +1190,13 @@ class PucFactory {
 
 endif;
 
-require_once(dirname(__FILE__) . '/github-checker.php');
+//require_once(dirname(__FILE__) . '/github-checker.php');
 
 //Register classes defined in this file with the factory.
 PucFactory::addVersion('PluginUpdateChecker', 'PluginUpdateChecker_2_1', '2.1');
 PucFactory::addVersion('PluginUpdate', 'PluginUpdate_2_1', '2.1');
 PucFactory::addVersion('PluginInfo', 'PluginInfo_2_1', '2.1');
-PucFactory::addVersion('PucGitHubChecker', 'PucGitHubChecker_2_1', '2.1');
+//PucFactory::addVersion('PucGitHubChecker', 'PucGitHubChecker_2_1', '2.1');
 
 /**
  * Create non-versioned variants of the update checker classes. This allows for backwards
