@@ -51,6 +51,7 @@ class PWebCompiler {
     );
     
     protected $filter = array(
+        'pwebcontact.php',
         'site.php',
         'admin.php',
         'tmpl/admin_edit.php',
