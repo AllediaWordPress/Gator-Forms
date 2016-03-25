@@ -196,7 +196,7 @@ Yes it will, however you only get access to new versions and support for as long
 
 == Changelog ==
 
-= 2.1.5 / 11-03-2016 =
+= 2.1.5 / 25-03-2016 =
 * CSS3 vertical toggler
 * Parse shortcodes in Custom HTML field
 * Updated jQuery Validation plugin
