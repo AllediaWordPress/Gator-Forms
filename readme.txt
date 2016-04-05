@@ -196,7 +196,7 @@ Yes it will, however you only get access to new versions and support for as long
 
 == Changelog ==
 
-= 2.1.5 / 05-04-2016 =
+= 2.1.6 / 05-04-2016 =
 * Fixed compatiblity with WordPress 4.5
 
 = 2.1.5 / 25-03-2016 =
