@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.6
+ * @version 2.1.7
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -1396,7 +1396,7 @@ class PWebContact
 		if (($value = (intval($params->get('tooltips_focus', 1)) | (intval($params->get('tooltips_validation', 1)) << 1)) ) !== 3)
 			$options[] = 'tooltips:'.$value;
 		
-		if ($value = $params->get('toggler_name_close') AND !$params->get('toggler_vertical', 0))
+		if ($value = $params->get('toggler_name_close') AND (!$params->get('toggler_vertical', 0) OR $params->get('toggler_vertical_type', 1)))
 			$options[] = 'togglerNameClose:"'.$value.'"';
 		
 		
