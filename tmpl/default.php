@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.5
+ * @version 2.1.8
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -154,7 +154,7 @@ $message =
 					<div class="pweb-field-container pweb-field-select pweb-field-mailto">
 						<div class="pweb-label">
 							<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl">
-								<?php _e('Contact with', 'pwebcontact'); ?>
+								<?php _e($field['label'], 'pwebcontact'); ?>
 								<span class="pweb-asterisk">*</span>
 							</label>
 						</div>
