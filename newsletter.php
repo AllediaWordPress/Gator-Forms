@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version 2.1.3
+ * @version 2.1.9
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -117,12 +117,20 @@ class PWebContact_Mailchimp
 
     public static function subscribe($id_list, $email, $name = '', $options)
     {
-        return self::doRequest('lists/subscribe.json', $options, array(
-                    'id' => $id_list,
-                    'double_optin' => (!empty($options['opt']) ? true : false),
-                    'email' => array('email' => $email)
-                        ), array('Content-Type: multipart/form-data')
+        $data = array(
+            'id' => $id_list,
+            'double_optin' => (!empty($options['opt']) ? true : false),
+            'email' => array(
+                'email' => $email
+            )
         );
+        if (!empty($name))
+        {
+            $data['merge_vars'] = array(
+                'FNAME' => $name
+            );
+        }
+        return self::doRequest('lists/subscribe.json', $options, $data, array('Content-Type: multipart/form-data'));
     }
 
     protected static function doRequest($rest_path, $options, $data = array(), $headers = array())
