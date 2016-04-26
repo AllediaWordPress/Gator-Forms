@@ -3,7 +3,7 @@ Contributors: perfect-web, piotrmocko
 Donate link: 
 Tags: contact form, file upload, AJAX, responsive contact form, multiple contact forms plugin, shortcode contact form, widget contact form, contact form plugin, contact form maker, drag and drop contact form, form builder, file upload form
 Requires at least: 3.5.0
-Tested up to: 4.5
+Tested up to: 4.5.1
 Stable tag: 2.1.9
 License: GNU/GPL
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -199,6 +199,7 @@ Yes it will, however you only get access to new versions and support for as long
 = 2.1.9 / 26-04-2016 =
 * Fixed do not wrap text in CSS3 vertical toggler
 * Save subscriber name in Mailchimp integration
+* Fixed usage of HTML code in JavaScript events
 
 = 2.1.8 / 20-04-2016 =
 * Fixed displaying custom label for field list of recipients

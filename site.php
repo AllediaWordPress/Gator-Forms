@@ -76,7 +76,7 @@ class PWebContact
             
             wp_register_script('pwebcontact-jquery-validate', $media_url.'js/jquery.validate'.($debug ? '' : '.min').'.js', array('jquery'), '1.15.0', true);
             
-            wp_register_script('pwebcontact', $media_url.'js/jquery.pwebcontact'.(file_exists($media_path.'js/jquery.pwebcontact.js') ? '' : '.min').'.js', array('jquery'), '2.1.8', true);
+            wp_register_script('pwebcontact', $media_url.'js/jquery.pwebcontact'.(file_exists($media_path.'js/jquery.pwebcontact.js') ? '' : '.min').'.js', array('jquery'), '2.1.9', true);
             
             
             // Register styles
@@ -1453,24 +1453,24 @@ class PWebContact
 		}
 		// After email sent success
 		if ($value = $params->get('oncomplete')) {
-			$options2[] = 'try{'.strip_tags($value)."\r\n".'}catch(e){this.debug(e)}';
+			$options2[] = 'try{'.$value."\r\n".'}catch(e){this.debug(e)}';
 		}
 		if (count($options2)) $options[] = 'onComplete:function(data){'.implode('', $options2).'}';
 		
 		// On error event
 		if ($value = $params->get('onerror')) {
-			$options[] = 'onError:function(data){try{'.strip_tags($value)."\r\n".'}catch(e){this.debug(e)}}';
+			$options[] = 'onError:function(data){try{'.$value."\r\n".'}catch(e){this.debug(e)}}';
 		}
 		
 		// On load, open and close events
 		if ($value = $params->get('onload')) {
-			$options[] = 'onLoad:function(){try{'.strip_tags($value)."\r\n".'}catch(e){this.debug(e)}}';
+			$options[] = 'onLoad:function(){try{'.$value."\r\n".'}catch(e){this.debug(e)}}';
 		}
 		if ($value = $params->get('onopen')) {
-			$options[] = 'onOpen:function(){try{'.strip_tags($value)."\r\n".'}catch(e){this.debug(e)}}';
+			$options[] = 'onOpen:function(){try{'.$value."\r\n".'}catch(e){this.debug(e)}}';
 		}
 		if ($value = $params->get('onclose')) {
-			$options[] = 'onClose:function(){try{'.strip_tags($value)."\r\n".'}catch(e){this.debug(e)}}';
+			$options[] = 'onClose:function(){try{'.$value."\r\n".'}catch(e){this.debug(e)}}';
 		}
 		
 		/*** PRO START ***/
