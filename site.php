@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.9
+ * @version 2.2.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -89,7 +89,7 @@ class PWebContact
 
             wp_register_style('pwebcontact-glyphicon', $media_url.'css/glyphicon.css', array(), '3.3.6');
 
-            wp_register_style('pwebcontact-layout', $media_url.'css/layout.css', array(), '2.1.9');
+            wp_register_style('pwebcontact-layout', $media_url.'css/layout.css', array(), '2.2.0');
             wp_register_style('pwebcontact-layout-rtl', $media_url.'css/layout-rtl.css');
             
             wp_register_style('pwebcontact-animations', $media_url.'css/animations.css');
@@ -2256,13 +2256,15 @@ class PWebContact
                 if ($field['type'] == 'email') 
                 {
                     // Validate email
-                    if ($value AND is_email($value) === false) {
-                        $invalid_fields[] = 'field-'.$field['alias'];
-                    } else {
-                        if (!$user_email) 
-                            $email_vars['email'] = $user_email = $value;
-                        else 
-                            $user_cc[] = $value;
+                    if ($value) {
+                        if (is_email($value) === false) {
+                            $invalid_fields[] = 'field-'.$field['alias'];
+                        } else {
+                            if (!$user_email) 
+                                $email_vars['email'] = $user_email = $value;
+                            else 
+                                $user_cc[] = $value;
+                        }
                     }
                 }
                 elseif ($field['type'] == 'checkbox' OR $field['type'] == 'checkbox_modal') 

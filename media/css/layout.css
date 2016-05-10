@@ -1,5 +1,5 @@
 /**
- * @version 2.1.9
+ * @version 2.2.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -181,6 +181,8 @@ div.pweb-modal *,
 }
 .pweb-vertical-css.pweb-rotate .pweb-text {
 	transform-origin: 50%;
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
 	transform: rotate(180deg);
 }
 

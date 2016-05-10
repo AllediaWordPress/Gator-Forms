@@ -196,6 +196,10 @@ Yes it will, however you only get access to new versions and support for as long
 
 == Changelog ==
 
+= 2.2.0 / 10-05-2016 =
+* Fixed CSS3 vertical toggler in Safari
+* Google Docs integration
+
 = 2.1.9 / 26-04-2016 =
 * Fixed do not wrap text in CSS3 vertical toggler
 * Save subscriber name in Mailchimp integration

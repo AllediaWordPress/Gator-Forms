@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.5
+ * @version 2.2.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -589,7 +589,7 @@ function_exists('add_action') or die;
                     'name' => 'toggler_font_family',
                     'label' => 'Toggler font family',
                     'tooltip' => 'Name of font used for Toggler. Separate multiple names with coma and wrap name which contains space with single quote.',
-                    'parent' => array('toggler_vertical_0')
+                    'parent' => array('toggler_vertical_0', 'toggler_vertical_type_1')
                 )); ?>
                 
                 <?php echo $this->_get_field(array(
@@ -654,7 +654,8 @@ function_exists('add_action') or die;
                         ),
                         array(
                             'value' => 1,
-                            'name' => ' CSS (recomended)'
+                            'name' => ' CSS (recomended)',
+                            'is_parent' => true
                         )
                     )
                 )); ?>
