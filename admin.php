@@ -789,7 +789,14 @@ pwebcontact_admin.is_pro = true;
 
     protected function _save_settings() {
 
-        return update_option('pwebcontact_settings', $this->_get_post('settings'));
+        /*** PRO START ***/
+        require_once dirname( __FILE__ ) . '/googledocs.php';
+        /*** PRO END ***/
+
+        $settings = $this->_get_post('settings');
+        do_action('pwebcontact_settingschange', array('settings' => $settings));
+        return update_option('pwebcontact_settings', $settings);
+
     }
 
 
