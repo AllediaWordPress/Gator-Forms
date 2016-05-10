@@ -1,7 +1,7 @@
 /**
- * @version 2.0.0
+ * @version 2.2.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -672,35 +672,34 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     }
 
     $("body").css("overflow-y", "scroll");
-    function selectElementText(el, win) {
-        win = win || window;
-        var doc = win.document, sel, range;
-        if (win.getSelection && doc.createRange) {
-            sel = win.getSelection();
+
+    // Google Docs integration
+    $('.googledocs-get-columns').click(function (e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        var static_columns = ['ip-address', 'browser', 'os', 'screen-resolution', 'title', 'url', 'attachments'],
+            columns = ['sent-on', 'ticket'];
+        $('.pweb-custom-field-alias:enabled').each(function (i, v) {
+            var name = $(v).val();
+            if (name !== '') {
+                columns.push('field-' + name.replace('_', '-'));
+            }
+        });
+        var $input = $('.googledocs-integration-columns');
+        columns = columns.concat(static_columns);
+        $input.text(columns.join('\x09'));
+
+        var doc = window.document, sel, range;
+        if (window.getSelection && doc.createRange) {
+            sel = window.getSelection();
             range = doc.createRange();
-            range.selectNodeContents(el);
+            range.selectNodeContents($input[0]);
             sel.removeAllRanges();
             sel.addRange(range);
         } else if (doc.body.createTextRange) {
             range = doc.body.createTextRange();
-            range.moveToElementText(el);
+            range.moveToElementText($input[0]);
             range.select();
         }
-    }
-
-    //Get all the aliases and enter them there:
-    $('.googledocs-get-columns').click(function (e) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        var columns = [];
-        $('.pweb-custom-field-alias:enabled').each(function (i, v) {
-            columns.push($(v).val());
-        });
-        var static_columns = ['os', 'url'],
-            columntext = $('.googledocs-integration-columns');
-        //Join the two arrays
-        columns = columns.concat(static_columns);
-        columntext.text(columns.join('	'));
-        selectElementText(columntext[0]);
     });
 });

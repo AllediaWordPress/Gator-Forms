@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 2.0.14
+ * @version 2.2.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -37,7 +37,8 @@ class PWebContact_Admin {
         'field_types' => array(),
         'settings' => array(
             /*** FREE START ***/
-            'dlid'
+            'dlid',
+            'googledocs_accesscode'
             /*** FREE END ***/
         ),
         'params' => array(
@@ -98,7 +99,10 @@ class PWebContact_Admin {
 			'upload_max_size',
 			'upload_path',
 			'upload_show_limits',
-			'upload_size_limit'
+			'upload_size_limit',
+            'googledocs_enable',
+            'googledocs_sheetname',
+            'googledocs_worksheetname'
             /*** FREE END ***/
         )
     );

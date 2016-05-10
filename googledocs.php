@@ -1,25 +1,30 @@
 <?php
 /**
- * @version   2.1.1
+ * @version   2.2.0
  * @package   Perfect Easy & Powerful Contact Form
- * @copyright © 2015 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
  * @license   GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author    Mateusz Podraza, based on Never Settle distributed on GNU/GPL
  */
+// no direct access
+function_exists('add_action') or die;
+
 //TODO: Implement an autoloader
-require_once plugin_dir_path(__FILE__) . 'lib/php-google-oauth/Google_Client.php';
-//Well.. Fuck.
-require_once plugin_dir_path(__FILE__) . 'lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/ServiceRequestInterface.php';
-require_once plugin_dir_path(__FILE__) . 'lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/DefaultServiceRequest.php';
-require_once plugin_dir_path(__FILE__) . 'lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/ServiceRequestFactory.php';
-require_once plugin_dir_path(__FILE__) . 'lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php';
-require_once plugin_dir_path(__FILE__) . 'lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php';
-require_once plugin_dir_path(__FILE__) . 'lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/Spreadsheet.php';
-require_once plugin_dir_path(__FILE__) . 'lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/Util.php';
-require_once plugin_dir_path(__FILE__) . 'lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/WorksheetFeed.php';
-require_once plugin_dir_path(__FILE__) . 'lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/Worksheet.php';
-require_once plugin_dir_path(__FILE__) . 'lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/ListFeed.php';
-require_once plugin_dir_path(__FILE__) . 'lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/Exception.php';
+define('GOOGLE_ROOT', dirname( __FILE__ ) . '/vendor/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet');
+
+require_once dirname(__FILE__) . '/vendor/php-google-oauth/Google_Client.php';
+
+require_once GOOGLE_ROOT . '/ServiceRequestInterface.php';
+require_once GOOGLE_ROOT . '/DefaultServiceRequest.php';
+require_once GOOGLE_ROOT . '/ServiceRequestFactory.php';
+require_once GOOGLE_ROOT . '/SpreadsheetService.php';
+require_once GOOGLE_ROOT . '/SpreadsheetFeed.php';
+require_once GOOGLE_ROOT . '/Spreadsheet.php';
+require_once GOOGLE_ROOT . '/Util.php';
+require_once GOOGLE_ROOT . '/WorksheetFeed.php';
+require_once GOOGLE_ROOT . '/Worksheet.php';
+require_once GOOGLE_ROOT . '/ListFeed.php';
+require_once GOOGLE_ROOT . '/Exception.php';
 
 use Google\Spreadsheet\DefaultServiceRequest;
 use Google\Spreadsheet\ServiceRequestFactory;
@@ -64,7 +69,7 @@ class PWebGoogleConnector
 		}
 		catch (Exception $e)
 		{
-
+            PWebContact::setLog('Error getting Google Token: ' . $e->getMessage());
 		}
 		$tokenData = json_decode($client->getAccessToken(), true);
 		$this->updateToken($tokenData);
@@ -89,7 +94,10 @@ class PWebGoogleConnector
 	public function auth()
 	{
 		$tokenData = $this->token_data;
-
+		if (!is_array($tokenData) || empty($tokenData))
+		{
+			return; //invalid data
+		}
 		if (time() > $tokenData['expire'])
 		{
 			$client = new Google_Client();
@@ -174,38 +182,64 @@ class PWebGoogleDocsPlg
 	 */
 	public static function onFormDataEvent($args)
 	{
-		//Check if Google Docs Integration is enabled for this form - if not, exit
-		if (!isset($args['data']['googledocs_enable']) || true !== $args['data']['googledocs_enable'])
+        $settings = PWebContact::getSettings();
+        $params   = PWebContact::getParams($args['form_id']);
+
+        //Check if Google Docs Integration is enabled for this form - if not, exit
+		if (!$params->get('googledocs_enable', 0))
 		{
 			return;
 		}
 		//Check if we have Google Access Code set - if not, exit
-		if (empty($args['data']['googledocs_accesscode']))
+		if (!$settings->get('googledocs_accesscode'))
 		{
 			return;
 		}
-		//Same for the sheet name
-		if (empty($args['data']['googledocs_sheetname']))
-		{
-			return;
-		}
-		//And the worksheet
-		if (empty($args['data']['googledocs_worksheetname']))
-		{
-			return;
-		}
+
 		//Prepare data
 		$email_vars = $args['email_vars'];
-		$email_vars = array(
-			'os' => $email_vars['os'],
-			'url' => $email_vars['url'],
-		);
-		$data = array_merge($args['data']['fields'], $email_vars);
+        $data = $args['data'];
+
+        $gData = array(
+            'sent-on'   => $email_vars['sent_on'],
+            'ticket'    => $email_vars['ticket']
+        );
+
+        foreach ($data['fields'] as $key => $value)
+        {
+            if (is_array($value)) $value = implode(', ',$value);
+            $gData['field-'.str_replace('_', '-', $key)] = $value;
+        }
+
+        $gData['ip-address'] 		= $data['ip_address'];
+        $gData['browser'] 			= $data['browser'];
+        $gData['os'] 				= $data['os'];
+        $gData['screen-resolution'] = $data['screen_resolution'];
+        $gData['title'] 			= $data['title'];
+        $gData['url'] 				= $data['url'];
+        $gData['attachments'] 		= '';
+
+        if (count($data['attachments']))
+        {
+            if ($params->get('attachment_type', 1) == 2 OR !$params->get('attachment_delete', 1))
+            {
+                $files = array();
+                $upload_url = $params->get('upload_url');
+                foreach ($data['attachments'] as $file)
+                    $files[] = $upload_url . rawurlencode($file);
+
+                $gData['attachments'] = implode(' , ', $files);
+            }
+            else
+            {
+                $gData['attachments'] = implode(', ', $data['attachments']);
+            }
+        }
 
 		//Connect to the spreadsheet and insert our data in a new row
-		$bridge = new PWebGoogleConnector($args['data']['googledocs_sheetname'], $args['data']['googledocs_worksheetname']);
+		$bridge = new PWebGoogleConnector($params->get('googledocs_sheetname'), $params->get('googledocs_worksheetname'));
 		$bridge->auth();
-		$bridge->add_row($data);
+		$bridge->add_row($gData);
 	}
 
 	public static function onSettingsChangeEvent($args)
