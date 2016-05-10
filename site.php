@@ -2426,8 +2426,13 @@ class PWebContact
         $email_copy = ($params->get('email_copy', 2) == 2);
         /*** FREE END ***/
 		/*** PRO START ***/
+        //Google Docs Integration
+        if ($params->get('googledocs_enable', 0))
+        {
+            require_once dirname(__FILE__) . '/googledocs.php';
+        }
         // process form input data and email template variables
-        do_action('pwebcontact_data', array('data' => $data, 'email_vars' => $email_vars));
+        do_action('pwebcontact_data', array('data' => $data, 'email_vars' => $email_vars, 'form_id' => $form_id));
         
         $email_copy = ($params->get('email_copy', 2) == 2 OR ($params->get('email_copy', 2) == 1 AND isset($_POST['copy']) AND (int)$_POST['copy']));
         /*** PRO END ***/

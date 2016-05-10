@@ -34,6 +34,7 @@ class PWebCompiler {
     );
     protected $exclude_free = array(
         'captcha.php',
+        'googledocs.php',
         'media/css/themes/',
         'media/css/uploader',
         'media/fonts', // Toggler font
@@ -47,7 +48,8 @@ class PWebCompiler {
         'newsletter.php',
         'update-checker',
         'uploader.php',
-        'UploadHandler.php'
+        'UploadHandler.php',
+        'vendor'
     );
     
     protected $filter = array(

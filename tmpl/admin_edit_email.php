@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.3
+ * @version 2.2.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -349,6 +349,56 @@ function_exists('add_action') or die;
                 )); ?>
             </div>
         </div>
+
+		<hr>
+
+		<div class="pweb-clearfix">
+			<h3><?php _e('Google Docs Integration', 'pwebcontact'); ?></h3>
+
+			<div class="pweb-width-50">
+				<?php echo $this->_get_field(array(
+					'type'    => 'radio',
+					'name'    => 'googledocs_enable',
+					'label'   => 'Enable Google Docs Integration',
+					'tooltip' => 'Enable saving of form data into a Google Spreadsheet.',
+					'desc'    => sprintf(__('Remember to set your Google Access Code in %s.', 'pwebcontact'), '<a href="' . admin_url('admin.php?page=pwebcontact&task=settings') . '" target="_blank">' . __('Contact Form Settings', 'pwebcontact') . '</a>'),
+					'default' => 0,
+					'class'   => 'pweb-radio-group',
+					'options' => array(
+						array(
+							'value' => 0,
+							'name'  => 'No'
+						),
+						array(
+							'value'     => 1,
+							'name'      => 'Yes',
+							'is_parent' => true
+						)
+					)
+				)); ?>
+				<p>Press the button below, copy the generated text, select the first column (<em>A</em>) and paste without formatting (default <em>CTRL+SHIFT+V</em> or in the top menu). This will ensure your data is saved correctly.</p>
+				<button class="button googledocs-get-columns"><i class="glyphicon glyphicon-download-alt"></i> <span>Get columns</span></button>
+				<code class="googledocs-integration-columns">
+					Please press the button first
+				</code>
+			</div>
+			<div class="pweb-width-50">
+				<?php echo $this->_get_field(array(
+					'type'    => 'text',
+					'name'    => 'googledocs_sheetname',
+					'label'   => 'Sheet name',
+					'tooltip' => 'Name of the Google Sheet you wish to save data in.',
+					'parent'  => array('googledocs_enable_1')
+				));
+				echo $this->_get_field(array(
+					'type'    => 'text',
+					'name'    => 'googledocs_worksheetname',
+					'label'   => 'Worksheet name',
+					'tooltip' => 'Name of a worksheet that resides in the spreadsheet you selected in the field above.',
+					'parent'  => array('googledocs_enable_1')
+				)); ?>
+			</div>
+		</div>
 
         <hr>
 

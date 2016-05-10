@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.0
+ * @version 2.2.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -67,4 +67,12 @@ function_exists('add_action') or die;
             'name' => 'Yes'
         )
     )
+)); ?>
+
+<?php echo $this->_get_field(array(
+    'type' => 'text',
+    'name' => 'googledocs_accesscode',
+    'group' => 'settings',
+    'desc' => sprintf(__('Click <a href="%s" target="_blank">here</a> to get your access code and allow us to save form data into a spreadsheet,', 'pwebcontact'), 'https://accounts.google.com/o/oauth2/auth?access_type=offline&approval_prompt=force&client_id=300313169789-tjp5sq43n8shqra9okb1j06ovlsrh0b6.apps.googleusercontent.com&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=https%3A%2F%2Fspreadsheets.google.com%2Ffeeds%2F'),
+    'label' => 'Google Access Code'
 )); ?>

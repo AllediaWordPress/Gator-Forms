@@ -1,5 +1,5 @@
 /**
- * @version 2.1.3
+ * @version 2.2.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -802,6 +802,36 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
                 console.log( error, xhr, message );
             }
         });
+    });
+
+    // Google Docs integration
+    $('.googledocs-get-columns').click(function (e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        var static_columns = ['ip-address', 'browser', 'os', 'screen-resolution', 'title', 'url', 'attachments'],
+            columns = ['sent-on', 'ticket'];
+        $('.pweb-custom-field-alias:enabled').each(function (i, v) {
+            var name = $(v).val();
+            if (name !== '') {
+                columns.push('field-' + name.replace('_', '-'));
+            }
+        });
+        var $input = $('.googledocs-integration-columns');
+        columns = columns.concat(static_columns);
+        $input.text(columns.join('\x09'));
+
+        var doc = window.document, sel, range;
+        if (window.getSelection && doc.createRange) {
+            sel = window.getSelection();
+            range = doc.createRange();
+            range.selectNodeContents($input[0]);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        } else if (doc.body.createTextRange) {
+            range = doc.body.createTextRange();
+            range.moveToElementText($input[0]);
+            range.select();
+        }
     });
 
 });
