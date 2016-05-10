@@ -2169,6 +2169,7 @@ class PWebContact
             /*** PRO END ***/
             'url' 				=> $data['url'],
 			'title' 			=> $data['title'],
+			'sent_on' 			=> get_the_date(),
 			'site_name' 		=> get_bloginfo('name') //WP
 		);
 		
@@ -2386,7 +2387,7 @@ class PWebContact
                 
         /*** PRO START ***/
         // Newsletter integration
-	$newsletter_type = strtolower($params->get('newsletter_type', ''));
+        $newsletter_type = strtolower($params->get('newsletter_type', ''));
         if ($newsletter_type && $user_email)
         {
             require_once dirname(__FILE__) . '/newsletter.php';
@@ -2432,8 +2433,12 @@ class PWebContact
             require_once dirname(__FILE__) . '/googledocs.php';
         }
         // process form input data and email template variables
-        do_action('pwebcontact_data', array('data' => $data, 'email_vars' => $email_vars, 'form_id' => $form_id));
-        
+        try {
+            do_action('pwebcontact_data', array('data' => $data, 'email_vars' => $email_vars, 'form_id' => $form_id));
+        } catch (Exception $ex) {
+            self::$logs[] = 'Do action: pwebcontact_data failed. '.$ex->getMessage();
+        }
+
         $email_copy = ($params->get('email_copy', 2) == 2 OR ($params->get('email_copy', 2) == 1 AND isset($_POST['copy']) AND (int)$_POST['copy']));
         /*** PRO END ***/
         

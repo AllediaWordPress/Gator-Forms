@@ -376,7 +376,7 @@ function_exists('add_action') or die;
 						)
 					)
 				)); ?>
-				<p>Press the button below, copy the generated text, select the first column (<em>A</em>) and paste without formatting (default <em>CTRL+SHIFT+V</em> or in the top menu). This will ensure your data is saved correctly.</p>
+				<p>Press the button below, copy the generated text, select the first column (A), paste the generated text into Google Spreadsheet, select it, click 'Data', select 'Split text into columns...' and as 'Separator' use 'Space'. This will ensure your data is saved correctly.</p>
 				<button class="button googledocs-get-columns"><i class="glyphicon glyphicon-download-alt"></i> <span>Get columns</span></button>
 				<code class="googledocs-integration-columns">
 					Please press the button first

@@ -1,5 +1,5 @@
 /**
- * @version 2.0.14
+ * @version 2.2.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -105,15 +105,15 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     
     
     $("#pweb_settings_email_from").change(function(e){
-        $(this).removeClass("pweb-invalid");
+        $(this).removeClass("pweb-invalid pweb-warning");
         var email = $(this).val().toLowerCase();
         if (!pwebcontact_admin.isLocalhost && email.indexOf("@") !== -1 && email.indexOf(pwebcontact_admin.domain) === -1) {
-            $(this).addClass("pweb-invalid");
+            $(this).addClass("pweb-warning");
         }
     }).trigger("change");
     
     $("#pweb_settings_smtp_username").change(function(e){
-        $(this).removeClass("pweb-invalid");
+        $(this).removeClass("pweb-invalid pweb-warning");
         if (!pwebcontact_admin.isLocalhost && $("#pweb_settings_mailer input:checked").val() === "smtp") {
             // SMTP user from other domain than site
             var username = $(this).val().toLowerCase();
@@ -124,12 +124,12 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     }).trigger("change");
     
     $("#pweb_settings_smtp_host").change(function(e){
-        $(this).removeClass('pweb-invalid');
+        $(this).removeClass('pweb-invalid pweb-warning');
         if (!pwebcontact_admin.isLocalhost && $("#pweb_settings_mailer input:checked").val() === "smtp") {
             // SMTP host from other domain than site
             var host = $(this).val().toLowerCase();
             if (host !== "localhost" && host.indexOf(pwebcontact_admin.domain) === -1) {
-                $(this).addClass("pweb-invalid");
+                $(this).addClass("pweb-warning");
             }
         }
     }).trigger("change");

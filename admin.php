@@ -470,8 +470,13 @@ class PWebContact_Admin {
                     check_admin_referer( 'save-settings' );
                 }
 
-                $result = $this->_save_settings();
-                $message = __($result ? 'Settings have been successfully saved.' : 'Failed saving settings!', 'pwebcontact');
+                try {
+                    $result = $this->_save_settings();
+                    $message = __($result ? 'Settings have been successfully saved.' : 'Failed saving settings!', 'pwebcontact');
+                } catch (Exception $ex) {
+                    $result = false;
+                    $message = __('Failed saving settings!', 'pwebcontact') . ' ' . $ex->getMessage();
+                }
 
                 if (isset($_GET['ajax'])) {
                     header('Content-type: application/json');
@@ -794,8 +799,9 @@ pwebcontact_admin.is_pro = true;
         /*** PRO END ***/
 
         $settings = $this->_get_post('settings');
+        $result = update_option('pwebcontact_settings', $settings);
         do_action('pwebcontact_settingschange', array('settings' => $settings));
-        return update_option('pwebcontact_settings', $settings);
+        return $result;
 
     }
 

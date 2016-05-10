@@ -98,6 +98,10 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     color: #ff0000 !important;
     border-color: #ff0000 !important;
 }
+input.pweb-warning {
+    color: #dda645 !important;
+    border-color: #dda645 !important;
+}
 
 .pweb-view-list h2 {
     margin-bottom: 15px;
