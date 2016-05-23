@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.2.0
+ * @version 2.2.1
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -714,59 +714,85 @@ function_exists('add_action') or die;
 
         <hr>
 
-        <div class="pweb-field pweb-desc">
-            <h3><?php _e('Google Analytics Tracking', 'pwebcontact'); ?></h3>
-            <p>
-                <?php _e('Copy one of following codes to below field', 'pwebcontact'); ?>
-                <strong><?php _e('JavaScript on mail success event', 'pwebcontact'); ?></strong>
-            </p>
+        <div class="pweb-clearfix">
+            <div class="pweb-width-50">
 
-            <div class="pweb-advanced-options">
-                <a href="#" class="pweb-advanced-options-toggler pweb-advanced-options-open">
-                    <span><?php _e( 'Universal', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                </a>
-                <div class="pweb-advanced-options-content">
-                    <div class="pweb-field-control">
-                        <p>
-                            <?php _e('Pageview', 'pwebcontact'); ?>: <code>ga('send', 'pageview', document.location.href+'/email-sent');</code><br>
-                            <?php _e('Event', 'pwebcontact'); ?>: <code>ga('send', 'event', 'Contact', 'E-mail sent', document.location.href);</code><br>
-                            <?php _e('Event with ticket', 'pwebcontact'); ?>: <code>ga('send', 'event', 'Contact', 'E-mail sent', data.ticket);</code>
-                        </p>
-                        <div class="pweb-alert pweb-alert-warning">
-                            <?php _e('You might need to change in above code function name `ga` to custom, if your Universal Analytics code does not use default function.', 'pwebcontact'); ?>
+                <div class="pweb-field pweb-desc">
+                    <h3><?php _e('Google Analytics Tracking', 'pwebcontact'); ?></h3>
+                    <p>
+                        <?php _e('Copy one of following codes to below field', 'pwebcontact'); ?>
+                        <strong><?php _e('JavaScript on mail success event', 'pwebcontact'); ?></strong>
+                    </p>
+
+                    <div class="pweb-advanced-options">
+                        <a href="#" class="pweb-advanced-options-toggler pweb-advanced-options-open">
+                            <span><?php _e( 'Universal', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
+                        </a>
+                        <div class="pweb-advanced-options-content">
+                            <div class="pweb-field-control">
+                                <p>
+                                    <?php _e('Pageview', 'pwebcontact'); ?>: <code>ga('send', 'pageview', document.location.href+'/email-sent');</code><br>
+                                    <?php _e('Event', 'pwebcontact'); ?>: <code>ga('send', 'event', 'Contact', 'E-mail sent', document.location.href);</code><br>
+                                    <?php _e('Event with ticket', 'pwebcontact'); ?>: <code>ga('send', 'event', 'Contact', 'E-mail sent', data.ticket);</code>
+                                </p>
+                                <div class="pweb-alert pweb-alert-warning">
+                                    <?php _e('You might need to change in above code function name `ga` to custom, if your Universal Analytics code does not use default function.', 'pwebcontact'); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pweb-advanced-options">
+                        <a href="#" class="pweb-advanced-options-toggler">
+                            <span><?php _e( 'Asynchronous', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
+                        </a>
+                        <div class="pweb-advanced-options-content">
+                            <div class="pweb-field-control">
+                                <p>
+                                    <?php _e('Pageview', 'pwebcontact'); ?>: <code>_gaq.push(['_trackPageview', document.location.href+'/email-sent']);</code><br>
+                                    <?php _e('Event', 'pwebcontact'); ?>: <code>_gaq.push(['_trackEvent', 'Contact', 'E-mail sent', document.location.href]);</code><br>
+                                    <?php _e('Event with ticket', 'pwebcontact'); ?>: <code>_gaq.push(['_trackEvent', 'Contact', 'E-mail sent', data.ticket]);</code>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pweb-advanced-options">
+                        <a href="#" class="pweb-advanced-options-toggler">
+                            <span><?php _e( 'Traditional', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
+                        </a>
+                        <div class="pweb-advanced-options-content">
+                            <div class="pweb-field-control">
+                                <p>
+                                    <?php _e('Pageview', 'pwebcontact'); ?>: <code>pageTracker._trackPageview(document.location.href+'/email-sent');</code><br>
+                                    <?php _e('Event', 'pwebcontact'); ?>: <code>pageTracker._trackEvent('Contact', 'E-mail sent', document.location.href);</code><br>
+                                    <?php _e('Event with ticket', 'pwebcontact'); ?>: <code>pageTracker._trackEvent('Contact', 'E-mail sent', data.ticket);</code>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="pweb-advanced-options">
-                <a href="#" class="pweb-advanced-options-toggler">
-                    <span><?php _e( 'Asynchronous', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                </a>
-                <div class="pweb-advanced-options-content">
+            </div>
+            <div class="pweb-width-50">
+
+                <div class="pweb-field pweb-desc">
+                    <h3><?php _e('Facebook Pixel Tracking', 'pwebcontact'); ?></h3>
+                    <p>
+                        <a href="<?php echo self_admin_url('plugin-install.php?tab=search&type=term&s=facebook+pixel'); ?>" target="_blank">
+                            <?php _e('Use any of the WordPress plugins to add Facebook Pixel tracking script to your site, if you haven\'t already.', 'pwebcontact'); ?>
+                        </a><br>
+                        <?php _e('Afterwards copy one of following codes to below field', 'pwebcontact'); ?>
+                        <strong><?php _e('JavaScript on mail success event', 'pwebcontact'); ?></strong>
+                    </p>
                     <div class="pweb-field-control">
                         <p>
-                            <?php _e('Pageview', 'pwebcontact'); ?>: <code>_gaq.push(['_trackPageview', document.location.href+'/email-sent']);</code><br>
-                            <?php _e('Event', 'pwebcontact'); ?>: <code>_gaq.push(['_trackEvent', 'Contact', 'E-mail sent', document.location.href]);</code><br>
-                            <?php _e('Event with ticket', 'pwebcontact'); ?>: <code>_gaq.push(['_trackEvent', 'Contact', 'E-mail sent', data.ticket]);</code>
+                            <?php _e('Lead', 'pwebcontact'); ?>: <code>fbq('track', 'Lead');</code><br>
+                            <?php _e('Content view', 'pwebcontact'); ?>: <code>fbq('track', 'ViewContent');</code>
                         </p>
                     </div>
                 </div>
-            </div>
 
-            <div class="pweb-advanced-options">
-                <a href="#" class="pweb-advanced-options-toggler">
-                    <span><?php _e( 'Traditional', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-                </a>
-                <div class="pweb-advanced-options-content">
-                    <div class="pweb-field-control">
-                        <p>
-                            <?php _e('Pageview', 'pwebcontact'); ?>: <code>pageTracker._trackPageview(document.location.href+'/email-sent');</code><br>
-                            <?php _e('Event', 'pwebcontact'); ?>: <code>pageTracker._trackEvent('Contact', 'E-mail sent', document.location.href);</code><br>
-                            <?php _e('Event with ticket', 'pwebcontact'); ?>: <code>pageTracker._trackEvent('Contact', 'E-mail sent', data.ticket);</code>
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
 

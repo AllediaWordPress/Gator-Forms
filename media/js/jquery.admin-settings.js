@@ -118,7 +118,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             // SMTP user from other domain than site
             var username = $(this).val().toLowerCase();
             if (username.indexOf("@") !== -1 && username.indexOf(pwebcontact_admin.domain) === -1) {
-                $(this).addClass("pweb-invalid");
+                $(this).addClass("pweb-warning");
             }
         }
     }).trigger("change");

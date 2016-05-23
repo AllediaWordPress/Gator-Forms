@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.2.0
+ * @version 2.2.1
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -406,7 +406,7 @@ class PWebContact_Admin {
                     check_admin_referer( 'edit-debug-state' );
                 }
 
-                $result = update_option('pwebcontact_debug', $state);
+                $result = (get_option('pwebcontact_debug') == $state) ? true : update_option('pwebcontact_debug', $state);
                 $message = __($result ? 'Debug has been successfully '.($state ? 'enabled' : 'disabled').'.' : 'Failed changing debug mode state!', 'pwebcontact');
 
                 if (isset($_GET['ajax'])) {
@@ -799,6 +799,7 @@ pwebcontact_admin.is_pro = true;
         /*** PRO END ***/
 
         $settings = $this->_get_post('settings');
+        $settings['timestamp'] = time(); // add timestamp to save settings event if it has not changed
         $result = update_option('pwebcontact_settings', $settings);
         do_action('pwebcontact_settingschange', array('settings' => $settings));
         return $result;
