@@ -169,13 +169,18 @@ class PWebCompiler {
     
     public function build() {
         
-        $options = getopt('', array('pro'));
-        
+        $options = getopt('', array('pro', 'ver'));
+
         $this->path = dirname(__DIR__).'/';
-        
+
         $version = $this->getVersion();
         $this->is_pro = isset($options['pro']);
-        
+
+        if (isset($options['ver'])) {
+            echo $version;
+            die;
+        }
+
         $zip_path = $this->path . 'build/' . ($this->is_pro ? 'pro' : 'free') . '/wp_pwebcontact_'.$version.'_'.($this->is_pro ? 'pro' : 'free').'.zip';
 		
         if (is_file($zip_path)) {
