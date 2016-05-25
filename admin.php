@@ -592,7 +592,8 @@ class PWebContact_Admin {
     function action_links( $links, $file ) {
 
         if ( $file == plugin_basename(dirname(__FILE__).'/pwebcontact.php') ) {
-            $links[] = '<a href="' . admin_url( 'admin.php?page=pwebcontact' ) . '">'.__( 'Forms list', 'pwebcontact' ).'</a>';
+            $links[] = '<a href="' . admin_url( 'admin.php?page=pwebcontact' ) . '">'.__( 'Forms list', 'pwebcontact' ).'</a>'
+                    . '<script>jQuery(document).ready(function($){$("tr#pwebcontact-update a.update-link").removeClass("update-link").unbind("click")});</script>';
         }
 
         return $links;
