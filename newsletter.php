@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version 2.1.9
+ * @version 2.2.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -29,11 +29,25 @@ class PWebContact_Freshmail
         return $lists;
     }
 
-    public static function subscribe($id_list, $email, $name = '', $options)
+    public static function subscribe($id_list, $email, $name = '', $fields = array(), $options = array())
     {
+        $custom_fields = array();
+        foreach ($fields as $key => $value)
+        {
+            if (strpos($key, 'fm_') === 0)
+            {
+                $subkey = substr($key, 3);
+                if ($subkey !== 'email')
+                {
+                    $custom_fields[$subkey] = $value;
+                }
+            }
+        }
+
         return self::doRequest('subscriber/add', $options, array(
                     'email' => $email,
-                    'list' => $id_list
+                    'list' => $id_list,
+                    'custom_fields' => $custom_fields
         ));
     }
 
@@ -47,15 +61,15 @@ class PWebContact_Freshmail
             $data = json_encode($data);
         }
 
-        $headers = array();
-        $headers['X-Rest-ApiKey'] = $options['apikey'];
+        $headers                   = array();
+        $headers['X-Rest-ApiKey']  = $options['apikey'];
         $headers['X-Rest-ApiSign'] = sha1($options['apikey']
                 . '/rest/' . $rest_path
                 . $data
                 . $options['secret']
         );
-        $headers['Content-Type'] = 'application/json';
-        $url = 'https://api.freshmail.com/rest/';
+        $headers['Content-Type']   = 'application/json';
+        $url                       = 'https://api.freshmail.com/rest/';
 
         try
         {
@@ -115,7 +129,7 @@ class PWebContact_Mailchimp
         return $lists;
     }
 
-    public static function subscribe($id_list, $email, $name = '', $options)
+    public static function subscribe($id_list, $email, $name = '', $fields = array(), $options = array())
     {
         $data = array(
             'id' => $id_list,
@@ -124,12 +138,13 @@ class PWebContact_Mailchimp
                 'email' => $email
             )
         );
+
         if (!empty($name))
         {
-            $data['merge_vars'] = array(
-                'FNAME' => $name
-            );
+            $fields['FNAME'] = $name;
         }
+        $data['merge_vars'] = $fields;
+
         return self::doRequest('lists/subscribe.json', $options, $data, array('Content-Type: multipart/form-data'));
     }
 
@@ -147,7 +162,7 @@ class PWebContact_Mailchimp
         }
 
         $data['apikey'] = $options['apikey'];
-        $url = 'https://' . $key_parts[1] . '.api.mailchimp.com/2.0/';
+        $url            = 'https://' . $key_parts[1] . '.api.mailchimp.com/2.0/';
 
         try
         {

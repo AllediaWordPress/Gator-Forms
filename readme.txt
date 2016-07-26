@@ -3,8 +3,8 @@ Contributors: perfect-web, piotrmocko
 Donate link: 
 Tags: contact form, file upload, AJAX, responsive contact form, multiple contact forms plugin, shortcode contact form, widget contact form, contact form plugin, contact form maker, drag and drop contact form, form builder, file upload form
 Requires at least: 3.5.0
-Tested up to: 4.5.2
-Stable tag: 2.2.2
+Tested up to: 4.5.3
+Stable tag: 2.2.3
 License: GNU/GPL
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -195,6 +195,10 @@ Yes it will, however you only get access to new versions and support for as long
 21. Very advanced options for web developers
 
 == Changelog ==
+
+= 2.2.3 / 28-07-2016 =
+* Pass all form fields to Mailchimp and Freshmail
+* Updated Google Spreadsheets API to latest v4
 
 = 2.2.2 / 25-05-2016 =
 * Fixed plugin updating form plugins list view

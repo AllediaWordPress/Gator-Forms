@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.2.0
+ * @version 2.2.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -2330,30 +2330,30 @@ class PWebContact
 			{
 				$date = new DateTime();
                 $data['ticket'] 		= $date->format('YmdHis'); //WP
-				$email_vars['ticket'] 	= sprintf($params->get('ticket_format', '[#%s]'), $data['ticket']);
+				$email_vars['ticket'] 	= @sprintf($params->get('ticket_format', '[#%s]'), $data['ticket']);
 			}
 			elseif ($ticket_type == 2)
 			{
-				$ticket_file = $params->get('media_path').'tickets/ticket_'.sprintf('%03d', $form_id).'.txt';
+				$ticket_file = $params->get('media_path').'tickets/ticket_'.@sprintf('%03d', $form_id).'.txt';
 				$ticket_counter = is_file($ticket_file) ? (int)file_get_contents($ticket_file) : 0;
 				$ticket_counter++;
 				file_put_contents($ticket_file, $ticket_counter);
 				
 				$data['ticket'] 		= $ticket_counter;
-				$email_vars['ticket'] 	= sprintf($params->get('ticket_format', '[#%06d]'), $ticket_counter);
+				$email_vars['ticket'] 	= @sprintf($params->get('ticket_format', '[#%06d]'), $ticket_counter);
 			}
 			
 			if ($data['ticket']) 
 			{
 				// success message with ticket
-				$success_msg = sprintf(__($params->get('msg_success', 'Message successfully sent. Your ticket is: %s'), 'pwebcontact'), $email_vars['ticket']);
+				$success_msg = @sprintf(__($params->get('msg_success', 'Message successfully sent. Your ticket is: %s'), 'pwebcontact'), $email_vars['ticket']);
 				
 				// email subject with ticket
 				$data['subject'] = __($params->get('email_subject', '%s Message sent from'), 'pwebcontact');
                 if (strpos($data['subject'], '%s') === false) {
                     $data['subject'] = '%s '.$data['subject']; //TODO test if change place for RTL
                 }
-                $data['subject'] = sprintf($data['subject'], $email_vars['ticket']);
+                $data['subject'] = @sprintf($data['subject'], $email_vars['ticket']);
 			}
 		}
         /*** PRO END ***/
@@ -2386,6 +2386,55 @@ class PWebContact
 		}
                 
         /*** PRO START ***/
+        // Google Sheets integration
+		if ($params->get('googlesheets_enable') && $params->get('googlesheets_spreadsheet_id')) {
+
+			require_once dirname(__FILE__) . '/google.php';
+
+            $gData = array(
+                'sent-on' => $email_vars['sent_on'],
+                'ticket' => $email_vars['ticket']
+            );
+
+            foreach ($data['fields'] as $key => $value) {
+                if (is_array($value)) {
+                    $value = implode(', ', $value);
+                }
+                $gData['field-' . $key] = $value;
+            }
+
+            foreach (array('ip_address', 'browser', 'os', 'screen_resolution', 'title', 'url') as $key) {
+                $gData[$key] = $data[$key];
+            }
+
+            $gData['attachments'] = '';
+            if (count(self::$data['attachments'])) {
+                if ($params->get('attachment_type', 1) == 2 OR ! $params->get('attachment_delete', 1)) {
+                    $files      = array();
+                    $upload_url = $params->get('upload_url');
+                    foreach (self::$data['attachments'] as $file)
+                        $files[] = $upload_url . rawurlencode($file);
+
+                    $gData['attachments'] = implode(' , ', $files);
+                }
+                else {
+                    $gData['attachments'] = implode(', ', self::$data['attachments']);
+                }
+            }
+
+            try {
+                PWebContact_GoogleApi::getInstance()->addRowToSpreadsheet(
+                        $params->get('googlesheets_spreadsheet_id')
+                        , $params->get('googlesheets_sheet_id', 0)
+                        , $gData
+                );
+            } catch (Exception $ex) {
+                if (PWEBCONTACT_DEBUG)
+                    self::$logs[] = (string) $ex;
+            }
+            unset($gData);
+        }
+
         // Newsletter integration
         $newsletter_type = strtolower($params->get('newsletter_type', ''));
         if ($newsletter_type && $user_email)
@@ -2417,7 +2466,7 @@ class PWebContact
 
                 foreach ($newsletter_lists as $list_id)
                 {
-                    call_user_func(array($class, 'subscribe'), $list_id, $user_email, $user_name, $options);
+                    call_user_func(array($class, 'subscribe'), $list_id, $user_email, $user_name, $data['fields'], $options);
                 }
             }
         }
@@ -2427,11 +2476,6 @@ class PWebContact
         $email_copy = ($params->get('email_copy', 2) == 2);
         /*** FREE END ***/
 		/*** PRO START ***/
-        //Google Docs Integration
-        if ($params->get('googledocs_enable', 0))
-        {
-            require_once dirname(__FILE__) . '/googledocs.php';
-        }
         // process form input data and email template variables
         try {
             do_action('pwebcontact_data', array('data' => $data, 'email_vars' => $email_vars, 'form_id' => $form_id));
@@ -2710,7 +2754,7 @@ class PWebContact
 				
 				if ($search_fields AND !isset(self::$email_tmpls[$cache_fields_key])) {
 					//TODO test RTL if need to change position of sprintf arguments
-					$fields_replacements[] = sprintf(__($is_html ? '<strong>%s</strong>: %s' : '%s: %s', 'pwebcontact'), $name, $value);
+					$fields_replacements[] = @sprintf(__($is_html ? '<strong>%s</strong>: %s' : '%s: %s', 'pwebcontact'), $name, $value);
 				}
 			}
 			
@@ -2741,7 +2785,7 @@ class PWebContact
 						$urls = array();
 						$url = $params->get('upload_url');
 						foreach (self::$data['attachments'] as $file)
-							$urls[] = sprintf(__($is_html ? '<a href="%s" target="_blank">%s</a>' : '%s', 'pwebcontact'), $url.rawurlencode($file), $file);
+							$urls[] = @sprintf(__($is_html ? '<a href="%s" target="_blank">%s</a>' : '%s', 'pwebcontact'), $url.rawurlencode($file), $file);
 
 						self::$email_tmpls[$cache_files_key] = implode($is_html ? '<br>' : "\r\n", $urls);
 					}
@@ -2851,6 +2895,9 @@ class PWebContact
 			'Mac OS X Lion' => 'Mac OS X 10.7',
 			'Mac OS X Mountain Lion' => 'Mac OS X 10.8',
 			'Mac OS X Mavericks' => 'Mac OS X 10.9',
+			'Mac OS X Yosemite' => 'Mac OS X 10.10',
+			'Mac OS X El Capitan' => 'Mac OS X 10.11',
+			'Mac OS X Sierra' => 'Mac OS X 10.12',
 			'Mac OS X%s' => 'Mac OS X( \d+\.\d+)*',
 			'Mac OS' => 'Mac_PowerPC|PowerPC|Macintosh',
 			// Mobile Devices
@@ -2898,7 +2945,7 @@ class PWebContact
 		
 		foreach ($os as $name => $regExp) {
 			if (preg_match('/'.$regExp.'/i', $_SERVER['HTTP_USER_AGENT'], $match)) {
-				$os_name = sprintf($name, array_key_exists(1, $match) ? $match[1] : '');
+				$os_name = @sprintf($name, array_key_exists(1, $match) ? $match[1] : '');
 				break;
 			}
 		}

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.2.1
+ * @version 2.2.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -358,10 +358,10 @@ function_exists('add_action') or die;
 			<div class="pweb-width-50">
 				<?php echo $this->_get_field(array(
 					'type'    => 'radio',
-					'name'    => 'googledocs_enable',
-					'label'   => 'Enable Google Docs Integration',
+					'name'    => 'googlesheets_enable',
+					'label'   => 'Enable Google Sheets integration',
 					'tooltip' => 'Enable saving of form data into a Google Spreadsheet.',
-					'desc'    => sprintf(__('Remember to set your Google Access Code in %s.', 'pwebcontact'), '<a href="' . admin_url('admin.php?page=pwebcontact&task=settings') . '" target="_blank">' . __('Contact Form Settings', 'pwebcontact') . '</a>'),
+					'desc'    => sprintf(__('Remember to set your Google API Access Code in %s.', 'pwebcontact'), '<a href="' . admin_url('admin.php?page=pwebcontact&task=settings#pweb_settings_googleapi_accesscode') . '" target="_blank">' . __('Contact Form Settings', 'pwebcontact') . '</a>'),
 					'default' => 0,
 					'class'   => 'pweb-radio-group',
 					'options' => array(
@@ -377,25 +377,25 @@ function_exists('add_action') or die;
 					)
 				)); ?>
 				<p>Press the button below, copy the generated text, select the first column (A), paste the generated text into Google Spreadsheet, select it, click 'Data', select 'Split text into columns...' and as 'Separator' use 'Space'. This will ensure your data is saved correctly.</p>
-				<button class="button googledocs-get-columns"><i class="glyphicon glyphicon-download-alt"></i> <span>Get columns</span></button>
-				<code class="googledocs-integration-columns">
+				<button class="button googlesheets-get-columns"><i class="glyphicon glyphicon-download-alt"></i> <span>Get columns</span></button>
+				<code class="googlesheets-columns">
 					Please press the button first
 				</code>
 			</div>
 			<div class="pweb-width-50">
 				<?php echo $this->_get_field(array(
 					'type'    => 'text',
-					'name'    => 'googledocs_sheetname',
-					'label'   => 'Sheet name',
-					'tooltip' => 'Name of the Google Sheet you wish to save data in.',
-					'parent'  => array('googledocs_enable_1')
+					'name'    => 'googlesheets_spreadsheet_id',
+					'label'   => 'Spreadsheet ID',
+					'tooltip' => 'The ID of spreadsheet from URL',
+					'parent'  => array('googlesheets_enable_1')
 				));
 				echo $this->_get_field(array(
 					'type'    => 'text',
-					'name'    => 'googledocs_worksheetname',
-					'label'   => 'Worksheet name',
-					'tooltip' => 'Name of a worksheet that resides in the spreadsheet you selected in the field above.',
-					'parent'  => array('googledocs_enable_1')
+					'name'    => 'googlesheets_sheet_id',
+					'label'   => 'Sheet ID',
+					'tooltip' => 'The ID of sheet from URL',
+					'parent'  => array('googlesheets_enable_1')
 				)); ?>
 			</div>
 		</div>

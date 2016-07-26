@@ -34,7 +34,7 @@ class PWebCompiler {
     );
     protected $exclude_free = array(
         'captcha.php',
-        'googledocs.php',
+        'google.php',
         'media/css/themes/',
         'media/css/uploader',
         'media/fonts', // Toggler font

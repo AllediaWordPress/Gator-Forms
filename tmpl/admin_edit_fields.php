@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.5
+ * @version 2.2.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -1969,7 +1969,10 @@ $this->_set_pro_options('field_types', array(
                         'index' => 'X',
                         'group' => 'fields',
                         'label' => 'API key',
-                        'class' => 'newsletter_depends_on_mailchimp pweb-custom-field-label-input'
+                        'class' => 'newsletter_depends_on_mailchimp pweb-custom-field-label-input',
+                        'desc' => 'For custom fields to be added to your list,'
+                                . ' you need to match \'Alias for email template\' in your field with your custom list field name.'
+                                . ' FNAME will be automatically filled in from your \'name\' type field.'
                     )); ?>
 
                     <?php echo $this->_get_field(array(
@@ -1989,7 +1992,11 @@ $this->_set_pro_options('field_types', array(
                         'index' => 'X',
                         'group' => 'fields',
                         'label' => 'Secret',
-                        'class' => 'newsletter_depends_on_freshmail pweb-custom-field-label-input'
+                        'class' => 'newsletter_depends_on_freshmail pweb-custom-field-label-input',
+                        'desc' => 'For custom fields to be added to your list,'
+                                . ' you need to match \'Alias for email template\' in your field with your custom list field name'
+                                . ' and add <strong>fm_</strong> prefix to \'Alias for email template\', for example: \'fm_name\''
+                                . ' (do not add prefix to your Freshmail fields).'
                     )); ?>
 
                     <?php echo $this->_get_field(array(

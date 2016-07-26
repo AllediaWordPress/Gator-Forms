@@ -1,5 +1,5 @@
 /**
- * @version 2.2.0
+ * @version 2.2.3
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -171,7 +171,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 			if (response && typeof response.success === "boolean") 
 			{
                 $("#pweb-save-status").html(
-                        response.success === true ? pwebcontact_l10n.saved_on+" "+(new Date()).toLocaleTimeString() : pwebcontact_l10n.error);
+                        response.success === true ? pwebcontact_l10n.saved_on+" "+(new Date()).toLocaleTimeString() : (response.message ? response.message : pwebcontact_l10n.error));
 			}
 		}).fail(function(jqXHR, textStatus, errorThrown) {
             $("#pweb-save-status").html("Request error");

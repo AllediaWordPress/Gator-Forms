@@ -805,20 +805,20 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
 
     // Google Docs integration
-    $('.googledocs-get-columns').click(function (e) {
+    $('.googlesheets-get-columns').click(function (e) {
         e.stopImmediatePropagation();
         e.preventDefault();
-        var static_columns = ['ip-address', 'browser', 'os', 'screen-resolution', 'title', 'url', 'attachments'],
-            columns = ['sent-on', 'ticket'];
-        $('.pweb-custom-field-alias:enabled').each(function (i, v) {
+        var static_columns = ['IP address', 'Browser', 'OS', 'Screen resolution', 'Page title', 'Page URL', 'Attachments'],
+            columns = ['Sent on', 'Ticket'];
+        $('.pweb-custom-field-label-input:enabled').each(function (i, v) {
             var name = $(v).val();
             if (name !== '') {
-                columns.push('field-' + name.replace('_', '-'));
+                columns.push(name);
             }
         });
-        var $input = $('.googledocs-integration-columns');
+        var $input = $('.googlesheets-columns');
         columns = columns.concat(static_columns);
-        $input.text(columns.join('\x09'));
+        $input.text(columns.join(';'));
 
         var doc = window.document, sel, range;
         if (window.getSelection && doc.createRange) {

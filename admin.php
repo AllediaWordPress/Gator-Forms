@@ -38,7 +38,7 @@ class PWebContact_Admin {
         'settings' => array(
             /*** FREE START ***/
             'dlid',
-            'googledocs_accesscode'
+            'googleapi_accesscode'
             /*** FREE END ***/
         ),
         'params' => array(
@@ -100,9 +100,9 @@ class PWebContact_Admin {
 			'upload_path',
 			'upload_show_limits',
 			'upload_size_limit',
-            'googledocs_enable',
-            'googledocs_sheetname',
-            'googledocs_worksheetname'
+            'googlesheets_enable',
+            'googlesheets_spreadsheet_id',
+            'googlesheets_sheet_id'
             /*** FREE END ***/
         )
     );
@@ -272,7 +272,7 @@ class PWebContact_Admin {
                 
                 $result = $this->_get_newsletter_lists();
 
-                header('Content-type: application/json');
+                header('Content-Type: application/json');
                 die(json_encode($result));
             }
         }
@@ -300,7 +300,7 @@ class PWebContact_Admin {
                 $message = __($result ? 'Contact form has been successfully saved.' : 'Failed saving contact form!', 'pwebcontact');
 
                 if (isset($_GET['ajax'])) {
-                    header('Content-type: application/json');
+                    header('Content-Type: application/json');
                     die(json_encode(array(
                         'success' => $result,
                         'message' => $message
@@ -336,7 +336,7 @@ class PWebContact_Admin {
                 $message = __($result ? 'Contact form has been successfully deleted.' : 'Failed deleting contact form!', 'pwebcontact');
 
                 if (isset($_GET['ajax'])) {
-                    header('Content-type: application/json');
+                    header('Content-Type: application/json');
                     die(json_encode(array(
                         'success' => $result,
                         'message' => $message
@@ -373,7 +373,7 @@ class PWebContact_Admin {
                 $message = __($result ? 'Contact form has been successfully '.($state ? 'published' : 'unpublished').'.' : 'Failed changing contact form state!', 'pwebcontact');
 
                 if (isset($_GET['ajax'])) {
-                    header('Content-type: application/json');
+                    header('Content-Type: application/json');
                     die(json_encode(array(
                         'success' => $result,
                         'message' => $message,
@@ -410,7 +410,7 @@ class PWebContact_Admin {
                 $message = __($result ? 'Debug has been successfully '.($state ? 'enabled' : 'disabled').'.' : 'Failed changing debug mode state!', 'pwebcontact');
 
                 if (isset($_GET['ajax'])) {
-                    header('Content-type: application/json');
+                    header('Content-Type: application/json');
                     die(json_encode(array(
                         'success' => $result,
                         'message' => $message,
@@ -479,7 +479,7 @@ class PWebContact_Admin {
                 }
 
                 if (isset($_GET['ajax'])) {
-                    header('Content-type: application/json');
+                    header('Content-Type: application/json');
                     die(json_encode(array(
                         'success' => $result,
                         'message' => $message
@@ -539,7 +539,7 @@ class PWebContact_Admin {
                 }
             }
 
-            header('Content-type: text/plain');
+            header('Content-Type: text/plain');
             die( $content );
         }
         elseif ( $task == 'load_fields' ) {
@@ -562,7 +562,7 @@ class PWebContact_Admin {
                 }
             }
 
-            header('Content-type: application/json');
+            header('Content-Type: application/json');
             die( $content );
         }
 
@@ -795,16 +795,29 @@ pwebcontact_admin.is_pro = true;
 
     protected function _save_settings() {
 
-        /*** PRO START ***/
-        require_once dirname( __FILE__ ) . '/googledocs.php';
-        /*** PRO END ***/
-
         $settings = $this->_get_post('settings');
         $settings['timestamp'] = time(); // add timestamp to save settings event if it has not changed
-        $result = update_option('pwebcontact_settings', $settings);
-        do_action('pwebcontact_settingschange', array('settings' => $settings));
-        return $result;
 
+        /*** PRO START ***/
+        require_once dirname( __FILE__ ) . '/google.php';
+        
+        if (!empty($settings['googleapi_accesscode'])) {
+            try {
+                PWebContact_GoogleApi::getInstance()->setAccessCode($settings['googleapi_accesscode']);
+            } catch (Exception $ex) {
+                $error = sprintf(__('Failed to get the access token requested with provided access code. Error message: %s'), $ex->getMessage());
+            }
+            $settings['googleapi_accesscode'] = '';
+        }
+        /*** PRO END ***/
+
+        $result = update_option('pwebcontact_settings', $settings);
+
+        if (isset($error)) {
+            throw new Exception($error);
+        } else {
+            return $result;
+        }
     }
 
 
@@ -970,6 +983,9 @@ pwebcontact_admin.is_pro = true;
 
     protected function _display_settings() {
 
+        /*** PRO START ***/
+        require_once dirname( __FILE__ ) . '/google.php';
+        /*** PRO END ***/
         $this->_load_tmpl('settings');
     }
 
