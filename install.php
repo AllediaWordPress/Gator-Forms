@@ -1,6 +1,6 @@
 <?php 
 /**
- * @version 1.0.0
+ * @version 2.3.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -18,8 +18,15 @@ function pwebcontact_install() {
 }
 
 function pwebcontact_uninstall() {
-    
-	pwebcontact_uninstall_db();
+
+    if (file_exists(dirname(__FILE__) . '/uninstall.txt')) {
+        delete_option('pwebcontact_debug');
+        delete_option('pwebcontact_settings');
+        delete_option('pwebcontact_tickets');
+        delete_option('pwebcontact_googledocs_token');
+        pwebcontact_uninstall_db();
+        pwebcontact_uninstall_upload_dir();
+    }
 }
 
 // create database table for contact forms settings
@@ -94,6 +101,22 @@ function pwebcontact_install_upload_dir() {
         // create wirtable upload path
         if (!is_dir($path)) {
             mkdir($path, 0755, true);
+        }
+    }
+}
+
+function pwebcontact_uninstall_upload_dir() {
+    
+    $upload_dir = wp_upload_dir();
+    $path = $upload_dir['basedir'].'/pwebcontact/';
+    
+    require_once ABSPATH . 'wp-admin/includes/file.php';
+
+    if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
+        global $wp_filesystem;
+
+        if ($wp_filesystem->is_dir($path)) {
+            $wp_filesystem->rmdir($path, true);
         }
     }
 }

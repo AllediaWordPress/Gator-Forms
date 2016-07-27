@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version 2.2.3
+ * @version 2.3.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -240,7 +240,7 @@ class PWebContact_GoogleApi
         $token = $this->getOption('accesstoken');
         if (empty($token))
         {
-            $token = json_decode(get_option($this->getOption('tokenstore'), '{}'), true);
+            $token = (array) get_option($this->getOption('tokenstore'), array());
             $this->setOption('accesstoken', $token);
         }
         return $token;
@@ -268,7 +268,6 @@ class PWebContact_GoogleApi
             $this->setOption('accesstoken', $token);
 
             // save the new token
-            $token = json_encode($token);
             update_option($this->getOption('tokenstore'), $token);
         }
 
@@ -497,7 +496,7 @@ class PWebContact_GoogleApi
             )
         );
 
-        $this->makeRESTRequest(
+        return $this->makeRESTRequest(
                 'https://sheets.googleapis.com/v4/spreadsheets/' . $spreadsheet_id . ':batchUpdate'
                 , $data
                 , array()

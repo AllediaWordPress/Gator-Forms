@@ -527,15 +527,25 @@ class PWebContact_Admin {
             $content = '';
             if (isset($_GET['ajax']) AND isset($_POST['format']) AND $_POST['format'] AND isset($_POST['tmpl']) AND $_POST['tmpl']) {
 
-                $path = dirname(__FILE__) .'/media/email_tmpl/'. basename($_POST['tmpl']) . ((int)$_POST['format'] === 2 ? '.html' : '.txt');
+                $file       = basename($_POST['tmpl']) . ((int) $_POST['format'] === 2 ? '.html' : '.txt');
+                $upload_dir = wp_upload_dir();
+                $path1      = $upload_dir['basedir'] . '/pwebcontact/email_tmpl/' . $file;
+                $path2      = dirname(__FILE__) . '/media/email_tmpl/' . $file;
+
                 if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                     global $wp_filesystem;
-                    if ($wp_filesystem->is_file($path)) {
-                        $content = $wp_filesystem->get_contents($path);
+                    if ($wp_filesystem->is_file($path1)) {
+                        $content = $wp_filesystem->get_contents($path1);
+                    }
+                    elseif ($wp_filesystem->is_file($path2)) {
+                        $content = $wp_filesystem->get_contents($path2);
                     }
                 }
-                elseif (is_file($path)) {
-                    $content = file_get_contents($path);
+                elseif (is_file($path1)) {
+                    $content = file_get_contents($path1);
+                }
+                elseif (is_file($path2)) {
+                    $content = file_get_contents($path2);
                 }
             }
 
@@ -550,15 +560,25 @@ class PWebContact_Admin {
             $content = '';
             if (isset($_GET['ajax']) AND isset($_POST['fields']) AND $_POST['fields']) {
 
-                $path = dirname(__FILE__) .'/media/fields_settings/'. basename($_POST['fields']) . '.txt';
+                $file       = basename($_POST['fields']) . '.txt';
+                $upload_dir = wp_upload_dir();
+                $path1      = $upload_dir['basedir'] . '/pwebcontact/fields_settings/' . $file;
+                $path2      = dirname(__FILE__) . '/media/fields_settings/' . $file;
+
                 if (function_exists('WP_Filesystem') AND WP_Filesystem()) {
                     global $wp_filesystem;
-                    if ($wp_filesystem->is_file($path)) {
-                        $content = $wp_filesystem->get_contents($path);
+                    if ($wp_filesystem->is_file($path1)) {
+                        $content = $wp_filesystem->get_contents($path1);
+                    }
+                    elseif ($wp_filesystem->is_file($path2)) {
+                        $content = $wp_filesystem->get_contents($path2);
                     }
                 }
-                elseif (is_file($path)) {
-                    $content = file_get_contents($path);
+                elseif (is_file($path1)) {
+                    $content = file_get_contents($path1);
+                }
+                elseif (is_file($path2)) {
+                    $content = file_get_contents($path2);
                 }
             }
 
@@ -1271,34 +1291,45 @@ pwebcontact_admin.is_pro = true;
                     ));
                 }
 
-                if (is_dir( dirname(__FILE__) .'/'. trim($directory, '/\\') )) {
-                    $directory = dirname(__FILE__) .'/'. trim($directory, '/\\');
+                $directories = array();
+                $directory   = trim($directory, '/\\');
+
+                if (is_dir(dirname(__FILE__) . '/' . $directory))
+                {
+                    $directories[] = dirname(__FILE__) . '/' . $directory;
+                    if (strpos($directory, 'media') === 0)
+                    {
+                        $directory  = str_replace('media', 'pwebcontact', $directory);
+                        $upload_dir = wp_upload_dir();
+                        if (is_dir($upload_dir['basedir'] . '/' . $directory))
+                        {
+                            $directories[] = $upload_dir['basedir'] . '/' . $directory;
+                        }
+                    }
                 }
-                elseif (is_dir( ABSPATH .'/'. trim($directory, '/\\') )) {
-                    $directory = ABSPATH .'/'. trim($directory, '/\\');
-                }
-                else {
-                    $directory = null;
+                elseif (is_dir(ABSPATH . '/' . $directory))
+                {
+                    $directories[] = ABSPATH . '/' . $directory;
                 }
 
-                if ($directory) {
-                    $dir = new DirectoryIterator($directory);
-                    foreach( $dir as $item )
-                    {
-                        if ($item->isFile())
-                        {
-                            if (strpos($item->getFilename(), 'index.') === false AND preg_match('/'.$filter.'/i', $item->getFilename())) {
-                                if (isset($strip_ext) AND $strip_ext) {
-                                    $pos = strrpos($item->getFilename(), '.', 3);
-                                    $file_name = substr($item->getFilename(), 0, $pos);
+                if (count($directories)) {
+                    foreach ($directories as $directory) {
+                        $dir = new DirectoryIterator($directory);
+                        foreach( $dir as $item ) {
+                            if ($item->isFile()) {
+                                if (strpos($item->getFilename(), 'index.') === false AND preg_match('/'.$filter.'/i', $item->getFilename())) {
+                                    if (isset($strip_ext) AND $strip_ext) {
+                                        $pos = strrpos($item->getFilename(), '.', 3);
+                                        $file_name = substr($item->getFilename(), 0, $pos);
+                                    }
+                                    else {
+                                        $file_name = $item->getFilename();
+                                    }
+                                    $options[$file_name] = array(
+                                        'value' => $file_name,
+                                        'name' => $file_name
+                                    );
                                 }
-                                else {
-                                    $file_name = $item->getFilename();
-                                }
-                                $options[] = array(
-                                    'value' => $file_name,
-                                    'name' => $file_name
-                                );
                             }
                         }
                     }

@@ -808,17 +808,44 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     $('.googlesheets-get-columns').click(function (e) {
         e.stopImmediatePropagation();
         e.preventDefault();
+
+        // close field options if opened
+        $("#pweb_fields_options_close").click();
+
         var static_columns = ['IP address', 'Browser', 'OS', 'Screen resolution', 'Page title', 'Page URL', 'Attachments'],
-            columns = ['Sent on', 'Ticket'];
-        $('.pweb-custom-field-label-input:enabled').each(function (i, v) {
+            columns = ['Sent on', 'Ticket', 'Subject'];
+        $('#pweb_fields_rows').find(
+            '.pweb-custom-field-type-name'
+            + ', .pweb-custom-field-type-email'
+            + ', .pweb-custom-field-type-phone'
+            + ', .pweb-custom-field-type-text'
+            + ', .pweb-custom-field-type-textarea'
+            + ', .pweb-custom-field-type-date'
+            + ', .pweb-custom-field-type-password'
+            + ', .pweb-custom-field-type-select'
+            + ', .pweb-custom-field-type-multiple'
+            + ', .pweb-custom-field-type-radio'
+            + ', .pweb-custom-field-type-checkboxes'
+            + ', .pweb-custom-field-type-checkbox'
+            + ', .pweb-custom-field-type-checkbox_modal'
+        ).find('.pweb-custom-field-label-input').each(function (i, v) {
             var name = $(v).val();
-            if (name !== '') {
-                columns.push(name);
+            if (!name) {
+                name = $(v).closest('.pweb-custom-field-options').find('.pweb-custom-field-alias').val();
             }
+            columns.push(name ? name : ' ');
         });
-        var $input = $('.googlesheets-columns');
+
+        var $mailto_list = $('#pweb_fields_rows .pweb-custom-field-type-mailto_list .pweb-custom-field-label-input');
+        if ($mailto_list.length) {
+            var name = $mailto_list.val();
+            columns.push(name ? name : 'Contact with');
+        }
+
         columns = columns.concat(static_columns);
-        $input.text(columns.join(';'));
+
+        var $input = $('.googlesheets-columns');
+        $input.css('display', '').text(columns.join(';'));
 
         var doc = window.document, sel, range;
         if (window.getSelection && doc.createRange) {

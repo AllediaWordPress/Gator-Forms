@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.2.3
+ * @version 2.3.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -659,11 +659,11 @@ function_exists('add_action') or die;
                     ))
                     . '</p>'
                     . '<p>'
-                    . __('Copy colums names and paste into the spreadsheet cell A1 and split into columns (click `Data` menu, select `Split text into columns...` and as `Separator` use `Semicolon ;`.', 'pwebcontact')
+                    . __('Copy colums names and paste into the spreadsheet cell A1 and split into columns (click `Data` menu, select `Split text into columns...` and as `Separator` use `Semicolon ;`).', 'pwebcontact')
                     . '</p>'
                     . '<p><button class="button googlesheets-get-columns"><i class="glyphicon glyphicon-download-alt"></i> '
                     . __('Get columns names', 'pwebcontact')
-                    . '</button> <code class="googlesheets-columns"></code></p>'
+                    . '</button> <code class="googlesheets-columns" style="display:none"></code></p>'
             )); ?>
 		</div>
 
@@ -866,6 +866,7 @@ function_exists('add_action') or die;
         <li><code>{url}</code> - <?php esc_html_e('page URL', 'pwebcontact'); ?></li>
         <li><code>{title}</code> - <?php esc_html_e('title of page', 'pwebcontact'); ?></li>
         <li><code>{site_name}</code> - <?php esc_html_e('site name', 'pwebcontact'); ?></li>
+        <li><code>{sent_on}</code> - <?php esc_html_e('date and time', 'pwebcontact'); ?></li>
         <li><code>{ip_address}</code> - <?php esc_html_e('User IP address', 'pwebcontact'); ?>
             <!-- FREE START -->
             <?php echo $this->_display_badge_pro(); ?>
@@ -905,6 +906,11 @@ function_exists('add_action') or die;
             <!-- FREE END -->
         </li>
         <li><code>{ticket}</code> - <?php esc_html_e('formatted ticket', 'pwebcontact'); ?>
+            <!-- FREE START -->
+            <?php echo $this->_display_badge_pro(); ?>
+            <!-- FREE END -->
+        </li>
+        <li><code>{subject}</code> - <?php esc_html_e('subject entered by User', 'pwebcontact'); ?>
             <!-- FREE START -->
             <?php echo $this->_display_badge_pro(); ?>
             <!-- FREE END -->

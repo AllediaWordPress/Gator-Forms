@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.2.0
+ * @version 2.3.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -81,7 +81,7 @@ function_exists('add_action') or die;
 <!-- FREE START -->
 <div id="pweb_theme_warning" class="pweb-alert pweb-alert-info">
     <?php _e('Using our themes requires PRO version.', 'pwebcontact'); ?>
-    <?php _e('You can create your own theme for FREE just by editing CSS files.', 'pwebcontact'); ?>
+    <?php _e('You can create your own theme for FREE just by editing CSS files. Remember that plugin update will overwrite any changes!', 'pwebcontact'); ?>
     <a class="button" target="_blank" href="<?php echo admin_url('plugin-editor.php?file='.urlencode('pwebcontact/media/css/themes/free.css').'&amp;plugin='.urlencode('pwebcontact/pwebcontact.php')); ?>">
         <i class="glyphicon glyphicon-edit"></i> <?php _e( 'Edit CSS', 'pwebcontact' ); ?>
     </a>

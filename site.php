@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.2.3
+ * @version 2.3.0
  * @package Perfect Easy & Powerful Contact Form
  * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -47,7 +47,8 @@ class PWebContact
             load_plugin_textdomain( 'pwebcontact', false, basename(dirname(__FILE__)).'/languages' );
             
             $media_path = dirname(__FILE__) . '/media/';
-            $media_url = plugins_url('media/', dirname(__FILE__) . '/pwebcontact.php');
+            $media_url  = plugins_url('media/', dirname(__FILE__) . '/pwebcontact.php');
+            $upload_dir = wp_upload_dir();
             
             $debug = ((defined('WP_DEBUG') AND WP_DEBUG === true) OR isset($_GET['debug']) OR get_option('pwebcontact_debug', false));
             define('PWEBCONTACT_DEBUG', $debug);
@@ -76,7 +77,7 @@ class PWebContact
             
             wp_register_script('pwebcontact-jquery-validate', $media_url.'js/jquery.validate'.($debug ? '' : '.min').'.js', array('jquery'), '1.15.0', true);
             
-            wp_register_script('pwebcontact', $media_url.'js/jquery.pwebcontact'.(file_exists($media_path.'js/jquery.pwebcontact.js') ? '' : '.min').'.js', array('jquery'), '2.1.9', true);
+            wp_register_script('pwebcontact', $media_url.'js/jquery.pwebcontact'.(file_exists($media_path.'js/jquery.pwebcontact.js') ? '' : '.min').'.js', array('jquery'), '2.3.0', true);
             
             
             // Register styles
@@ -89,7 +90,7 @@ class PWebContact
 
             wp_register_style('pwebcontact-glyphicon', $media_url.'css/glyphicon.css', array(), '3.3.6');
 
-            wp_register_style('pwebcontact-layout', $media_url.'css/layout.css', array(), '2.2.0');
+            wp_register_style('pwebcontact-layout', $media_url.'css/layout.css', array(), '2.3.0');
             wp_register_style('pwebcontact-layout-rtl', $media_url.'css/layout-rtl.css');
             
             wp_register_style('pwebcontact-animations', $media_url.'css/animations.css');
@@ -101,7 +102,7 @@ class PWebContact
             wp_register_style('pwebcontact-jquery-ui-datepicker', $media_url.'jquery-ui/smoothness/jquery-ui.datepicker'.($debug ? '' : '.min').'.css', array(), '1.11.4');
             /*** PRO END ***/
             
-            wp_register_style('pwebcontact-custom', $media_url.'css/custom.css');
+            wp_register_style('pwebcontact-custom', $upload_dir['baseurl'].'/pwebcontact/css/custom.css');
             
             // Register styles for Internet Explorer
             wp_register_style('pwebcontact-ie8', $media_url.'css/ie8.css');
@@ -1030,6 +1031,7 @@ class PWebContact
 		$layout 	= $params->get('layout_type', 'slidebox');
 		$debug 		= $params->get('debug');
         $bootstrap  = false;
+        $upload_dir = wp_upload_dir();
 
         
 		// jQuery
@@ -1217,7 +1219,7 @@ class PWebContact
         /*** PRO END ***/
 		
         // Custom styles
-        if (is_file($media_path.'css/custom.css')) {
+        if (is_file($upload_dir['basedir'].'/pwebcontact/css/custom.css')) {
             wp_enqueue_style('pwebcontact-custom');
         }
         
@@ -2152,6 +2154,7 @@ class PWebContact
 			'email'				=> '',
 			'username' 			=> $user->display_name, //WP
 			/*** FREE START ***/
+            'subject'           => 'Requires PRO version',
             'ip_address' 		=> 'Requires PRO version',
 			'browser' 			=> 'Requires PRO version',
 			'os' 				=> 'Requires PRO version',
@@ -2160,6 +2163,7 @@ class PWebContact
 			'ticket'			=> 'Requires PRO version',
             /*** FREE END ***/
             /*** PRO START ***/
+            'subject'           => '',
             'ip_address' 		=> $data['ip_address'],
 			'browser' 			=> $data['browser'],
 			'os' 				=> $data['os'],
@@ -2169,7 +2173,7 @@ class PWebContact
             /*** PRO END ***/
             'url' 				=> $data['url'],
 			'title' 			=> $data['title'],
-			'sent_on' 			=> get_the_date(),
+			'sent_on' 			=> mysql2date( get_option('date_format') .' '. get_option('time_format'), 'now' ),
 			'site_name' 		=> get_bloginfo('name') //WP
 		);
 		
@@ -2280,6 +2284,7 @@ class PWebContact
                     }
                     elseif ($field['type'] == 'subject') {
                         $data['user_subject'] .= ' '.$value;
+                        unset($data['fields'][$field['alias']]);
                     }
 
                     // validate fields with regular expression
@@ -2294,7 +2299,7 @@ class PWebContact
 		}
 		
 		if ($data['mailto'] === 0) {
-			$data['mailto'] = null;
+			$data['mailto'] = false;
 		}
 		
 		// invalid fields
@@ -2334,13 +2339,15 @@ class PWebContact
 			}
 			elseif ($ticket_type == 2)
 			{
-				$ticket_file = $params->get('media_path').'tickets/ticket_'.@sprintf('%03d', $form_id).'.txt';
-				$ticket_counter = is_file($ticket_file) ? (int)file_get_contents($ticket_file) : 0;
-				$ticket_counter++;
-				file_put_contents($ticket_file, $ticket_counter);
-				
-				$data['ticket'] 		= $ticket_counter;
-				$email_vars['ticket'] 	= @sprintf($params->get('ticket_format', '[#%06d]'), $ticket_counter);
+				$tickets = (array) get_option('pwebcontact_tickets', array());
+                if (!isset($tickets[$form_id])) {
+                    $tickets[$form_id] = 0;
+                }
+				$tickets[$form_id]++;
+				update_option('pwebcontact_tickets', $tickets);
+
+				$data['ticket'] 		= $tickets[$form_id];
+				$email_vars['ticket'] 	= @sprintf($params->get('ticket_format', '[#%06d]'), $tickets[$form_id]);
 			}
 			
 			if ($data['ticket']) 
@@ -2371,6 +2378,7 @@ class PWebContact
         /*** PRO START ***/
         // user subject
         if ($data['user_subject']) {
+            $email_vars['subject'] = $data['user_subject'];
             $data['subject'] = trim($data['subject']) .' '. $data['user_subject'];
         }
         /*** PRO END ***/
@@ -2393,7 +2401,8 @@ class PWebContact
 
             $gData = array(
                 'sent-on' => $email_vars['sent_on'],
-                'ticket' => $email_vars['ticket']
+                'ticket' => $email_vars['ticket'],
+                'subject' => $data['subject']
             );
 
             foreach ($data['fields'] as $key => $value) {
@@ -2401,6 +2410,10 @@ class PWebContact
                     $value = implode(', ', $value);
                 }
                 $gData['field-' . $key] = $value;
+            }
+
+            if ($data['mailto'] !== null) {
+                $gData['mailto_name'] = $email_vars['mailto_name'];
             }
 
             foreach (array('ip_address', 'browser', 'os', 'screen_resolution', 'title', 'url') as $key) {
@@ -2423,14 +2436,16 @@ class PWebContact
             }
 
             try {
-                PWebContact_GoogleApi::getInstance()->addRowToSpreadsheet(
+                $result = PWebContact_GoogleApi::getInstance()->addRowToSpreadsheet(
                         $params->get('googlesheets_spreadsheet_id')
                         , $params->get('googlesheets_sheet_id', 0)
                         , $gData
                 );
+                if (PWEBCONTACT_DEBUG)
+                    self::$logs[] = 'Trigger Google Sheets integration: ' . (is_wp_error($result) ? 'error '.$result->get_error_message() : 'success');
             } catch (Exception $ex) {
                 if (PWEBCONTACT_DEBUG)
-                    self::$logs[] = (string) $ex;
+                    self::$logs[] = 'Trigger Google Sheets integration: exception ' . $ex->getMessage();
             }
             unset($gData);
         }
@@ -2445,6 +2460,9 @@ class PWebContact
 
             if (class_exists($class))
             {
+                if (PWEBCONTACT_DEBUG)
+                    self::$logs[] = 'Trigger newsletter integration';
+
                 $options = array(
                     'apikey' => $params->get('newsletter_apikey', null),
                     'secret' => $params->get('newsletter_secret', null),
@@ -2709,7 +2727,7 @@ class PWebContact
 			foreach ($fields as $field)
 			{
 				// skip all separators which does not have any data
-                if (!isset($field['alias']) OR in_array($field['type'], array('page', 'row', 'column', 'button_send', 'email_copy', 'captcha', 'upload', 'custom_text', 'header'))) {
+                if (!isset($field['alias']) OR in_array($field['type'], array('page', 'row', 'column', 'button_send', 'email_copy', 'captcha', 'upload', 'subject', 'custom_text', 'header'))) {
                     continue;
                 }
 				
