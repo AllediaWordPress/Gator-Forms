@@ -69,7 +69,8 @@ function_exists('add_action') or die;
     )
 )); ?>
 
-<?php /*** PRO START ***/
+<?php
+/*** PRO START ***/
 $client   = PWebContact_GoogleApi::getInstance();
 $url      = $client->createAccessCodeUrl('https://www.googleapis.com/auth/spreadsheets');
 $hasToken = $client->hasToken();
@@ -83,5 +84,6 @@ echo $this->_get_field(array(
                     . '<i class="glyphicon glyphicon-' . ($hasToken ? 'ok' : 'remove') . '"></i> '
                     . __(($hasToken ? 'Has access' : 'No access'), 'pwebcontact')
                     . '</span>'
-)); 
-/*** PRO END ***/ ?>
+));
+/*** PRO END ***/
+?>

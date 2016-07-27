@@ -350,56 +350,6 @@ function_exists('add_action') or die;
             </div>
         </div>
 
-		<hr>
-
-		<div class="pweb-clearfix">
-			<h3><?php _e('Google Docs Integration', 'pwebcontact'); ?></h3>
-
-			<div class="pweb-width-50">
-				<?php echo $this->_get_field(array(
-					'type'    => 'radio',
-					'name'    => 'googlesheets_enable',
-					'label'   => 'Enable Google Sheets integration',
-					'tooltip' => 'Enable saving of form data into a Google Spreadsheet.',
-					'desc'    => sprintf(__('Remember to set your Google API Access Code in %s.', 'pwebcontact'), '<a href="' . admin_url('admin.php?page=pwebcontact&task=settings#pweb_settings_googleapi_accesscode') . '" target="_blank">' . __('Contact Form Settings', 'pwebcontact') . '</a>'),
-					'default' => 0,
-					'class'   => 'pweb-radio-group',
-					'options' => array(
-						array(
-							'value' => 0,
-							'name'  => 'No'
-						),
-						array(
-							'value'     => 1,
-							'name'      => 'Yes',
-							'is_parent' => true
-						)
-					)
-				)); ?>
-				<p>Press the button below, copy the generated text, select the first column (A), paste the generated text into Google Spreadsheet, select it, click 'Data', select 'Split text into columns...' and as 'Separator' use 'Space'. This will ensure your data is saved correctly.</p>
-				<button class="button googlesheets-get-columns"><i class="glyphicon glyphicon-download-alt"></i> <span>Get columns</span></button>
-				<code class="googlesheets-columns">
-					Please press the button first
-				</code>
-			</div>
-			<div class="pweb-width-50">
-				<?php echo $this->_get_field(array(
-					'type'    => 'text',
-					'name'    => 'googlesheets_spreadsheet_id',
-					'label'   => 'Spreadsheet ID',
-					'tooltip' => 'The ID of spreadsheet from URL',
-					'parent'  => array('googlesheets_enable_1')
-				));
-				echo $this->_get_field(array(
-					'type'    => 'text',
-					'name'    => 'googlesheets_sheet_id',
-					'label'   => 'Sheet ID',
-					'tooltip' => 'The ID of sheet from URL',
-					'parent'  => array('googlesheets_enable_1')
-				)); ?>
-			</div>
-		</div>
-
         <hr>
 
         <div class="pweb-clearfix">
@@ -646,6 +596,76 @@ function_exists('add_action') or die;
                 )); ?>
             </div>
         </div>
+
+		<hr>
+
+		<div class="pweb-clearfix">
+			<h3><?php _e('Google Sheets integration', 'pwebcontact'); ?></h3>
+
+            <?php echo $this->_get_field(array(
+                'type'    => 'radio',
+                'name'    => 'googlesheets_enable',
+                'label'   => 'Enable Google Sheets integration',
+                'tooltip' => 'Enable saving of form data into a Google Spreadsheet.',
+                'default' => 0,
+                'class'   => 'pweb-radio-group',
+                'options' => array(
+                    array(
+                        'value' => 0,
+                        'name'  => 'No'
+                    ),
+                    array(
+                        'value'     => 1,
+                        'name'      => 'Yes',
+                        'is_parent' => true
+                    )
+                )
+            )); ?>
+
+            <?php echo $this->_get_field(array(
+                'type'    => 'custom',
+                'name'    => 'googlesheets_instructions',
+                'parent'  => array('googlesheets_enable_1'),
+                'content'   => 
+                    '<p>'
+                    . sprintf(__('Grant an access to your Google Spreadsheets in %s', 'pwebcontact')
+                            , '<a href="' . admin_url('admin.php?page=pwebcontact&task=settings#pweb_settings_googleapi_accesscode') . '" target="_blank">' . __('Contact Form Settings', 'pwebcontact') . '</a>')
+                    . '</p>'
+                    . '<p>'
+                    . __('Create a new Google Spreadsheet with the same account which you have used for granting the access.', 'pwebcontact')
+                    . '</p>'
+                    . '<p>'
+                    . __('Copy the Spreadsheet ID and the Sheet ID from the URL as shown in the below example', 'pwebcontact')
+                    . '</p>'
+                    . '<pre>https://docs.google.com/spreadsheets/d/<var>spreadsheetId</var>/edit#gid=<var>sheetId</var></pre>'
+                    . '<p>'
+                    . $this->_get_label(array(
+                        'name'  => 'googlesheets_spreadsheet_id',
+                        'label' => 'Spreadsheet ID'
+                    )) . ' '
+                    . $this->_get_field_control(array(
+                        'type'  => 'text',
+                        'name'  => 'googlesheets_spreadsheet_id',
+                        'class' => 'pweb-input-large'
+                    ))
+                    . ' &nbsp; &nbsp; '
+                    . $this->_get_label(array(
+                        'name'  => 'googlesheets_sheet_id',
+                        'label' => 'Sheet ID'
+                    )) . ' '
+                    . $this->_get_field_control(array(
+                        'type'  => 'text',
+                        'name'  => 'googlesheets_sheet_id'
+                    ))
+                    . '</p>'
+                    . '<p>'
+                    . __('Copy colums names and paste into the spreadsheet cell A1 and split into columns (click `Data` menu, select `Split text into columns...` and as `Separator` use `Semicolon ;`.', 'pwebcontact')
+                    . '</p>'
+                    . '<p><button class="button googlesheets-get-columns"><i class="glyphicon glyphicon-download-alt"></i> '
+                    . __('Get columns names', 'pwebcontact')
+                    . '</button> <code class="googlesheets-columns"></code></p>'
+            )); ?>
+		</div>
 
         <hr>
 
