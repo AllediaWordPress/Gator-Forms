@@ -211,21 +211,23 @@ $message =
 
 					/*** PRO START ***/
 					/* ----- Newsletter ---------------------------------------------------------------------------- */
-					elseif ($field['type'] == 'newsletter' AND $field['newsletter_visibility']) : 
+                    elseif ($field['type'] == 'newsletter' AND $field['newsletter_visibility']) :
 
-                                            $field['id'] = 'pwebcontact'.$form_id.'_newsletter';
-                                            $newsletter_lists = (array)$field['newsletter_lists'];
-                            $newsletter_inline 	= count($newsletter_lists) == 1;
+                        $field['id'] = 'pwebcontact'.$form_id.'_newsletter';
 
-						if ($newsletter_inline) :
+                        $newsletter_lists = !isset($field['newsletter_lists']) ? array() : (array)$field['newsletter_lists'];
+                        $newsletter_inline = count($newsletter_lists) == 1;
 
-							$list = json_decode($newsletter_lists[0], true);
-							reset($list);
-							$newsletter_value = key($list);
-							$newsletter_title = $list[$newsletter_value];
-						?>
+                        if ($newsletter_inline && !empty($newsletter_lists)) :
 
-						<div class="pweb-field-container pweb-field-single-checkbox pweb-field-newsletter pweb-field-buttons">
+                            $list = json_decode($newsletter_lists[0], true);
+                            reset($list);
+                            $newsletter_value = key($list);
+                            $newsletter_title = $list[$newsletter_value];
+                            ?>
+
+
+                            <div class="pweb-field-container pweb-field-single-checkbox pweb-field-newsletter pweb-field-buttons">
 							<div class="pweb-field">
 								<input type="checkbox" name="newsletter[]" id="<?php echo $field['id']; ?>" value="<?php echo $newsletter_value; ?>" class="pweb-checkbox pweb-single-checkbox<?php if (isset($field['required']) AND $field['required']) echo ' required'; ?>" <?php if ($field['newsletter_visibility'] == 1) echo 'checked="checked"'; ?> data-role="none">
 								<label for="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>-lbl"<?php if (isset($field['tooltip']) AND $field['tooltip']) echo ' class="pweb-tooltip" title="'.esc_attr__($field['tooltip'], 'pwebcontact').'"'; ?>>
