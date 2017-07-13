@@ -2049,7 +2049,29 @@ class PWebContact
 	{
 		self::initAjaxResponse();
 		if (($response = self::checkToken()) !== true) return $response;
-		
+
+        if (PWEBCONTACT_DEBUG) self::$logs[] = 'Checking captcha';
+
+        $params = self::getParams();
+
+        $response = array('status' => 101, 'msg' => '');
+
+        try {
+            // veriffy captcha code
+            require_once (dirname(__FILE__).'/captcha.php');
+            $captcha = new PWebContact_Captcha(array('form_id' => $params->get('id')));
+            if (!$captcha->checkAnswer())
+            {
+                if (PWEBCONTACT_DEBUG) self::$logs[] = 'Invalid captcha code';
+                $response = array('status' => 201, 'msg' => __('Invalid captcha code', 'pwebcontact'));
+                self::closeAjaxResponse($response);
+            }
+        } catch (Exception $e) {
+            self::$logs[] = $e->getMessage().' in '.$e->getFile().' on line '.$e->getLine();
+            $response = array('status' => 301, 'msg' => __('WordPress error', 'pwebcontact'));
+            self::closeAjaxResponse($response);
+        }
+
 		if (PWEBCONTACT_DEBUG) self::$logs[] = 'Sending emails';
 		
 		$params = self::getParams();
@@ -2061,7 +2083,6 @@ class PWebContact
 			$response = array('status' => 300, 'msg' => __('WordPress error', 'pwebcontact'));
 		}
 		
-        /*** PRO START ***/
 		// delete atachments
 		if ($params->get('show_upload', 0) AND $params->get('attachment_delete') AND $params->get('attachment_type', 1) == 1 AND ($response['status'] < 200 OR $response['status'] >= 300))
 		{
@@ -2077,7 +2098,6 @@ class PWebContact
 				$response = array('status' => 401, 'msg' => __('WordPress error', 'pwebcontact'));
 			}
 		}
-        /*** PRO END ***/
 		
 		self::closeAjaxResponse($response);
 	}
