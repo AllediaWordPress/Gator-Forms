@@ -2055,21 +2055,21 @@ class PWebContact
         $params = self::getParams();
 
         $response = array('status' => 101, 'msg' => '');
-
-        try {
-            // veriffy captcha code
-            require_once (dirname(__FILE__).'/captcha.php');
-            $captcha = new PWebContact_Captcha(array('form_id' => $params->get('id')));
-            if (!$captcha->checkAnswer())
-            {
-                if (PWEBCONTACT_DEBUG) self::$logs[] = 'Invalid captcha code';
-                $response = array('status' => 201, 'msg' => __('Invalid captcha code', 'pwebcontact'));
+        if (!is_null($params->get('captcha'))) {
+            try {
+                // verify captcha code
+                require_once(dirname(__FILE__) . '/captcha.php');
+                $captcha = new PWebContact_Captcha(array('form_id' => $params->get('id')));
+                if (!$captcha->checkAnswer()) {
+                    if (PWEBCONTACT_DEBUG) self::$logs[] = 'Invalid captcha code';
+                    $response = array('status' => 201, 'msg' => __('Invalid captcha code', 'pwebcontact'));
+                    self::closeAjaxResponse($response);
+                }
+            } catch (Exception $e) {
+                self::$logs[] = $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
+                $response = array('status' => 301, 'msg' => __('WordPress error', 'pwebcontact'));
                 self::closeAjaxResponse($response);
             }
-        } catch (Exception $e) {
-            self::$logs[] = $e->getMessage().' in '.$e->getFile().' on line '.$e->getLine();
-            $response = array('status' => 301, 'msg' => __('WordPress error', 'pwebcontact'));
-            self::closeAjaxResponse($response);
         }
 
 		if (PWEBCONTACT_DEBUG) self::$logs[] = 'Sending emails';
