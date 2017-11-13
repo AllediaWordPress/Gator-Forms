@@ -3,7 +3,7 @@ Contributors: perfect-web, piotrmocko
 Donate link: 
 Tags: contact form, file upload, AJAX, responsive contact form, multiple contact forms plugin, shortcode contact form, widget contact form, contact form plugin, contact form maker, drag and drop contact form, form builder, file upload form
 Requires at least: 3.5.0
-Tested up to: 4.8.0
+Tested up to: 4.9.0
 Stable tag: 2.3.2
 License: GNU/GPL
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -22,7 +22,7 @@ Contact Form easy for beginners, customizable for pros!
 * Cool visual and animations effects
 
 Discover Perfect Easy & Powerful Contact Form developed for WordPress. First of all see cool visual effects you can use with your contact form such as smooth slide in effect, impressive lightbox appear effects or on-site display with possible accordation effect. As you see possibilities of our Contact Form are practically unlimited. What is more learn about key features of Perfect Contact Form starting from handy upload, trough excellent spam protection, to unlimited number of forms and fields you can use to build your contact form. Thirdly explore our ready-made responsive layouts you can easily adjust to your needs. No matter you need a simple contact form, call me back option, an application or reservation form, support ticket submission form or a poll, Perfect Contact Form will suit your needs perfectly.
-Try it, it‚Äôs easy!
+Try it, itís easy!
 
 = Key Features of Perfect Contact Form =
 
@@ -142,7 +142,7 @@ Please update your PHP version to 5.3+ . Check out our compatibility & requireme
 Please try to edit your e-mail configuration in our plugin settings - try using SMTP or your domain's e-mail - this issue should be resolved then.
 
 
-= 5. Form is stuck on ‚ÄûInitalizing form‚Äù =
+= 5. Form is stuck on ÑInitalizing formî =
 
 Initializing forms error is caused by jQuery conflicts between our plugin and other plugins or your Wordpress template. Please try disabling other plugins and checking whether it will work correctly.
 
