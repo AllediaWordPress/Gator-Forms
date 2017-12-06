@@ -115,7 +115,7 @@ class PWebContact_Mailchimp
 
 	public static function getLists($options)
 	{
-		$response = self::doRequest('GET', 'lists', $options);
+		$response = self::doRequest('GET', 'lists?count=50', $options);
 
 		$lists = array();
 		if ($response && isset($response->lists))
