@@ -302,6 +302,10 @@ function_exists('add_action') or die;
                         array(
                             'value' => 2,
                             'name' => 'Page title'
+                        ),
+                        array(
+                            'value' => 3,
+                            'name' => 'Name field'
                         )
                     )
                 )); ?>
@@ -597,10 +601,10 @@ function_exists('add_action') or die;
             </div>
         </div>
 
-		<hr>
+        <hr>
 
-		<div class="pweb-clearfix">
-			<h3><?php _e('Google Sheets integration', 'pwebcontact'); ?></h3>
+        <div class="pweb-clearfix">
+            <h3><?php _e('Google Sheets integration', 'pwebcontact'); ?></h3>
 
             <?php echo $this->_get_field(array(
                 'type'    => 'radio',
@@ -626,10 +630,10 @@ function_exists('add_action') or die;
                 'type'    => 'custom',
                 'name'    => 'googlesheets_instructions',
                 'parent'  => array('googlesheets_enable_1'),
-                'content'   => 
+                'content'   =>
                     '<p>'
                     . sprintf(__('Grant an access to your Google Spreadsheets in %s', 'pwebcontact')
-                            , '<a href="' . admin_url('admin.php?page=pwebcontact&task=settings#pweb_settings_googleapi_accesscode') . '" target="_blank">' . __('Contact Form Settings', 'pwebcontact') . '</a>')
+                        , '<a href="' . admin_url('admin.php?page=pwebcontact&task=settings#pweb_settings_googleapi_accesscode') . '" target="_blank">' . __('Contact Form Settings', 'pwebcontact') . '</a>')
                     . '</p>'
                     . '<p>'
                     . __('Create a new Google Spreadsheet with the same account which you have used for granting the access.', 'pwebcontact')
@@ -665,7 +669,7 @@ function_exists('add_action') or die;
                     . __('Get columns names', 'pwebcontact')
                     . '</button> <code class="googlesheets-columns" style="display:none"></code></p>'
             )); ?>
-		</div>
+        </div>
 
         <hr>
 
