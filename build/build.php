@@ -46,7 +46,6 @@ class PWebCompiler {
         'media/themes/dev',
         'media/tickets',
         'newsletter.php',
-        'update-checker',
         'uploader.php',
         'UploadHandler.php',
         'vendor'
