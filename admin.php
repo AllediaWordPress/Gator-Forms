@@ -947,16 +947,24 @@ pwebcontact_admin.is_pro = true;
 
     endif; ?>
 
-    <hr>
-
-    <p class="pweb-copyrights">
-        Copyright &copy; 2016
-        <a href="https://www.perfect-web.co/wordpress-plugins/contact-form" target="_blank"><strong>Perfect Web sp. z o.o.</strong></a>,
-        All rights reserved.
-        Distributed under
-        <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank"><strong>GNU/GPL</strong></a>.<br>
-        All other trademarks and copyrights are property of their respective owners.
-    </p>
+    <footer class="c-admin-footer">
+      <div class="c-rating">
+        <a href="https://wordpress.org/support/plugin/pwebcontact/reviews/#new-post" target="_blank" rel="noopener noreferer">
+            <?php
+            printf(
+                __('If you like Perfect Easy & Powerful Contact Form please leave us a %s rating. Thank you!', 'pwebcontact'),
+                '<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>'
+            );
+            ?>
+        </a>
+      </div>
+      <hr>
+      <nav class="c-links">
+        <a href="https://gatorforms.com" target="_blank" rel="noopener noreferer"><?php _e('Gator Forms Homepage', 'pwebcontact'); ?></a>
+        <a href="https://gatorforms.com/documentation" target="_blank" rel="noopener noreferer"><?php _e('Documentation', 'pwebcontact'); ?></a>
+        <a href="https://gatorforms.com/contact" target="_blank" rel="noopener noreferer"><?php _e('Contact', 'pwebcontact'); ?></a>
+      </nav>
+    </footer>
 </div>
 <?php
 

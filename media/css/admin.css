@@ -1004,6 +1004,50 @@ code, pre var {
     color: #777777;
 }
 
+.c-admin-footer {
+  margin-top: 20px;
+  text-align: center;
+  color: #777;
+}
+
+.c-admin-footer .c-rating .dashicons-star-filled {
+  line-height: 18px;
+  font-size: 12px;
+  width: 12px;
+  height: 12px;
+  color: #FFB300;
+  -webkit-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.c-admin-footer a {
+  text-decoration: none;
+  color: inherit;
+  -webkit-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.c-admin-footer .c-rating a:hover {
+  color: #27ae60;
+}
+
+.c-admin-footer .c-links {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.c-admin-footer .c-links a:hover {
+  color: #27ae60;
+}
+
+.c-admin-footer .c-links a + a {
+  margin-left: 15px;
+}
+
+.c-admin-footer .c-rating a:hover .dashicons-star-filled {
+  color: rgb(241, 169, 0);
+}
+
 .pweb-clear {
     clear: both;
 }
