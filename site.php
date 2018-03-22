@@ -1,10 +1,10 @@
 <?php
 /**
- * @version 2.3.4
- * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
- * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
- * @author Piotr Moćko
+ * @version     2.3.4
+ * @package     Perfect Easy & Powerful Contact Form
+ * @copyright   (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
+ * @license     GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @author      Piotr Moćko
  */
 
 // TODO rotate toggler with CSS
@@ -17,19 +17,19 @@ function_exists('add_action') or die;
 class PWebContact
 {
     // multiple instances
-    protected static $params 		= array();
-    protected static $fields 		= array();
-    protected static $forms 		= array();
+    protected static $params        = array();
+    protected static $fields        = array();
+    protected static $forms         = array();
     // only one instance
     protected static $settings      = null;
-    protected static $data 			= array();
-    protected static $email_tmpls 	= array();
-    protected static $email_vars 	= array();
-    protected static $logs 			= array();
+    protected static $data          = array();
+    protected static $email_tmpls   = array();
+    protected static $email_vars    = array();
+    protected static $logs          = array();
 
     protected static $headers       = array();
-    protected static $sys_info 		= null;
-    protected static $loaded 		= array();
+    protected static $sys_info      = null;
+    protected static $loaded        = array();
 
 
     public static function init()
@@ -514,12 +514,12 @@ class PWebContact
 
     public static function compileCustomCSS($form_id = 0)
     {
-        $params 		= self::getParams($form_id);
-        $form_id 		= (int)$params->get('id');
-        $media_url 		= $params->get('media_url');
-        $layout 		= $params->get('layout_type', 'slidebox');
-        $css 			= null;
-        $declarations 	= array();
+        $params         = self::getParams($form_id);
+        $form_id        = (int)$params->get('id');
+        $media_url      = $params->get('media_url');
+        $layout         = $params->get('layout_type', 'slidebox');
+        $css            = null;
+        $declarations   = array();
 
         // Form width
         if ($value = $params->get('form_width')) {
@@ -1025,11 +1025,11 @@ class PWebContact
 
     public static function initHeader($form_id = 0)
     {
-        $params 	= self::getParams($form_id);
-        $media_url 	= $params->get('media_url');
+        $params     = self::getParams($form_id);
+        $media_url  = $params->get('media_url');
         $media_path = $params->get('media_path');
-        $layout 	= $params->get('layout_type', 'slidebox');
-        $debug 		= $params->get('debug');
+        $layout     = $params->get('layout_type', 'slidebox');
+        $debug      = $params->get('debug');
         $bootstrap  = false;
         $upload_dir = wp_upload_dir();
 
@@ -1156,13 +1156,13 @@ class PWebContact
 
             //TODO load datepicker translations
             /*if (!isset(self::$loaded['datepicker_text']))
-			{
-				self::$loaded['datepicker_text'] = true;
+            {
+                self::$loaded['datepicker_text'] = true;
 
                 wp_localize_script('jquery-ui-datepicker', 'pwebcontact_l10n = pwebcontact_l10n || {}; pwebcontact_l10n.datepicker', array(
                     '' => __('', 'pwebcontact'),
                 ));
-			}*/
+            }*/
         }
         /*** PRO END ***/
 
@@ -1366,8 +1366,8 @@ class PWebContact
     {
         $params = self::getParams($form_id);
 
-        $layout 	= $params->get('layout_type', 'slidebox');
-        $position 	= $params->get('toggler_position', 'left');
+        $layout     = $params->get('layout_type', 'slidebox');
+        $position   = $params->get('toggler_position', 'left');
 
         $options = array();
         $options[] = 'id:'.$form_id;
@@ -1603,19 +1603,19 @@ class PWebContact
     /*** PRO START ***/
     protected static function createToggleImage($form_id = 0, $path = null, $file = null, $lang_code = 'en-US')
     {
-        $params 		= self::getParams($form_id);
+        $params         = self::getParams($form_id);
 
-        $font_path 		= $params->get('media_path') . 'fonts/'.$params->get('toggler_font', 'NotoSans-Regular').'.ttf'; //WP
-        $font_size 		= (int)$params->get('toggler_font_size', 12);
+        $font_path      = $params->get('media_path') . 'fonts/'.$params->get('toggler_font', 'NotoSans-Regular').'.ttf'; //WP
+        $font_size      = (int)$params->get('toggler_font_size', 12);
 
-        $text_open 		= $params->get('toggler_name_open');
-        $text_close 	= $params->get('toggler_name_close');
+        $text_open      = $params->get('toggler_name_open');
+        $text_close     = $params->get('toggler_name_close');
 
         if ($params->get('rtl')) {
-            $text_open 	= self::utf8_strrev($text_open);
+            $text_open  = self::utf8_strrev($text_open);
         }
-        $text_length 	= strlen($text_open);
-        $text_open 		= self::utf8_strconvert($text_open);
+        $text_length    = strlen($text_open);
+        $text_open      = self::utf8_strconvert($text_open);
 
         if ($text_close)
         {
@@ -1628,10 +1628,10 @@ class PWebContact
             $text_close = self::utf8_strconvert($text_close);
         }
 
-        $width 			= $params->get('toggler_width', 30);
-        $height 		= is_numeric($params->get('toggler_height')) ? $params->get('toggler_height') : $text_length * $font_size / 1.2;
+        $width          = $params->get('toggler_width', 30);
+        $height         = is_numeric($params->get('toggler_height')) ? $params->get('toggler_height') : $text_length * $font_size / 1.2;
 
-        $rotate 		= (int)$params->get('toggler_rotate', 1);
+        $rotate         = (int)$params->get('toggler_rotate', 1);
 
         // Parse font color
         $color = self::parseToRgbColor( $params->get('toggler_color') );
@@ -1909,8 +1909,8 @@ class PWebContact
         }
 
         // Set media path
-        $params->set('media_url', 	plugins_url('media/', dirname(__FILE__) . '/pwebcontact.php')); //WP
-        $params->set('media_path', 	dirname(__FILE__) . '/media/'); //WP
+        $params->set('media_url',   plugins_url('media/', dirname(__FILE__) . '/pwebcontact.php')); //WP
+        $params->set('media_path',  dirname(__FILE__) . '/media/'); //WP
 
         /*** PRO START ***/
         $upload_dir = wp_upload_dir();
@@ -2132,10 +2132,10 @@ class PWebContact
     {
         add_action('phpmailer_init', array('PWebContact', 'setupMailer'));
 
-        $user 		= wp_get_current_user();
-        $params 	= self::getParams();
+        $user       = wp_get_current_user();
+        $params     = self::getParams();
         $settings   = self::getSettings();
-        $form_id 	= (int)$params->get('id');
+        $form_id    = (int)$params->get('id');
 
         // mail from
         $global_name  = trim( $params->get( 'email_from_name', $settings->get('email_from_name', get_bloginfo('name')) ) );
@@ -2145,64 +2145,64 @@ class PWebContact
             return array('status' => 303, 'msg' => __('MOD_PWEBCONTACT_GLOBAL_CONFIG_ERR', 'pwebcontact'));
         }
 
-        $data 		=& self::$data;
+        $data       =& self::$data;
         $email_vars =& self::$email_vars;
 
         // Get inputs
         $data = array(
-            'fields'			=> isset($_POST['fields'])              ? (array)$_POST['fields'] : array(),
-            'mailto'			=> isset($_POST['mailto'])              ? (int)$_POST['mailto'] : null,
-            'title' 			=> isset($_POST['title'])               ? (string)$_POST['title'] : null,
-            'url' 				=> isset($_POST['url'])                 ? (string)$_POST['url'] : null,
+            'fields'            => isset($_POST['fields'])              ? (array)$_POST['fields'] : array(),
+            'mailto'            => isset($_POST['mailto'])              ? (int)$_POST['mailto'] : null,
+            'title'             => isset($_POST['title'])               ? (string)$_POST['title'] : null,
+            'url'               => isset($_POST['url'])                 ? (string)$_POST['url'] : null,
             'screen_resolution' => isset($_POST['screen_resolution'])   ? (string)$_POST['screen_resolution'] : null,
             /*** PRO START ***/
             'newsletter'  => isset($_POST['newsletter'])    ? (array)$_POST['newsletter'] : array(),
             /*** PRO END ***/
-            'attachments' 		=> isset($_POST['attachments'])         ? (array)$_POST['attachments'] : array()
+            'attachments'       => isset($_POST['attachments'])         ? (array)$_POST['attachments'] : array()
         );
 
-        $data['ip_address'] 	= self::detectIP();
-        $data['browser'] 		= self::detectBrowser();
-        $data['os'] 			= self::detectOS();
+        $data['ip_address']     = self::detectIP();
+        $data['browser']        = self::detectBrowser();
+        $data['os']             = self::detectOS();
 
-        $data['user_id'] 		= $user->ID; //WP
-        $data['user_subject'] 	= '';
+        $data['user_id']        = $user->ID; //WP
+        $data['user_subject']   = '';
 
         // init email variables
         $email_vars = array(
-            'name'				=> '',
-            'email'				=> '',
-            'username' 			=> $user->display_name, //WP
+            'name'              => '',
+            'email'             => '',
+            'username'          => $user->display_name, //WP
             /*** FREE START ***/
             'subject'           => 'Requires PRO version',
-            'ip_address' 		=> 'Requires PRO version',
-            'browser' 			=> 'Requires PRO version',
-            'os' 				=> 'Requires PRO version',
+            'ip_address'        => 'Requires PRO version',
+            'browser'           => 'Requires PRO version',
+            'os'                => 'Requires PRO version',
             'screen_resolution' => 'Requires PRO version',
-            'mailto_name'		=> 'Requires PRO version',
-            'ticket'			=> 'Requires PRO version',
+            'mailto_name'       => 'Requires PRO version',
+            'ticket'            => 'Requires PRO version',
             /*** FREE END ***/
             /*** PRO START ***/
             'subject'           => '',
-            'ip_address' 		=> $data['ip_address'],
-            'browser' 			=> $data['browser'],
-            'os' 				=> $data['os'],
+            'ip_address'        => $data['ip_address'],
+            'browser'           => $data['browser'],
+            'os'                => $data['os'],
             'screen_resolution' => $data['screen_resolution'],
-            'mailto_name'		=> '',
-            'ticket'			=> '',
+            'mailto_name'       => '',
+            'ticket'            => '',
             /*** PRO END ***/
-            'url' 				=> $data['url'],
-            'title' 			=> $data['title'],
-            'sent_on' 			=> mysql2date( get_option('date_format') .' '. get_option('time_format'), 'now' ),
-            'site_name' 		=> get_bloginfo('name') //WP
+            'url'               => $data['url'],
+            'title'             => $data['title'],
+            'sent_on'           => mysql2date( get_option('date_format') .' '. get_option('time_format'), 'now' ),
+            'site_name'         => get_bloginfo('name') //WP
         );
 
         $fields = self::getFields($form_id);
 
         $user_email = null;
-        $user_name 	= null;
-        $user_cc 	= array();
-        $email_to 	= array();
+        $user_name  = null;
+        $user_cc    = array();
+        $email_to   = array();
 
         $invalid_fields = array();
 
@@ -2354,8 +2354,8 @@ class PWebContact
             if ($ticket_type == 1)
             {
                 $date = new DateTime();
-                $data['ticket'] 		= $date->format('YmdHis'); //WP
-                $email_vars['ticket'] 	= @sprintf($params->get('ticket_format', '[#%s]'), $data['ticket']);
+                $data['ticket']         = $date->format('YmdHis'); //WP
+                $email_vars['ticket']   = @sprintf($params->get('ticket_format', '[#%s]'), $data['ticket']);
             }
             elseif ($ticket_type == 2)
             {
@@ -2366,8 +2366,8 @@ class PWebContact
                 $tickets[$form_id]++;
                 update_option('pwebcontact_tickets', $tickets);
 
-                $data['ticket'] 		= $tickets[$form_id];
-                $email_vars['ticket'] 	= @sprintf($params->get('ticket_format', '[#%06d]'), $tickets[$form_id]);
+                $data['ticket']         = $tickets[$form_id];
+                $email_vars['ticket']   = @sprintf($params->get('ticket_format', '[#%06d]'), $tickets[$form_id]);
             }
 
             if ($data['ticket'])
@@ -2736,7 +2736,7 @@ class PWebContact
             {
                 foreach ($lang_vars as $variable)
                 {
-                    $patterns[] 	= $variable[0];
+                    $patterns[]     = $variable[0];
                     $replacements[] = __($variable[1], 'pwebcontact');
                 }
             }
@@ -2787,10 +2787,10 @@ class PWebContact
                         $value = self::$email_vars['mailto_name'];
                 }
 
-                $patterns[] 	= '{'.$field['alias'].'.value}';
+                $patterns[]     = '{'.$field['alias'].'.value}';
                 $replacements[] = $value;
 
-                $patterns[] 	= '{'.$field['alias'].'.label}';
+                $patterns[]     = '{'.$field['alias'].'.label}';
                 $replacements[] = $name = __($field['label'], 'pwebcontact');
 
                 if ($search_fields AND !isset(self::$email_tmpls[$cache_fields_key])) {
@@ -2806,7 +2806,7 @@ class PWebContact
                 if (!isset(self::$email_tmpls[$cache_fields_key])) {
                     self::$email_tmpls[$cache_fields_key] = implode($is_html ? '<br>' : "\r\n", $fields_replacements);
                 }
-                $patterns[] 	= '{fields}';
+                $patterns[]     = '{fields}';
                 $replacements[] = self::$email_tmpls[$cache_fields_key];
             }
 
@@ -2846,7 +2846,7 @@ class PWebContact
             // system
             foreach (self::$email_vars as $variable => $value)
             {
-                $patterns[] 	= '{'.$variable.'}';
+                $patterns[]     = '{'.$variable.'}';
                 $replacements[] = $value;
             }
 

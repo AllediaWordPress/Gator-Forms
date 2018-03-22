@@ -2,7 +2,7 @@
 /**
  * @version 2.0.14
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -12,9 +12,9 @@ function_exists('add_action') or die;
 
 ?>
 <form name="edit" method="post" action="<?php echo esc_attr(admin_url( 'admin.php?page=pwebcontact&task=save' )); ?>" id="pweb_form">
-    
+
     <div id="pweb-adminbar">
-        
+
         <div class="pweb-toolbar pweb-clearfix">
 
             <!-- header for displaying update and error messages after -->
@@ -33,7 +33,7 @@ function_exists('add_action') or die;
             </button>
 
             <span id="pweb-save-status"><?php _e( 'Saved on', 'pwebcontact' ); ?> <?php echo get_date_from_gmt($this->data->modify_date); ?></span>
-            
+
             <!-- FREE START -->
             <button class="button button-primary right pweb-buy" id="pweb-buy-button">
                 <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
@@ -75,42 +75,42 @@ function_exists('add_action') or die;
             </a>
         </h2>
     </div>
-    
+
     <div id="pweb-tabs-content">
-        
+
         <div id="pweb-tab-location-content" class="nav-tab-content nav-tab-content-active pweb-clearfix">
             <?php $this->_load_tmpl('location', __FILE__); ?>
         </div>
-        
+
         <div id="pweb-tab-fields-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('fields', __FILE__); ?>
         </div>
-        
+
         <div id="pweb-tab-theme-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('theme', __FILE__); ?>
         </div>
-        
+
         <div id="pweb-tab-email-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('email', __FILE__); ?>
         </div>
-        
+
         <div id="pweb-tab-check-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('check', __FILE__); ?>
         </div>
-        
+
         <div id="pweb-tab-tips-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('tips', __FILE__); ?>
         </div>
-        
+
         <div id="pweb-tab-advanced-content" class="nav-tab-content pweb-clearfix">
             <?php $this->_load_tmpl('advanced', __FILE__); ?>
         </div>
     </div>
-    
+
 
     <input type="hidden" name="id" value="<?php echo (int)$this->id; ?>">
     <?php wp_nonce_field( 'save-form_'.$this->id ); ?>
-    
+
 </form>
 
 <?php if ($this->_get_param('feed', 1, 'settings')) : ?>

@@ -1,9 +1,8 @@
 <?php
-
 /**
- * @version 2.1.4
- * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
+ * @version     2.1.4
+ * @package     Perfect Easy & Powerful Contact Form
+ * @copyright   (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */

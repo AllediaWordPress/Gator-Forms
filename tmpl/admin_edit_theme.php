@@ -2,7 +2,7 @@
 /**
  * @version 2.3.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -16,7 +16,7 @@ function_exists('add_action') or die;
     <?php printf(__('Step %d of %d', 'pwebcontact'), 3, 4); ?>
     -
     <?php _e('Choose predefined theme or create own in customizer', 'pwebcontact'); ?>
-    
+
     <button class="button button-primary pweb-next-tab-button" type="button">
         <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
@@ -25,11 +25,11 @@ function_exists('add_action') or die;
 <?php $themes = $this->_get_themes(); ?>
 <div class="flipster" id="pweb-themes-coverflow">
     <ul>
-        <?php foreach ($themes as $theme_name => $theme) : 
+        <?php foreach ($themes as $theme_name => $theme) :
             if ($theme_name === 'reset') continue; ?>
         <li<?php if ($theme->is_active === true) echo ' class="pweb-active-theme"'; ?>>
             <div class="pweb-theme" data-name="<?php echo $theme_name; ?>" data-settings='<?php echo $theme->settings; ?>'>
-                
+
                 <div class="pweb-theme-image">
                     <!-- FREE START -->
                     <div class="pweb-theme-badge<?php echo $theme_name === 'free' ? '-free' : ''; ?>"><?php echo $theme_name === 'free' ? 'Free' : 'Pro'; ?></div>
@@ -59,7 +59,7 @@ function_exists('add_action') or die;
     <button id="pweb-themes-coverflow-control-next" class="button" type="button">
         <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
-    
+
     <?php echo $this->_get_field_control(array(
         'type' => 'hidden',
         'name' => 'theme'
@@ -103,9 +103,9 @@ function_exists('add_action') or die;
             <i class="glyphicon glyphicon-remove"></i> <?php _e( 'Clear theme settings', 'pwebcontact' ); ?>
         </button>
         <?php endif; ?>
-        
+
         <hr>
-        
+
         <div class="pweb-clearfix">
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
@@ -144,7 +144,7 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
                     'name' => 'gradient',
@@ -190,7 +190,7 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'labels_invalid_color',
@@ -216,7 +216,7 @@ function_exists('add_action') or die;
                     'class' => 'pweb-filter-unit pweb-input-mini'
                 )); ?>
             </div>
-            
+
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
@@ -225,7 +225,7 @@ function_exists('add_action') or die;
                     'label' => 'Color of form text',
                     'tooltip' => 'Select color of text'
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'text',
                     'name' => 'form_font_size',
@@ -240,7 +240,7 @@ function_exists('add_action') or die;
                     'label' => 'Form font family',
                     'tooltip' => 'Name of font used for form. Separate multiple names with coma and wrap name which contains space with single quote.'
                 )); ?>
-                
+
                 <div class="pweb-alert pweb-alert-info">
                     <?php _e('You can choose color of success and error message by changing Advanced option in `Email` tab', 'pwebcontact'); ?>
                 </div>
@@ -248,7 +248,7 @@ function_exists('add_action') or die;
         </div>
 
         <hr>
-        
+
         <div class="pweb-clearfix">
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
@@ -258,7 +258,7 @@ function_exists('add_action') or die;
                     'label' => 'Color of fields',
                     'tooltip' => 'Select background color of fields'
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'fields_border_color',
@@ -273,7 +273,7 @@ function_exists('add_action') or die;
                     'tooltip' => 'Select text color of fields'
                 )); ?>
             </div>
-            
+
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
@@ -282,7 +282,7 @@ function_exists('add_action') or die;
                     'label' => 'Color of active field',
                     'tooltip' => 'Select background color of active field'
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'fields_active_border_color',
@@ -297,7 +297,7 @@ function_exists('add_action') or die;
                     'tooltip' => 'Select text color of active field'
                 )); ?>
             </div>
-            
+
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
@@ -306,7 +306,7 @@ function_exists('add_action') or die;
                     'label' => 'Color of invalid fields',
                     'tooltip' => 'Select background color of invalid fields'
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'fields_invalid_border_color',
@@ -324,9 +324,9 @@ function_exists('add_action') or die;
                 )); ?>
             </div>
         </div>
-            
+
         <hr>
-        
+
         <div class="pweb-clearfix">
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
@@ -344,7 +344,7 @@ function_exists('add_action') or die;
                     'tooltip' => 'Select color of buttons text'
                 )); ?>
             </div>
-            
+
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
@@ -412,7 +412,7 @@ function_exists('add_action') or die;
                     'class' => 'pweb-filter-unit pweb-input-mini'
                 )); ?>
             </div>
-            
+
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'image',
@@ -441,7 +441,7 @@ function_exists('add_action') or die;
                         array('value' => 'center bottom')
                     )
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'select',
                     'name' => 'bg_repeat',
@@ -466,7 +466,7 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'select',
                     'name' => 'bg_size',
@@ -489,9 +489,9 @@ function_exists('add_action') or die;
                 )); ?>
             </div>
         </div>
-        
+
         <hr>
-        
+
         <div class="pweb-clearfix">
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
@@ -510,7 +510,7 @@ function_exists('add_action') or die;
                     'tooltip' => 'Select text color of Toggler Tab',
                     'parent' => array('handler_tab', 'handler_button')
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
                     'name' => 'toggler_icon',
@@ -574,7 +574,7 @@ function_exists('add_action') or die;
                     'parent' => array('toggler_icon_custom'),
                     'class' => 'pweb-input-xlarge'
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'text',
                     'name' => 'toggler_font_size',
@@ -591,7 +591,7 @@ function_exists('add_action') or die;
                     'tooltip' => 'Name of font used for Toggler. Separate multiple names with coma and wrap name which contains space with single quote.',
                     'parent' => array('toggler_vertical_0', 'toggler_vertical_type_1')
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
                     'name' => 'toggler_slide',
@@ -612,7 +612,7 @@ function_exists('add_action') or die;
                     )
                 )); ?>
             </div>
-            
+
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
@@ -670,7 +670,7 @@ function_exists('add_action') or die;
                     'directory' => 'media/fonts',
                     'strip_ext' => true,
                     'parent' => array('toggler_vertical_type_0'),
-                    'html_after' => 
+                    'html_after' =>
                           '<div class="pweb_params_toggler_vertical_1" style="display:none">'
                             . '<div class="pweb-alert pweb-alert-warning">'
                                 . '<strong>' . __('Front-end troubleshooting', 'pwebcontact') . '</strong><br>'
@@ -698,7 +698,7 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
-                
+
                 <?php echo $this->_get_field(array(
                     'type' => 'text',
                     'name' => 'toggler_width',
@@ -718,7 +718,7 @@ function_exists('add_action') or die;
                     'parent' => array('handler_tab', 'handler_button')
                 )); ?>
             </div>
-            
+
             <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
@@ -774,6 +774,6 @@ function_exists('add_action') or die;
                 )); ?>
             </div>
         </div>
-        
+
     </div>
 </div>

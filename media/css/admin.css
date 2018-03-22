@@ -1,7 +1,7 @@
 /**
  * @version 2.3.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -24,7 +24,7 @@
 @media only screen and (max-width: 900px) {
     .auto-fold #pweb-adminbar {
         margin-left: 56px;
-    }  
+    }
 }
 
 #pweb-tabs-content {
@@ -220,7 +220,7 @@ input.pweb-warning {
 .pweb-steps {
     margin-bottom: 40px;
     margin-left: 20px;
-} 
+}
 .pweb-steps button.button, .pweb-steps button.button:focus {
     vertical-align: middle;
 }
@@ -316,7 +316,7 @@ input.pweb-warning {
     float: left;
 }
 .pweb-location-step {
-    
+
 }
 .pweb-location-step h3 {
     text-align: center;
@@ -448,13 +448,13 @@ input.pweb-warning {
     border-left-color: #DD823B;
 }
 
-#pweb_params_handler .pweb-field-option, 
+#pweb_params_handler .pweb-field-option,
 #pweb_params_effect .pweb-field-option,
 #pweb_params_layout_type .pweb-field-option {
     display: inline-block;
     width: 250px;
 }
-#pweb_params_handler .pweb-field-option label, 
+#pweb_params_handler .pweb-field-option label,
 #pweb_params_effect .pweb-field-option label,
 #pweb_params_layout_type .pweb-field-option label {
     max-width: 230px;
@@ -1092,11 +1092,11 @@ body .ui-tooltip {
 .pwebposition-top-left, .pwebposition-top-right,
 .pwebposition-bottom-left, .pwebposition-bottom-right,
 .pwebposition-static {
-	display: block; 
+	display: block;
 	border: 1px solid #aaa;
     background: #fff;
-	width: 50px; 
-	height: 30px; 
+	width: 50px;
+	height: 30px;
 	position: relative;
 	cursor: pointer;
 	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);

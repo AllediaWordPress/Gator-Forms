@@ -1,12 +1,12 @@
-<?php 
+<?php
 /**
  * Plugin Name: Perfect Easy & Powerful Contact Form
- * Plugin URI: https://www.perfect-web.co/wordpress/contact-form
+ * Plugin URI: https://gatorforms.com
  * Description: Easy for beginners, customizable for pros!
  * Version: 2.3.4
  * Text Domain: pwebcontact
- * Author: Piotr Moćko
- * Author URI: https://www.perfect-web.co
+ * Author: Gator Forms
+ * Author URI: https://gatorforms.com
  * License: GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  */
 
@@ -55,7 +55,7 @@ if (version_compare($GLOBALS['wp_version'], '3.5', '>=') AND version_compare(PHP
             register_activation_hook( __FILE__, 'pwebcontact_install' );
             register_uninstall_hook( __FILE__, 'pwebcontact_uninstall' );
         }
-    } 
+    }
     else {
 
         add_action('init', array('PWebContact', 'init'));

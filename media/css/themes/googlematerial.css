@@ -1,7 +1,7 @@
 /**
  * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -98,27 +98,27 @@
 /* Labels invalid */
 .pweb-theme-googlematerial form.pwebcontact-form .invalid,
 .pweb-theme-googlematerial form.pwebcontact-form .invalid a {
-	
+
 }
 
 /* Fields */
-.pweb-theme-googlematerial form.pwebcontact-form input.pweb-input, 
-.pweb-theme-googlematerial form.pwebcontact-form select, 
+.pweb-theme-googlematerial form.pwebcontact-form input.pweb-input,
+.pweb-theme-googlematerial form.pwebcontact-form select,
 .pweb-theme-googlematerial form.pwebcontact-form textarea {
 	color: #666;
 	border-color: #999;
 }
 
 /* Fields invalid */
-.pweb-theme-googlematerial form.pwebcontact-form input.invalid.pweb-input, 
-.pweb-theme-googlematerial form.pwebcontact-form select.invalid, 
-.pweb-theme-googlematerial form.pwebcontact-form textarea.invalid { 
-	
+.pweb-theme-googlematerial form.pwebcontact-form input.invalid.pweb-input,
+.pweb-theme-googlematerial form.pwebcontact-form select.invalid,
+.pweb-theme-googlematerial form.pwebcontact-form textarea.invalid {
+
 }
 
 /* Fields active */
-.pweb-theme-googlematerial form.pwebcontact-form input.pweb-input:focus, 
-.pweb-theme-googlematerial form.pwebcontact-form select:focus, 
+.pweb-theme-googlematerial form.pwebcontact-form input.pweb-input:focus,
+.pweb-theme-googlematerial form.pwebcontact-form select:focus,
 .pweb-theme-googlematerial form.pwebcontact-form textarea:focus {
 	color: #333 !important;
     border-color: #000 !important;

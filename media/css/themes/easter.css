@@ -1,7 +1,7 @@
 /**
  * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -9,7 +9,7 @@
 /* Form background */
 .pweb-theme-easter .pwebcontact-container,
 .pweb-theme-easter.ui-effects-transfer.pweb-genie {
-    
+
 }
 .pweb-theme-easter.pweb-slidebox .pwebcontact-container,
 .pweb-theme-easter.pweb-modal .pwebcontact-container,
@@ -17,10 +17,10 @@
 
 }
 .pweb-theme-easter.pweb-accordion .pwebcontact-container {
-    
+
 }
 .pweb-theme-easter.pweb-static .pwebcontact-container {
-    
+
 }
 
 /* Form text */
@@ -31,7 +31,7 @@
 .pweb-theme-easter form.pwebcontact-form .pweb-chars-counter,
 .pweb-theme-easter form.pwebcontact-form .pweb-uploader,
 .pweb-theme-easter .pwebcontact-box .pweb-dropzone {
-	
+
 }
 
 /* Links */
@@ -45,8 +45,8 @@
 }
 
 /* Fields */
-.pweb-theme-easter form.pwebcontact-form input.pweb-input, 
-.pweb-theme-easter form.pwebcontact-form select, 
+.pweb-theme-easter form.pwebcontact-form input.pweb-input,
+.pweb-theme-easter form.pwebcontact-form select,
 .pweb-theme-easter form.pwebcontact-form textarea {
 	background: #fff;
 	color: #333;
@@ -66,10 +66,10 @@
     right: 0px;
 }
 /* Fields invalid */
-.pweb-theme-easter form.pwebcontact-form input.invalid.pweb-input, 
-.pweb-theme-easter form.pwebcontact-form select.invalid, 
-.pweb-theme-easter form.pwebcontact-form textarea.invalid { 
-	
+.pweb-theme-easter form.pwebcontact-form input.invalid.pweb-input,
+.pweb-theme-easter form.pwebcontact-form select.invalid,
+.pweb-theme-easter form.pwebcontact-form textarea.invalid {
+
 }
 .pweb-theme-easter .btn.pweb-button-send:after {
     content: ' ';
@@ -89,8 +89,8 @@
     padding-right: 30px !important;
 }
 /* Fields active */
-.pweb-theme-easter form.pwebcontact-form input.pweb-input:focus, 
-.pweb-theme-easter form.pwebcontact-form select:focus, 
+.pweb-theme-easter form.pwebcontact-form input.pweb-input:focus,
+.pweb-theme-easter form.pwebcontact-form select:focus,
 .pweb-theme-easter form.pwebcontact-form textarea:focus {
 	border-color: #002991 !important;
 	-webkit-box-shadow: 0 1px 2px #0048ff inset !important;
@@ -138,7 +138,7 @@
 /* Buttons shadow */
 .pweb-theme-easter.pweb-shadow form.pwebcontact-form button,
 .pweb-theme-easter.pweb-shadow form.pwebcontact-form .btn {
-	
+
 }
 
 /* Buttons on mouse over */
@@ -150,52 +150,52 @@
 
 /* Calendar button */
 .pweb-theme-easter form.pwebcontact-form .pweb-calendar-btn {
-	
+
 }
 
 /* Message success */
 .pweb-theme-easter form.pwebcontact-form .pweb-msg .pweb-success {
-	
+
 }
 /* Message error */
 .pweb-theme-easter form.pwebcontact-form .pweb-msg .pweb-error {
-	
+
 }
 
 /* Star of required fields */
 .pweb-theme-easter form.pwebcontact-form label .pweb-asterisk {
-	
+
 }
 
 /* Labels over fields */
 .pweb-theme-easter.pweb-labels-over form.pwebcontact-form .pweb-label-over label {
-	
+
 }
 
 /* Labels invalid */
 .pweb-theme-easter form.pwebcontact-form label.invalid,
 .pweb-theme-easter form.pwebcontact-form label.invalid a {
-	
+
 }
 
  /* Accordion Arrow */
 .pweb-theme-easter.pweb-accordion.pweb-accordion-boxed .pweb-arrow {
-	
+
 }
 
 /* Lightbox Window */
 .pweb-theme-easter.pwebcontact-box.pweb-modal .pwebcontact-container,
 .pweb-theme-easter.ui-effects-transfer.pweb-genie {
-	
+
 }
 /* Lightbox Window close button */
 .pweb-theme-easter.pwebcontact-box.pweb-modal .close {
-	
+
 }
 
 /* Upload dropzone */
 .pweb-theme-easter.pwebcontact-box.pweb-dragged .pweb-dropzone {
-	
+
 }
 
 /* Upload progress */
@@ -211,7 +211,7 @@
 	border: 1px solid;
 	border-color: #0044cc #0044cc #002a80;
 	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
-	
+
 	background-color: #0044cc;
 
     background: url("../../images/themes/easter/background.png") !important;
@@ -347,7 +347,7 @@
 	font-size: 16px;
 }
 .pwebcontact_toggler.pweb-theme-easter.pweb-shadow {
-    
+
     -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
 }

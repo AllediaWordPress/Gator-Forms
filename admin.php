@@ -1,10 +1,10 @@
 <?php
 /**
- * @version 2.2.2
- * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
- * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
- * @author Piotr Moćko
+ * @version     2.2.2
+ * @package     Perfect Easy & Powerful Contact Form
+ * @copyright   (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
+ * @license     GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @author      Piotr Moćko
  */
 
 // TODO editor button for inserting shortcode
@@ -44,17 +44,17 @@ class PWebContact_Admin {
         'params' => array(
             /*** FREE START ***/
             'attachment_delete',
-			'attachment_type',
+            'attachment_type',
             'bg_color',
-			'bg_image',
-			'bg_opacity',
-			'bg_padding',
-			'bg_padding_position',
-			'bg_position',
+            'bg_image',
+            'bg_opacity',
+            'bg_padding',
+            'bg_padding_position',
+            'bg_position',
             'bg_repeat',
             'bg_size',
-			'buttons_fields_color',
-			'buttons_text_color',
+            'buttons_fields_color',
+            'buttons_text_color',
             'email_copy::1',
             'fields_border_color',
             'fields_color',
@@ -66,40 +66,40 @@ class PWebContact_Admin {
             'fields_invalid_color',
             'fields_invalid_text_color',
             'form_font_family',
-			'form_font_size',
+            'form_font_size',
             'gradient',
             'labels_invalid_color',
             'labels_position',
-			'labels_width',
+            'labels_width',
             'msg_error_color',
-			'msg_success_color',
-			'modal_bg',
-			'modal_opacity',
+            'msg_success_color',
+            'modal_bg',
+            'modal_opacity',
             'rounded',
             'shadow',
             'show_upload',
             'text_color',
             'ticket_enable',
-			'ticket_format',
+            'ticket_format',
             'toggler_bg',
-			'toggler_color',
-			'toggler_font',
-			'toggler_font_family',
-			'toggler_font_size',
+            'toggler_color',
+            'toggler_font',
+            'toggler_font_family',
+            'toggler_font_size',
             'toggler_glyphicon',
             'toggler_icomoon',
-			'toggler_icon',
-			'toggler_icon_custom_image',
-			'toggler_icon_gallery_image',
+            'toggler_icon',
+            'toggler_icon_custom_image',
+            'toggler_icon_gallery_image',
             'toggler_rotate',
-			'toggler_vertical',
+            'toggler_vertical',
             'upload_allowed_ext',
-			'upload_autostart',
-			'upload_files_limit',
-			'upload_max_size',
-			'upload_path',
-			'upload_show_limits',
-			'upload_size_limit',
+            'upload_autostart',
+            'upload_files_limit',
+            'upload_max_size',
+            'upload_path',
+            'upload_show_limits',
+            'upload_size_limit',
             'googlesheets_enable',
             'googlesheets_spreadsheet_id',
             'googlesheets_sheet_id'
@@ -126,15 +126,15 @@ class PWebContact_Admin {
         // Configuration link in menu
         add_action( 'admin_menu', array($this, 'menu') );
 
-		/*** PRO START ***/
-		// Add action for message
+        /*** PRO START ***/
+        // Add action for message
         add_action( 'admin_notices', array($this, 'display_update_message') );
 
-		// Add filter for requesting our server, checking for updates!
+        // Add filter for requesting our server, checking for updates!
         add_filter( 'puc_request_info_result-pwebcontact', array($this, 'prepere_update_message') );
         /*** PRO END ***/
 
-		// Configuration link on plugins list
+        // Configuration link on plugins list
         add_filter( 'plugin_action_links', array($this, 'action_links'), 10, 2 );
     }
 
@@ -269,7 +269,7 @@ class PWebContact_Admin {
 
             if (isset($_GET['ajax'])) {
                 check_ajax_referer( 'newsletter' );
-                
+
                 $result = $this->_get_newsletter_lists();
 
                 header('Content-Type: application/json');
@@ -501,7 +501,7 @@ class PWebContact_Admin {
 
             $this->_check_requirements();
             $this->_load_forms();
-			$this->_load_settings();
+            $this->_load_settings();
 
             // load JS files
             wp_enqueue_script('pwebcontact_admin_script', plugins_url('media/js/jquery.admin-list.js', __FILE__),
@@ -820,7 +820,7 @@ pwebcontact_admin.is_pro = true;
 
         /*** PRO START ***/
         require_once dirname( __FILE__ ) . '/google.php';
-        
+
         if (!empty($settings['googleapi_accesscode'])) {
             try {
                 PWebContact_GoogleApi::getInstance()->setAccessCode($settings['googleapi_accesscode']);
@@ -950,13 +950,13 @@ pwebcontact_admin.is_pro = true;
     <hr>
 
     <p class="pweb-copyrights">
-		Copyright &copy; 2016
+        Copyright &copy; 2016
         <a href="https://www.perfect-web.co/wordpress-plugins/contact-form" target="_blank"><strong>Perfect Web sp. z o.o.</strong></a>,
         All rights reserved.
-		Distributed under
+        Distributed under
         <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank"><strong>GNU/GPL</strong></a>.<br>
-		All other trademarks and copyrights are property of their respective owners.
-	</p>
+        All other trademarks and copyrights are property of their respective owners.
+    </p>
 </div>
 <?php
 
@@ -982,22 +982,22 @@ pwebcontact_admin.is_pro = true;
 ?>
 <div class="error pweb-clearfix"><p><strong><?php echo implode('<br>', $this->errors); ?></strong></p></div>
 <?php
-		}
+        }
 
         if (count($this->warnings)) {
 ?>
 <div class="error pweb-clearfix"><p><strong><?php echo implode('<br>', $this->warnings); ?></strong></p></div>
 <?php
-		}
+        }
 
         if (isset($_GET['notification']) AND $_GET['notification']) {
             $this->notifications[] = urldecode($_GET['notification']);
         }
-		if (count($this->notifications)) {
+        if (count($this->notifications)) {
 ?>
 <div class="updated pweb-clearfix"><p><strong><?php echo implode('<br>', $this->notifications); ?></strong></p></div>
 <?php
-		}
+        }
     }
 
 
@@ -1099,16 +1099,16 @@ pwebcontact_admin.is_pro = true;
     }
 
 
-	protected function _get_feeds_script() {
+    protected function _get_feeds_script() {
 
-		global $wp_version;
+        global $wp_version;
 
         return
-			  '(function(){'
-			. 'var pw=document.createElement("script");pw.type="text/javascript";pw.async=true;'
-			. 'pw.src="https://www.perfect-web.co/index.php?option=com_ars&view=update&task=stream&format=raw&id=8&version='.$this->_get_version().'&wpversion='.$wp_version.'&uid='.md5(home_url()).'";'
-			. 'var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(pw,s);'
-			. '})();';
+              '(function(){'
+            . 'var pw=document.createElement("script");pw.type="text/javascript";pw.async=true;'
+            . 'pw.src="https://www.perfect-web.co/index.php?option=com_ars&view=update&task=stream&format=raw&id=8&version='.$this->_get_version().'&wpversion='.$wp_version.'&uid='.md5(home_url()).'";'
+            . 'var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(pw,s);'
+            . '})();';
     }
 
 
@@ -1581,17 +1581,17 @@ pwebcontact_admin.is_pro = true;
         $val = trim($str);
         $last = strtolower($str[strlen($str)-1]);
         switch($last)
-		{
+        {
             case 'g': $val *= 1024;
             case 'm': $val *= 1024;
             case 'k': $val *= 1024;
         }
-		$val = $val / 1024 / 1024;
+        $val = $val / 1024 / 1024;
 
         return $val > 10 ? intval($val) : round($val, 2);
     }
 
-	/*** PRO START ***/
+    /*** PRO START ***/
     private function _check_updates()
     {
         require_once dirname(__FILE__). '/update-checker/plugin-update-checker.php';
@@ -1603,26 +1603,26 @@ pwebcontact_admin.is_pro = true;
         $UpdateChecker->addQueryArgFilter( array($this, 'get_updates_query') );
     }
 
-	public function prepere_update_message($pluginInfo)
-	{
+    public function prepere_update_message($pluginInfo)
+    {
         // create object for update info
         $update = new stdClass();
 
-		if (isset($pluginInfo->updateImage) AND !empty($pluginInfo->updateImage))
-		{
-			$path = 'media/cache/' . basename($pluginInfo->updateImage);
+        if (isset($pluginInfo->updateImage) AND !empty($pluginInfo->updateImage))
+        {
+            $path = 'media/cache/' . basename($pluginInfo->updateImage);
 
-			// Always override file!
-			if ($contents = file_get_contents($pluginInfo->updateImage))
-			{
-				file_put_contents(plugin_dir_path(__FILE__) . $path, $contents);
-			}
+            // Always override file!
+            if ($contents = file_get_contents($pluginInfo->updateImage))
+            {
+                file_put_contents(plugin_dir_path(__FILE__) . $path, $contents);
+            }
 
-			if (isset($pluginInfo->updateStyle))
-			{
-				$pluginInfo->updateStyle = str_replace('__IMAGE__', plugin_dir_url(__FILE__) . $path, $pluginInfo->updateStyle);
-			}
-		}
+            if (isset($pluginInfo->updateStyle))
+            {
+                $pluginInfo->updateStyle = str_replace('__IMAGE__', plugin_dir_url(__FILE__) . $path, $pluginInfo->updateStyle);
+            }
+        }
 
         $update->message    = isset($pluginInfo->updateMessage) ? $pluginInfo->updateMessage : '';
         $update->style      = isset($pluginInfo->updateStyle) ? $pluginInfo->updateStyle : '';
@@ -1635,38 +1635,38 @@ pwebcontact_admin.is_pro = true;
     }
 
     public function display_update_message()
-	{
+    {
         global $pagenow;
         $option = get_site_option('pwebcontact_update');
 
         // If $option is `false` script never checked plugin for update, so exit this method
         if ($option === false)
-		{
-			return;
-		}
+        {
+            return;
+        }
 
-		if (isset($option->version))
-		{
-			if ( $option->version <= $this->_get_version() )
-			{
-				$option->version = NULL;
-				update_site_option('pwebcontact_update', $option);
-			}
+        if (isset($option->version))
+        {
+            if ( $option->version <= $this->_get_version() )
+            {
+                $option->version = NULL;
+                update_site_option('pwebcontact_update', $option);
+            }
 
-			if ($option->version !== NULL AND
-				(in_array($pagenow, array('plugins.php', 'index.php')) OR ( $pagenow == 'admin.php' AND $_GET['page'] == 'pwebcontact' ))
-			) {
-				echo '<div class="updated position-relative display-block" style="' . $option->style . '">'
-					. '<p>'
-					. ($option->message ? __($option->message, 'pwebcontact') : sprintf(__('There is a new update of %s!', 'pwebcontact')
+            if ($option->version !== NULL AND
+                (in_array($pagenow, array('plugins.php', 'index.php')) OR ( $pagenow == 'admin.php' AND $_GET['page'] == 'pwebcontact' ))
+            ) {
+                echo '<div class="updated position-relative display-block" style="' . $option->style . '">'
+                    . '<p>'
+                    . ($option->message ? __($option->message, 'pwebcontact') : sprintf(__('There is a new update of %s!', 'pwebcontact')
                             , '<strong>' . $this->_get_plugin_name() . '</strong>'))
-					. ' <a href="' . admin_url('update-core.php') . '">' . __('Click here', 'pwebcontact') . '</a>'
-					. '</p>'
-					. '</div>';
+                    . ' <a href="' . admin_url('update-core.php') . '">' . __('Click here', 'pwebcontact') . '</a>'
+                    . '</p>'
+                    . '</div>';
 
                 $this->_display_dlid_message();
-			}
-		}
+            }
+        }
     }
 
     protected function _display_dlid_message()
@@ -1720,19 +1720,19 @@ pwebcontact_admin.is_pro = true;
         // installed_version = x.x.x
         $query['version'] = $this->_get_version();
 
-		// WP version
-		$query['wpversion'] = $wp_version;
+        // WP version
+        $query['wpversion'] = $wp_version;
 
-		// host name
-		$query['host'] = urlencode(home_url());
+        // host name
+        $query['host'] = urlencode(home_url());
 
         return $query;
     }
-	/*** PRO END ***/
+    /*** PRO END ***/
 
     private function _check_image_text_creation()
-	{
-		if (!isset($this->requirements['image_text']))
+    {
+        if (!isset($this->requirements['image_text']))
         {
             $this->requirements['image_text'] = true;
 
@@ -1758,11 +1758,11 @@ pwebcontact_admin.is_pro = true;
             }
         }
 
-		return $this->requirements['image_text'];
-	}
+        return $this->requirements['image_text'];
+    }
 
     private function _check_cache_path()
-	{
+    {
         if (!isset($this->requirements['cache_path']))
         {
             $this->requirements['cache_path'] = true;
@@ -1798,10 +1798,10 @@ pwebcontact_admin.is_pro = true;
         }
 
         return $this->requirements['cache_path'];
-	}
+    }
 
     private function _check_upload_path()
-	{
+    {
         if (!isset($this->requirements['upload_path']))
         {
             $this->requirements['upload_path'] = true;
@@ -1850,10 +1850,10 @@ pwebcontact_admin.is_pro = true;
         }
 
         return $this->requirements['upload_path'];
-	}
+    }
 
     private function _check_mailer()
-	{
+    {
         if (!isset($this->requirements['mailer']))
         {
             $this->requirements['mailer'] = true;
@@ -1878,7 +1878,7 @@ pwebcontact_admin.is_pro = true;
     }
 
     private function _check_php_version()
-	{
+    {
         if (!isset($this->requirements['php_version']))
         {
             $this->requirements['php_version'] = true;
@@ -1892,7 +1892,7 @@ pwebcontact_admin.is_pro = true;
     }
 
     private function _check_wp_version()
-	{
+    {
         global $wp_version;
 
         if (!isset($this->requirements['wp_version']))

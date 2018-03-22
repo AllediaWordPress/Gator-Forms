@@ -2,7 +2,7 @@
 /**
  * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -23,11 +23,11 @@ function_exists('add_action') or die;
 
 <!-- FREE START -->
 <div id="pweb-cog-check-warning" class="pweb-alert pweb-alert-success" style="display:none">
-    <i class="glyphicon glyphicon-ok"></i> 
-    <?php _e('Congratulations your form is ready! But you have chosen some PRO options so you need to BUY Pro Version in order to enjoy using them', 'pwebcontact'); 
+    <i class="glyphicon glyphicon-ok"></i>
+    <?php _e('Congratulations your form is ready! But you have chosen some PRO options so you need to BUY Pro Version in order to enjoy using them', 'pwebcontact');
         //TODO check email template for: ip_address, browser, os, screen_resolution, mailto_name, ticket
     ?>
-    
+
     <button class="button button-primary pweb-buy">
         <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
     </button>
@@ -44,7 +44,7 @@ function_exists('add_action') or die;
 </button>
 
 <div id="pweb-cog-check">
-    
+
     <div class="pweb-alert pweb-alert-danger" id="pweb-email-to-warning" style="display:none">
         <i class="glyphicon glyphicon-warning-sign"></i>
         <?php _e('Enter one or more emails to which message should be sent to in `Email` tab.', 'pwebcontact'); ?>
@@ -55,10 +55,10 @@ function_exists('add_action') or die;
         <i class="glyphicon glyphicon-warning-sign"></i> <?php echo $result; ?>
     </div>
     <?php endif; ?>
-    
-    
-    <?php 
-    //TODO check if copy to user field is allowed 
+
+
+    <?php
+    //TODO check if copy to user field is allowed
     //TODO warn about shortcode and widget position
     //TODO warn about browser detection if used in email template and 3-rd part plugin not installed
     ?>

@@ -1,7 +1,7 @@
 /**
  * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -9,16 +9,16 @@
 /* Font family and size */
 .pweb-button-green form.pwebcontact-form button,
 .pweb-button-green form.pwebcontact-form .btn {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 12px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
 }
 
 /* Links */
 .pweb-button-green form.pwebcontact-form a,
 .pweb-button-green .pweb-button-close {
     color: #51a351;
-	text-decoration: none;
-	background: none;
+    text-decoration: none;
+    background: none;
 }
 .pweb-button-green form.pwebcontact-form a:hover {
     text-decoration: underline;
@@ -27,43 +27,43 @@
 /* Buttons */
 .pweb-button-green form.pwebcontact-form button,
 .pweb-button-green form.pwebcontact-form .btn {
-	color: #fff !important;
-	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
-	border: 1px solid;
-	border-color: #51a351 #51a351 #3B893B;
-	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
-	background: #51a351;
-	background-image: -moz-linear-gradient(top,#62c462,#51a351);
-	background-image: -ms-linear-gradient(top,#62c462, #51a351);
-	background-image: -webkit-gradient(linear,0 0,0 100%,from(#62c462),to(#51a351));
-	background-image: -webkit-linear-gradient(top,#62c462,#51a351);
-	background-image: -o-linear-gradient(top,#62c462,#51a351);
-	background-image: linear-gradient(to bottom,#62c462,#51a351);
-	background-repeat: repeat-x;
-	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
-	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    color: #fff !important;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    border: 1px solid;
+    border-color: #51a351 #51a351 #3B893B;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    background: #51a351;
+    background-image: -moz-linear-gradient(top,#62c462,#51a351);
+    background-image: -ms-linear-gradient(top,#62c462, #51a351);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#62c462),to(#51a351));
+    background-image: -webkit-linear-gradient(top,#62c462,#51a351);
+    background-image: -o-linear-gradient(top,#62c462,#51a351);
+    background-image: linear-gradient(to bottom,#62c462,#51a351);
+    background-repeat: repeat-x;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
 }
 /* Buttons shadow */
 .pweb-button-green.pweb-shadow form.pwebcontact-form button,
 .pweb-button-green.pweb-shadow form.pwebcontact-form .btn {
-	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 /* Buttons on mouse over */
 .pweb-button-green form.pwebcontact-form button:hover,
 .pweb-button-green form.pwebcontact-form .btn:hover {
-	background-color: #51a351;
-	background-position: 0 -30px;
+    background-color: #51a351;
+    background-position: 0 -30px;
 }
 
 /* Calendar button */
 .pweb-button-green form.pwebcontact-form .pweb-calendar-btn {
-	
+
 }
 /* Upload progress */
 .pweb-button-green .pweb-uploader .progress.progress-striped .bar.progress-bar {
-	background-color: #51a351;
-	background-image: none;
+    background-color: #51a351;
+    background-image: none;
 }

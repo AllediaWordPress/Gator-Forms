@@ -2,7 +2,7 @@
 /**
  * @version 2.0.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -13,7 +13,7 @@ class PWebCompiler {
     protected $zip = null;
     protected $zip_base_path = null;
     protected $is_pro = false;
-    
+
     protected $exclude_regex = array(
         '/^\./',
         '/^media\/cache\/.+\.((?!html).)+$/i',
@@ -27,7 +27,7 @@ class PWebCompiler {
     );
     protected $include_pro = array();
     protected $exclude_pro = array();
-    
+
     protected $include_free = array(
         'media/css/themes/index.html',
         'media/css/themes/free.css'
@@ -51,7 +51,7 @@ class PWebCompiler {
         'UploadHandler.php',
         'vendor'
     );
-    
+
     protected $filter = array(
         'pwebcontact.php',
         'site.php',
@@ -67,41 +67,41 @@ class PWebCompiler {
         'tmpl/default.php',
         'media/js/jquery.pwebcontact.min.js'
     );
-    
+
     protected function filterFileContents( &$contents = null ) {
-        
+
         if ($this->is_pro) {
             $contents = preg_replace('/([^\n\r]*<!-- FREE START -->).*?(<!-- FREE END -->[^\n]*\n)/s', '', $contents);
             $contents = preg_replace('/([^\n\r]*\/\*\*\* FREE START \*\*\*\/).*?(\/\*\*\* FREE END \*\*\*\/[^\n]*\n)/s', '', $contents);
-            
+
             $contents = preg_replace('/\n[^\n\r]*<!-- PRO (START|END) -->.*/', '', $contents);
             $contents = preg_replace('/\n[^\n\r]*\/\*\*\* PRO (START|END) \*\*\*\/.*/', '', $contents);
-            
+
             $contents = preg_replace('/Plugin Name: [^\n\r]+/i', '\\0 PRO', $contents);
         }
         else {
             $contents = preg_replace('/([^\n\r]*<!-- PRO START -->).*?(<!-- PRO END -->[^\n]*\n)/s', '', $contents);
             $contents = preg_replace('/([^\n\r]*\/\*\*\* PRO START \*\*\*\/).*?(\/\*\*\* PRO END \*\*\*\/[^\n]*\n)/s', '', $contents);
-            
+
             $contents = preg_replace('/\n[^\n\r]*<!-- FREE (START|END) -->.*/', '', $contents);
             $contents = preg_replace('/\n[^\n\r]*\/\*\*\* FREE (START|END) \*\*\*\/.*/', '', $contents);
         }
     }
-    
+
     protected function addFilesToZip($directory = null) {
-        
+
         if ($directory) {
             $directory = ltrim($directory, '/');
         }
-        
+
         $iterator = new DirectoryIterator( $this->path . $directory );
 
         foreach ( $iterator as $info ) {
-            
+
             if (!$info->isDot()) {
-                
+
                 $filename = $info->getFilename();
-                
+
                 foreach ($this->exclude_regex as $regex) {
                     if (preg_match($regex, $directory . $filename)) {
                         continue 2;
@@ -112,7 +112,7 @@ class PWebCompiler {
                         continue 2;
                     }
                 }
-                
+
                 if ($this->is_pro === false) {
                     foreach ($this->exclude_free as $exclude) {
                         if (strpos($directory . $filename, $exclude) === 0) {
@@ -137,7 +137,7 @@ class PWebCompiler {
                         }
                     }
                 }
-                
+
                 if ($info->isFile()) {
                     if (in_array($directory . $filename, $this->filter)) {
                         $contents = file_get_contents( $this->path . $directory . $filename );
@@ -155,20 +155,20 @@ class PWebCompiler {
             }
         }
     }
-    
+
     protected function getVersion() {
-        
+
         $contents = file_get_contents($this->path.'pwebcontact.php');
-        
+
         if (preg_match('/Version: (\d+(\.\d+)*)+/i', $contents, $match)) {
             return $match[1];
         }
-        
+
         return '2.0.0';
     }
-    
+
     public function build() {
-        
+
         $options = getopt('', array('pro', 'ver'));
 
         $this->path = dirname(__DIR__).'/';
@@ -182,20 +182,20 @@ class PWebCompiler {
         }
 
         $zip_path = $this->path . 'build/' . ($this->is_pro ? 'pro' : 'free') . '/wp_pwebcontact_'.$version.'_'.($this->is_pro ? 'pro' : 'free').'.zip';
-		
+
         if (is_file($zip_path)) {
             unlink($zip_path);
         }
-        
+
         $this->zip = new ZipArchive;
 		if (true === $this->zip->open($zip_path, ZipArchive::CREATE)) {
-            
+
             $this->zip_base_path = 'pwebcontact/';
             $this->zip->addEmptyDir( $this->zip_base_path );
-            
+
             $this->addFilesToZip();
             $this->zip->close();
-		
+
             echo "OK\r\n";
 		}
         else {

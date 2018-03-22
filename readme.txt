@@ -1,10 +1,10 @@
 === Perfect Easy & Powerful Contact Form ===
 Contributors: perfect-web, piotrmocko
-Donate link: 
+Donate link:
 Tags: contact form, file upload, AJAX, responsive contact form, multiple contact forms plugin, shortcode contact form, widget contact form, contact form plugin, contact form maker, drag and drop contact form, form builder, file upload form
 Requires at least: 3.5.0
 Tested up to: 4.9.0
-Stable tag: 2.3.4
+Stable tag: 2.3.5
 License: GNU/GPL
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,7 +22,7 @@ Contact Form easy for beginners, customizable for pros!
 * Cool visual and animations effects
 
 Discover Perfect Easy & Powerful Contact Form developed for WordPress. First of all see cool visual effects you can use with your contact form such as smooth slide in effect, impressive lightbox appear effects or on-site display with possible accordation effect. As you see possibilities of our Contact Form are practically unlimited. What is more learn about key features of Perfect Contact Form starting from handy upload, trough excellent spam protection, to unlimited number of forms and fields you can use to build your contact form. Thirdly explore our ready-made responsive layouts you can easily adjust to your needs. No matter you need a simple contact form, call me back option, an application or reservation form, support ticket submission form or a poll, Perfect Contact Form will suit your needs perfectly.
-Try it, it�s easy!
+Try it, it's easy!
 
 = Key Features of Perfect Contact Form =
 
@@ -91,11 +91,11 @@ Try it, it�s easy!
 * Select predefined email template, set text or HTML format to make your contact form more attractive.
 * Set custom success message and email subject.
 * *Ticket system - adds to subject unique date-time based ID or number counter.*
-* Set custom toggler tab name, display it vertical or horizontal or hide it. to make your contact form more visible. 
+* Set custom toggler tab name, display it vertical or horizontal or hide it. to make your contact form more visible.
 * *Track User informations: IP address, browser ([requires 3rd-part plugin](http://wordpress.org/plugins/php-browser-detection/)), operating system, screen resolution.*
 * Track page title and URL from which email was sent.
 * Page redirect to URL after sending email.
-* Google Analytics Tracking Page View or Event after sending email. to check your contact form efficiency. 
+* Google Analytics Tracking Page View or Event after sending email. to check your contact form efficiency.
 * Google AdWords and Microsoft adCenter Conversion Tracking.
 * *Open contact form with menu item.*
 * Open contact form with custom link, image or any HTML code.
@@ -129,7 +129,7 @@ Please edit toggler height/width in our plugin configuration > Theme > Advanced 
 
 = 2. I want to customize the Toggler Tab position =
 
-In our plugin configuration > *Location & Effects tab in Position offset [px, %]* field input offset value in pixels (px) or percents (%) for example 200px or 25%. 
+In our plugin configuration > *Location & Effects tab in Position offset [px, %]* field input offset value in pixels (px) or percents (%) for example 200px or 25%.
 
 
 = 3. I am getting a Parse error when I try to install this plugin =
@@ -142,7 +142,7 @@ Please update your PHP version to 5.3+ . Check out our compatibility & requireme
 Please try to edit your e-mail configuration in our plugin settings - try using SMTP or your domain's e-mail - this issue should be resolved then.
 
 
-= 5. Form is stuck on �Initalizing form� =
+= 5. Form is stuck on "Initalizing form" =
 
 Initializing forms error is caused by jQuery conflicts between our plugin and other plugins or your Wordpress template. Please try disabling other plugins and checking whether it will work correctly.
 
@@ -167,7 +167,7 @@ which is the id number of your form. Then paste it as HTML into where you wish f
 
 = 8. If I purchase standard 30 days subscription will my form still work after it expires? =
 
-Yes it will, however you only get access to new versions and support for as long as your subscription is active. 
+Yes it will, however you only get access to new versions and support for as long as your subscription is active.
 
 
 == Screenshots ==
@@ -195,6 +195,11 @@ Yes it will, however you only get access to new versions and support for as long
 21. Very advanced options for web developers
 
 == Changelog ==
+
+= 2.3.5 / @todo =
+
+Changed:
+* Updated copyright info
 
 = 2.3.0 / 27-07-2016 =
 * Pass all form fields to Mailchimp and Freshmail

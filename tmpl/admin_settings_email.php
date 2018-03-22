@@ -2,7 +2,7 @@
 /**
  * @version 1.0.0
  * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2016 Perfect Web sp. z o.o., All rights reserved. https://www.perfect-web.co
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -27,8 +27,8 @@ $php_mail_enabled = (function_exists('mail') AND is_callable('mail'));
     'group' => 'settings',
     'label' => 'Sender email',
     'header' => 'Email settings',
-    'desc' => sprintf(__('Leave blank to use email: &bdquo;%s&rdquo; set in %s.', 'pwebcontact'), get_bloginfo('admin_email'), 
-                        '<a href="'.admin_url('options-general.php').'" target="_blank">'.__('WordPress General Settings', 'pwebcontact').'</a>') 
+    'desc' => sprintf(__('Leave blank to use email: &bdquo;%s&rdquo; set in %s.', 'pwebcontact'), get_bloginfo('admin_email'),
+                        '<a href="'.admin_url('options-general.php').'" target="_blank">'.__('WordPress General Settings', 'pwebcontact').'</a>')
                 . ($isLocalhsot ? '' : ' '.sprintf(__('Sender email should be in the same domain as your website, example: %s'), 'info@'.$domain)),
     'class' => 'pweb-filter-email'
 )); ?>
