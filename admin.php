@@ -1632,7 +1632,7 @@ pwebcontact_admin.is_pro = true;
                             , '<strong>' . $this->_get_plugin_name() . '</strong>'
                             , '<strong>' . __('Download ID', 'pwebcontact') . '</strong>'
                             , '<a href="' . admin_url( 'admin.php?page=pwebcontact&task=settings#pweb_settings_dlid' ) . '">' . __('settings', 'pwebcontact') . '</a>'
-                            , '<a href="https://gatorforms.com/wp-login.php" target="_blank">Gator Forms</a>')
+                            , '<a href="https://gatorforms.com/wp-login.php" target="_blank">Gator Forms</a>.')
                     . '</p>'
                     . '</div>';
             }
