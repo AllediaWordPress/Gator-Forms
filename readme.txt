@@ -119,7 +119,7 @@ Try it, it's easy!
 
 = Support =
 
-To ask a support question about Perfect Contact Form or post a bug report, fill a [support form](https://www.perfect-web.co/wordpress-plugins/contact-form/documentation?utm_source=backend&utm_medium=installer&utm_campaign=WPD) on our website. We will get back to you within 24h for sure, usually it takes less time. We are working from Monday to Friday 10 - 15 GMT+2, except holidays - actual informations on our website.
+To ask a support question about Perfect Contact Form or post a bug report, fill a [support form](https://gatorforms.com/support?utm_source=backend&utm_medium=installer&utm_campaign=WPD) on our website. We will get back to you within 24h for sure, usually it takes less time. We are working from Monday to Friday 10 - 15 GMT+2, except holidays - actual informations on our website.
 
 
 = 1. How to change Toggler tab height/width? =
@@ -149,7 +149,7 @@ Initializing forms error is caused by jQuery conflicts between our plugin and ot
 
 = 6. I have updated Contact Form through Wordpress panel and I no longer can use PRO features =
 
-Please disable and uninstall our plugin (do not worry, your existing form settings will remain intact), then download newest version form our website: https://www.perfect-web.co/my-subscriptions?utm_source=backend&utm_medium=installer&utm_campaign=WPD and install our plugin in .zip format through Wordpress Plugins manager.
+Please disable and uninstall our plugin (do not worry, your existing form settings will remain intact), then download newest version form our website: https://gatorforms.com/my-downloads?utm_source=backend&utm_medium=installer&utm_campaign=WPD and install our plugin in .zip format through Wordpress Plugins manager.
 
 
 = 7. How to open our contact form with a link or an image? =

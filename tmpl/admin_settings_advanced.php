@@ -39,10 +39,10 @@ function_exists('add_action') or die;
     'group' => 'settings',
     /*** FREE START ***/
     'readonly' => true,
-    'desc' => sprintf(__('Enter Download ID which you can find at %s website, to get automatical updates if you have active PRO subscription. You have to first reinstall plugin to PRO version by yourself.', 'pwebcontact'), '<a href="https://www.perfect-web.co/login" target="_blank">Perfect-Web.co</a>'),
+    'desc' => sprintf(__('Enter Download ID which you can find at %s website, to get automatical updates if you have active PRO subscription. You have to first reinstall plugin to PRO version by yourself.', 'pwebcontact'), '<a href="https://gatorforms.com/wp-login.php" target="_blank">Gator Forms</a>'),
     /*** FREE END ***/
     /*** PRO START ***/
-    'desc' => sprintf(__('Enter Download ID which you can find at %s website, to get automatical updates if you have active PRO subscription.', 'pwebcontact'), '<a href="https://www.perfect-web.co/login" target="_blank">Perfect-Web.co</a>'),
+    'desc' => sprintf(__('Enter Download ID which you can find at %s website, to get automatical updates if you have active PRO subscription.', 'pwebcontact'), '<a href="https://gatorforms.com/wp-login.php" target="_blank">Gator Forms</a>'),
     /*** PRO END ***/
     'label' => 'Download ID'
 )); ?>

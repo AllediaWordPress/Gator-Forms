@@ -115,14 +115,14 @@ class PWebContact_Admin {
     function __construct() {
 
         /*** PRO START ***/
-        $source = 'perfect-web.co';
+        $source = 'gatorforms.com';
         /*** PRO END ***/
         /*** FREE START ***/
         $source = 'wordpress.org';
         /*** FREE END ***/
 
-        $this->documentation_url = 'https://www.perfect-web.co/wordpress-plugins/contact-form/documentation?utm_source=backend&utm_medium=button&utm_campaign=documentation&utm_content='.$source;
-        $this->buy_url = 'https://www.perfect-web.co/wordpress-plugins/contact-form/subscriptions?tmpl=component&utm_source=backend&utm_medium=button&utm_campaign=upgrade_to_pro&utm_content='.$source;
+        $this->documentation_url = 'https://gatorforms.com/documentation?utm_source=backend&utm_medium=button&utm_campaign=documentation&utm_content='.$source;
+        $this->buy_url = 'https://gatorforms.com/everything-club?utm_source=backend&utm_medium=button&utm_campaign=upgrade_to_pro&utm_content='.$source;
 
         // initialize admin view
         add_action( 'admin_init', array($this, 'init') );
@@ -1645,7 +1645,7 @@ pwebcontact_admin.is_pro = true;
                             , '<strong>' . $this->_get_plugin_name() . '</strong>'
                             , '<strong>' . __('Download ID', 'pwebcontact') . '</strong>'
                             , '<a href="' . admin_url( 'admin.php?page=pwebcontact&task=settings#pweb_settings_dlid' ) . '">' . __('settings', 'pwebcontact') . '</a>'
-                            , '<a href="https://www.perfect-web.co/login" target="_blank">Perfect-Web.co</a>')
+                            , '<a href="https://gatorforms.com/wp-login.php" target="_blank">Gator Forms</a>')
                     . '</p>'
                     . '</div>';
             }
