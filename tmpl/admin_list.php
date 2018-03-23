@@ -41,7 +41,7 @@ function_exists('add_action') or die;
 
 <?php $this->_display_messages(); ?>
 <!-- PRO START -->
-<?php $this->_display_dlid_message(); ?>
+<?php $this->display_update_message(); ?>
 <!-- PRO END -->
 
 <div class="theme-browser pweb-panels pweb-clearfix">
