@@ -1614,7 +1614,7 @@ pwebcontact_admin.is_pro = true;
                 'version'     => $this->_get_version(),
                 'license'     => $licenseKey,
                 'item_id'     => self::API_ID,
-                'author'      => 'admin',
+                'author'      => 'pressshack',
                 'wp_override' => true
             )
         );
