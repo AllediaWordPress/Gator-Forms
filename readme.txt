@@ -196,10 +196,11 @@ Yes it will, however you only get access to new versions and support for as long
 
 == Changelog ==
 
-= 2.3.5 / @todo =
+= 2.3.5 / 02-04-2018 =
 
 Changed:
 * Updated copyright info
+* Minor internal changes
 
 = 2.3.0 / 27-07-2016 =
 * Pass all form fields to Mailchimp and Freshmail

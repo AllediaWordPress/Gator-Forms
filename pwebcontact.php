@@ -3,7 +3,7 @@
  * Plugin Name: Perfect Easy & Powerful Contact Form
  * Plugin URI: https://gatorforms.com
  * Description: Easy for beginners, customizable for pros!
- * Version: 2.3.4
+ * Version: 2.3.5
  * Text Domain: pwebcontact
  * Author: Gator Forms
  * Author URI: https://gatorforms.com
