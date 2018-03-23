@@ -25,7 +25,10 @@ class PWebCompiler {
         'assets',
         'build'
     );
-    protected $include_pro = array();
+    protected $include_pro = array(
+        'edd/EDDUpdateChecker.php',
+        'edd/index.html'
+    );
     protected $exclude_pro = array();
 
     protected $include_free = array(
@@ -48,7 +51,8 @@ class PWebCompiler {
         'newsletter.php',
         'uploader.php',
         'UploadHandler.php',
-        'vendor'
+        'vendor',
+        'edd'
     );
 
     protected $filter = array(
