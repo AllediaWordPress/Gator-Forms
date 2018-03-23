@@ -142,6 +142,8 @@ class PWebContact_Admin {
         if (strlen($licenseKey) === 0) {
             add_action('admin_notices', array($this, 'display_update_message'));
         }
+
+        add_filter('site_transient_update_plugins', array($this, 'preventWPUpdateChecks'));
         /*** PRO END ***/
 
         // Configuration link on plugins list
@@ -1648,6 +1650,23 @@ pwebcontact_admin.is_pro = true;
                     . '</div>';
             }
         }
+    }
+
+    public static function preventWPUpdateChecks($updates)
+    {
+        $pluginIdentifier = 'pwebcontact/pwebcontact.php';
+
+        if (isset($updates->response)
+            && isset($updates->response[$pluginIdentifier])
+            && isset($updates->response[$pluginIdentifier]->url)
+        ) {
+            $needle = str_replace('.', '\.', str_replace('/', '\/', self::API_URL));
+            if (!preg_match('/^'. $needle .'/i', $updates->response[$pluginIdentifier]->url)) {
+                unset($updates->response[$pluginIdentifier]);
+            }
+        }
+
+        return $updates;
     }
     /*** PRO END ***/
 
