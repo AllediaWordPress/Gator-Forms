@@ -16,7 +16,11 @@ function_exists('add_action') or die;
 $pwebcontact_admin = new PWebContact_Admin;
 
 class PWebContact_Admin {
+    /*** PRO START ***/
+    const API_URL = 'https://gatorforms.com';
+    const API_ID = '@todo';
 
+    /*** PRO END ***/
     protected $id = null;
     protected $view = null;
     protected $can_edit = false;
@@ -127,11 +131,17 @@ class PWebContact_Admin {
         add_action( 'admin_menu', array($this, 'menu') );
 
         /*** PRO START ***/
-        // Add action for message
-        add_action( 'admin_notices', array($this, 'display_update_message') );
+        global $pagenow;
 
-        // Add filter for requesting our server, checking for updates!
-        add_filter( 'puc_request_info_result-pwebcontact', array($this, 'prepere_update_message') );
+        $option = (object)get_site_option('pwebcontact_settings');
+        if ($option === false) {
+            return;
+        }
+
+        $licenseKey = isset($option->dlid) ? trim($option->dlid) : '';
+        if (strlen($licenseKey) === 0) {
+            add_action('admin_notices', array($this, 'display_update_message'));
+        }
         /*** PRO END ***/
 
         // Configuration link on plugins list
@@ -1602,89 +1612,31 @@ pwebcontact_admin.is_pro = true;
     /*** PRO START ***/
     private function _check_updates()
     {
-        require_once dirname(__FILE__). '/update-checker/plugin-update-checker.php';
+        require_once dirname(__FILE__) . '/edd/EDDUpdateChecker.php';
 
-        $UpdateChecker = PucFactory::buildUpdateChecker(
-            'https://www.perfect-web.co/index.php?option=com_ars&view=update&task=stream&format=json&id=8',
-            dirname(__FILE__).'/pwebcontact.php'
+        $options = (array)get_option('pwebcontact_settings');
+
+        $licenseKey = isset($options['dlid']) ? $options['dlid'] : '';
+
+        $updater = new \EDDUpdateChecker(
+            self::API_URL,
+            'pwebcontact/pwebcontact.php',
+            array(
+                'version'     => $this->_get_version(),
+                'license'     => $licenseKey,
+                'item_id'     => self::API_ID,
+                'author'      => 'admin',
+                'wp_override' => true
+            )
         );
-        $UpdateChecker->addQueryArgFilter( array($this, 'get_updates_query') );
-    }
-
-    public function prepere_update_message($pluginInfo)
-    {
-        // create object for update info
-        $update = new stdClass();
-
-        if (isset($pluginInfo->updateImage) AND !empty($pluginInfo->updateImage))
-        {
-            $path = 'media/cache/' . basename($pluginInfo->updateImage);
-
-            // Always override file!
-            if ($contents = file_get_contents($pluginInfo->updateImage))
-            {
-                file_put_contents(plugin_dir_path(__FILE__) . $path, $contents);
-            }
-
-            if (isset($pluginInfo->updateStyle))
-            {
-                $pluginInfo->updateStyle = str_replace('__IMAGE__', plugin_dir_url(__FILE__) . $path, $pluginInfo->updateStyle);
-            }
-        }
-
-        $update->message    = isset($pluginInfo->updateMessage) ? $pluginInfo->updateMessage : '';
-        $update->style      = isset($pluginInfo->updateStyle) ? $pluginInfo->updateStyle : '';
-        $update->version    = isset($pluginInfo->version) ? $pluginInfo->version : '';
-
-        // Save upgrade info to database
-        update_site_option('pwebcontact_update', $update);
-
-        return $pluginInfo;
     }
 
     public function display_update_message()
     {
-        global $pagenow;
-        $option = get_site_option('pwebcontact_update');
-
-        // If $option is `false` script never checked plugin for update, so exit this method
-        if ($option === false)
-        {
-            return;
-        }
-
-        if (isset($option->version))
-        {
-            if ( $option->version <= $this->_get_version() )
-            {
-                $option->version = NULL;
-                update_site_option('pwebcontact_update', $option);
-            }
-
-            if ($option->version !== NULL AND
-                (in_array($pagenow, array('plugins.php', 'index.php')) OR ( $pagenow == 'admin.php' AND $_GET['page'] == 'pwebcontact' ))
-            ) {
-                echo '<div class="updated position-relative display-block" style="' . $option->style . '">'
-                    . '<p>'
-                    . ($option->message ? __($option->message, 'pwebcontact') : sprintf(__('There is a new update of %s!', 'pwebcontact')
-                            , '<strong>' . $this->_get_plugin_name() . '</strong>'))
-                    . ' <a href="' . admin_url('update-core.php') . '">' . __('Click here', 'pwebcontact') . '</a>'
-                    . '</p>'
-                    . '</div>';
-
-                $this->_display_dlid_message();
-            }
-        }
-    }
-
-    protected function _display_dlid_message()
-    {
-        if (!isset($this->_dlid_message_displayed))
-        {
+        if (!isset($this->_dlid_message_displayed)) {
             $this->_dlid_message_displayed = true;
             $this->_load_settings();
-            if (!$this->_get_param('dlid', null, 'settings'))
-            {
+            if (!$this->_get_param('dlid', null, 'settings')) {
                 echo '<div class="error display-block">'
                     . '<p>'
                     . sprintf(__('To update %s directly from WordPress enter %s in plugin %s. Get your Download ID at %s', 'pwebcontact')
@@ -1696,45 +1648,6 @@ pwebcontact_admin.is_pro = true;
                     . '</div>';
             }
         }
-    }
-
-    public function get_updates_query($query)
-    {
-        global $wp_version;
-
-        $this->_load_settings();
-
-        // Get download ID from settings
-        $query['dlid'] = $this->_get_param('dlid', null, 'settings');
-        if (empty($query['dlid']))
-        {
-            // Get download ID from a file
-            require_once ABSPATH . 'wp-admin/includes/file.php';
-            $files = list_files( dirname(__FILE__), 1 );
-            foreach ($files as $file) {
-                $file = basename($file);
-                if (preg_match('/^[a-f0-9]{32}$/', $file)) {
-                    $query['dlid'] = $file;
-
-                    // Save old download ID in settings
-                    $this->data->settings['dlid'] = $file;
-                    update_option('pwebcontact_settings', $this->data->settings);
-                    break;
-                }
-            }
-        }
-
-        // plugin version
-        // installed_version = x.x.x
-        $query['version'] = $this->_get_version();
-
-        // WP version
-        $query['wpversion'] = $wp_version;
-
-        // host name
-        $query['host'] = urlencode(home_url());
-
-        return $query;
     }
     /*** PRO END ***/
 
