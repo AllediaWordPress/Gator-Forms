@@ -232,7 +232,7 @@ function_exists('add_action') or die;
             'type' => 'radio',
             'name' => 'close_other',
             'label' => 'Close other Perfect Contact Forms and Boxes',
-            'tooltip' => 'Close all other Slide in Boxes and Accordion from Perfect-Web when opening another one.',
+            'tooltip' => 'Close all other Slide in Boxes and Accordion from Gator Forms when opening another one.',
             'default' => 0,
             'parent' => array('layout_type_slidebox', 'layout_type_accordion'),
             'class' => 'pweb-radio-group',
