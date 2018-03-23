@@ -196,7 +196,7 @@ Yes it will, however you only get access to new versions and support for as long
 
 == Changelog ==
 
-= 2.3.5 / 02-04-2018 =
+= 2.3.5 / 26-03-2018 =
 
 Changed:
 * Updated copyright info
