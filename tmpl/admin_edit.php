@@ -112,9 +112,3 @@ function_exists('add_action') or die;
     <?php wp_nonce_field( 'save-form_'.$this->id ); ?>
 
 </form>
-
-<?php if ($this->_get_param('feed', 1, 'settings')) : ?>
-<script type="text/javascript">
-<?php echo $this->_get_feeds_script(); ?>
-</script>
-<?php endif; ?>

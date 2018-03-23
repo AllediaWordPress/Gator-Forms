@@ -122,9 +122,3 @@ endif; ?>
     <p><?php _e( 'Are you sure you want to delete form:', 'pwebcontact' ); ?>
     <span class="pweb-dialog-form-title"></span>?</p>
 </div>
-
-<?php if ($this->_get_param('feed', 1, 'settings')) : ?>
-<script type="text/javascript">
-<?php echo $this->_get_feeds_script(); ?>
-</script>
-<?php endif; ?>

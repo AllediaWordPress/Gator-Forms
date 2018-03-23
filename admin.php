@@ -1119,19 +1119,6 @@ pwebcontact_admin.is_pro = true;
     }
 
 
-    protected function _get_feeds_script() {
-
-        global $wp_version;
-
-        return
-              '(function(){'
-            . 'var pw=document.createElement("script");pw.type="text/javascript";pw.async=true;'
-            . 'pw.src="https://www.perfect-web.co/index.php?option=com_ars&view=update&task=stream&format=raw&id=8&version='.$this->_get_version().'&wpversion='.$wp_version.'&uid='.md5(home_url()).'";'
-            . 'var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(pw,s);'
-            . '})();';
-    }
-
-
     protected function _get_name() {
 
         $data = get_plugin_data(dirname(__FILE__).'/pwebcontact.php', false, true);
