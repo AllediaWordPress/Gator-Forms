@@ -615,7 +615,7 @@ class PWebContact_Admin {
             $title = __('Edit') .' &lsaquo; '. $title;
         }
 
-        add_menu_page($title, __('Perfect Contact Forms', 'pwebcontact'),
+        add_menu_page($title, __('Gator Forms', 'pwebcontact'),
                 'manage_options', 'pwebcontact', array($this, 'configuration'),
                 plugins_url('media/images/admin/menu-icon.png', dirname(__FILE__).'/pwebcontact.php'));
     }

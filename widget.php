@@ -25,7 +25,7 @@ class PWebContact_Widget extends WP_Widget {
      */
     public function __construct($id_base = 'pwebcontact-widget', $name = null, $widget_options = array(), $control_options = array()) {
 
-        $name = ($name ? $name : __('Perfect Contact Form', 'pwebcontact'));
+        $name = ($name ? $name : __('Gator Form', 'pwebcontact'));
 
         /* Widget settings. */
         $widget_options = array_merge(array( 'classname' => 'pwebcontact', 'description' => __('Ajax Popup Contact Form.', 'pwebcontact') ), $widget_options);

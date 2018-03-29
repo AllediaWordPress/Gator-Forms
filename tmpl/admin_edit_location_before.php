@@ -231,7 +231,7 @@ function_exists('add_action') or die;
         <?php echo $this->_get_field(array(
             'type' => 'radio',
             'name' => 'close_other',
-            'label' => 'Close other Perfect Contact Forms and Boxes',
+            'label' => 'Close other Gator Forms and Boxes',
             'tooltip' => 'Close all other Slide in Boxes and Accordion from Gator Forms when opening another one.',
             'default' => 0,
             'parent' => array('layout_type_slidebox', 'layout_type_accordion'),

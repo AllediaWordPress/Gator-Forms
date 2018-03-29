@@ -1585,11 +1585,11 @@ class PWebContact
                 'jQuery(document).ready(function($){'.
                 'if(typeof pwebContact'.$form_id.'Count=="undefined"){'.
                 // Check if document header has been loaded
-                'if(typeof pwebContact=="undefined")alert("Perfect Contact Form Debug: Contact form module has been loaded incorrect.");'.
+                'if(typeof pwebContact=="undefined")alert("Gator Form Debug: Contact form module has been loaded incorrect.");'.
                 // Check if one module instance has been loaded only once
                 'pwebContact'.$form_id.'Count=$(".pwebcontact'.$form_id.'_form").length;'.
                 'if(pwebContact'.$form_id.'Count>1)'.
-                'alert("Perfect Contact Form Debug: Contact form module ID '.$form_id.' has been loaded "+pwebContact'.$form_id.'Count+" times. You can have multiple contact forms, but one instance of module can be loaded only once!")'.
+                'alert("Gator Form Debug: Contact form module ID '.$form_id.' has been loaded "+pwebContact'.$form_id.'Count+" times. You can have multiple contact forms, but one instance of module can be loaded only once!")'.
                 '}'.
                 '});'.
                 $script
