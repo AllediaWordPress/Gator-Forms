@@ -56,6 +56,7 @@ class PWebCompiler {
     );
 
     protected $filter = array(
+        'readme.txt',
         'pwebcontact.php',
         'site.php',
         'admin.php',
@@ -80,7 +81,7 @@ class PWebCompiler {
             $contents = preg_replace('/\n[^\n\r]*<!-- PRO (START|END) -->.*/', '', $contents);
             $contents = preg_replace('/\n[^\n\r]*\/\*\*\* PRO (START|END) \*\*\*\/.*/', '', $contents);
 
-            $contents = preg_replace('/Plugin Name: [^\n\r]+/i', '\\0 PRO', $contents);
+            $contents = preg_replace('/Plugin Name: [^\n\r]+/i', '\\0 Pro', $contents);
         }
         else {
             $contents = preg_replace('/([^\n\r]*<!-- PRO START -->).*?(<!-- PRO END -->[^\n]*\n)/s', '', $contents);
