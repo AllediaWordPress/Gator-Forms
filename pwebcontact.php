@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Perfect Easy & Powerful Contact Form
+ * Plugin Name: Gator Forms
  * Plugin URI: https://gatorforms.com
  * Description: Easy for beginners, customizable for pros!
  * Version: 2.3.5
