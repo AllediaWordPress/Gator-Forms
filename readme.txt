@@ -1,4 +1,4 @@
-=== Perfect Easy & Powerful Contact Form ===
+=== Gator Forms ===
 Contributors: perfect-web, piotrmocko
 Donate link:
 Tags: contact form, file upload, AJAX, responsive contact form, multiple contact forms plugin, shortcode contact form, widget contact form, contact form plugin, contact form maker, drag and drop contact form, form builder, file upload form
@@ -21,10 +21,10 @@ Contact Form easy for beginners, customizable for pros!
 * Ready-made contact form themes
 * Cool visual and animations effects
 
-Discover Perfect Easy & Powerful Contact Form developed for WordPress. First of all see cool visual effects you can use with your contact form such as smooth slide in effect, impressive lightbox appear effects or on-site display with possible accordation effect. As you see possibilities of our Contact Form are practically unlimited. What is more learn about key features of Perfect Contact Form starting from handy upload, trough excellent spam protection, to unlimited number of forms and fields you can use to build your contact form. Thirdly explore our ready-made responsive layouts you can easily adjust to your needs. No matter you need a simple contact form, call me back option, an application or reservation form, support ticket submission form or a poll, Perfect Contact Form will suit your needs perfectly.
+Discover Gator Forms developed for WordPress. First of all see cool visual effects you can use with your contact form such as smooth slide in effect, impressive lightbox appear effects or on-site display with possible accordation effect. As you see possibilities of our Contact Form are practically unlimited. What is more learn about key features of Gator Forms starting from handy upload, trough excellent spam protection, to unlimited number of forms and fields you can use to build your contact form. Thirdly explore our ready-made responsive layouts you can easily adjust to your needs. No matter you need a simple contact form, call me back option, an application or reservation form, support ticket submission form or a poll, Gator Forms will suit your needs perfectly.
 Try it, it's easy!
 
-= Key Features of Perfect Contact Form =
+= Key Features of Gator Forms =
 
 * Fully responsive & Mobile ready
 * Unlimited forms and fields
@@ -32,7 +32,7 @@ Try it, it's easy!
 * Spam protection
 * *File upload*
 
-= Popular usage examples of Perfect Contact Form =
+= Popular usage examples of Gator Forms =
 
 * Call me back form
 * Application form
@@ -81,7 +81,7 @@ Try it, it's easy!
 * Each field can have a tooltip and validation rule, can be required or not.
 * Display labels: above fields, *inline with fields* or *inside*.
 * *Display any text or HTML code between fields* in contact form.
-* *Upload files selected with a button or by drag-and-drop using Perfect Contact Form, set: size limit, files limit, extension types.*
+* *Upload files selected with a button or by drag-and-drop using Gator Forms, set: size limit, files limit, extension types.*
 * *Attach files directly to email or as links to files stored on server.*
 * Advanced spam protection without any codes to make your contact form safer.
 * Multiple email recipients, BCC, reply to email, WordPress Admin as recipient.
@@ -111,7 +111,7 @@ Try it, it's easy!
 
 1. Install ZIP file or upload plugin files to the `/wp-content/plugins/pwebcontact` directory.
 1. **Activate the contact form plugin** through the Plugins menu in WordPress.
-1. Go to **Perfect Contact Forms** menu and create first contact form.
+1. Go to **Gator Forms** menu and create first contact form.
 1. Follow 5 steps tabs with contact form configuration and save it.
 1. If you have selected to display contact form with shortcode or in widget then do not forget to insert shortcode or create widget.
 
@@ -119,7 +119,7 @@ Try it, it's easy!
 
 = Support =
 
-To ask a support question about Perfect Contact Form or post a bug report, fill a [support form](https://gatorforms.com/support?utm_source=backend&utm_medium=installer&utm_campaign=WPD) on our website. We will get back to you within 24h for sure, usually it takes less time. We are working from Monday to Friday 10 - 15 GMT+2, except holidays - actual informations on our website.
+To ask a support question about Gator Forms or post a bug report, fill a [support form](https://gatorforms.com/support?utm_source=backend&utm_medium=installer&utm_campaign=WPD) on our website. We will get back to you within 24h for sure, usually it takes less time. We are working from Monday to Friday 10 - 15 GMT+2, except holidays - actual informations on our website.
 
 
 = 1. How to change Toggler tab height/width? =
