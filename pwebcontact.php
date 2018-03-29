@@ -72,7 +72,7 @@ else {
     function pwebcontact_requirements_notice() {
         ?>
         <div class="error">
-            <p><?php printf(__( 'Perfect Easy & Powerful Contact Form plugin requires WordPress %s and PHP %s', 'pwebcontact' ), '3.5+', '5.3+'); ?></p>
+            <p><?php printf(__( 'Gator Forms plugin requires WordPress %s and PHP %s', 'pwebcontact' ), '3.5+', '5.3+'); ?></p>
         </div>
         <?php
     }

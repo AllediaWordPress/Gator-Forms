@@ -2,7 +2,7 @@
 
 /**
  * @version 2.3.0
- * @package Perfect Easy & Powerful Contact Form
+ * @package Gator Forms
  * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko

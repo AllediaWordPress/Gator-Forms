@@ -1,7 +1,7 @@
 <?php
 /**
  * @version     2.2.2
- * @package     Perfect Easy & Powerful Contact Form
+ * @package     Gator Forms
  * @copyright   (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license     GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author      Piotr Moćko
@@ -609,7 +609,7 @@ class PWebContact_Admin {
 
     function menu() {
 
-        $title = __('Perfect Easy & Powerful Contact Form', 'pwebcontact');
+        $title = __('Gator Forms', 'pwebcontact');
 
         if (isset($_GET['task']) AND $_GET['task'] == 'edit') {
             $title = __('Edit') .' &lsaquo; '. $title;
@@ -964,7 +964,7 @@ pwebcontact_admin.is_pro = true;
         <a href="https://wordpress.org/support/plugin/pwebcontact/reviews/#new-post" target="_blank" rel="noopener noreferer">
             <?php
             printf(
-                __('If you like Perfect Easy & Powerful Contact Form please leave us a %s rating. Thank you!', 'pwebcontact'),
+                __('If you like Gator Forms please leave us a %s rating. Thank you!', 'pwebcontact'),
                 '<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>'
             );
             ?>
