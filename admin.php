@@ -122,7 +122,7 @@ class PWebContact_Admin {
         /*** FREE END ***/
 
         $this->documentation_url = 'https://gatorforms.com/documentation?utm_source=backend&utm_medium=button&utm_campaign=documentation&utm_content='.$source;
-        $this->buy_url = 'https://gatorforms.com/everything-club?utm_source=backend&utm_medium=button&utm_campaign=upgrade_to_pro&utm_content='.$source;
+        $this->buy_url = 'https://gatorforms.com/pro?utm_source=backend&utm_medium=button&utm_campaign=upgrade_to_pro&utm_content='.$source;
 
         // initialize admin view
         add_action( 'admin_init', array($this, 'init') );
