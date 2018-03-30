@@ -185,7 +185,13 @@ class PWebCompiler {
             die;
         }
 
-        $zip_path = $this->path . 'build/' . ($this->is_pro ? 'pro' : 'free') . '/wp_pwebcontact_'.$version.'_'.($this->is_pro ? 'pro' : 'free').'.zip';
+        $zip_path = sprintf(
+            '%s/build/%s/GatorForms%s-v%s.zip',
+            $this->path,
+            $this->is_pro ? 'pro' : 'free',
+            $this->is_pro ? 'Pro' : '',
+            $version
+        );
 
         if (is_file($zip_path)) {
             unlink($zip_path);
