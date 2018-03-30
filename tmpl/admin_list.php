@@ -104,7 +104,7 @@ endif; ?>
 
     <!-- FREE START -->
     <div class="theme active pweb-panel-box pweb-panel-pro">
-        <div class="theme-screenshot pweb-buy">
+        <div class="theme-screenshot pweb-buy" data-href="<?php echo $this->buy_url; ?>" data-role="anchor">
             <i class="glyphicon glyphicon-shopping-cart"></i>
         </div>
         <h3 class="theme-name">

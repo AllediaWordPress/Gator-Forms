@@ -756,26 +756,19 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 
 
     $("span.pweb-pro, .pweb-buy").click(function(e){
-        e.preventDefault();
-        e.stopPropagation();
+        var self = $(this);
+        var tagName = $(this).prop('tagName').toUpperCase();
 
-        var width = $(window).width() - 50,
-            height = $(window).height();
-
-        if (width > 700) {
-            width = 700;
+        if (tagName !== 'A') {
+            var elRole = self.attr('data-role') || null;
+            if (elRole === 'anchor') {
+                var targetUrl = self.attr('data-href') || '';
+                if (targetUrl.length) {
+                    var w = window.open(targetUrl, '_blank');
+                    w.focus();
+                }
+            }
         }
-        if (height >= 750) {
-            height = height - 120;
-        }
-        else {
-            height = height - 20;
-        }
-
-        tb_show(pwebcontact_l10n.buy_subscription,
-            pwebcontact_admin.buy_url
-                    + (pwebcontact_admin.buy_url.indexOf("?") === -1 ? "?" : "&")
-                    + "TB_iframe=1&width="+width+"&height="+(height-30), "");
     });
 
 
