@@ -200,7 +200,8 @@ Yes it will, however you only get access to new versions and support for as long
 
 Changed:
 * Updated copyright info and branding
-* Minor internal changes
+* Minor internal code changes
+* Minor UI tweaks
 
 Fixed:
 * Fixed bug where it was impossible to copy form shortcodes to clipboard using keyboard hotkeys
