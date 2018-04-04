@@ -20,6 +20,8 @@ class PWebCompiler {
         '/^media\/css\/(background|button|form|toggler)/i'
     );
     protected $exclude = array(
+        'media/images/admin/psd',
+        'media/images/admin/bkp',
         'media/css/custom.css',
         'media/js/jquery.pwebcontact.js',
         'assets',
