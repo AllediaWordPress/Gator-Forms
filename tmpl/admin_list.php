@@ -87,7 +87,7 @@ function_exists('add_action') or die;
                 <i class="glyphicon glyphicon-<?php echo $form->publish ? 'ok-sign' : 'remove-sign'; ?>"></i>
             </button>
             <button type="button"<?php if (!$this->can_edit) echo ' disabled="disabled"'; ?>
-                    class="button pweb-has-tooltip" title="<?php esc_attr_e( 'Copy' ); ?>"
+                    class="button pweb-has-tooltip" title="<?php esc_attr_e('Clone', 'pwebcontact'); ?>"
                     onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact&task=copy&id='.(int)$form->id.'&_wpnonce='. wp_create_nonce('copy-form_'.$form->id) ); ?>'">
                 <i class="glyphicon glyphicon-file"></i>
             </button>
