@@ -63,18 +63,20 @@ function_exists('add_action') or die;
         </h3>
         <div class="theme-name pweb-position">
             <?php if ($form->position == 'shortcode') : ?>
+                <?php $formShortcode = '[pwebcontact id='. (int)$form->id .']'; ?>
                 <span><?php _e('Shortcode:', 'pwebcontact'); ?></span>
                 <div style="float: right;">
                     <input
                         type="text" class="pweb-shortcode pweb-has-tooltip"
                         readonly="readonly"
                         title="<?php esc_attr_e( 'Copy shortcode and paste into blog post or page.', 'pwebcontact' ); ?>"
-                        value="[pwebcontact id=<?php echo (int)$form->id; ?>]"
+                        value="<?php echo $formShortcode; ?>"
                         style="text-align: center;">
                     <button
                         type="button"
-                        class="button pweb-has-tooltip"
-                        title="<?php esc_attr_e('Copy shortcode to clipboard', 'pwebcontact'); ?>">
+                        class="button pweb-has-tooltip pweb-o-copy-clipboard"
+                        title="<?php esc_attr_e('Copy shortcode to clipboard', 'pwebcontact'); ?>"
+                        data-action-title="<?php esc_attr_e('Copied!', 'pwebcontact'); ?>">
                         <i class="glyphicon glyphicon-copy"></i>
                     </button>
                 </div>

@@ -162,4 +162,33 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         });
         $(this).css({'position': 'relative', 'min-height': 36}).prepend($close);
     });
+
+    $('.pweb-o-copy-clipboard').on('click', function(e) {
+      e.preventDefault();
+
+      if (!document.execCommand) return;
+
+      var self = $(this);
+
+      var shortcodeInput = self.prev();
+      if (!shortcodeInput.length) return;
+
+      // Stores the input original title.
+      var shortcodeInputOriginalTitle = shortcodeInput.attr('title');
+      // Reset the title to prevent the tooltip from appearing when we call the next command.
+      shortcodeInput.attr('title', '');
+      // Select shortcode from input.
+      shortcodeInput.select();
+      // Copy selection to clipboard.
+      document.execCommand('copy');
+      // Unselect text from input.
+      shortcodeInput[0].selectionStart = shortcodeInput[0].selectionEnd;
+      // Restore the input original title.
+      shortcodeInput.attr('title', shortcodeInputOriginalTitle);
+
+      // Change the tooltip text.
+      var selfActionTitle = self.attr('data-action-title');
+      var tooltipWrapper = $('#' + self.attr('aria-describedby'));
+      tooltipWrapper.text(selfActionTitle);
+    });
 });
