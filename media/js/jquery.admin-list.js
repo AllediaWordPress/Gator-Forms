@@ -135,10 +135,6 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         e.preventDefault();
         e.stopPropagation();
         $(this).select();
-    }).on("keydown", function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        $(this).select();
     });
 
 

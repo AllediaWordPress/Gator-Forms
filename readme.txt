@@ -202,6 +202,9 @@ Changed:
 * Updated copyright info and branding
 * Minor internal changes
 
+Fixed:
+* Fixed bug where it was impossible to copy form shortcodes to clipboard using keyboard hotkeys
+
 = 2.3.0 / 27-07-2016 =
 * Pass all form fields to Mailchimp and Freshmail
 * Updated Google Spreadsheets API to latest v4
