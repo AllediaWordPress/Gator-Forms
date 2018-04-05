@@ -855,34 +855,50 @@ pwebcontact_admin.is_pro = true;
             throw new Exception($error);
         } else {
             /*** PRO START ***/
-            if ($shouldRefreshUpdateStatus) {
-                $updatesCache = get_site_transient('update_plugins');
-                if ($updatesCache !== null) {
-                    $pluginBootstrap = 'pwebcontact/pwebcontact.php';
-
-                    if (isset($updatesCache->checked)
-                        && isset($updatesCache->checked[$pluginBootstrap])
-                    ) {
-                        unset($updatesCache->checked[$pluginBootstrap]);
+            if ($shouldRefreshUpdateStatus
+                && strlen($newDlid) > 0
+            ) {
+                $licenseKeyStatus = self::getLicenseKeyStatus($newDlid);
+                if ($licenseKeyStatus === 'valid'
+                    || $licenseKeyStatus === 'inactive'
+                ) {
+                    if ($licenseKeyStatus === 'inactive') {
+                        $activationStatus = self::activateLicenseKey($newDlid);
+                        if (is_string($activationStatus)) {
+                            throw new Exception(__('Download ID status:', 'pwebcontact') . ' ' . $activationStatus);
+                        }
                     }
 
-                    if (isset($updatesCache->response)
-                        && isset($updatesCache->response[$pluginBootstrap])
-                    ) {
-                        unset($updatesCache->response[$pluginBootstrap]);
+                    $updatesCache = get_site_transient('update_plugins');
+                    if ($updatesCache !== null) {
+                        $pluginBootstrap = 'pwebcontact/pwebcontact.php';
+
+                        if (isset($updatesCache->checked)
+                            && isset($updatesCache->checked[$pluginBootstrap])
+                        ) {
+                            unset($updatesCache->checked[$pluginBootstrap]);
+                        }
+
+                        if (isset($updatesCache->response)
+                            && isset($updatesCache->response[$pluginBootstrap])
+                        ) {
+                            unset($updatesCache->response[$pluginBootstrap]);
+                        }
+
+                        if (isset($updatesCache->no_update)
+                            && isset($updatesCache->no_update[$pluginBootstrap])
+                        ) {
+                            unset($updatesCache->no_update[$pluginBootstrap]);
+                        }
+
+                        delete_site_transient('update_plugins');
+                        delete_site_transient('pwebcontact:plugin_latest_version');
+                        delete_site_option('pwebcontact_update');
+
+                        set_site_transient('update_plugins', $updatesCache);
                     }
-
-                    if (isset($updatesCache->no_update)
-                        && isset($updatesCache->no_update[$pluginBootstrap])
-                    ) {
-                        unset($updatesCache->no_update[$pluginBootstrap]);
-                    }
-
-                    delete_site_transient('update_plugins');
-                    delete_site_transient('pwebcontact:plugin_latest_version');
-                    delete_site_option('pwebcontact_update');
-
-                    set_site_transient('update_plugins', $updatesCache);
+                } else {
+                    throw new Exception(__('Download ID status:', 'pwebcontact') . ' ' . $licenseKeyStatus);
                 }
             }
 
@@ -891,6 +907,79 @@ pwebcontact_admin.is_pro = true;
         }
     }
 
+    /*** PRO START ***/
+    private static function getLicenseKeyStatus($licenseKey)
+    {
+        try {
+            if (empty($licenseKey)) {
+                return false;
+            }
+
+            $apiData = array(
+                'edd_action' => 'check_license',
+                'license'    => $licenseKey,
+                'item_id'    => self::API_ID
+            );
+
+            $apiResponse = wp_remote_get(
+                esc_url_raw(add_query_arg($apiData, self::API_URL)),
+                array(
+                    'timeout'   => 15,
+                    'body'      => $apiData,
+                    'sslverify' => false
+                )
+            );
+
+            if (is_wp_error($apiResponse)) {
+                throw new \Exception($apiResponse->get_error_message());
+            }
+
+            $apiResponseData = json_decode(wp_remote_retrieve_body($apiResponse));
+
+            return $apiResponseData->license;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    private static function activateLicenseKey($licenseKey)
+    {
+        try {
+            if (empty($licenseKey)) {
+                return false;
+            }
+
+            $apiData = array(
+                'edd_action' => 'activate_license',
+                'license'    => $licenseKey,
+                'item_id'    => self::API_ID
+            );
+
+            $apiResponse = wp_remote_get(
+                esc_url_raw(add_query_arg($apiData, self::API_URL)),
+                array(
+                    'timeout'   => 15,
+                    'body'      => $apiData,
+                    'sslverify' => false
+                )
+            );
+
+            if (is_wp_error($apiResponse)) {
+                throw new \Exception($apiResponse->get_error_message());
+            }
+
+            $apiResponseData = json_decode(wp_remote_retrieve_body($apiResponse));
+
+            if (!$apiResponseData->success) {
+                return $apiResponseData->error;
+            }
+
+            return $apiResponseData->license === 'valid';
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+    /*** PRO END ***/
 
     protected function _save_form() {
 
