@@ -841,6 +841,12 @@ pwebcontact_admin.is_pro = true;
             }
             $settings['googleapi_accesscode'] = '';
         }
+
+        $oldSettings = get_option('pwebcontact_settings');
+        $oldDlid = !empty($oldSettings) && isset($oldSettings['dlid']) ? $oldSettings['dlid'] : '';
+        $newDlid = isset($settings['dlid']) ? $settings['dlid'] : '';
+
+        $shouldRefreshUpdateStatus = $oldDlid !== $newDlid;
         /*** PRO END ***/
 
         $result = update_option('pwebcontact_settings', $settings);
@@ -848,6 +854,39 @@ pwebcontact_admin.is_pro = true;
         if (isset($error)) {
             throw new Exception($error);
         } else {
+            /*** PRO START ***/
+            if ($shouldRefreshUpdateStatus) {
+                $updatesCache = get_site_transient('update_plugins');
+                if ($updatesCache !== null) {
+                    $pluginBootstrap = 'pwebcontact/pwebcontact.php';
+
+                    if (isset($updatesCache->checked)
+                        && isset($updatesCache->checked[$pluginBootstrap])
+                    ) {
+                        unset($updatesCache->checked[$pluginBootstrap]);
+                    }
+
+                    if (isset($updatesCache->response)
+                        && isset($updatesCache->response[$pluginBootstrap])
+                    ) {
+                        unset($updatesCache->response[$pluginBootstrap]);
+                    }
+
+                    if (isset($updatesCache->no_update)
+                        && isset($updatesCache->no_update[$pluginBootstrap])
+                    ) {
+                        unset($updatesCache->no_update[$pluginBootstrap]);
+                    }
+
+                    delete_site_transient('update_plugins');
+                    delete_site_transient('pwebcontact:plugin_latest_version');
+                    delete_site_option('pwebcontact_update');
+
+                    set_site_transient('update_plugins', $updatesCache);
+                }
+            }
+
+            /*** PRO END ***/
             return $result;
         }
     }
