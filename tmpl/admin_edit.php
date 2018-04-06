@@ -61,7 +61,7 @@ function_exists('add_action') or die;
                 <?php esc_html_e( 'Fields', 'pwebcontact' ); ?>
             </a>
             <a href="#pweb-tab-theme" id="pweb-tab-theme" class="nav-tab">
-                <i class="glyphicon glyphicon-tint"></i>
+                <i class="glyphicon glyphicon-picture"></i>
                 <?php esc_html_e( 'Theme', 'pwebcontact' ); ?>
             </a>
             <a href="#pweb-tab-email" id="pweb-tab-email" class="nav-tab">

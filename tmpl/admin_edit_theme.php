@@ -88,7 +88,7 @@ function_exists('add_action') or die;
 
 <div class="pweb-advanced-options">
     <button type="button" class="button button-primary pweb-advanced-options-toggler">
-        <i class="glyphicon glyphicon-tint"></i> <span><?php _e( 'Theme customizer', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
+        <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Theme customizer', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
     </button>
     <div class="pweb-advanced-options-content">
 
