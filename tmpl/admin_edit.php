@@ -33,8 +33,6 @@ function_exists('add_action') or die;
                 <i class="glyphicon glyphicon-remove"></i> <span><?php _e( 'Close' ); ?></span>
             </button>
 
-            <span id="pweb-save-status"><?php _e( 'Saved on', 'pwebcontact' ); ?> <?php echo get_date_from_gmt($this->data->modify_date); ?></span>
-
             <!-- FREE START -->
             <button class="button button-primary right pweb-buy" id="pweb-buy-button" data-href="<?php echo $this->buy_url; ?>" data-role="anchor">
                 <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
