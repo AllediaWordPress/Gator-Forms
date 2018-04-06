@@ -13,8 +13,6 @@ function_exists('add_action') or die;
 ?>
 
 <h3 class="pweb-steps">
-    <?php printf(__('Step %d of %d', 'pwebcontact'), 3, 4); ?>
-    -
     <?php _e('Choose predefined theme or create own in customizer', 'pwebcontact'); ?>
 
     <button class="button button-primary pweb-next-tab-button" type="button">

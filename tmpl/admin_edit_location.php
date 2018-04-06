@@ -13,8 +13,6 @@ function_exists('add_action') or die;
 ?>
 
 <h3 class="pweb-steps">
-    <?php printf(__('Step %d of %d', 'pwebcontact'), 1, 4); ?>
-    -
     <?php _e('Decide how and where your form should be displayed', 'pwebcontact'); ?>
     <button class="button button-primary pweb-next-tab-button" type="button">
         <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>

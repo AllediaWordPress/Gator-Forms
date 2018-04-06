@@ -43,8 +43,6 @@ $this->_set_pro_options('field_types', array(
 ?>
 
 <h3 class="pweb-steps">
-    <?php printf(__('Step %d of %d', 'pwebcontact'), 2, 4); ?>
-    -
     <?php _e('Choose predefined form composition', 'pwebcontact'); ?>
 
     <?php echo $this->_get_field_control(array(
