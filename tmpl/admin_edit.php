@@ -21,9 +21,10 @@ function_exists('add_action') or die;
             <h2 style="display:none"></h2>
             <?php $this->_display_messages(); ?>
 
-            <h2><?php _e( 'Edit' ); ?></h2>
-
-            <input type="text" name="title" value="<?php echo esc_attr($this->data->title); ?>" placeholder="<?php esc_attr_e( 'Form name', 'pwebcontact' ); ?>">
+            <label>
+                <h2><?php _e('Form title', 'pwebcontact'); ?></h2>
+                <input type="text" name="title" value="<?php echo esc_attr($this->data->title); ?>" placeholder="<?php esc_attr_e( 'Form name', 'pwebcontact' ); ?>">
+            </label>
 
             <button type="submit" class="button button-primary" id="pweb-save-button">
                 <i class="glyphicon glyphicon-floppy-disk"></i> <span><?php _e( 'Save' ); ?></span>
