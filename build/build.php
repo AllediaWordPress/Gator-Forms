@@ -67,7 +67,6 @@ class PWebCompiler {
         'tmpl/admin_edit_email.php',
         'tmpl/admin_edit_fields.php',
         'tmpl/admin_edit_theme.php',
-        'tmpl/admin_edit_tips.php',
         'tmpl/admin_list.php',
         'tmpl/admin_settings_advanced.php',
         'tmpl/default.php',
