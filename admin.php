@@ -1756,11 +1756,12 @@ pwebcontact_admin.is_pro = true;
             if (!$this->_get_param('dlid', null, 'settings')) {
                 echo '<div class="error display-block">'
                     . '<p>'
-                    . sprintf(__('To update %s directly from WordPress enter %s in plugin %s. Get your Download ID at %s', 'pwebcontact')
-                            , '<strong>' . $this->_get_plugin_name() . '</strong>'
-                            , '<strong>' . __('Download ID', 'pwebcontact') . '</strong>'
-                            , '<a href="' . admin_url( 'admin.php?page=pwebcontact&task=settings#pweb_settings_dlid' ) . '">' . __('settings', 'pwebcontact') . '</a>'
-                            , '<a href="https://gatorforms.com/wp-login.php" target="_blank">Gator Forms</a>.')
+                    . sprintf(
+                        __('To get %s updates, please enter your %s. Get your license key at %s.', 'pwebcontact'),
+                        '<strong>' . $this->_get_plugin_name() . '</strong>',
+                        '<a href="' . admin_url('admin.php?page=pwebcontact&task=settings#pweb_settings_dlid') . '">' . __('license key', 'pwebcontact') . '</a>',
+                         '<a href="https://gatorforms.com/wp-login.php" target="_blank">'. __('Gator Forms', 'pwebcontact') .'</a>'
+                    )
                     . '</p>'
                     . '</div>';
             }
