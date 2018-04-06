@@ -702,10 +702,10 @@ form.pwebcontact-form .pweb-msg .pweb-error {
     color: #aa0000;
 }
 form.pwebcontact-form .pweb-msg-before {
-    margin-bottom: 5px;
+    margin-bottom: 20px;
 }
 form.pwebcontact-form .pweb-msg-after {
-
+    margin-top: 20px;
 }
 form.pwebcontact-form .pweb-msg-button,
 form.pwebcontact-form .pweb-msg-popup {
