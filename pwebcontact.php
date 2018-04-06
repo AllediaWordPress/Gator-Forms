@@ -3,7 +3,7 @@
  * Plugin Name: Gator Forms
  * Plugin URI: https://gatorforms.com
  * Description: Easy for beginners, customizable for pros!
- * Version: 2.4.0-rc1
+ * Version: 2.4.0-rc2
  * Text Domain: pwebcontact
  * Author: Gator Forms
  * Author URI: https://gatorforms.com
