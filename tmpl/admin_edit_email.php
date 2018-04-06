@@ -15,7 +15,7 @@ function_exists('add_action') or die;
 ?>
 
 <h3 class="pweb-steps">
-    <?php _e('Choose your answer scheme', 'pwebcontact'); ?>
+    <?php _e('Choose an existing answer scheme', 'pwebcontact'); ?>
 
     <?php echo $this->_get_field_control(array(
         'type' => 'select',
