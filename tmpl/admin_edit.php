@@ -21,27 +21,34 @@ function_exists('add_action') or die;
             <h2 style="display:none"></h2>
             <?php $this->_display_messages(); ?>
 
-            <label>
-                <h2><?php _e('Form title', 'pwebcontact'); ?></h2>
-                <input type="text" name="title" value="<?php echo esc_attr($this->data->title); ?>" placeholder="<?php esc_attr_e( 'Form name', 'pwebcontact' ); ?>">
-            </label>
+            <div class="pweb-c-navbar pweb-u-flex-row">
+                <label>
+                    <h2><?php _e('Form title', 'pwebcontact'); ?></h2>
+                    <input type="text" name="title" value="<?php echo esc_attr($this->data->title); ?>" placeholder="<?php esc_attr_e( 'Form name', 'pwebcontact' ); ?>">
+                </label>
 
-            <button type="submit" class="button button-primary" id="pweb-save-button">
-                <i class="glyphicon glyphicon-floppy-disk"></i> <span><?php _e( 'Save' ); ?></span>
-            </button>
-            <button type="button" class="button" id="pweb-close-button" onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact' ); ?>'">
-                <i class="glyphicon glyphicon-remove"></i> <span><?php _e( 'Close' ); ?></span>
-            </button>
-
-            <!-- FREE START -->
-            <button class="button button-primary right pweb-buy" id="pweb-buy-button" data-href="<?php echo $this->buy_url; ?>" data-role="anchor">
-                <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
-                <span>&amp; <?php _e( 'Get Support', 'pwebcontact' ); ?></span>
-            </button>
-            <!-- FREE END -->
-            <a class="button button-primary right" id="pweb-docs-button" href="<?php echo $this->documentation_url; ?>" target="_blank">
-                <i class="glyphicon glyphicon-question-sign"></i> <span><?php _e( 'Documentation' ); ?></span>
-            </a>
+                <div class="pweb-u-flex-row">
+                    <div>
+                        <button type="submit" class="button button-primary" id="pweb-save-button">
+                            <i class="glyphicon glyphicon-floppy-disk"></i> <span><?php _e( 'Save' ); ?></span>
+                        </button>
+                        <button type="button" class="button" id="pweb-close-button" onclick="document.location.href='<?php echo admin_url( 'admin.php?page=pwebcontact' ); ?>'">
+                            <i class="glyphicon glyphicon-remove"></i> <span><?php _e( 'Close' ); ?></span>
+                        </button>
+                    </div>
+                    <div>
+                        <!-- FREE START -->
+                        <button class="button button-primary right pweb-buy" id="pweb-buy-button" data-href="<?php echo $this->buy_url; ?>" data-role="anchor">
+                            <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy Pro', 'pwebcontact' ); ?>
+                            <span>&amp; <?php _e( 'Get Support', 'pwebcontact' ); ?></span>
+                        </button>
+                        <!-- FREE END -->
+                        <a class="button button-primary right" id="pweb-docs-button" href="<?php echo $this->documentation_url; ?>" target="_blank">
+                            <i class="glyphicon glyphicon-question-sign"></i> <span><?php _e( 'Documentation' ); ?></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <h2 class="nav-tab-wrapper" id="pweb-tabs">

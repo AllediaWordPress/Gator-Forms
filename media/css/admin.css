@@ -1205,3 +1205,11 @@ body .ui-tooltip {
     line-height: 31px;
 }
 
+.pweb-c-navbar {
+  justify-content: space-between;
+}
+
+.pweb-u-flex-row {
+  display: flex;
+  flex-direction: row;
+}
