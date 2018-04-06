@@ -102,7 +102,7 @@ function_exists('add_action') or die;
             ),
             array(
                 'value' => 1,
-                'name' => 'When field &bdquo;Send copy to yourself&rdquo; is checked'
+                'name' => 'When field &quot;Send copy to yourself&quot; is checked'
             )
         )
     )); ?>
@@ -366,7 +366,7 @@ function_exists('add_action') or die;
                     'type' => 'text',
                     'name' => 'email_from',
                     'label' => 'Sender email',
-                    'desc' => sprintf(__('Leave blank to use email: &bdquo;%s&rdquo; set in %s.', 'pwebcontact'), $this->_get_param('email_from', get_bloginfo('admin_email'), 'settings'),
+                    'desc' => sprintf(__('Leave blank to use email: &quot;%s&quot; set in %s.', 'pwebcontact'), $this->_get_param('email_from', get_bloginfo('admin_email'), 'settings'),
                             '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>')
                         . ($isLocalhsot ? '' : sprintf(__('Sender email should be in the same domain as your website, example: %s'), 'info@'.$domain)),
                     'class' => 'pweb-filter-email'
@@ -376,7 +376,7 @@ function_exists('add_action') or die;
                     'type' => 'text',
                     'name' => 'email_from_name',
                     'label' => 'Sender name',
-                    'desc' => sprintf(__('Leave blank to use name: &bdquo;%s&rdquo; set in %s.', 'pwebcontact'), $this->_get_param('email_from_name', get_bloginfo('name'), 'settings'),
+                    'desc' => sprintf(__('Leave blank to use name: &quot;%s&quot; set in %s.', 'pwebcontact'), $this->_get_param('email_from_name', get_bloginfo('name'), 'settings'),
                         '<a href="'.admin_url('admin.php?page=pwebcontact&task=settings').'" target="_blank">'.__('Contact Form Settings', 'pwebcontact').'</a>')
                 )); ?>
             </div>
