@@ -43,7 +43,7 @@ $this->_set_pro_options('field_types', array(
 ?>
 
 <h3 class="pweb-steps">
-    <?php _e('Choose predefined form composition', 'pwebcontact'); ?>
+    <?php _e('Choose a form template', 'pwebcontact'); ?>
 
     <?php echo $this->_get_field_control(array(
         'type' => 'filelist',
@@ -63,11 +63,11 @@ $this->_set_pro_options('field_types', array(
         )
     )); ?>
 
-    <?php _e('or drag and drop fields', 'pwebcontact'); ?>
 
     <button class="button button-primary pweb-next-tab-button" type="button">
         <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
     </button>
+    <?php _e('drag-and-drop fields to create your own form', 'pwebcontact'); ?>
 </h3>
 
 <!-- FREE START -->
