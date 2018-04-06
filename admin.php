@@ -865,7 +865,7 @@ pwebcontact_admin.is_pro = true;
                     if ($licenseKeyStatus === 'inactive') {
                         $activationStatus = self::activateLicenseKey($newDlid);
                         if (is_string($activationStatus)) {
-                            throw new Exception(__('Download ID status:', 'pwebcontact') . ' ' . $activationStatus);
+                            throw new Exception(__('License Key status:', 'pwebcontact') . ' ' . $activationStatus);
                         }
                     }
 
@@ -898,7 +898,7 @@ pwebcontact_admin.is_pro = true;
                         set_site_transient('update_plugins', $updatesCache);
                     }
                 } else {
-                    throw new Exception(__('Download ID status:', 'pwebcontact') . ' ' . $licenseKeyStatus);
+                    throw new Exception(__('License Key status:', 'pwebcontact') . ' ' . $licenseKeyStatus);
                 }
             }
 
