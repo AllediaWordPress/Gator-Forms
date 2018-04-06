@@ -50,11 +50,6 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
         $(window).trigger("resize");
     });
 
-    $tabs.find(".pweb-next-tab-button").click(function(e){
-        e.preventDefault();
-        $( "#"+ $(this).closest(".nav-tab-content").attr("id").replace("-content", "") ).next().click();
-    });
-
     // Location tabs
     $("#pweb-location-steps .pweb-location-step-tab").click(function(e){
         e.preventDefault();
