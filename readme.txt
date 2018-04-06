@@ -198,6 +198,9 @@ Yes it will, however you only get access to new versions and support for as long
 
 = 2.4.0 / @todo =
 
+Removed:
+* Removed Tips tab
+
 Changed:
 * Updated copyright info
 * Update branding info
