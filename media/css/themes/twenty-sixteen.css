@@ -89,12 +89,10 @@ form.pwebcontact-form input.pweb-radio {
     border: none;
 }
 
-@media (min-width: 768px) {
+.pwebcontact.pweb-slidebox .pwebcontact-container {
+    padding: 30px 30px 10px;
+}
 
-    .pwebcontact.pweb-slidebox .pwebcontact-container {
-        padding: 30px 30px 10px;
-    }
-    .pwebcontact.pweb-slidebox.pweb-left.pweb-vertical .pwebcontact-container {
-        padding-left: 70px;
-    }
+.pwebcontact.pweb-slidebox.pweb-left.pweb-vertical .pwebcontact-container {
+    padding-left: 70px;
 }
