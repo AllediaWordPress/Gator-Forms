@@ -63,10 +63,6 @@ $this->_set_pro_options('field_types', array(
         )
     )); ?>
 
-
-    <button class="button button-primary pweb-next-tab-button" type="button">
-        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
-    </button>
     <?php _e('drag-and-drop fields to create your own form', 'pwebcontact'); ?>
 </h3>
 

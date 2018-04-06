@@ -42,10 +42,6 @@ function_exists('add_action') or die;
     )); ?>
 
     <?php _e('or define your own', 'pwebcontact'); ?>
-
-    <button class="button button-primary pweb-next-tab-button" type="button">
-        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
-    </button>
 </h3>
 
 <?php echo $this->_get_field(array(

@@ -14,10 +14,6 @@ function_exists('add_action') or die;
 
 <h3 class="pweb-steps">
     <?php _e('Choose predefined theme or create own in customizer', 'pwebcontact'); ?>
-
-    <button class="button button-primary pweb-next-tab-button" type="button">
-        <?php _e( 'Next', 'pwebcontact' ); ?> <i class="glyphicon glyphicon-chevron-right"></i>
-    </button>
 </h3>
 
 <?php $themes = $this->_get_themes(); ?>
