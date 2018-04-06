@@ -54,7 +54,7 @@ function_exists('add_action') or die;
         <h2 class="nav-tab-wrapper" id="pweb-tabs">
             <a href="#pweb-tab-location" id="pweb-tab-location" class="nav-tab nav-tab-active">
                 <i class="glyphicon glyphicon-th-large"></i>
-                <?php esc_html_e( 'Location & Effects', 'pwebcontact' ); ?>
+                <?php esc_html_e( 'Location', 'pwebcontact' ); ?>
             </a>
             <a href="#pweb-tab-fields" id="pweb-tab-fields" class="nav-tab">
                 <i class="glyphicon glyphicon-th-list"></i>
