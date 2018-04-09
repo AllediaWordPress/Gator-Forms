@@ -3,7 +3,7 @@
   "description": "Designed to look perfect with WordPress 2015 default theme.",
   "params": {
     "rounded": 0,
-    "shadow": 1,
+    "shadow": 0,
     "gradient": 2,
     "labels_position": "inline",
     "labels_invalid_color": "#aa0000",
