@@ -47,9 +47,6 @@ form.pwebcontact-form .btn {
     padding: 0.8em 1.8em;
     text-shadow: none !important;
     font-weight: 800;
-    border-radius: 3px !important;
-    -moz-border-radius: 3px !important;
-    -webkit-border-radius: 3px !important;
 }
 
 form.pwebcontact-form button[type="submit"].btn {
@@ -86,10 +83,12 @@ form.pwebcontact-form input.pweb-radio {
 .pweb-radius form.pwebcontact-form input.pweb-input,
 .pweb-radius form.pwebcontact-form select,
 .pweb-radius form.pwebcontact-form textarea,
-.pweb-radius form.pwebcontact-form .pweb-field-shadow {
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+.pweb-radius form.pwebcontact-form .pweb-field-shadow,
+.pweb-radius form.pwebcontact-form button,
+.pweb-radius form.pwebcontact-form .btn {
+    border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    -webkit-border-radius: 3px !important;
 }
 
 /* Toggler rounded */

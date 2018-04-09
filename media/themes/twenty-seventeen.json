@@ -2,7 +2,7 @@
     "title": "Twenty Seventeen",
     "description": "Designed to look perfect with WordPress 2017 default theme.",
     "params": {
-    "rounded": 0,
+    "rounded": 1,
     "shadow": 1,
     "gradient": 2,
     "labels_position": "inline",
