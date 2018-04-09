@@ -8,6 +8,10 @@
 
 @import url('https://fonts.googleapis.com/css?family=Libre+Franklin:400,800');
 
+form.pwebcontact-form .pweb-label label {
+    font-weight: 800;
+}
+
 form.pwebcontact-form input.pweb-input,
 form.pwebcontact-form select {
     line-height: 40px;
