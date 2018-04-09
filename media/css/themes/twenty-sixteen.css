@@ -6,8 +6,8 @@
  * @author Emil Lament
  */
 
-@import url('https://fonts.googleapis.com/css?family=Noto+Serif');
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans:700');
+@import url('https://fonts.googleapis.com/css?family=Merriweather');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700');
 
 form.pwebcontact-form input.pweb-input,
 form.pwebcontact-form select {
@@ -45,15 +45,18 @@ form.pwebcontact-form .pweb-field-shadow {
 
 form.pwebcontact-form button,
 form.pwebcontact-form .btn {
-    padding: 0.5em 0.5em;
-    font-family: Noto Sans, sans-serif !important;
+    padding: 0.6em 0.8em;
+    font-family: Montserrat, sans-serif !important;
     text-shadow: none !important;
     text-transform: uppercase;
     font-weight: 700;
+    border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    -webkit-border-radius: 2px !important;
 }
 
 form.pwebcontact-form button[type="submit"].btn {
-    padding: 0.7917em 1.5em;
+    padding: 0.65em 0.85em;
 }
 
 form.pwebcontact-form button:hover,
@@ -62,8 +65,8 @@ form.pwebcontact-form button:active,
 form.pwebcontact-form .btn:hover,
 form.pwebcontact-form .btn:focus,
 form.pwebcontact-form .btn:active {
-    background: #707070 !important;
-    border-color: #707070 !important;
+    background: #007acc !important;
+    border-color: #007acc !important;
 }
 
 .pweb-calendar-btn .glyphicon {
@@ -73,7 +76,7 @@ form.pwebcontact-form .btn:active {
 
 form.pwebcontact-form input.pweb-checkbox,
 form.pwebcontact-form input.pweb-radio {
-    margin: 7px 7px 0 0;
+    margin: 5px 7px 0 0;
     float: left;
 }
 
@@ -83,7 +86,108 @@ form.pwebcontact-form input.pweb-radio {
     border: none;
 }
 
+.pweb-radius form.pwebcontact-form input.pweb-input,
+.pweb-radius form.pwebcontact-form select,
+.pweb-radius form.pwebcontact-form textarea,
+.pweb-radius form.pwebcontact-form .pweb-field-shadow {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+/* Toggler rounded */
+
+.pwebcontact_toggler.pweb-radius {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.pweb-left .pwebcontact_toggler.pweb-radius {
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.pweb-right .pwebcontact_toggler.pweb-radius {
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+}
+
+.pweb-top .pwebcontact_toggler.pweb-radius {
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+}
+
+.pweb-bottom .pwebcontact_toggler.pweb-radius {
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+
 /* Slide */
+
+.pwebcontact.pweb-slidebox.pweb-left.pweb-radius .pwebcontact-container {
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.pwebcontact.pweb-slidebox.pweb-right.pweb-radius .pwebcontact-container {
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+}
+
+.pwebcontact.pweb-slidebox.pweb-left.pweb-toggler-slide.pweb-radius .pwebcontact-container {
+    -webkit-border-radius: 0 0 4px 0;
+    -moz-border-radius: 0 0 4px 0;
+    border-radius: 0 0 4px 0;
+}
+
+.pwebcontact.pweb-slidebox.pweb-right.pweb-toggler-slide.pweb-radius .pwebcontact-container {
+    -webkit-border-radius: 0 0 0 4px;
+    -moz-border-radius: 0 0 0 4px;
+    border-radius: 0 0 0 4px;
+}
+
+.pwebcontact.pweb-slidebox.pweb-top.pweb-radius .pwebcontact-container {
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+}
+
+.pwebcontact.pweb-slidebox.pweb-bottom.pweb-radius .pwebcontact-container {
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+
+.pwebcontact.pweb-slidebox.pweb-top.pweb-toggler-slide.pweb-offset-left.pweb-radius .pwebcontact-container {
+    -webkit-border-radius: 0 0 4px 0;
+    -moz-border-radius: 0 0 4px 0;
+    border-radius: 0 0 4px 0;
+}
+
+.pwebcontact.pweb-slidebox.pweb-top.pweb-toggler-slide.pweb-offset-right.pweb-radius .pwebcontact-container {
+    -webkit-border-radius: 0 0 0 4px;
+    -moz-border-radius: 0 0 0 4px;
+    border-radius: 0 0 0 4px;
+}
+
+.pwebcontact.pweb-slidebox.pweb-bottom.pweb-toggler-slide.pweb-offset-left.pweb-radius .pwebcontact-container {
+    -webkit-border-radius: 0 4px 0 0;
+    -moz-border-radius: 0 4px 0 0;
+    border-radius: 0 4px 0 0;
+}
+
+.pwebcontact.pweb-slidebox.pweb-bottom.pweb-toggler-slide.pweb-offset-right.pweb-radius .pwebcontact-container {
+    -webkit-border-radius: 4px 0 0 0;
+    -moz-border-radius: 4px 0 0 0;
+    border-radius: 4px 0 0 0;
+}
 
 .pwebcontact.pweb-slidebox.pweb-vertical.pweb-left .pwebcontact_toggler {
     top: 30px;
