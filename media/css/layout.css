@@ -926,7 +926,7 @@ form.pwebcontact-form label.invalid a {
 .pweb-labels-inline form.pwebcontact-form .pweb-field-container {
     margin-bottom: 12px;
 }
-.pweb-labels-inline form.pwebcontact-form .pweb-row:last-of-type .pweb-field-container {
+form.pwebcontact-form .pweb-row:last-of-type .pweb-field-container {
     margin-bottom: 0;
 }
 .pweb-labels-inline form.pwebcontact-form .pweb-label {

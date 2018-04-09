@@ -6,10 +6,14 @@
  * @author Emil Lament
  */
 
-@import url('https://fonts.googleapis.com/css?family=Libre+Franklin:400,800');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+
+form.pwebcontact-form .pweb-field-container {
+    margin-bottom: 20px;
+}
 
 form.pwebcontact-form .pweb-label label {
-    font-weight: 800;
+    font-weight: 700;
 }
 
 form.pwebcontact-form input.pweb-input,
@@ -54,7 +58,12 @@ form.pwebcontact-form .btn {
 }
 
 form.pwebcontact-form button[type="submit"].btn {
-    padding: 1em 2em;
+    padding: 0.5em 1.5em;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 form.pwebcontact-form button:hover,
