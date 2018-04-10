@@ -704,9 +704,6 @@ form.pwebcontact-form .pweb-msg .pweb-error {
 form.pwebcontact-form .pweb-msg-before {
     margin-bottom: 20px;
 }
-form.pwebcontact-form .pweb-msg-after {
-    /*margin-top: 20px;*/
-}
 form.pwebcontact-form .pweb-msg-after > .pweb-success,
 form.pwebcontact-form .pweb-msg-after > .pweb-error,
 form.pwebcontact-form .pweb-msg-after > .pweb-progress {
