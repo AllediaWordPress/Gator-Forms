@@ -503,9 +503,9 @@ div.pweb-modal *,
 }
 
 .pwebcontact_toggler.pweb-shadow {
-    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(255,255,255,0.2) inset;
-    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(255,255,255,0.2) inset;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(255,255,255,0.2) inset;
+    -moz-box-shadow: 0 0 70px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 70px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 70px rgba(0, 0, 0, 0.5);
 }
 .pwebcontact.pweb-offset-left.pweb-top .pwebcontact_toggler.pweb-shadow {
     -moz-box-shadow: -1px 3px 3px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(255,255,255,0.2) inset;
@@ -528,9 +528,9 @@ div.pweb-modal *,
     box-shadow: 1px -3px 3px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(255,255,255,0.2) inset;
 }
 .pwebcontact.pweb-vertical.pweb-left .pwebcontact_toggler.pweb-shadow {
-    -moz-box-shadow: 3px -1px 3px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(255,255,255,0.2) inset;
-    -webkit-box-shadow: 3px -1px 3px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(255,255,255,0.2) inset;
-    box-shadow: 3px -1px 3px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(255,255,255,0.2) inset;
+    -moz-box-shadow: 0 0 70px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 70px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 70px rgba(0, 0, 0, 0.5);
 }
 .pwebcontact.pweb-vertical.pweb-right .pwebcontact_toggler.pweb-shadow {
     -moz-box-shadow: -3px -1px 3px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(255,255,255,0.2) inset;
@@ -702,10 +702,12 @@ form.pwebcontact-form .pweb-msg .pweb-error {
     color: #aa0000;
 }
 form.pwebcontact-form .pweb-msg-before {
-    margin-bottom: 5px;
+    margin-bottom: 20px;
 }
-form.pwebcontact-form .pweb-msg-after {
-
+form.pwebcontact-form .pweb-msg-after > .pweb-success,
+form.pwebcontact-form .pweb-msg-after > .pweb-error,
+form.pwebcontact-form .pweb-msg-after > .pweb-progress {
+    margin-top: 20px;
 }
 form.pwebcontact-form .pweb-msg-button,
 form.pwebcontact-form .pweb-msg-popup {
@@ -920,6 +922,9 @@ form.pwebcontact-form label.invalid a {
  */
 .pweb-labels-inline form.pwebcontact-form .pweb-field-container {
     margin-bottom: 12px;
+}
+form.pwebcontact-form .pweb-row:last-of-type .pweb-field-container {
+    margin-bottom: 0;
 }
 .pweb-labels-inline form.pwebcontact-form .pweb-label {
     clear: both;

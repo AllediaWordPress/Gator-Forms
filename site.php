@@ -604,7 +604,7 @@ class PWebContact
                         $declarations[] = 'text-shadow:0 1px 1px rgba(0,0,0,0.5)';
                     }
                     else {
-                        $declarations[] = 'text-shadow:0 1px 1px rgba(255,255,255,0.5)';
+                        $declarations[] = 'text-shadow: none';
                     }
 
                     unset($secondary_color);
