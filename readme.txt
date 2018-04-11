@@ -219,151 +219,151 @@ Removed:
 Fixed:
 * Fixed bug where it was impossible to copy form shortcodes to clipboard using keyboard hotkeys
 
-= 2.3.0 / 27-07-2016 =
+= 2.3.0 / 2016-07-27 =
 * Pass all form fields to Mailchimp and Freshmail
 * Updated Google Spreadsheets API to latest v4
 * Fix ticket counter to not reset after plugin update
 * Load custom email templates and fields settings from upload directory
 * Load custom.css file from upload directory
 
-= 2.2.2 / 25-05-2016 =
+= 2.2.2 / 2016-05-25 =
 * Fixed plugin updating form plugins list view
 
-= 2.2.1 / 23-05-2016 =
+= 2.2.1 / 2016-05-23 =
 * Updated reCaptcha to latest version
 * Facebook Pixel tracking
 
-= 2.2.0 / 10-05-2016 =
+= 2.2.0 / 2016-05-10 =
 * Fixed CSS3 vertical toggler in Safari
 * Fixed sending message when there are two email fields and one is empty
 
-= 2.2.0 PRO / 10-05-2016 =
+= 2.2.0 PRO / 2016-05-10 =
 * Google Docs integration
 
-= 2.1.9 / 26-04-2016 =
+= 2.1.9 / 2016-04-26 =
 * Fixed do not wrap text in CSS3 vertical toggler
 * Save subscriber name in Mailchimp integration
 * Fixed usage of HTML code in JavaScript events
 
-= 2.1.8 / 20-04-2016 =
+= 2.1.8 / 2016-04-20 =
 * Fixed displaying custom label for field list of recipients
 
-= 2.1.7 / 19-04-2016 =
+= 2.1.7 / 2016-04-19 =
 * Fixed CSS3 vertical toggler close name
 
-= 2.1.6 / 05-04-2016 =
+= 2.1.6 / 2016-04-05 =
 * Fixed compatiblity with WordPress 4.5
 
-= 2.1.5 / 25-03-2016 =
+= 2.1.5 / 2016-03-25 =
 * CSS3 vertical toggler
 * Parse shortcodes in Custom HTML field
 * Updated jQuery Validation plugin
 + Updated jQuery File Upload plugin
 + Updated jQuery UI Datepicker CSS
 
-= 2.1.4 / 01-02-2016 =
+= 2.1.4 / 2016-02-01 =
 * Fixed reCaptcha stoken expired on some servers
 
-= 2.1.3 / 18-12-2015 =
+= 2.1.3 / 2015-12-18 =
 * Fixed error when displaying form by shortcode on some themes
 * Fixed input field height for big font size
 * Added option to autocomplete fields by Browser
 * Added MailChimp double opt-in
 * Bootstrap 3.3.6
 
-= 2.1.2 / 28-09-2015 =
+= 2.1.2 / 2015-09-28 =
 * Updated list of Operating Systems
 * Removed predefined styles with were deprecated
 * MailChimp integration
 * FreshMail integration
 
-= 2.1.1 / 19-08-2015 =
+= 2.1.1 / 2015-08-19 =
 * Added option to force loading JS and CSS resources at all pages
 * Fixed changing styles of other forms when form is opened in modal window
 * Fixed size of contact form in sidebar widget with Twenty-Fifteen WordPress theme
 * Fixed themes: Free, Easter, Google Material, Note, Notebook, Dev
 
-= 2.1.0 / 12-08-2015 =
+= 2.1.0 / 2015-08-12 =
 * Added Google Recaptcha field in PRO version
 * Notebook Theme
 * Fixed hidding tooltips in Bootstrap 3
 * Fixed modal backdrop opacity in Bootstrap 3
 
-= 2.0.17 / 23-07-2015 =
+= 2.0.17 / 2015-07-23 =
 * Fixed attaching files from other forms when there are multiple forms with upload
 
-= 2.0.16 / 22-07-2015 =
+= 2.0.16 / 2015-07-22 =
 * Fixed URL to Google Fonts when visiting website with HTTPS protocol
 * Bootstrap 3.3.5
 * Updated jQuery Validation plugin
 * Updated jQuery File Upload server handler
 
-= 2.0.15 / 12-06-2015 =
+= 2.0.15 / 2015-06-12 =
 * Fixed PHP notice in ajax response if email sent only to admin in FREE version
 * Removed some unused code in FREE version
 * Added missing border in Google Material Design theme
 
-= 2.0.14 / 11-06-2015 =
+= 2.0.14 / 2015-06-11 =
 * Google Material Design theme
 * Fixed display of WordPress messages and errors
 * Notice about missing Download ID in PRO version
 
-= 2.0.13 / 29-05-2015 =
+= 2.0.13 / 2015-05-29 =
 * Bootstrap 3.3.4
 * Fixed automatic downgrade from PRO to FREE version
 * Added Download ID option in main settings of Contact Form
 
-= 2.0.12 / 25-05-2015 =
+= 2.0.12 / 2015-05-25 =
 * Fixed installation error on some websites
 
-= 2.0.11 / 22-05-2015 =
+= 2.0.11 / 2015-05-22 =
 * Twenty Fifteen theme
 
-= 2.0.10 / 30-03-2015 =
+= 2.0.10 / 2015-03-30 =
 * Easter theme
 
-= 2.0.9 / 25-03-2015 =
+= 2.0.9 / 2015-03-25 =
 * Updated readme.txt
 
-= 2.0.8 / 24-03-2015 =
+= 2.0.8 / 2015-03-24 =
 * Fixed scrolling modal window content on iPhone
 
-= 2.0.7 / 24-02-2015 =
+= 2.0.7 / 2015-02-24 =
 * Bootstrap 3.3.2
 * Responsive contact form in slidebox when opened and viewport has changed
 * Updated jQuery File Upload plugin
 * Fixed validation of required upload when there are more than one contact form with required upload
 
-= 2.0.6 / 11-02-2015 =
+= 2.0.6 / 2015-02-11 =
 * Fixed sending emails in HTML format
 * Fixed superformal email template
 
-= 2.0.5 / 10-12-2014 =
+= 2.0.5 / 2014-12-10 =
 * Added option to change upload button label
 * Fixed sending emails in HTML format
 * Fixed Lightbox effects
 
-= 2.0.4 / 02-12-2014 =
+= 2.0.4 / 2014-12-02 =
 * Use PHP native filesystem when WP_Filesystem is not working
 * Bootstrap 3.3.1
 
-= 2.0.3 / 14-11-2014 =
+= 2.0.3 / 2014-11-14 =
 * Fixed sending email when there is missing WordPress website name
 
-= 2.0.2 / 12-11-2014 =
+= 2.0.2 / 2014-11-12 =
 * Bootstrap 3.3.0
 
-= 2.0.1 / 06-11-2014 =
+= 2.0.1 / 2014-11-06 =
 * New predefined forms
 * Support for Bootstrap 3.3
 * Fixed using HTTP on front-end when HTTPS is enabled for back-end
 
-= 2.0.0 PRO / 27-10-2014 =
+= 2.0.0 PRO / 2014-10-27 =
 * Pretty themes with customizer
 * Improved caching CSS and Toggler images with text
 * Added WordPress PHP action before email send, e.g. to store data
 
-= 2.0.0 / 27-10-2014 =
+= 2.0.0 / 2014-10-27 =
 * Unlocked most of PRO options
 * Unlocked layouts: slidebox, lightbox, accordion, static
 * Unlocked email subject, BCC and Reply-To
@@ -381,42 +381,42 @@ Fixed:
 * Added new option to disable scrolling page to success message
 * Added new option to disable caching CSS in a file
 
-= 1.0.10 / 18-09-2014 =
+= 1.0.10 / 2014-09-18 =
 * fixed vertical toggler text on some servers with PHP 5.3 and GD 2.0.34, mainly for language ru-center
 
-= 1.0.9 / 16-09-2014 =
+= 1.0.9 / 2014-09-16 =
 * fixed opening Lightbox with transfer effects under Bootstrap 3
 
-= 1.0.8 / 08-09-2014 =
+= 1.0.8 / 2014-09-08 =
 * fixed opening Lightbox with custom link or menu when using appear effect and URL with #pwebcontactID_toggler
 
-= 1.0.7 / 20-08-2014 =
+= 1.0.7 / 2014-08-20 =
 * Fixed field type of: List of recipients
 * Updated jQuery File Upload, Validation and Cookie plugin
 * Updated Bootstrap to version 3.2.0
 
-= 1.0.6 / 04-08-2014 =
+= 1.0.6 / 2014-08-04 =
 * Fixed loading multiple contact forms at one page
 
-= 1.0.5 / 25-07-2014 =
+= 1.0.5 / 2014-07-25 =
 * Open contact form with menu item
 * Informations about custom links and JavaScript code for opening form and preloading field values
 * Informations about Google Analytics tracking
 
-= 1.0.4 / 22-07-2014 =
+= 1.0.4 / 2014-07-22 =
 * Automatic updates for PRO version
 
-= 1.0.3 / 21-07-2014 =
+= 1.0.3 / 2014-07-21 =
 * Fixed copying fields when coyping a form
 * Improved display of Rules & Terms in modal window
 
-= 1.0.2 / 17-07-2014 =
+= 1.0.2 / 2014-07-17 =
 * Fixed some PHP notices
 
-= 1.0.1 / 16-07-2014 =
+= 1.0.1 / 2014-07-16 =
 * Display updates feed
 
-= 1.0.0 / 15-07-2014 =
+= 1.0.0 / 2014-07-15 =
 * First release
 
 == Upgrade Notice ==
