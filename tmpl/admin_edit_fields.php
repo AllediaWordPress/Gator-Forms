@@ -70,9 +70,9 @@ $this->_set_pro_options('field_types', array(
 <div id="pweb_fields_pro_warning" class="pweb-alert pweb-alert-info" style="display:none">
     <?php _e('You need to go PRO :)', 'pwebcontact'); ?>
     <?php _e('You have chosen some PRO fields. You can still save your form, but to display it buy PRO Version', 'pwebcontact'); ?>
-    <button class="button button-primary pweb-buy">
+    <a href="https://gatorforms.com/pro/?utm_source=backend&utm_medium=button&utm_campaign=upgrade_to_pro&utm_content=wordpress.org" target="_blank" class="button button-primary pweb-buy">
         <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy', 'pwebcontact' ); ?>
-    </button>
+    </a>
 </div>
 <!-- FREE END -->
 
