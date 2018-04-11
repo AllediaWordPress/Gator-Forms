@@ -198,12 +198,6 @@ Yes it will, however you only get access to new versions and support for as long
 
 = 2.4.0 / @todo =
 
-Removed:
-* Removed Tips tab
-* Removed Twenty Twelve theme
-* Removed Twenty Thirteen theme
-* Removed Twenty Fourteen theme
-
 Added:
 * Added Twenty Sixteen theme
 * Added Twenty Seventeen theme
@@ -215,6 +209,12 @@ Changed:
 * Minor internal code enhancements
 * Minor UI tweaks
 * Updated Twenty Fifteen theme
+
+Removed:
+* Removed Tips tab
+* Removed Twenty Twelve theme
+* Removed Twenty Thirteen theme
+* Removed Twenty Fourteen theme
 
 Fixed:
 * Fixed bug where it was impossible to copy form shortcodes to clipboard using keyboard hotkeys
