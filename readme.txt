@@ -58,8 +58,6 @@ Try it, it's easy!
 
 *Functions written in italic may be limited in a free version*
 
-**Visit our [demo page](https://www.perfect-web.co/wordpress-plugins/contact-form?utm_source=backend&utm_medium=installer&utm_campaign=WPD#page-demo) to see how cool they actually are ;)**
-
 = Compatibility & Requirements =
 
 * WordPress 3.5+
