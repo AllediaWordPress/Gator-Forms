@@ -1,13 +1,13 @@
 /**
  * @version 1.0.0
- * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @package Gator Forms
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
 
 /* files list */
-.pweb-rtl .pweb-uploader .files .size, 
+.pweb-rtl .pweb-uploader .files .size,
 .pweb-rtl .pweb-uploader .files .error,
 .pweb-rtl .pweb-uploader .files .cancel,
 .pweb-rtl .pweb-uploader .files .delete {

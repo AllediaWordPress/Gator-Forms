@@ -1,0 +1,69 @@
+/**
+ * @version 2.0.0
+ * @package Gator Forms
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
+ * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @author Piotr Moćko
+ */
+
+/* Font family and size */
+.pweb-button-red form.pwebcontact-form button,
+.pweb-button-red form.pwebcontact-form .btn {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+
+/* Links */
+.pweb-button-red form.pwebcontact-form a,
+.pweb-button-red .pweb-button-close{
+    color: #bd362f;
+    text-decoration: none;
+    background: none;
+}
+.pweb-button-red form.pwebcontact-form a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons */
+.pweb-button-red form.pwebcontact-form button,
+.pweb-button-red form.pwebcontact-form .btn {
+    color: #fff !important;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    border: 1px solid;
+    border-color: #bd362f #bd362f #A82E2A;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    background: #bd362f;
+    background-image: -moz-linear-gradient(top,#ee5f5b,#bd362f);
+    background-image: -ms-linear-gradient(top,#ee5f5b, #bd362f);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#ee5f5b),to(#bd362f));
+    background-image: -webkit-linear-gradient(top,#ee5f5b,#bd362f);
+    background-image: -o-linear-gradient(top,#ee5f5b,#bd362f);
+    background-image: linear-gradient(to bottom,#ee5f5b,#bd362f);
+    background-repeat: repeat-x;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+/* Buttons shadow */
+.pweb-button-red.pweb-shadow form.pwebcontact-form button,
+.pweb-button-red.pweb-shadow form.pwebcontact-form .btn {
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+/* Buttons on mouse over */
+.pweb-button-red form.pwebcontact-form button:hover,
+.pweb-button-red form.pwebcontact-form .btn:hover {
+    background-color: #bd362f;
+    background-position: 0 -30px;
+}
+
+/* Calendar button */
+.pweb-button-red form.pwebcontact-form .pweb-calendar-btn {
+
+}
+/* Upload progress */
+.pweb-button-red .pweb-uploader .progress.progress-striped .bar.progress-bar {
+    background-color: #bd362f;
+    background-image: none;
+}

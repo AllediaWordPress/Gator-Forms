@@ -2,3 +2,4 @@ media/css/custom.css
 media/cache/*.css
 build/free/
 build/pro/
+*.zip

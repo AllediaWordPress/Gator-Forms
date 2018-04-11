@@ -1,0 +1,111 @@
+/**
+ * @version 2.0.0
+ * @package Gator Forms
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
+ * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @author Emil Lament
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:700');
+
+form.pwebcontact-form input.pweb-input,
+form.pwebcontact-form select {
+    line-height: 40px;
+    height: 40px;
+}
+
+form.pwebcontact-form input.pweb-input,
+form.pwebcontact-form select,
+form.pwebcontact-form textarea {
+    padding: 0.5em;
+    min-height: 40px;
+    line-height: 40px;
+}
+
+form.pwebcontact-form input.pweb-input:focus,
+form.pwebcontact-form select:focus,
+form.pwebcontact-form textarea:focus {
+    background: #fff !important;
+    color: #333 !important;
+}
+
+form.pwebcontact-form input.pweb-input:focus,
+form.pwebcontact-form select:focus,
+form.pwebcontact-form textarea:focus,
+form.pwebcontact-form input.pweb-input,
+form.pwebcontact-form select,
+form.pwebcontact-form textarea,
+form.pwebcontact-form button,
+form.pwebcontact-form .btn,
+form.pwebcontact-form .pweb-field-shadow {
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
+
+form.pwebcontact-form button,
+form.pwebcontact-form .btn {
+    padding: 0.5em 0.5em;
+    font-family: Noto Sans, sans-serif !important;
+    text-shadow: none !important;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+form.pwebcontact-form button[type="submit"].btn {
+    padding: 0.7917em 1.5em;
+}
+
+form.pwebcontact-form button:hover,
+form.pwebcontact-form button:focus,
+form.pwebcontact-form button:active,
+form.pwebcontact-form .btn:hover,
+form.pwebcontact-form .btn:focus,
+form.pwebcontact-form .btn:active {
+    background: #707070 !important;
+    border-color: #707070 !important;
+}
+
+.pweb-calendar-btn .glyphicon {
+    top: 6px;
+    right: 6px;
+}
+
+form.pwebcontact-form input.pweb-checkbox,
+form.pwebcontact-form input.pweb-radio {
+    margin: 7px 7px 0 0;
+    float: left;
+}
+
+.pweb-slidebox .pwebcontact-container,
+.pweb-modal .pwebcontact-container,
+.pweb-accordion-boxed .pwebcontact-container {
+    border: none;
+}
+
+/* Slide */
+
+.pwebcontact.pweb-slidebox.pweb-vertical.pweb-left .pwebcontact_toggler {
+    top: 30px;
+}
+
+.pwebcontact.pweb-slidebox .pwebcontact-container {
+    padding: 30px;
+}
+
+.pwebcontact.pweb-slidebox.pweb-shadow .pwebcontact-container {
+    -moz-box-shadow: 0 0 70px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 70px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 70px rgba(0, 0, 0, 0.5);
+}
+
+.pwebcontact.pweb-slidebox.pweb-left.pweb-vertical .pwebcontact-container {
+    padding-left: 70px;
+}
+
+/* Accordion */
+
+.pweb-accordion.pweb-accordion-boxed .pwebcontact-container {
+    padding: 30px;
+}

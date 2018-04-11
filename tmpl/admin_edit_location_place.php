@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 1.0.0
- * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @version 2.0.0
+ * @package Gator Forms
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -42,9 +42,9 @@ function_exists('add_action') or die;
 
 
 <!--<div class="pweb-advanced-options">
-    <a href="#" class="pweb-advanced-options-toggler">
+    <button type="button" class="button pweb-advanced-options-toggler">
         <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-    </a>
+    </button>
     <div class="pweb-advanced-options-content">
         <?php /*echo $this->_get_field(array(
             'type' => 'radio',

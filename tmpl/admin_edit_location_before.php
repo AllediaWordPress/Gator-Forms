@@ -1,8 +1,8 @@
 <?php
 /**
- * @version 1.0.0
- * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @version 2.0.0
+ * @package Gator Forms
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -51,14 +51,14 @@ function_exists('add_action') or die;
     'type' => 'text',
     'name' => 'toggler_name',
     'label' => 'Define text shown on Toggler Tab or Button',
-    'default' => 'Contact form',
+    'default' => 'Contact us',
     'parent' => array('handler_button', 'handler_tab')
 )); ?>
 
 <div class="pweb-advanced-options">
-    <a href="#" class="pweb-advanced-options-toggler">
+    <button type="button" class="button pweb-advanced-options-toggler">
         <i class="glyphicon glyphicon-cog"></i> <span><?php _e( 'Advanced', 'pwebcontact' ); ?></span> <i class="glyphicon glyphicon-chevron-down"></i>
-    </a>
+    </button>
     <div class="pweb-advanced-options-content">
         <?php echo $this->_get_field(array(
             'type' => 'radio',
@@ -100,145 +100,37 @@ function_exists('add_action') or die;
                     'name' => 'Bottom right',
                     'after' => '<br><span class="pwebposition-bottom-right"><span></span><span>&harr;</span></span>'
                 )
-            )
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'text',
-            'name' => 'offset',
-            'label' => 'Position offset [px, %]',
-            'tooltip' => 'Set length of red arrow in above `Toggler Tab position` with unit, e.g. 150px, 25%',
-            'class' => 'pweb-filter-unit pweb-input-mini',
-            'parent' => array('layout_type_slidebox', 'handler_tab')
+            ),
+            'html_after' =>
+                  '<div class="pweb_params_toggler_position_left pweb_params_toggler_position_right" style="display:none">'
+                    . '<div class="pweb-alert pweb-alert-info">'
+                        . __('You can flip Toggler Tab to vertical position by changing Advanced option in `Theme` tab', 'pwebcontact')
+                    . '</div>'
+                . '</div>'
         )); ?>
 
-        <?php echo $this->_get_field(array(
-            'type' => 'text',
-            'name' => 'zindex',
-            'label' => 'Layer level (CSS z-index)',
-            'tooltip' => 'Default level is 1030. If contact form appears under menu or other layers then enlarge default value.',
-            'class' => 'pweb-filter-int pweb-input-mini',
-            'parent' => array('layout_type_slidebox', 'layout_type_modal')
-        )); ?>
-
-
-
-        <?php echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'toggler_icon',
-            'label' => 'Toggler icon',
-            'header' => 'Toggler Tab',
-            'tooltip' => 'Select source for Toggler Tab icon.',
-            'default' => 0,
-            'parent' => array('handler_tab', 'handler_button'),
-            'class' => 'pweb-radio-group',
-            'options' => array(
-                array(
-                    'value' => 0,
-                    'name' => 'Disabled'
-                ),
-                array(
-                    'value' => 'glyphicon',
-                    'name' => 'Glyphicons',
-                    'is_parent' => true
-                ),
-                array(
-                    'value' => 'gallery',
-                    'name' => 'Gallery',
-                    'is_parent' => true
-                ),
-                array(
-                    'value' => 'custom',
-                    'name' => 'Custom image',
-                    'is_parent' => true
-                )
-            )
-        )); ?>
-
-        <?php echo $this->_get_field(array(
-            'type' => 'glyphicon',
-            'name' => 'toggler_glyphicon',
-            'label' => 'Glyphicons',
-            'parent' => array('toggler_icon_glyphicon')
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'filelist',
-            'name' => 'toggler_icon_gallery_image',
-            'label' => 'Gallery icon',
-            'tooltip' => 'Select image from directory: `wp-content/plugins/pwebcontact/media/images/icons`.',
-            'filter' => '\.(jpg|png|gif)$',
-            'directory' => 'media/images/icons',
-            'parent' => array('toggler_icon_gallery')
-        )); ?>
-        
-        <?php echo $this->_get_field(array(
-            'type' => 'image',
-            'name' => 'toggler_icon_custom_image',
-            'label' => 'Custom icon',
-            'tooltip' => 'Enter URL with custom image file with icon for Toggler Tab.',
-            'parent' => array('toggler_icon_custom'),
-            'class' => 'pweb-input-xlarge'
-        )); ?>
-
-
-
-        <?php echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'toggler_vertical',
-            'label' => 'Vertical Toggler Tab',
-            'header' => 'Vertical Toggler Tab',
-            'tooltip' => 'Flip toggler tab to vertical orientation.',
-            'desc' => 'Default vertical text color is white, change it in `Layout` tab.<br>Reload browser cache on front-end to see changes.<br>If you see rectangles instead of letters then you have to use other `TTF font`.<br>If text is cut then enlarge height of toggler in `Layout` tab. Width leave blank.',
-            'default' => 0,
-            'parent' => array('toggler_position_left', 'toggler_position_right'),
-            'class' => 'pweb-radio-group',
-            'options' => array(
-                array(
-                    'value' => 0,
-                    'name' => 'No',
-                    'is_parent' => true
-                ),
-                array(
-                    'value' => 1,
-                    'name' => 'Yes',
-                    'is_parent' => true,
-                    'disabled' => $this->_check_image_text_creation() !== true
-                )
-            )
-        )); ?>
-
-        <?php echo $this->_get_field(array(
-            'type' => 'radio',
-            'name' => 'toggler_rotate',
-            'label' => 'Rotate Toggler Tab text',
-            'tooltip' => 'Rotate text by 90&deg; to the left or right.',
-            'default' => 1,
-            'parent' => array('toggler_vertical_1'),
-            'options' => array(
-                array(
-                    'value' => -1,
-                    'name' => '-90&deg; (counter-clockwise)' //TODO add utf8 rotate arrow
-                ),
-                array(
-                    'value' => 1,
-                    'name' => ' 90&deg; (clockwise)' //TODO add utf8 rotate arrow
-                )
-            )
-        )); ?>
-
-        <?php echo $this->_get_field(array(
-            'type' => 'filelist',
-            'name' => 'toggler_font',
-            'label' => 'TTF font for vertical Toggler Tab text',
-            'tooltip' => 'Select font from directory: `wp-content/plugins/pwebcontact/media/fonts`. If it does not support your language then upload there other font file.',
-            'default' => 'NotoSans-Regular',
-            'filter' => '\.ttf$',
-            'directory' => 'media/fonts',
-            'strip_ext' => true,
-            'parent' => array('toggler_vertical_1')
-        )); ?>
-
+        <div class="pweb-clearfix">
+            <div class="pweb-width-50">
+            <?php echo $this->_get_field(array(
+                'type' => 'text',
+                'name' => 'offset',
+                'label' => 'Position offset [px, %]',
+                'tooltip' => 'Set length of red arrow in above `Toggler Tab position` with unit, e.g. 150px, 25%',
+                'class' => 'pweb-filter-unit pweb-input-mini',
+                'parent' => array('layout_type_slidebox', 'handler_tab')
+            )); ?>
+            </div>
+            <div class="pweb-width-50">
+            <?php echo $this->_get_field(array(
+                'type' => 'text',
+                'name' => 'zindex',
+                'label' => 'Layer level (CSS z-index)',
+                'tooltip' => 'Default level is 1030. If contact form appears under menu or other layers then enlarge default value.',
+                'class' => 'pweb-filter-int pweb-input-mini',
+                'parent' => array('layout_type_slidebox', 'layout_type_modal')
+            )); ?>
+            </div>
+        </div>
 
 
         <?php echo $this->_get_field(array(
@@ -272,7 +164,7 @@ function_exists('add_action') or die;
                 )
             )
         )); ?>
-        
+
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'open_delay',
@@ -282,7 +174,7 @@ function_exists('add_action') or die;
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('open_toggler_1', 'open_toggler_2', 'open_toggler_3')
         )); ?>
-        
+
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'open_count',
@@ -292,7 +184,7 @@ function_exists('add_action') or die;
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('open_toggler_1', 'open_toggler_2', 'open_toggler_3')
         )); ?>
-        
+
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'cookie_lifetime',
@@ -325,7 +217,7 @@ function_exists('add_action') or die;
                 )
             )
         )); ?>
-        
+
         <?php echo $this->_get_field(array(
             'type' => 'text',
             'name' => 'close_delay',
@@ -335,12 +227,12 @@ function_exists('add_action') or die;
             'class' => 'pweb-filter-int pweb-input-mini',
             'parent' => array('close_toggler_1')
         )); ?>
-        
+
         <?php echo $this->_get_field(array(
             'type' => 'radio',
             'name' => 'close_other',
-            'label' => 'Close other Perfect Contact Forms and Boxes',
-            'tooltip' => 'Close all other Slide in Boxes and Accordion from Perfect-Web when opening another one.',
+            'label' => 'Close other Gator Forms and Boxes',
+            'tooltip' => 'Close all other Slide in Boxes and Accordion from Gator Forms when opening another one.',
             'default' => 0,
             'parent' => array('layout_type_slidebox', 'layout_type_accordion'),
             'class' => 'pweb-radio-group',
@@ -355,7 +247,7 @@ function_exists('add_action') or die;
                 )
             )
         )); ?>
-        
+
         <?php echo $this->_get_field(array(
             'type' => 'radio',
             'name' => 'modal_disable_close',
@@ -390,7 +282,7 @@ function_exists('add_action') or die;
                 'cols' => 50
             )
         )); ?>
-        
+
         <?php echo $this->_get_field(array(
             'type' => 'textarea',
             'name' => 'onopen',
@@ -403,7 +295,7 @@ function_exists('add_action') or die;
                 'cols' => 50
             )
         )); ?>
-        
+
         <?php echo $this->_get_field(array(
             'type' => 'textarea',
             'name' => 'onclose',

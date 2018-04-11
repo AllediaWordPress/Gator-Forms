@@ -1,7 +1,7 @@
 /**
- * @version 1.0.7
- * @package Perfect Easy & Powerful Contact Form
- * @copyright © 2014 Perfect Web sp. z o.o., All rights reserved. http://www.perfect-web.co
+ * @version 2.3.0
+ * @package Gator Forms
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
  * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
  * @author Piotr Moćko
  */
@@ -24,7 +24,7 @@
 @media only screen and (max-width: 900px) {
     .auto-fold #pweb-adminbar {
         margin-left: 56px;
-    }  
+    }
 }
 
 #pweb-tabs-content {
@@ -98,6 +98,10 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     color: #ff0000 !important;
     border-color: #ff0000 !important;
 }
+input.pweb-warning {
+    color: #dda645 !important;
+    border-color: #dda645 !important;
+}
 
 .pweb-view-list h2 {
     margin-bottom: 15px;
@@ -148,7 +152,7 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     text-align: center;
     background-repeat: no-repeat;
     background-position: center center;
-    z-index: 0;
+    z-index: 1;
 }
 .pweb-panels.theme-browser .theme .theme-screenshot:hover {
     cursor: pointer;
@@ -203,20 +207,6 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     padding: 0 0 0 10px;
     color: #999;
 }
-#wpbody div.error,
-#wpbody div.updated,
-#wpbody div.update-nag,
-#wpbody div.update-message,
-#wpbody div.update-php,
-#wpbody div.update-plugins {
-    position: absolute;
-    top: 0px;
-    z-index: 1;
-    width: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
 
 .nav-tab-content {
     display: none;
@@ -228,9 +218,9 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 
 
 .pweb-steps {
-    text-align: center;
-    margin-bottom: 20px;
-} 
+    margin-bottom: 40px;
+    margin-left: 20px;
+}
 .pweb-steps button.button, .pweb-steps button.button:focus {
     vertical-align: middle;
 }
@@ -240,30 +230,82 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 .pweb-steps select {
     vertical-align: middle;
 }
-.pweb-steps .pweb-next-tab-button {
-    margin-left: 30px;
-}
 
 
-#pweb-theme-preview {
+#pweb-themes-coverflow {
     text-align: center;
 }
-#pweb-theme-preview img {
+#pweb-themes-coverflow .pweb-theme-image {
+    overflow: hidden;
+    position: relative;
     margin: 0 auto;
-    background: #FFFFFF;
-    padding: 10px;
+    background: #fff;
     -webkit-box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
 }
-#pweb-theme-preview a + i.glyphicon-refresh,
-#pweb_load_fields + i.glyphicon-refresh,
-.pweb-load-email-tmpl + i.glyphicon-refresh {
-    margin-left: 5px;
+#pweb-themes-coverflow .pweb-theme-image img {
+    margin: 0 auto;
+    border: 10px solid #FFFFFF;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#pweb-themes-coverflow .pweb-theme-image .glyphicon {
+    margin: 50px auto;
+    font-size: 100px;
+}
+#pweb-themes-coverflow .pweb-theme .pweb-theme-badge,
+#pweb-themes-coverflow .pweb-theme .pweb-theme-badge-free{
+	position: absolute;
+	top: 15px;
+	right: -45px;
+	width: 150px;
+	padding: 2px 0 2px;
+	text-align: center;
+	font-size: 24px;
+	line-height: 30px;
+	color: #fff;
+	background-color: #AA0000;
+	transform:rotate(45deg);
+	-ms-transform:rotate(45deg); /* IE 9 */
+	-webkit-transform:rotate(45deg); /* Safari and Chrome */
+}
+#pweb-themes-coverflow .pweb-theme .pweb-theme-badge-free {
+	background-color: #009E0A;
+}
+#pweb-themes-coverflow.flipster-coverflow .flip-items {
+    padding-bottom: 2%;
+}
+#pweb-themes-coverflow-controls {
+    text-align: center;
+    margin: 0 auto 20px auto;
+}
+#pweb-themes-coverflow-controls .button {
+    vertical-align: middle;
+}
+#pweb-themes-coverflow-control-load {
+    font-size: 20px;
+    height: 42px;
+    line-height: 36px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+#pweb-themes-coverflow-control-reset {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
-
+.pweb-width-33 {
+    width: 33.3%;
+    float: left;
+}
 .pweb-width-40 {
     width: 39.9%;
+    float: left;
+}
+.pweb-width-50 {
+    width: 49.9%;
     float: left;
 }
 .pweb-width-60 {
@@ -271,7 +313,7 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     float: left;
 }
 .pweb-location-step {
-    
+
 }
 .pweb-location-step h3 {
     text-align: center;
@@ -403,13 +445,13 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     border-left-color: #DD823B;
 }
 
-#pweb_params_handler .pweb-field-option, 
+#pweb_params_handler .pweb-field-option,
 #pweb_params_effect .pweb-field-option,
 #pweb_params_layout_type .pweb-field-option {
     display: inline-block;
     width: 250px;
 }
-#pweb_params_handler .pweb-field-option label, 
+#pweb_params_handler .pweb-field-option label,
 #pweb_params_effect .pweb-field-option label,
 #pweb_params_layout_type .pweb-field-option label {
     max-width: 230px;
@@ -479,32 +521,41 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 .pweb-advanced-options.pweb-advanced-options-active {
     margin-bottom: 10px;
 }
-.pweb-advanced-options-toggler {
-    display: block;
-    margin-bottom: 10px;
+.pweb-advanced-options .pweb-advanced-options-toggler {
+    display: inline-block;
+    margin-bottom: 10px !important;
     font-weight: bold;
     font-size: 15px;
     text-decoration: none;
 }
-.pweb-advanced-options-toggler span {
+.pweb-advanced-options .pweb-advanced-options-toggler span {
+    margin: 0 10px;
+}
+.pweb-advanced-options a.pweb-advanced-options-toggler span {
     text-decoration: underline;
 }
-.pweb-advanced-options-toggler .glyphicon,
-.pweb-advanced-options-toggler .glyphicon:before {
+.pweb-advanced-options .pweb-advanced-options-toggler .glyphicon,
+.pweb-advanced-options .pweb-advanced-options-toggler .glyphicon:before {
     text-decoration: none;
 }
-.pweb-advanced-options-content {
+.pweb-advanced-options .pweb-advanced-options-content {
     display: none;
 }
 #pweb_fields_types .pweb-advanced-options {
     padding-top: 20px;
+}
+#pweb-tab-theme-content .pweb-advanced-options-toggler {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 
 .pweb-field {
     margin-bottom: 20px;
 }
-.pweb-field > label + .pweb-field-control {
+.pweb-field > label + .pweb-field-control,
+.pweb-field > label + span.pweb-pro + .pweb-field-control{
     margin-top: 10px;
 }
 .pweb-field .pweb-field-control {
@@ -518,6 +569,9 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
     display: inline-block;
     margin-right: 20px;
     min-width: 50px;
+}
+.pweb-radio-group-vertical .pweb-field-option {
+    display: block;
 }
 
 .pweb-field.pweb-desc p {
@@ -781,6 +835,17 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 #pweb_fields .pweb-custom-fields-type:hover {
     border-color: rgba(0,0,0, 0.6);
 }
+#pweb_fields .pweb-fields-types .pweb-custom-fields-single.pweb-custom-fields-disabled {
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+    cursor: not-allowed;
+}
+#pweb_fields .pweb-fields-types .pweb-custom-fields-separator {
+    float: left;
+    padding: 20px 0;
+    width: 100%;
+}
+
 .pweb-custom-field-type-email,
 .pweb-custom-field-type-name,
 .pweb-custom-field-type-phone,
@@ -808,6 +873,7 @@ input.pweb-invalid, textarea.pweb-invalid, select.pweb-invalid, fieldset.pweb-in
 }
 .pweb-custom-field-type-upload,
 .pweb-custom-field-type-captcha,
+.pweb-custom-field-type-newsletter,
 .pweb-custom-field-type-mailto_list {
     background-color: #8066A8;
 }
@@ -912,11 +978,14 @@ span.pweb-free {
 }
 
 
-code {
+pre, code {
     background-color: #f7f7f9;
     border: 1px solid #e1e1e8;
     border-radius: 3px;
-    color: #d14;
+    color: #000;
+}
+code, pre var {
+	color: #d14;
 }
 
 
@@ -930,6 +999,50 @@ code {
     font-size: 13px;
     line-height: 20px;
     color: #777777;
+}
+
+.c-admin-footer {
+  margin-top: 20px;
+  text-align: center;
+  color: #777;
+}
+
+.c-admin-footer .c-rating .dashicons-star-filled {
+  line-height: 18px;
+  font-size: 12px;
+  width: 12px;
+  height: 12px;
+  color: #FFB300;
+  -webkit-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.c-admin-footer a {
+  text-decoration: none;
+  color: inherit;
+  -webkit-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.c-admin-footer .c-rating a:hover {
+  color: #27ae60;
+}
+
+.c-admin-footer .c-links {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.c-admin-footer .c-links a:hover {
+  color: #27ae60;
+}
+
+.c-admin-footer .c-links a + a {
+  margin-left: 15px;
+}
+
+.c-admin-footer .c-rating a:hover .dashicons-star-filled {
+  color: rgb(241, 169, 0);
 }
 
 .pweb-clear {
@@ -994,6 +1107,11 @@ code {
     vertical-align: middle;
 }
 
+.pweb-field-control .pweb-alert {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
 /* jQuery UI Tooltips */
 .ui-tooltip {
 	padding: 8px;
@@ -1015,11 +1133,11 @@ body .ui-tooltip {
 .pwebposition-top-left, .pwebposition-top-right,
 .pwebposition-bottom-left, .pwebposition-bottom-right,
 .pwebposition-static {
-	display: block; 
+	display: block;
 	border: 1px solid #aaa;
     background: #fff;
-	width: 50px; 
-	height: 30px; 
+	width: 50px;
+	height: 30px;
 	position: relative;
 	cursor: pointer;
 	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
@@ -1070,3 +1188,25 @@ body .ui-tooltip {
 .pwebposition-top-right > span + span { right: 0; top: 0; }
 .pwebposition-bottom-left > span + span { left: 0; bottom: 0; }
 .pwebposition-bottom-right > span + span { right: 0; bottom: 0; }
+
+/* Update message */
+.position-relative {
+    position: relative !important;
+}
+.display-block {
+    display: block !important;
+}
+/* Google Sheets */
+.googlesheets-columns {
+    vertical-align: middle;
+    line-height: 31px;
+}
+
+.pweb-c-navbar {
+  justify-content: space-between;
+}
+
+.pweb-u-flex-row {
+  display: flex;
+  flex-direction: row;
+}
