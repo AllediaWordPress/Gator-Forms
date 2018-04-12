@@ -1,4 +1,4 @@
-=== Gator Forms ===
+=== Gator Forms: the WordPress Contact Form with bite! ===
 Contributors: perfect-web, piotrmocko
 Tags: contact form, contact form plugin, form builder, wordpress form, wordpress forms plugin
 Requires at least: 3.5.0
@@ -142,27 +142,28 @@ Yes it will, however you only get access to new versions and support for as long
 
 == Screenshots ==
 
-01. Slide contact form from any page edge
-02. Change any colors of contact form fields, buttons, background and opening tab or edit CSS file for free.
-03. Create contact form with unlimited fields, display labels above fields, inline with them or inside as placeholder
-04. Display contact form in modal window (lightbox)
-05. Display opening tab horizontal or vertical
-06. Display static contact form in widget or insite with shortcode. You can also display contact form in accordion.
-07. Step 1 - select starting position of your contact form
-08. Step 1 - select effect which you want to use for displayoing your contact form
-09. Step 1 - you can decide here where your contact form should be visible: on all pages, on selected with shortcode or in widget.
-10. Step 2 - use our easy drag & drop form builder to create your own form
-11. Step 2 - each field has advanced options with label, tooltip and many others
-12. Step 3 - you can choose one of predefined themes or create your own for free by editing CSS file
-13. Step 4 - choose predefined anwser scheme or create your own
-14. Step 5 - you can check here if you you did everything needed to publish your contact form
-15. Create unlimited number of contact forms
-16. Step 1 - advanced options of layout
-17. Step 3 - theme customizer
-18. Step 4 - advanced options of email
-19. Step 4 - email template variables
-20. Tips for opening contact form with menu item or custom HTML/JavaScript code
-21. Very advanced options for web developers
+01.
+02.
+03.
+04.
+05.
+06.
+07.
+08. Step 1 - select starting position of your contact form
+09. Step 1 - select effect which you want to use for displayoing your contact form
+10. Step 1 - you can decide here where your contact form should be visible: on all pages, on selected with shortcode or in widget.
+11. Step 2 - use our easy drag & drop form builder to create your own form
+12. Step 2 - each field has advanced options with label, tooltip and many others
+13. Step 3 - you can choose one of predefined themes or create your own for free by editing CSS file
+14. Step 4 - choose predefined anwser scheme or create your own
+15. Step 5 - you can check here if you you did everything needed to publish your contact form
+16. Create unlimited number of contact forms
+17. Step 1 - advanced options of layout
+18. Step 3 - theme customizer
+19. Step 4 - advanced options of email
+20. Step 4 - email template variables
+21. Tips for opening contact form with menu item or custom HTML/JavaScript code
+22. Very advanced options for web developers
 
 
 == Changelog ==
