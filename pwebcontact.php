@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Gator Forms
  * Plugin URI: https://gatorforms.com
- * Description: Easy for beginners, customizable for pros!
+ * Description: Gator Forms: the WordPress Contact Form for sharp people.
  * Version: 2.4.1-beta1
  * Text Domain: pwebcontact
  * Author: Gator Forms
