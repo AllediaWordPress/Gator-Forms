@@ -171,25 +171,29 @@ Yes it will, however you only get access to new versions and support for as long
 
 = 2.4.0 / 2018-04-11 =
 
-Added:
+*Added:*
+
 * Added Twenty Sixteen theme
 * Added Twenty Seventeen theme
 * Added Minimal Blue theme
 
-Changed:
+*Changed:*
+
 * Updated copyright info
 * Update branding info
 * Minor internal code enhancements
 * Minor UI tweaks
 * Updated Twenty Fifteen theme
 
-Removed:
+*Removed:*
+
 * Removed Tips tab
 * Removed Twenty Twelve theme
 * Removed Twenty Thirteen theme
 * Removed Twenty Fourteen theme
 
-Fixed:
+*Fixed:*
+
 * Fixed bug where it was impossible to copy form shortcodes to clipboard using keyboard hotkeys
 
 = 2.3.0 / 2016-07-27 =
