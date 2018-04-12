@@ -169,20 +169,20 @@ Yes it will, however you only get access to new versions and support for as long
 
 = 2.4.1 / 2018-04-12 =
 
-*Changed:*
+**Changed:**
 
 * Update plugin description
 * Update readme.txt infos
 
 = 2.4.0 / 2018-04-11 =
 
-*Added:*
+**Added:**
 
 * Added Twenty Sixteen theme
 * Added Twenty Seventeen theme
 * Added Minimal Blue theme
 
-*Changed:*
+**Changed:**
 
 * Updated copyright info
 * Update branding info
@@ -190,14 +190,14 @@ Yes it will, however you only get access to new versions and support for as long
 * Minor UI tweaks
 * Updated Twenty Fifteen theme
 
-*Removed:*
+**Removed:**
 
 * Removed Tips tab
 * Removed Twenty Twelve theme
 * Removed Twenty Thirteen theme
 * Removed Twenty Fourteen theme
 
-*Fixed:*
+**Fixed:**
 
 * Fixed bug where it was impossible to copy form shortcodes to clipboard using keyboard hotkeys
 
