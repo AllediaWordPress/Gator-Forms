@@ -7,7 +7,7 @@ Stable tag: 2.4.0
 License: GNU/GPL
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Contact Form easy for beginners, customizable for pros!
+Gator Forms is the best contact form for WordPress. It’s easy for beginners, and customizable for pros!
 
 == Description ==
 
