@@ -1,96 +1,67 @@
 === Gator Forms ===
 Contributors: perfect-web, piotrmocko
-Donate link:
-Tags: contact form, file upload, AJAX, responsive contact form, multiple contact forms plugin, shortcode contact form, widget contact form, contact form plugin, contact form maker, drag and drop contact form, form builder, file upload form
+Tags: contact form, contact form plugin, form builder, wordpress form, wordpress forms plugin
 Requires at least: 3.5.0
 Tested up to: 4.9.0
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 License: GNU/GPL
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Contact Form easy for beginners, customizable for pros!
+Gator Forms is the best contact form for WordPress. It’s easy for beginners, and customizable for pros!
 
 == Description ==
 
-Contact Form easy for beginners, customizable for pros!
+Gator Forms is the best contact form for WordPress. It’s easy for beginners, and customizable for pros!
 
-* 5-click setup
-* Fully responsive
-* Drag & Drop contact form builder
-* Spam protection without annoying captcha
-* Ready-made contact form themes
-* Cool visual and animations effects
+* You can set up your forms with just 5 clicks!
+* There’s a drag-and-drop form builder.
+* Spam protection without using an annoying captchas.
+* Choose from dozens of ready-made themes.
+* Cool visual and animations effects.
 
-Discover Gator Forms developed for WordPress. First of all see cool visual effects you can use with your contact form such as smooth slide in effect, impressive lightbox appear effects or on-site display with possible accordation effect. As you see possibilities of our Contact Form are practically unlimited. What is more learn about key features of Gator Forms starting from handy upload, trough excellent spam protection, to unlimited number of forms and fields you can use to build your contact form. Thirdly explore our ready-made responsive layouts you can easily adjust to your needs. No matter you need a simple contact form, call me back option, an application or reservation form, support ticket submission form or a poll, Gator Forms will suit your needs perfectly.
-Try it, it's easy!
+Why should you use Gator Forms for your WordPress site?
 
-= Key Features of Gator Forms =
+Gator Forms allows you to create great contact forms. You can place them inside Posts and Pages, plus also inside many other areas of your site.
 
-* Fully responsive & Mobile ready
-* Unlimited forms and fields
-* Ready-made layouts you can adjust
-* Spam protection
-* *File upload*
+Gator Forms really stands out with its layout options.
 
-= Popular usage examples of Gator Forms =
+Your contact form can sit in a fixed position on the edge of your site. Your contact form can slide in automatically from above or below. Your contact form can appear in a lightbox. Your contact form can appear inside an accordion. The visual possibilities with Gator Forms are practically unlimited!
 
-* Call me back form
+Gator Forms also has a ton of features including file upload, excellent spam protection, and unlimited number of forms and fields.
+
+Try Gator Forms. It’s easy!
+
+
+= Popular Usage Examples of Gator Forms =
+
+* Contact form
+* Call-me-back form
 * Application form
 * Reservation form
 * Support ticket
-* Poll form
-* and of course - Contact Form
 
-= Cool animation effects =
 
-* Smooth slide-in effect
-* Screen edge fixed position
-* Semi-transparent background
-* Multiple lightbox appear effects
-* Accordion
+= All Gator Forms Features =
 
-= Beautiful ready-made Themes =
-
-* *Inspired by the newest Internet trends*
-* *Installed in one-click*
-* *Fully adjustable*
-* *Regularly updated*
-
-*Functions written in italic may be limited in a free version*
-
-= Compatibility & Requirements =
-
-* WordPress 3.5+
-* jQuery 1.8+
-* Bootstrap 2.3.2 - 3.x
-* **PHP 5.3+**
-* HTML5 & CSS3
-* Supports all modern browsers, IE9+, partly IE7-8
-* Mobile ready
-* Responsive, RWD
-* Requires 3rd-party plugin for [browser detection](http://wordpress.org/plugins/php-browser-detection/)
-
-= All features =
-
-* Unlimited number of contact forms can be published at one page.
-* Unlimited number of fields type of: text, name, email, textarea, *phone, subject, select list, multiple select list, single checkbox, checkboxes group, radios group, data picker with calendar, password* in your contact form.
+* Field types include text, name, email, textarea, *phone, subject, select list, multiple select list, single checkbox, checkboxes group, radios group, date picker with calendar, password* in your contact form.
 * Sort fields with drag-and-drop to easily create your contact form.
-* Split fields into columns to make your contact form more useful
-* Each field can have a tooltip and validation rule, can be required or not.
-* Display labels: above fields, *inline with fields* or *inside*.
-* *Display any text or HTML code between fields* in contact form.
+* Organize your fields into columns to make your contact form more useful.
+* Each field can have a tooltip and validation rule.
+* Each field can be required or not.
+* Display labels: above fields, *inline with fields* or inside.
+* *Display any text or HTML code between fields in contact form.*
 * *Upload files selected with a button or by drag-and-drop using Gator Forms, set: size limit, files limit, extension types.*
 * *Attach files directly to email or as links to files stored on server.*
 * Advanced spam protection without any codes to make your contact form safer.
 * Multiple email recipients, BCC, reply to email, WordPress Admin as recipient.
 * *Drop-down list of recipients.*
-* Automatically fill in User name and email if is logged in.
+* Automatically fill in the user’s name and email address if they are logged in.
 * Send a copy of email to sender.
 * Select predefined email template, set text or HTML format to make your contact form more attractive.
 * Set custom success message and email subject.
-* *Ticket system - adds to subject unique date-time based ID or number counter.*
+* *Ticket system – add a unique date-time based ID or number counter.*
 * Set custom toggler tab name, display it vertical or horizontal or hide it. to make your contact form more visible.
-* *Track User informations: IP address, browser ([requires 3rd-part plugin](http://wordpress.org/plugins/php-browser-detection/)), operating system, screen resolution.*
+* *Track user information: IP address, browser ([requires a 3rd-part plugin](https://wordpress.org/plugins/php-browser-detection)), operating system, screen resolution.*
 * Track page title and URL from which email was sent.
 * Page redirect to URL after sending email.
 * Google Analytics Tracking Page View or Event after sending email. to check your contact form efficiency.
@@ -98,12 +69,13 @@ Try it, it's easy!
 * *Open contact form with menu item.*
 * Open contact form with custom link, image or any HTML code.
 * Preload fields values by URL or link.
-* Auto-open of contact form on page load, or on scroll, or on exit - when mouse pointer goes above top edge of page (experimental, not always works in IE 7 and 8).
-* Auto-open limit count - open contact form for first X-times after page refresh and selected event.
-* Auto-open delay - if contact form not opened earlier by user.
-* Auto-close delay - if contact form not closed earlier by user.
+* Auto-open of contact form on page load, or on scroll, or on exit – when mouse pointer goes above top edge of page (experimental, * not always works in IE 7 and 8).
+* Auto-open limit count – open contact form for first X-times after page refresh and selected event.
+* Auto-open delay – if contact form not opened earlier by user.
+* Auto-close delay – if contact form not closed earlier by user.
 
-*Functions written in italic may be limited in a free version*
+*Functions written in italics require [Gator Forms Pro](https://gatorforms.com).*
+
 
 == Installation ==
 
@@ -192,29 +164,41 @@ Yes it will, however you only get access to new versions and support for as long
 20. Tips for opening contact form with menu item or custom HTML/JavaScript code
 21. Very advanced options for web developers
 
+
 == Changelog ==
+
+= 2.4.1 / 2018-04-12 =
+
+**Changed:**
+
+* Update plugin description
+* Update readme.txt infos
 
 = 2.4.0 / 2018-04-11 =
 
-Added:
+**Added:**
+
 * Added Twenty Sixteen theme
 * Added Twenty Seventeen theme
 * Added Minimal Blue theme
 
-Changed:
+**Changed:**
+
 * Updated copyright info
 * Update branding info
 * Minor internal code enhancements
 * Minor UI tweaks
 * Updated Twenty Fifteen theme
 
-Removed:
+**Removed:**
+
 * Removed Tips tab
 * Removed Twenty Twelve theme
 * Removed Twenty Thirteen theme
 * Removed Twenty Fourteen theme
 
-Fixed:
+**Fixed:**
+
 * Fixed bug where it was impossible to copy form shortcodes to clipboard using keyboard hotkeys
 
 = 2.3.0 / 2016-07-27 =
