@@ -1,6 +1,5 @@
 === Gator Forms ===
 Contributors: perfect-web, piotrmocko
-Donate link:
 Tags: contact form, file upload, AJAX, responsive contact form, multiple contact forms plugin, shortcode contact form, widget contact form, contact form plugin, contact form maker, drag and drop contact form, form builder, file upload form
 Requires at least: 3.5.0
 Tested up to: 4.9.0
