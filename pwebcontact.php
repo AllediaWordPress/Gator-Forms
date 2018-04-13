@@ -33,6 +33,13 @@ if (version_compare($GLOBALS['wp_version'], '3.5', '>=') AND version_compare(PHP
 
     if ( is_admin() ) {
 
+        // Load CSS for menu icon always
+        function pwebcontact_admin_menu_style() {
+            wp_register_style('pwebcontact_admin_menu_style', plugins_url('media/css/menu-icon.css', __FILE__, false));
+            wp_enqueue_style('pwebcontact_admin_menu_style');
+        }
+        add_action( 'admin_enqueue_scripts', 'pwebcontact_admin_menu_style' );
+
         if (defined( 'DOING_AJAX' )) {
 
             add_action('wp_ajax_pwebcontact_sendEmail', array('PWebContact', 'sendEmailAjax'));
