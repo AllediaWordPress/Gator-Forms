@@ -168,6 +168,12 @@ Yes it will, however you only get access to new versions and support for as long
 
 == Changelog ==
 
+= 2.4.2 =
+
+**Changed:**
+
+* Update admin menu icon
+
 = 2.4.1 / 2018-04-12 =
 
 **Changed:**
