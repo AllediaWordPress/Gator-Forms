@@ -6,29 +6,58 @@
  * @author Piotr Moćko
  */
 
+.button.pweb-buy {
+    background: #709c2d;
+    border-color: #5e8129 #527320 #527320;
+    box-shadow: 0 1px 0 #527320;
+    -moz-box-shadow: 0 1px 0 #668e29;
+    -webkit-box-shadow: 0 1px 0 #668e29;
+    -o-box-shadow: 0 1px 0 #668e29;
+    text-shadow: 0 -1px 1px #527320, 1px 0 1px #527320, 0 1px 1px #527320, -1px 0 1px #527320;
+}
+
+.js .postbox.gf-box .hndle {
+    cursor: inherit;
+}
+
+.button.pweb-buy:hover,
+.button.pweb-buy:active,
+.button.pweb-buy:focus {
+    background: #79a831;
+    border-color: #527320;
+}
+
+.gf-misc-actions-container {
+     padding: 10px;
+}
+
+#pweb-buy-button {
+    float: left;
+}
+
+#pweb-docs-button {
+    float: right;
+}
+
+#pweb-buy-button,
+#pweb-docs-button {
+    margin-bottom: 10px;
+}
+
 #pweb-adminbar {
-    position: fixed;
-    z-index: 98;
     background: #F1F1F1;
-    left: 0;
-    right: 0;
-    top: 32px;
-    margin-left: 180px;
-    margin-right: 20px;
     padding: 10px 0;
-    overflow: auto;
 }
 .folded #pweb-adminbar {
     margin-left: 56px;
 }
-@media only screen and (max-width: 900px) {
-    .auto-fold #pweb-adminbar {
-        margin-left: 56px;
-    }
+
+h2#pweb-tabs {
+    padding: 15px 0 0;
 }
 
 #pweb-tabs-content {
-    padding-top: 100px;
+    padding-top: 10px;
 }
 #pweb-settings-content {
     padding-top: 50px;

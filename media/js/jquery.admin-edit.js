@@ -27,9 +27,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     var $tabs = $("#pweb-tabs-content"),
         $adminBar = $("#pweb-adminbar");
 
-    $(window).resize(function(){
+    /*$(window).resize(function(){
         $tabs.css("padding-top", $(this).width() < 768 ? 0 : $adminBar.height());
-    });
+    });*/
 
     // Initialize tooltips
     $(".pweb-has-tooltip").tooltip({
