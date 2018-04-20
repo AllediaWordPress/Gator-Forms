@@ -1,4 +1,21 @@
+<?php
+/**
+ * @version 2.0.14
+ * @package Gator Forms
+ * @copyright (C) 2018 Gator Forms, All rights reserved. https://gatorforms.com
+ * @license GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @author Piotr Moćko
+ */
+
+// No direct access
+function_exists('add_action') or die;
+
+?>
+
 <h1 class="wp-heading-inline"><?php _e('Edit Form', 'pwebcontact'); ?></h1>
+<a href="<?php echo wp_nonce_url( admin_url( 'admin.php?page=pwebcontact&task=new' ), 'new-form'); ?>" class="page-title-action">
+    <?php echo esc_html_x('Add New', 'link'); ?>
+</a>
 <hr class="wp-header-end">
 
 <!-- header for displaying update and error messages after -->
