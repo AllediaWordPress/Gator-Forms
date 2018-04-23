@@ -66,6 +66,15 @@
     margin-left: 56px;
 }
 
+#pweb-tabs .nav-tab-active,
+#pweb-tabs .nav-tab-active:focus,
+#pweb-tabs .nav-tab-active:focus:active,
+#pweb-tabs .nav-tab-active:hover {
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
 h2#pweb-tabs {
     padding: 15px 0 0;
 }

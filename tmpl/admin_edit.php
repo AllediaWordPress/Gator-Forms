@@ -122,7 +122,6 @@ function_exists('add_action') or die;
                                             </a>
                                         </div>
                                         <div class="clear"></div>
-                                        <div>Something else goes here (?)</div>
                                     </div>
                                     <!-- #minor-publishing-actions -->
                                     <div class="clear"></div>
