@@ -13,7 +13,7 @@ function_exists('add_action') or die;
 ?>
 
 <h3 class="pweb-steps">
-    <?php _e('Choose a predefined theme or create own in customizer', 'pwebcontact'); ?>
+    <?php _e('Choose predefined theme or create own in customizer', 'pwebcontact'); ?>
 </h3>
 
 <?php $themes = $this->_get_themes(); ?>
@@ -98,13 +98,14 @@ function_exists('add_action') or die;
         </button>
         <?php endif; ?>
 
-        <h3><?php _e( 'Common settings', 'pwebcontact' ); ?></h3>
+        <hr>
 
-        <table class="form-table">
-            <tbody>
+        <div class="pweb-clearfix">
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
                     'name' => 'rounded',
+                    'header' => 'Common',
                     'label' => 'Display rounded corners',
                     'default' => 0,
                     'class' => 'pweb-radio-group',
@@ -155,17 +156,15 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
+            </div>
 
-            </tbody>
-        </table>
 
-        <h3><?php _e( 'Label settings', 'pwebcontact' ); ?></h3>
-
-        <table class="form-table">
-            <tbody>
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
                     'name' => 'labels_position',
+                    'header' => 'Labels and From size',
+                    'label' => 'Labels position',
                     'tooltip' => 'Select placement of fields labels. For mobile devices (phones) labels inline are displayed above fields.',
                     'default' => 'above',
                     'class' => 'pweb-radio-group-vertical',
@@ -210,17 +209,13 @@ function_exists('add_action') or die;
                     'tooltip' => 'Width of form is also a width of Lightbox window. If you want to maximize the window then set 100%.',
                     'class' => 'pweb-filter-unit pweb-input-mini'
                 )); ?>
+            </div>
 
-            </tbody>
-        </table>
-
-        <h3><?php _e( 'Text settings', 'pwebcontact' ); ?></h3>
-
-        <table class="form-table">
-            <tbody>
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'text_color',
+                    'header' => 'Form text',
                     'label' => 'Color of form text',
                     'tooltip' => 'Select color of text'
                 )); ?>
@@ -240,22 +235,20 @@ function_exists('add_action') or die;
                     'tooltip' => 'Name of font used for form. Separate multiple names with coma and wrap name which contains space with single quote.'
                 )); ?>
 
-                <tr class="pweb-alert pweb-alert-info">
-                    <td colspan="2">
-                        <?php _e('You can choose color of success and error message by changing Advanced option in `Email` tab', 'pwebcontact'); ?>
-                    </td>
-                </tr>
+                <div class="pweb-alert pweb-alert-info">
+                    <?php _e('You can choose color of success and error message by changing Advanced option in `Email` tab', 'pwebcontact'); ?>
+                </div>
+            </div>
+        </div>
 
-            </tbody>
-        </table>
+        <hr>
 
-        <h3><?php _e( 'Field settings', 'pwebcontact' ); ?></h3>
-
-        <table class="form-table">
-            <tbody>
+        <div class="pweb-clearfix">
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'fields_color',
+                    'header' => 'Fields',
                     'label' => 'Color of fields',
                     'tooltip' => 'Select background color of fields'
                 )); ?>
@@ -273,17 +266,13 @@ function_exists('add_action') or die;
                     'label' => 'Color of fields text',
                     'tooltip' => 'Select text color of fields'
                 )); ?>
+            </div>
 
-            </tbody>
-        </table>
-
-        <h3><?php _e( 'Active Field settings', 'pwebcontact' ); ?></h3>
-
-        <table class="form-table">
-            <tbody>
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'fields_active_color',
+                    'header' => 'Fields active',
                     'label' => 'Color of active field',
                     'tooltip' => 'Select background color of active field'
                 )); ?>
@@ -301,17 +290,13 @@ function_exists('add_action') or die;
                     'label' => 'Color of active field text',
                     'tooltip' => 'Select text color of active field'
                 )); ?>
+            </div>
 
-            </tbody>
-        </table>
-
-        <h3><?php _e( 'Invalid Field settings', 'pwebcontact' ); ?></h3>
-
-        <table class="form-table">
-            <tbody>
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'fields_invalid_color',
+                    'header' => 'Fields invalid',
                     'label' => 'Color of invalid fields',
                     'tooltip' => 'Select background color of invalid fields'
                 )); ?>
@@ -331,16 +316,17 @@ function_exists('add_action') or die;
                     'tooltip' => 'Select text color of invalid fields',
                     'default' => '#AA0000'
                 )); ?>
-            </tbody>
-        </table>
+            </div>
+        </div>
 
-        <h3><?php _e( 'Button and Link settings', 'pwebcontact' ); ?></h3>
+        <hr>
 
-        <table class="form-table">
-            <tbody>
+        <div class="pweb-clearfix">
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'buttons_fields_color',
+                    'header' => 'Buttons and Links',
                     'label' => 'Color of buttons and links',
                     'tooltip' => 'Select color of buttons background, links text color and upload progress bar.'
                 )); ?>
@@ -351,7 +337,9 @@ function_exists('add_action') or die;
                     'label' => 'Color of buttons text',
                     'tooltip' => 'Select color of buttons text'
                 )); ?>
+            </div>
 
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'bg_color',
@@ -417,17 +405,13 @@ function_exists('add_action') or die;
                     'tooltip' => 'Size of space for background image.',
                     'class' => 'pweb-filter-unit pweb-input-mini'
                 )); ?>
+            </div>
 
-            </tbody>
-        </table>
-
-        <h3><?php _e( 'Background image settings', 'pwebcontact' ); ?></h3>
-
-        <table class="form-table">
-            <tbody>
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'image',
                     'name' => 'bg_image',
+                    'header' => 'Background image',
                     'label' => 'Background image',
                     'tooltip' => 'Enter URL of image which will be shown in background of contact form. URL should be relative to WordPress root.',
                     'class' => 'pweb-input-xlarge'
@@ -497,16 +481,17 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
-            </tbody>
-        </table>
+            </div>
+        </div>
 
-        <h3><?php _e( 'Toggler Button and Tab settings', 'pwebcontact' ); ?></h3>
+        <hr>
 
-        <table class="form-table">
-            <tbody>
+        <div class="pweb-clearfix">
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'toggler_bg',
+                    'header' => 'Toggler Button and Tab',
                     'label' => 'Color of Toggler',
                     'tooltip' => 'Select background color of Toggler Tab.',
                     'parent' => array('handler_tab', 'handler_button')
@@ -620,18 +605,14 @@ function_exists('add_action') or die;
                         )
                     )
                 )); ?>
+            </div>
 
-            </tbody>
-        </table>
-
-        <h3><?php _e( 'Vertical Toggler settings', 'pwebcontact' ); ?></h3>
-
-        <table class="form-table">
-            <tbody>
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
                     'name' => 'toggler_vertical',
                     'label' => 'Vertical Toggler Tab',
+                    'header' => 'Vertical Toggler Tab',
                     'tooltip' => 'Flip toggler tab to vertical orientation. Default vertical text color is white.',
                     'default' => 0,
                     'parent' => array('toggler_position_left', 'toggler_position_right'),
@@ -712,16 +693,10 @@ function_exists('add_action') or die;
                     )
                 )); ?>
 
-            </tbody>
-        </table>
-
-        <h3><?php _e( 'Toggler Size settings', 'pwebcontact' ); ?></h3>
-
-        <table class="form-table">
-            <tbody>
                 <?php echo $this->_get_field(array(
                     'type' => 'text',
                     'name' => 'toggler_width',
+                    'header' => 'Toggler size',
                     'label' => 'Toggler width [px]',
                     'tooltip' => 'Toggler Tab width in pixels (without unit), e.g. 100. Leave blank for enabled vertical toggler.',
                     'class' => 'pweb-filter-int pweb-input-mini',
@@ -736,7 +711,9 @@ function_exists('add_action') or die;
                     'class' => 'pweb-filter-int pweb-input-mini',
                     'parent' => array('handler_tab', 'handler_button')
                 )); ?>
+            </div>
 
+            <div class="pweb-width-33">
                 <?php echo $this->_get_field(array(
                     'type' => 'radio',
                     'name' => 'accordion_boxed',
@@ -758,16 +735,10 @@ function_exists('add_action') or die;
                     )
                 )); ?>
 
-            </tbody>
-        </table>
-
-        <h3><?php _e( 'Lightbox backdrop settings', 'pwebcontact' ); ?></h3>
-
-        <table class="form-table">
-            <tbody>
                 <?php echo $this->_get_field(array(
                     'type' => 'color',
                     'name' => 'modal_bg',
+                    'header' => 'Lightbox backdrop',
                     'label' => 'Lightbox backdrop color',
                     'tooltip' => 'Color of background layer under Lightbox window.',
                     'parent' => array('layout_type_modal')
@@ -795,8 +766,8 @@ function_exists('add_action') or die;
                         array('value' => 1.0)
                     )
                 )); ?>
-            </tbody>
-        </table>
+            </div>
+        </div>
 
     </div>
 </div>

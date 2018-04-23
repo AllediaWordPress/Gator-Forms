@@ -1284,20 +1284,18 @@ pwebcontact_admin.is_pro = true;
         }
 
         return
-                '<tr class="pweb-field pweb-field-' . $type
-                . ($parent ? $parent : '')
-                . ($is_pro === true ? ' pweb-pro' : '')
-                . ($disabled === true ? ' pweb-disabled' : '')
-                . '">
-                    <th scope="row">'
-                    . ($header ? '<h3>' . $header . '</h3>' : '')
-                    . ($label ? $this->_get_label($opt) : '')
-                    . '</th>
-                    <td>'.
+                '<div class="pweb-field pweb-field-'.$type
+                .($parent ? $parent : '')
+                .($is_pro === true ? ' pweb-pro' : '')
+                .($disabled === true ? ' pweb-disabled' : '')
+                .'">'.
+                    ($header ? '<h3>'.$header.'</h3>' : '').
+                    ($label ? $this->_get_label($opt) : '').
+                    '<div class="pweb-field-control">'.
                         $this->_get_field_control($opt).
                         ($desc ? '<div class="pweb-field-desc">'. __($desc, 'pwebcontact') .'</div>' : '').
-                    '</td>'.
-                '</tr>';
+                    '</div>'.
+                '</div>';
     }
 
 
@@ -1647,7 +1645,7 @@ pwebcontact_admin.is_pro = true;
 
                     $option_id = $id .'_'. preg_replace('/[^a-z0-9-_]/i', '', str_replace(':', '_', $option['value']));
 
-                    $html .= '<label class="'
+                    $html .= '<div class="pweb-field-option'
                             . (isset($option['class']) ? ' '.esc_attr($option['class']) : '').'"'
                             . (isset($option['tooltip']) ? ' title="'. esc_attr__($option['tooltip'], 'pwebcontact') .'"' : '')
                             . '>';
@@ -1660,10 +1658,12 @@ pwebcontact_admin.is_pro = true;
                             . ($option['is_pro'] ? ' pweb-pro' : '')
                             . '">';
 
-                    $html .= __($option['name'], 'pwebcontact') . (isset($option['after']) ? $option['after'] : '')
-                            . ($option['is_pro'] ? $this->_display_badge_pro() : '');
+                    $html .= '<label for="'.$option_id.'" id="'.$option_id.'-lbl"'
+                            . '>'. __($option['name'], 'pwebcontact') . (isset($option['after']) ? $option['after'] : '')
+                            . ($option['is_pro'] ? $this->_display_badge_pro() : '')
+                            . '</label>';
 
-                    $html .= '</label><br>';
+                    $html .= '</div>';
                 }
                 $html .= '</fieldset>';
                 break;

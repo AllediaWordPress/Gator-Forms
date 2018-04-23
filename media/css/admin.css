@@ -597,9 +597,21 @@ input.pweb-warning {
 .pweb-field {
     margin-bottom: 20px;
 }
+.pweb-field > label + .pweb-field-control,
+.pweb-field > label + span.pweb-pro + .pweb-field-control{
+    margin-top: 10px;
+}
+.pweb-field .pweb-field-control {
+    margin-left: 15px;
+}
 .pweb-field .pweb-field-desc {
     margin-top: 5px;
     font-style: italic;
+}
+.pweb-radio-group .pweb-field-option {
+    display: inline-block;
+    margin-right: 20px;
+    min-width: 50px;
 }
 .pweb-radio-group-vertical .pweb-field-option {
     display: block;
@@ -980,9 +992,10 @@ span.pweb-pro,
 span.pweb-free {
     display: inline-block;
     font-weight: bold;
-    font-size: 10px;
+    font-size: 13px;
     line-height: 18px;
     padding: 0 5px;
+    margin-left: 3px;
     text-transform: uppercase;
 }
 span.pweb-pro {
@@ -1137,7 +1150,7 @@ code, pre var {
     vertical-align: middle;
 }
 
-.pweb-alert {
+.pweb-field-control .pweb-alert {
     margin-top: 10px;
     margin-right: 10px;
 }
