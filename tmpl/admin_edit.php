@@ -146,6 +146,7 @@ function_exists('add_action') or die;
                                             <button class="button button-primary pweb-buy" id="pweb-buy-button" data-href="<?php echo $this->buy_url; ?>" data-role="anchor">
                                                 <?php _e( 'Need all the features?', 'pwebcontact' ); ?> <strong><?php _e( 'Go Pro!', 'pwebcontact' ); ?></strong>
                                             </button>
+                                            <!-- FREE END -->
                                             <ul>
                                                 <li><a href="https://gatorforms.com/documentation/create-form/" target="_blank"><?php _e( 'Creating Your Form', 'pwebcontact' ); ?></a></li>
                                                 <li><a href="https://gatorforms.com/documentation/getting-started/" target="_blank"><?php _e( 'Getting started', 'pwebcontact' ); ?></a></li>
