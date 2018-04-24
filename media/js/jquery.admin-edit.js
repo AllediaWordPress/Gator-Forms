@@ -38,8 +38,8 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 
     // Tabs
     $("#pweb-tabs").find(".nav-tab").click(function(e){
-        e.preventDefault();
         document.location.hash = $(this).attr("href");
+        e.preventDefault();
 
         $("#pweb-tabs").find(".nav-tab-active").removeClass("nav-tab-active");
         $(this).addClass("nav-tab-active");
@@ -716,7 +716,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
 
 
-    $("#pweb-tab-check").click(function(){
+    var gfCheckStatus = function() {
 
         var is_empty_recipient = (!$("#pweb_params_email_to").val() && $("#pweb_params_email_cms_user").get(0).selectedIndex === 0);
         $("#pweb-email-to-warning")[is_empty_recipient ? "show" : "hide"]();
@@ -739,7 +739,15 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             $("#pweb-cog-check-error").hide();
             $("#pweb-cog-check-save").show();
         }
+    };
+
+    $(window).load(function() {
+        gfCheckStatus();
     });
+
+    window.setInterval(function(){
+        gfCheckStatus();
+    }, 5000);
 
     $("#pweb-cog-check-save").click(function(){
         $("#pweb-save-button").click();

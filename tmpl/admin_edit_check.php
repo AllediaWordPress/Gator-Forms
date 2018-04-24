@@ -11,12 +11,8 @@
 function_exists('add_action') or die;
 ?>
 
-<h3>
-    <?php _e('Check below if you can publish your form', 'pwebcontact'); ?>
-</h3>
 
-
-<div id="pweb-cog-check-success" class="pweb-alert pweb-alert-success" style="display:block">
+<div id="pweb-cog-check-success" class="pweb-alert pweb-alert-success" style="display:none">
     <i class="glyphicon glyphicon-ok"></i>
     <?php _e('Congratulations! All options you had to choose to get your form working properly are chosen.', 'pwebcontact'); ?>
 </div>
@@ -27,10 +23,6 @@ function_exists('add_action') or die;
     <?php _e('Congratulations your form is ready! But you have chosen some PRO options so you need to BUY Pro Version in order to enjoy using them', 'pwebcontact');
         //TODO check email template for: ip_address, browser, os, screen_resolution, mailto_name, ticket
     ?>
-
-    <button class="button button-primary pweb-buy">
-        <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy PRO', 'pwebcontact' ); ?>
-    </button>
 </div>
 <!-- FREE END -->
 
@@ -38,10 +30,6 @@ function_exists('add_action') or die;
     <i class="glyphicon glyphicon-warning-sign"></i>
     <?php _e('There are still some options required to get your form working', 'pwebcontact'); ?>
 </div>
-
-<button type="button" class="button button-primary" id="pweb-cog-check-save">
-    <i class="glyphicon glyphicon-floppy-disk"></i> <span><?php _e( 'Save' ); ?></span>
-</button>
 
 <div id="pweb-cog-check">
 

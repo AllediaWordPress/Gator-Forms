@@ -46,11 +46,12 @@
 }
 
 #pweb-buy-button {
-    float: left;
+    display: block;
+    width: 100%;
 }
 
 #pweb-docs-button {
-    float: right;
+
 }
 
 #pweb-buy-button,
@@ -1114,41 +1115,37 @@ code, pre var {
     100% { transform: rotate(359deg) }
 }
 
-.pweb-alert {
-    border: 1px solid rgba(0, 0, 0, 0);
-    border-radius: 4px;
+#pweb_theme_warning {
     margin-bottom: 20px;
+}
+
+#pweb-tab-check-content .pweb-alert {
+    margin-bottom: 10px;
+}
+
+.pweb-alert {
     padding: 15px;
 }
 .pweb-alert-danger {
     background-color: #F2DEDE;
-    border-color: #EBCCD1;
     color: #A94442;
 }
 .pweb-alert-warning {
     background-color: #FCF8E3;
-    border-color: #FAEBCC;
     color: #8A6D3B;
 }
 .pweb-alert-info {
     background-color: #D9EDF7;
-    border-color: #BCE8F1;
     color: #31708F;
 }
 .pweb-alert-success {
     background-color: #DFF0D8;
-    border-color: #D6E9C6;
     color: #3C763D;
 }
 
 .pweb-alert .button,
 .pweb-alert .button:focus {
     vertical-align: middle;
-}
-
-.pweb-alert {
-    margin-top: 10px;
-    margin-right: 10px;
 }
 
 /* jQuery UI Tooltips */
