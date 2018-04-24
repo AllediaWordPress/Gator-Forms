@@ -144,7 +144,7 @@ function_exists('add_action') or die;
                                         <div class="gf-misc-actions">
                                             <!-- FREE START -->
                                             <button class="button button-primary pweb-buy" id="pweb-buy-button" data-href="<?php echo $this->buy_url; ?>" data-role="anchor">
-                                                <i class="glyphicon glyphicon-shopping-cart"></i> <?php _e( 'Buy Pro', 'pwebcontact' ); ?>
+                                                <?php _e( 'Need all the features?', 'pwebcontact' ); ?> <strong><?php _e( 'Go Pro!', 'pwebcontact' ); ?></strong>
                                             </button>
                                             <ul>
                                                 <li><a href="https://gatorforms.com/documentation/create-form/" target="_blank"><?php _e( 'Creating Your Form', 'pwebcontact' ); ?></a></li>
