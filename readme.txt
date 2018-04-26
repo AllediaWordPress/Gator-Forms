@@ -170,6 +170,10 @@ Yes it will, however you only get access to new versions and support for as long
 
 = @todo =
 
+**Added:**
+
+* Submitted messages are now saved on DB
+
 **Changed:**
 
 * Update admin menu icon
