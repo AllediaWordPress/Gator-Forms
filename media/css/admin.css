@@ -1012,6 +1012,9 @@ span.pweb-free {
     top: 5px;
 }
 
+.pweb-dialog-delete .ui-dialog-buttonpane .ui-button + .ui-button {
+    margin-left: 10px;
+}
 
 .ui-dialog-content p {
     margin: 10px;
