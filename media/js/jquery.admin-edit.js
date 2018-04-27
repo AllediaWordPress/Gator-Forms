@@ -816,10 +816,40 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             $("#pweb-save-button").get(0).disabled = false;
 
         }).done(function(response, textStatus, jqXHR) {
-			if (response && typeof response.success === "boolean")
-			{
-                $("#pweb-save-status").html(
-                        response.success === true ? pwebcontact_l10n.saved_on+" "+(new Date()).toLocaleTimeString() : (response.message ? response.message : pwebcontact_l10n.error));
+			if (response && typeof response.success === "boolean") {
+          var message = null;
+          var statusClass = null;
+          if (response.success === true) {
+              message = pwebcontact_l10n.saved_on + " " + (new Date()).toLocaleTimeString();
+              statusClass = 'success';
+          } else {
+              message = response.message ? response.message : pwebcontact_l10n.error;
+              statusClass = 'error';
+          }
+
+          var wrapper = $('<div></div>', {
+              class:'o-notice is-dismissible notice notice-' + statusClass,
+              style: 'display: none'
+          });
+
+          wrapper.html('<p>'+ message +'</p><button type="button" class="notice-dismiss">&nbsp;</button>');
+
+          $('button', wrapper).on('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              var wrapper = $(this).parent();
+
+              wrapper.slideUp({
+                  complete: function() {
+                      wrapper.remove();
+                  }
+              });
+          });
+
+          $('#pweb_form').prepend(wrapper);
+
+          wrapper.slideDown();
 			}
 		}).fail(function(jqXHR, textStatus, errorThrown) {
             $("#pweb-save-status").html("Request error");
