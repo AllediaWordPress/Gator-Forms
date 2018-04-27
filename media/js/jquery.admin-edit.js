@@ -38,7 +38,6 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
 
     // Tabs
     $("#pweb-tabs").find(".nav-tab").click(function(e){
-        document.location.hash = $(this).attr("href");
         e.preventDefault();
 
         $("#pweb-tabs").find(".nav-tab-active").removeClass("nav-tab-active");
