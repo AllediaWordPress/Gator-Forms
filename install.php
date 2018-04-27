@@ -64,7 +64,7 @@ function pwebcontact_install_db() {
       `user_id` bigint(20) unsigned NOT NULL DEFAULT '0',
       `ticket` varchar(50) DEFAULT NULL,
       PRIMARY KEY (`id`)
-    ) {$charset_collate} AUTO_INCREMENT=1";
+    ) {$charset_collate} AUTO_INCREMENT=1;";
     dbDelta($sql);
 }
 
