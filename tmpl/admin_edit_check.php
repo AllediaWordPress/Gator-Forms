@@ -13,25 +13,25 @@ function_exists('add_action') or die;
 
 
 <div id="pweb-cog-check-success" class="pweb-alert pweb-alert-success" style="display:none">
-    <?php _e('Congratulations! All options you had to choose to get your form working properly are chosen.', 'pwebcontact'); ?>
+    <?php _e('Congratulations your form is ready!', 'pwebcontact'); ?>
 </div>
 
 <!-- FREE START -->
 <div id="pweb-cog-check-warning" class="pweb-alert pweb-alert-success" style="display:none">
-    <?php _e('Congratulations your form is ready! But you have chosen some PRO options so you need to BUY Pro Version in order to enjoy using them', 'pwebcontact');
+    <?php _e('Congratulations your form is ready! However, you have chosen some PRO options, so please buy Gator Forms Pro.', 'pwebcontact');
         //TODO check email template for: ip_address, browser, os, screen_resolution, mailto_name, ticket
     ?>
 </div>
 <!-- FREE END -->
 
 <div id="pweb-cog-check-error" class="pweb-alert pweb-alert-danger" style="display:none">
-    <?php _e('There are still some options required to get your form working', 'pwebcontact'); ?>
+    <?php _e('There are still some options required to get your form working.', 'pwebcontact'); ?>
 </div>
 
 <div id="pweb-cog-check">
 
     <div class="pweb-alert pweb-alert-danger" id="pweb-email-to-warning" style="display:none">
-        <?php _e('Enter one or more emails to which message should be sent to in `Email` tab.', 'pwebcontact'); ?>
+        <?php _e('Please go to the Email tab and enter an email address to receive messages.', 'pwebcontact'); ?>
     </div>
 
     <?php if (($result = $this->_check_mailer()) !== true) : ?>
