@@ -1012,7 +1012,7 @@ span.pweb-free {
     top: 5px;
 }
 
-.pweb-dialog-delete .ui-dialog-buttonpane .ui-button + .ui-button {
+.ui-dialog[aria-describedby="pweb-dialog-delete"] .ui-dialog-buttonpane .ui-button + .ui-button {
     margin-left: 10px;
 }
 
