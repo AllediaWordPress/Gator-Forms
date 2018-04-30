@@ -168,7 +168,7 @@ Yes it will, however you only get access to new versions and support for as long
 
 == Changelog ==
 
-= 2.5.0 / @todo =
+= 2.5.0 / 2018-04-30 =
 
 **Added:**
 
