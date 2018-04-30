@@ -51,6 +51,21 @@ function pwebcontact_install_db() {
     ) $charset_collate AUTO_INCREMENT=1;";
 
     dbDelta( $sql );
+
+    $sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}pwebcontact_messages` (
+      `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+      `form_id` int(11) NOT NULL,
+      `sent` tinyint(1) NOT NULL DEFAULT '0',
+      `created_at` datetime NOT NULL,
+      `payload` text NOT NULL,
+      `ip_address` varchar(45) DEFAULT '',
+      `browser` varchar(255) DEFAULT '',
+      `os` varchar(255) DEFAULT '',
+      `user_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+      `ticket` varchar(50) DEFAULT NULL,
+      PRIMARY KEY (`id`)
+    ) {$charset_collate} AUTO_INCREMENT=1;";
+    dbDelta($sql);
 }
 
 
@@ -63,6 +78,9 @@ function pwebcontact_uninstall_db() {
     $sql = "DROP TABLE IF EXISTS `{$wpdb->prefix}pwebcontact_forms`;";
 
     dbDelta( $sql );
+
+    $sql = "DROP TABLE IF EXISTS `{$wpdb->prefix}pwebcontact_messages`";
+    dbDelta($sql);
 }
 
 function pwebcontact_check_db() {
@@ -72,7 +90,9 @@ function pwebcontact_check_db() {
     $show = $wpdb->hide_errors();
 
     try {
-        if (false === $wpdb->query( 'SELECT `id` FROM `'.$wpdb->prefix.'pwebcontact_forms` LIMIT 1' )) {
+        if (false === $wpdb->query( 'SELECT `id` FROM `'.$wpdb->prefix.'pwebcontact_forms` LIMIT 1' )
+            || false === $wpdb->query( 'SELECT `id` FROM `'.$wpdb->prefix.'pwebcontact_messages` LIMIT 1' )
+        ) {
             pwebcontact_install_db();
         }
     } catch (Exception $e) {

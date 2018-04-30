@@ -3,7 +3,7 @@
  * Plugin Name: Gator Forms
  * Plugin URI: https://gatorforms.com
  * Description: Gator Forms: the WordPress Contact Form for sharp people.
- * Version: 2.4.1
+ * Version: 2.5.0
  * Text Domain: pwebcontact
  * Author: Gator Forms
  * Author URI: https://gatorforms.com
@@ -32,6 +32,13 @@ if (version_compare($GLOBALS['wp_version'], '3.5', '>=') AND version_compare(PHP
     require_once dirname( __FILE__ ) . '/site.php';
 
     if ( is_admin() ) {
+
+        // Load CSS for menu icon always
+        function pwebcontact_admin_menu_style() {
+            wp_register_style('pwebcontact_admin_menu_style', plugins_url('media/css/menu-icon.css', __FILE__, false));
+            wp_enqueue_style('pwebcontact_admin_menu_style');
+        }
+        add_action( 'admin_enqueue_scripts', 'pwebcontact_admin_menu_style' );
 
         if (defined( 'DOING_AJAX' )) {
 

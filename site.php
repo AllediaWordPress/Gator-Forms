@@ -2677,14 +2677,64 @@ class PWebContact
         // send Admin email
         $result = wp_mail($email_to, $data['subject'], $body, $headers, $attachments);
 
-        if ($result !== true)
-        {
-            return array('status' => 306, 'msg' => __('Error sending email to admin', 'pwebcontact'));
+        if ($result !== true) {
+            $response = array(
+                'status' => 306,
+                'msg'    => __('Error sending email to admin', 'pwebcontact')
+            );
+        } else {
+            if (PWEBCONTACT_DEBUG) {
+                self::$logs[] = 'Admin email sent successfully';
+            }
+
+            $response = array(
+                'status' => 100,
+                'msg'    => $success_msg,
+                'ticket' => $data['ticket']
+            );
         }
-        elseif (PWEBCONTACT_DEBUG) self::$logs[] = 'Admin email sent successfully';
 
+        $payload = array();
+        foreach ($fields as $field) {
+            if (in_array($field['type'], array('page', 'row', 'column', 'button_send', 'email_copy', 'captcha', 'custom_text', 'header'))) continue;
 
-        return array('status' => 100, 'msg' => $success_msg, 'ticket' => $data['ticket']);
+            $row = (object)array(
+                'type'   => $field['type'],
+                'label'  => $field['label'],
+                'alias'  => isset($field['alias']) ? $field['alias'] : null
+            );
+
+            if ($field['type'] === 'mailto_list') {
+                $row->value = isset($field['values']) ? $field['values'] : null;
+            } else if ($field['type'] === 'upload') {
+                $row->value = (array)$data['attachments'];
+            } else {
+                $row->value = isset($data['fields'][$field['alias']]) ? $data['fields'][$field['alias']] : null;
+            }
+
+            $payload[] = $row;
+        }
+
+        $messageData = array(
+            'form_id'    => $form_id,
+            'sent'       => (int)($response['status'] === 100),
+            'created_at' => current_time('mysql', 1),
+            'payload'    => maybe_serialize($payload),
+            'ip_address' => $data['ip_address'],
+            'browser'    => $data['browser'],
+            'os'         => $data['os'],
+            'user_id'    => (int)$user->ID > 0 ? $user->ID : 0,
+            'ticket'     => isset($data['ticket']) ? $data['ticket'] : ''
+        );
+
+        global $wpdb;
+        $wpdb->insert(
+            $wpdb->prefix . 'pwebcontact_messages',
+            $messageData,
+            array('%d', '%d', '%s', '%s', '%s', '%s', '%s', '%d', '%s')
+        );
+
+        return $response;
     }
 
 

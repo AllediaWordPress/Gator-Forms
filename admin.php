@@ -157,11 +157,43 @@ class PWebContact_Admin {
         $this->_check_updates();
         /*** PRO END ***/
 
-        if (!isset($_GET['page']) OR $_GET['page'] !== 'pwebcontact') {
-            return;
-        }
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : '';
+
+        if (!in_array($currentPage, array('pwebcontact', 'pwebcontact-messages'))) return;
 
         load_plugin_textdomain( 'pwebcontact', false, basename(dirname(__FILE__)).'/languages' );
+
+        if ($currentPage === 'pwebcontact-messages') {
+            wp_enqueue_style('pwebcontact_admin_style', plugins_url('media/css/admin.css', __FILE__));
+
+            $itemId = isset($_GET['id']) && is_numeric($_GET['id']) ? (int)$_GET['id'] : 0;
+
+            if ($itemId > 0) {
+                wp_enqueue_style(
+                    'pwebcontact-message',
+                    plugins_url('media/css/messages-item.css', __FILE__)
+                );
+            } else {
+                wp_register_style('jquery-ui', '//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css');
+                wp_enqueue_style('jquery-ui');
+
+                wp_enqueue_style(
+                    'pwebcontact-messages',
+                    plugins_url('media/css/messages-list.css', __FILE__)
+                );
+
+                wp_enqueue_script(
+                    'pwebcontact-messages',
+                    plugins_url('media/js/messages-list.js', __FILE__),
+                    array(
+                        'jquery',
+                        'jquery-ui-datepicker'
+                    )
+                );
+            }
+
+            return;
+        }
 
         $this->can_edit = current_user_can('manage_options');
 
@@ -615,9 +647,30 @@ class PWebContact_Admin {
             $title = __('Edit') .' &lsaquo; '. $title;
         }
 
-        add_menu_page($title, __('Gator Forms', 'pwebcontact'),
-                'manage_options', 'pwebcontact', array($this, 'configuration'),
-                plugins_url('media/images/admin/menu-icon.png', dirname(__FILE__).'/pwebcontact.php'));
+        add_menu_page(
+            $title,
+            __('Gator Forms', 'pwebcontact'),
+            'manage_options',
+            'pwebcontact',
+            array($this, 'configuration')
+        );
+
+        global $pagenow;
+
+        $messageId = isset($_GET['id']) && is_numeric($_GET['id']) ? (int)$_GET['id'] : 0;
+
+        if (!is_admin()
+            || $pagenow !== 'admin.php'
+            || !isset($_GET['page'])
+            || $_GET['page'] !== 'pwebcontact-messages'
+            || $messageId <= 0
+        ) {
+            $messagesPageTitle = __('Messages', 'pwebcontact');
+        } else {
+            $messagesPageTitle = sprintf(__('Message #%d', 'pwebcontact'), $messageId);
+        }
+
+        add_submenu_page('pwebcontact', $messagesPageTitle, __('Messages', 'pwebcontact'), 'manage_options', 'pwebcontact-messages', array($this, 'renderMessagesPage'));
     }
 
 
@@ -1990,4 +2043,220 @@ pwebcontact_admin.is_pro = true;
         return array('error'=>__('Somthing went wrong or newsletter integration does not exist', 'pwebcontact'));
     }
 
+    public static function renderMessagesPage()
+    {
+        global $pagenow;
+
+        if (!is_admin()
+            || $pagenow !== 'admin.php'
+            || !isset($_GET['page'])
+            || $_GET['page'] !== 'pwebcontact-messages'
+        ) {
+            return;
+        }
+
+        global $wpdb;
+
+        $dateFormat = (string)get_option('date_format');
+        if (empty($dateFormat)) {
+            $dateFormat = 'Y-m-d';
+        }
+
+        $timeFormat = (string)get_option('time_format');
+        if (empty($timeFormat)) {
+            $timeFormat = 'H:i:s';
+        }
+
+        $dateTimeFormat = $dateFormat . ' ' . $timeFormat;
+
+        $instanceTimezone = (string)get_option('timezone_string');
+        if (empty($instanceTimezone)) {
+            $instanceTimezone = 'UTC';
+        }
+
+        $instanceTimezone = new \DateTimeZone($instanceTimezone);
+
+        $utcTimeZone = new \DateTimeZone('UTC');
+
+        $messageId = isset($_GET['id']) && is_numeric($_GET['id']) ? (int)$_GET['id'] : 0;
+
+        if ($messageId <= 0) {
+            $orderBy = 'created_at';
+            $orderBySql = '`message`.`'. $orderBy .'`';
+            $orderDir = 'desc';
+
+            if (isset($_GET['orderby'])
+                && in_array($_GET['orderby'], array('created_at', 'ip_address', 'browser', 'user'))
+            ) {
+                $orderBy = $_GET['orderby'];
+
+                if ($orderBy === 'user') {
+                    $orderBySql = '`user`.`display_name`';
+                } else {
+                    $orderBySql = '`message`.`'. $orderBy .'`';
+                }
+            }
+
+            if (isset($_GET['orderdir'])
+                && in_array(strtoupper($_GET['orderdir']), array('ASC', 'DESC'))
+            ) {
+                $orderDir = strtolower($_GET['orderdir']);
+            }
+
+            $filters = (object)array(
+                'search'    => '',
+                'form'      => -1,
+                'status'    => -1,
+                'startDate' => '',
+                'endDate'   => ''
+            );
+
+            $sqlWhere = '1 = 1';
+            if (isset($_GET['s'])) {
+                $s = esc_sql(trim($_GET['s']));
+                if (strlen($s) > 0) {
+                    $filters->search = $s;
+
+                    $sqlWhere .= sprintf(
+                        ' AND (`message`.`ip_address` = "%s"
+                            OR `message`.`browser` = "%1$s"
+                            OR `message`.`os`
+                            OR `message`.`ticket` LIKE "%2$s"
+                            OR `user`.`display_name` LIKE "%2$s")',
+                        $s,
+                        '%' . $s . '%'
+                    );
+                }
+                unset($s);
+            }
+
+            if (isset($_GET['form'])) {
+                $form = isset($_GET['form']) && is_numeric($_GET['form']) ? (int)$_GET['form'] : 0;
+                if ($form > 0) {
+                    $filters->form = $form;
+
+                    $sqlWhere .= ' AND (`message`.`form_id` = '. $form .')';
+                }
+                unset($form);
+            }
+
+            if (isset($_GET['status'])) {
+                $status = isset($_GET['status']) && is_numeric($_GET['status']) ? (int)$_GET['status'] : -1;
+                if (in_array($status, array(1, 0))) {
+                    $filters->status = $status;
+
+                    $sqlWhere .= ' AND (`message`.`sent` = '. $status .')';
+                }
+                unset($status);
+            }
+
+            if (isset($_GET['start_date'])) {
+                $startDate = isset($_GET['start_date']) ? $_GET['start_date'] : '';
+                if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $startDate)) {
+                    $filters->startDate = $startDate;
+                }
+                unset($startDate);
+            }
+
+            if (isset($_GET['end_date'])) {
+                $endDate = isset($_GET['end_date']) ? $_GET['end_date'] : '';
+                if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $endDate)) {
+                    $filters->endDate = $endDate;
+                }
+                unset($endDate);
+            }
+
+            if (!empty($filters->startDate)) {
+                $sqlWhere .= ' AND (`message`.`created_at` >= "'. $filters->startDate .' 00:00:00")';
+            }
+
+            if (!empty($filters->endDate)) {
+                $sqlWhere .= ' AND (`message`.`created_at` <= "'. $filters->endDate .' 23:59:59")';
+            }
+
+            $totalCount = $wpdb->get_var(sprintf(
+                'SELECT COUNT(`message`.`id`)
+                FROM `%s` AS `message`',
+                $wpdb->prefix . 'pwebcontact_messages'
+            ));
+
+            $rowsetCount = $wpdb->get_var(sprintf(
+                'SELECT COUNT(`message`.`id`)
+                FROM `%s` AS `message`
+                LEFT JOIN `%s` AS `form` ON `form`.`id` = `message`.`form_id`
+                LEFT JOIN `%s` AS `user` ON `user`.`ID` = `message`.`user_id`
+                WHERE %s',
+                $wpdb->prefix . 'pwebcontact_messages',
+                $wpdb->prefix . 'pwebcontact_forms',
+                $wpdb->prefix . 'users',
+                !empty($sqlWhere) ? $sqlWhere : ''
+            ));
+
+            $limit = isset($_GET['l']) && is_numeric($_GET['l']) ? (int)$_GET['l'] : 10;
+            if ($limit <= 0 || $limit > 100) {
+                $limit = 10;
+            }
+
+            $pagination = (object)array(
+                'pages'       => ceil($rowsetCount / $limit),
+                'currentPage' => isset($_GET['p']) && is_numeric($_GET['p']) ? ($_GET['p'] > 0 ? (int)$_GET['p'] : 1) : 1
+            );
+
+            $pagination->offset = ($pagination->currentPage - 1) * $limit;
+
+            $sql = sprintf(
+                'SELECT `message`.*, `form`.`title`, `user`.`display_name`
+                FROM `%s` AS `message`
+                LEFT JOIN `%s` AS `form` ON `form`.`id` = `message`.`form_id`
+                LEFT JOIN `%s` AS `user` ON `user`.`ID` = `message`.`user_id`
+                WHERE %s
+                ORDER BY %s %s
+                LIMIT %d, %d',
+                $wpdb->prefix . 'pwebcontact_messages',
+                $wpdb->prefix . 'pwebcontact_forms',
+                $wpdb->prefix . 'users',
+                !empty($sqlWhere) ? $sqlWhere : '',
+                $orderBySql,
+                $orderDir,
+                $pagination->offset,
+                $limit
+            );
+
+            $rowset = (array)$wpdb->get_results($sql);
+
+            $formsRowset = (array)$wpdb->get_results(sprintf(
+                'SELECT `form`.`id`, `form`.`title`
+                FROM `%s` AS `form`
+                ORDER BY `form`.`title` ASC',
+                $wpdb->prefix . 'pwebcontact_forms'
+            ));
+
+            unset($sql);
+
+            ob_start();
+            include 'tmpl/messages/list.php';
+            $html = ob_get_contents();
+            ob_end_clean();
+
+        } else {
+            $row = $wpdb->get_row(sprintf(
+                'SELECT `message`.*, `form`.`title`, `user`.`display_name`
+                FROM `%s` AS `message`
+                LEFT JOIN `%s` AS `form` ON `form`.`id` = `message`.`form_id`
+                LEFT JOIN `%s` AS `user` ON `user`.`ID` = `message`.`user_id`
+                WHERE `message`.`id` = %d',
+                $wpdb->prefix . 'pwebcontact_messages',
+                $wpdb->prefix . 'pwebcontact_forms',
+                $wpdb->prefix . 'users',
+                $messageId
+            ));
+
+            ob_start();
+            include 'tmpl/messages/item.php';
+            $html = ob_get_contents();
+            ob_end_clean();
+        }
+
+        echo $html;
+    }
 }

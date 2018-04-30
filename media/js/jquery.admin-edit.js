@@ -27,9 +27,9 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     var $tabs = $("#pweb-tabs-content"),
         $adminBar = $("#pweb-adminbar");
 
-    $(window).resize(function(){
+    /*$(window).resize(function(){
         $tabs.css("padding-top", $(this).width() < 768 ? 0 : $adminBar.height());
-    });
+    });*/
 
     // Initialize tooltips
     $(".pweb-has-tooltip").tooltip({
@@ -39,7 +39,6 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     // Tabs
     $("#pweb-tabs").find(".nav-tab").click(function(e){
         e.preventDefault();
-        document.location.hash = $(this).attr("href");
 
         $("#pweb-tabs").find(".nav-tab-active").removeClass("nav-tab-active");
         $(this).addClass("nav-tab-active");
@@ -716,7 +715,7 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
     });
 
 
-    $("#pweb-tab-check").click(function(){
+    var gfCheckStatus = function() {
 
         var is_empty_recipient = (!$("#pweb_params_email_to").val() && $("#pweb_params_email_cms_user").get(0).selectedIndex === 0);
         $("#pweb-email-to-warning")[is_empty_recipient ? "show" : "hide"]();
@@ -739,7 +738,15 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             $("#pweb-cog-check-error").hide();
             $("#pweb-cog-check-save").show();
         }
+    };
+
+    $(window).load(function() {
+        gfCheckStatus();
     });
+
+    window.setInterval(function(){
+        gfCheckStatus();
+    }, 5000);
 
     $("#pweb-cog-check-save").click(function(){
         $("#pweb-save-button").click();
@@ -809,10 +816,40 @@ if (typeof jQuery !== "undefined") jQuery(document).ready(function($){
             $("#pweb-save-button").get(0).disabled = false;
 
         }).done(function(response, textStatus, jqXHR) {
-			if (response && typeof response.success === "boolean")
-			{
-                $("#pweb-save-status").html(
-                        response.success === true ? pwebcontact_l10n.saved_on+" "+(new Date()).toLocaleTimeString() : (response.message ? response.message : pwebcontact_l10n.error));
+			if (response && typeof response.success === "boolean") {
+          var message = null;
+          var statusClass = null;
+          if (response.success === true) {
+              message = pwebcontact_l10n.saved_on + " " + (new Date()).toLocaleTimeString();
+              statusClass = 'success';
+          } else {
+              message = response.message ? response.message : pwebcontact_l10n.error;
+              statusClass = 'error';
+          }
+
+          var wrapper = $('<div></div>', {
+              class:'o-notice is-dismissible notice notice-' + statusClass,
+              style: 'display: none'
+          });
+
+          wrapper.html('<p>'+ message +'</p><button type="button" class="notice-dismiss">&nbsp;</button>');
+
+          $('button', wrapper).on('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              var wrapper = $(this).parent();
+
+              wrapper.slideUp({
+                  complete: function() {
+                      wrapper.remove();
+                  }
+              });
+          });
+
+          $('#pweb_form').prepend(wrapper);
+
+          wrapper.slideDown();
 			}
 		}).fail(function(jqXHR, textStatus, errorThrown) {
             $("#pweb-save-status").html("Request error");

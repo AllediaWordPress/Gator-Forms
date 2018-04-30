@@ -110,6 +110,11 @@ function_exists('add_action') or die;
                     data-action="<?php echo admin_url( 'admin.php?page=pwebcontact&task=delete&id='.(int)$form->id.'&ajax=1&_wpnonce='. wp_create_nonce('delete-form_'.$form->id) ); ?>">
                 <i class="glyphicon glyphicon-trash"></i>
             </button>
+            <a href="<?php echo admin_url('admin.php?page=pwebcontact-messages&form=' . $form->id); ?>"
+                class="button pweb-has-tooltip"
+                title="<?php _e('List messages received', 'pwebcontact'); ?>">
+                <i class="glyphicon glyphicon-envelope"></i>
+            </a>
         </div>
     </div>
 <?php endforeach;
