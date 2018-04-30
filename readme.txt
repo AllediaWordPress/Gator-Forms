@@ -3,7 +3,7 @@ Contributors: perfect-web, piotrmocko
 Tags: contact form, contact form plugin, form builder, wordpress form, wordpress forms plugin
 Requires at least: 3.5.0
 Tested up to: 4.9.0
-Stable tag: 2.4.1
+Stable tag: 2.5.0
 License: GNU/GPL
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -168,7 +168,7 @@ Yes it will, however you only get access to new versions and support for as long
 
 == Changelog ==
 
-= @todo =
+= 2.5.0 / 2018-04-30 =
 
 **Added:**
 
